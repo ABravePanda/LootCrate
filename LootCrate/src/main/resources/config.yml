@@ -1,0 +1,42 @@
+###############################
+#							  #
+# LootCrate 				  #
+#							  #
+# Developed by A_Brave_Panda  #
+#							  #
+###############################
+#
+# Message Key
+# < > = Mandatory, must use at least one option
+# [ ] = Mandatory, must enter some custom input
+# ( ) = Optional,  may or may not enter some input
+# { } = Placeholder
+messages:
+    prefix: "&e&lLOOTCRATE &r"
+    command-no-permission: "&cYou have no permission to do this"
+    lootcrate-interact-no-permission: "&cYou do not have permission to interact with that LootCrate"
+    must-be-player: "&cYou must be a player to do this"
+    meta-command-usage: "&cUsage: /meta <name | lore | enchant>"
+    must-be-holding-item: "&cYou must be holding an item in your main hand!"
+    lootcrate-chance-not-100: "&4Error: &cThe items in the LootCrate &e{name} {#{id}} &conly total &e{ChanceTotal}&c."
+    lootcrate-command-basic-usage: "&cUsage: /lootcrate <create | delete | key | set | add | remove | get | items | list>"
+    lootcrate-not-found: "&cThe LootCrate with the id &e#{id}&c was not found."
+    lootcrate-item-not-found: "&cThe item &e#{ItemId} &cin LootCrate with the id &e#{id}&c was not found."
+    lootcrate-command-create-usage: "&cUsage: /lootcrate create [name]"
+    lootcrate-command-create-success: "&fCreated a LootCrate with the name &e\"{name}\"&f. &fReference ID: &e#{id}"
+    lootcrate-command-key-usage: "&cUsage: /lootcrate key [crate id] [glowing]"
+    lootcrate-command-key-success: "&fAdded a key to the LootCrate with the name &e\"{name}\"&f."
+    lootcrate-command-add-usage: "&cUsage: /lootcrate add [crate id] [min amount] [max amount] [chance] [isDisplay]"
+    lootcrate-command-add-minmax: "&cThe minimum amount must be smaller or equal to the max amount"
+    lootcrate-command-add-success: "&fAdded &e{item}&f to the LootCrate with the name &e\"{name}\"&f. The item's id is &e#{ItemId}&f."
+    lootcrate-command-remove-usage: "&cUsage: /lootcrate remove [crate id] [item id]"
+    lootcrate-command-remove-success: "&fRemoved item &e#{ItemId}&f from the LootCrate with the name &e\"{name}\"&f."
+    lootcrate-command-items-usage: "&cUsage: /lootcrate items [crate id]"
+    lootcrate-command-items-format: "&7#{id} | &fType: &e{type}&f | Name: &e{name}&f | MinAmount: &e{MinAmount}&f | MaxAmount: &e{MaxAmount}&f | Chance: &e{chance}&f | Commands: &e{commands}&f"
+    lootcrate-command-set-usage: "&cUsage: /lootcrate set [crate id]"
+    lootcrate-command-set-success: "&fSet &e{X}, {Y}, {Z} &fas a location for the LootCrate &e\"{name}\"&f."
+    lootcrate-command-set-remove-success: "&fRemoved &e{X}, {Y}, {Z} &fas a LootCrate location."
+    lootcrate-command-get-usage: "&cUsage: /lootcrate get [crate id] (amount)"
+    lootcrate-command-get-success: "&fYou have received the key for the LootCrate &e\"{name}\"&f."
+    lootcrate-open: "&aOpening LootCrate &e{name}"
+    lootcrate-wrong-key: "&cThis is the wrong key to open the LootCrate &e{name}"

@@ -1,0 +1,10 @@
+name: ${project.name}
+main: lootcrate.LootCrate
+version: ${project.version}
+description: ${project.description}
+author: A_Brave_Panda
+load: startup
+api-version: 1.13
+commands:
+  lootcrate:
+  meta:
