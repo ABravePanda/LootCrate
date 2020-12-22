@@ -18,7 +18,6 @@ import lootcrate.objects.CrateKey;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.utils.CommandUtils;
-import lootcrate.utils.ObjUtils;
 import lootcrate.utils.interfaces.SubCommand;
 
 public class SubCommandLootCrateSet implements SubCommand
@@ -40,19 +39,30 @@ public class SubCommandLootCrateSet implements SubCommand
     {
 	Player p = (Player) sender;
 	
-	if (args.length < 2)
+	if (args.length != 2)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_GET_USAGE, null);
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
 	    return;
 	}
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_GET.getKey()))
+	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_SET.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
 	}
+
+	Location l = p.getTargetBlock(null, 10).getLocation();
+	ImmutableMap<String, String> map1 = ImmutableMap.of("X", l.getBlockX() + "", "Y", l.getBlockY() + "",
+		"Z", l.getBlockZ() + "");
+	if (args[1].equalsIgnoreCase("none"))
+	{
+	    plugin.locationManager.removeCrateLocation(l);
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
+	    return;
+	}
+
 	if (CommandUtils.tryParse(args[1]) == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_GET_USAGE, null);
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
 	    return;
 	}
 
@@ -63,24 +73,11 @@ public class SubCommandLootCrateSet implements SubCommand
 		    ImmutableMap.of("id", "" + CommandUtils.tryParse(args[1])));
 	    return;
 	}
+	ImmutableMap<String, String> map = ImmutableMap.of("id", crate.getId() + "", "name", crate.getName(),
+		"X", l.getBlockX() + "", "Y", l.getBlockY() + "", "Z", l.getBlockZ() + "");
 
-	if (args.length == 3)
-	{
-	    if (CommandUtils.tryParse(args[2]) == null)
-	    {
-		plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_GET_USAGE, null);
-		return;
-	    }
-	    for (int i = 0; i < CommandUtils.tryParse(args[2]); i++)
-	    {
-		p.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
-	    }
-
-	} else
-	    p.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
-	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_GET_SUCCESS,
-		ImmutableMap.of("id", crate.getId() + "", "name", crate.getName()));
-
+	plugin.locationManager.addCrateLocation(l, crate);
+	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
     }
     
     

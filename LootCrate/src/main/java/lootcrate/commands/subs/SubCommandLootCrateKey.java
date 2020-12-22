@@ -65,7 +65,7 @@ public class SubCommandLootCrateKey implements SubCommand
 	crate.setKey(key);
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_SUCCESS,
-		ImmutableMap.of("name", "" + crate.getName()));
+		ImmutableMap.of("name", "" + crate.getName(), "id", "" + crate.getId()));
 	plugin.messageManager.crateNotification(crate, sender);
     }
     

@@ -68,7 +68,7 @@ public class SubCommandLootCrateCommand implements SubCommand
 	
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_SUCCESS,
-		ImmutableMap.of("id", "" + CommandUtils.tryParse(args[1]), "name", crate.getName(), "ItemId", "" + item.getId()));
+		ImmutableMap.of("id", "" + crate.getId(), "name", crate.getName(), "ItemId", "" + item.getId()));
 
 	plugin.messageManager.crateNotification(crate, sender);
     }

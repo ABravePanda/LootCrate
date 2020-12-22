@@ -11,6 +11,7 @@ public enum Message
     LOOTCRATE_CHANCE_NOT_100("lootcrate-chance-not-100"),
     LOOTCRATE_BASIC_USAGE("lootcrate-command-basic-usage"),
     LOOTCRATE_NOT_FOUND("lootcrate-not-found"),
+    KEY_NOT_FOUND("key-not-found"),
     LOOTCRATE_ITEM_NOT_FOUND("lootcrate-item-not-found"),
     LOOTCRATE_COMMAND_CREATE_USAGE("lootcrate-command-create-usage"),
     LOOTCRATE_COMMAND_CREATE_SUCCESS("lootcrate-command-create-success"),
@@ -30,6 +31,7 @@ public enum Message
     LOOTCRATE_COMMAND_GET_SUCCESS("lootcrate-command-get-success"),
     LOOTCRATE_COMMAND_COMMAND_USAGE("lootcrate-command-command-usage"),
     LOOTCRATE_COMMAND_COMMAND_SUCCESS("lootcrate-command-command-success"),
+    LOOTCRATE_COMMAND_RELOAD_SUCCESS("lootcrate-command-reload-success"),
     LOOTCRATE_OPEN("lootcrate-open"),
     LOOTCRATE_INCORRECT_KEY("lootcrate-wrong-key");
     

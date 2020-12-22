@@ -51,7 +51,7 @@ public class LootCrateInteractEvent implements Listener
 		e.setCancelled(true);
 
 		// get the crate
-		Crate crate = plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation());
+		Crate crate = crateManager.getCrateById(plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation()).getId());
 
 		if (!p.hasPermission("lootcrate.interact." + crate.getId()))
 		{

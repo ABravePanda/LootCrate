@@ -66,7 +66,7 @@ public class SubCommandLootCrateRemove implements SubCommand
 	crate.removeItem(item);
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_REMOVE_SUCCESS,
-		ImmutableMap.of("id", "" + CommandUtils.tryParse(args[1]), "name", crate.getName(), "ItemId",
+		ImmutableMap.of("id", "" + crate.getId(), "name", crate.getName(), "ItemId",
 			"" + CommandUtils.tryParse(args[2])));
 	plugin.messageManager.crateNotification(crate, sender);
     }
