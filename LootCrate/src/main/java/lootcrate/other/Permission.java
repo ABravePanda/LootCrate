@@ -9,7 +9,8 @@ public enum Permission
     COMMAND_LOOTCRATE_REMOVE("lootcrate.remove"),
     COMMAND_LOOTCRATE_ITEMS("lootcrate.items"),
     COMMAND_LOOTCRATE_SET("lootcrate.set"),
-    COMMAND_LOOTCRATE_GET("lootcrate.get");
+    COMMAND_LOOTCRATE_GET("lootcrate.get"),
+    COMMAND_LOOTCRATE_COMMAND("lootcrate.command");
 
     String key;
     
