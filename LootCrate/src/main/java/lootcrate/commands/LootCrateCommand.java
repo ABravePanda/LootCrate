@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
 import lootcrate.commands.subs.SubCommandLootCrateAdd;
+import lootcrate.commands.subs.SubCommandLootCrateCommand;
 import lootcrate.commands.subs.SubCommandLootCrateCreate;
 import lootcrate.commands.subs.SubCommandLootCrateGet;
 import lootcrate.commands.subs.SubCommandLootCrateItems;
@@ -21,9 +22,8 @@ import lootcrate.managers.CrateManager;
 import lootcrate.managers.LocationManager;
 import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
-import lootcrate.objects.CrateItem;
 import lootcrate.other.Message;
-import lootcrate.utils.CommandUtils;
+import lootcrate.utils.TabUtils;
 
 public class LootCrateCommand implements CommandExecutor, TabCompleter
 {
@@ -85,17 +85,8 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args[0].equalsIgnoreCase("get"))
 		new SubCommandLootCrateGet(plugin, sender, args);
 		
-	    // command command
 	    if (args[0].equalsIgnoreCase("command"))
-	    {
-		Crate crate = crateManager.getCrateById(CommandUtils.tryParse(args[1]));
-		CrateItem item = crateManager.getCrateItemById(crate, Integer.parseInt(args[2]));
-		String command = CommandUtils.builder(args, 3);
-		item.getCommands().add(command);
-		crate.replaceItem(item);
-		crateManager.save(crate);
-	    }
-
+		new SubCommandLootCrateCommand(plugin, sender, args);
 	}
 
 	return false;
@@ -132,13 +123,19 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	if (args[0].equalsIgnoreCase("delete"))
 	{
 	    if (args.length == 2)
+	    {
 		list.add("[CrateID]");
+		TabUtils.addCratesToList(list, crateManager);
+	    }
 	    return list;
 	}
 	if (args[0].equalsIgnoreCase("get"))
 	{
 	    if (args.length == 2)
+	    {
 		list.add("[CrateID]");
+		TabUtils.addCratesToList(list, crateManager);
+	    }
 	    if (args.length == 3)
 		list.add("(Amount)");
 	    return list;
@@ -146,13 +143,20 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	if (args[0].equalsIgnoreCase("set"))
 	{
 	    if (args.length == 2)
+	    {
 		list.add("[CrateID]");
+		TabUtils.addCratesToList(list, crateManager);
+	    }
 	    return list;
 	}
 	if (args[0].equalsIgnoreCase("items"))
 	{
 	    if (args.length == 2)
+	    {
 		list.add("[CrateID]");
+		for(Crate crate : crateManager.load())
+		    TabUtils.addCratesToList(list, crateManager);
+	    }
 	    return list;
 	}
 
@@ -160,7 +164,10 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	if (args[0].equalsIgnoreCase("add"))
 	{
 	    if (args.length == 2)
+	    {
 		list.add("[CrateID]");
+		TabUtils.addCratesToList(list, crateManager);
+	    }
 	    if (args.length == 3)
 		list.add("[MinimumAmount]");
 	    if (args.length == 4)
@@ -174,7 +181,10 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	if (args[0].equalsIgnoreCase("key"))
 	{
 	    if (args.length == 2)
+	    {
 		list.add("[CrateID]");
+		TabUtils.addCratesToList(list, crateManager);
+	    }
 	    if (args.length == 3)
 		list.add("[IsGlowing]");
 	    return list;
@@ -182,9 +192,15 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	if (args[0].equalsIgnoreCase("command"))
 	{
 	    if (args.length == 2)
+	    {
 		list.add("[CrateID]");
+		TabUtils.addCratesToList(list, crateManager);
+	    }
 	    if (args.length == 3)
+	    {
 		list.add("[ItemID]");
+		TabUtils.addCrateItemsToListFromID(list, crateManager, Integer.parseInt(args[1]));
+	    }
 	    if (args.length == 4)
 		list.add("[Command] - Use {player} as placeholder");
 	    return list;

@@ -28,6 +28,8 @@ public enum Message
     LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS("lootcrate-command-set-remove-success"),
     LOOTCRATE_COMMAND_GET_USAGE("lootcrate-command-get-usage"),
     LOOTCRATE_COMMAND_GET_SUCCESS("lootcrate-command-get-success"),
+    LOOTCRATE_COMMAND_COMMAND_USAGE("lootcrate-command-command-usage"),
+    LOOTCRATE_COMMAND_COMMAND_SUCCESS("lootcrate-command-command-success"),
     LOOTCRATE_OPEN("lootcrate-open"),
     LOOTCRATE_INCORRECT_KEY("lootcrate-wrong-key");
     

@@ -38,5 +38,7 @@ messages:
     lootcrate-command-set-remove-success: "&fRemoved &e{X}, {Y}, {Z} &fas a LootCrate location."
     lootcrate-command-get-usage: "&cUsage: /lootcrate get [crate id] (amount)"
     lootcrate-command-get-success: "&fYou have received the key for the LootCrate &e\"{name}\"&f."
+    lootcrate-command-command-usage: "&cUsage: /lootcrate command [crate id] [item id] [command]"
+    lootcrate-command-command-success: "&fYou have added a command to Item &e#{ItemId} for the LootCrate &e\"{name}\"&f."
     lootcrate-open: "&aOpening LootCrate &e{name}"
     lootcrate-wrong-key: "&cThis is the wrong key to open the LootCrate &e{name}"

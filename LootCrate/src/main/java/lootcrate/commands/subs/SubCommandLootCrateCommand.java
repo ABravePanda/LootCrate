@@ -34,28 +34,24 @@ public class SubCommandLootCrateCommand implements SubCommand
     {
 	Player p = (Player) sender;
 	
-	if (args.length <= 5)
+	if (args.length <= 3)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_USAGE, null);
 	    return;
 	}
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_ADD.getKey()))
+	
+	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_COMMAND.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
 	}
-	if (p.getInventory().getItemInMainHand().getType() == Material.AIR)
-	{
-	    plugin.messageManager.sendMessage(sender, Message.MUST_HOLD_ITEM, null);
-	    return;
-	}
 
-	if (CommandUtils.tryParse(args[2]) == null || CommandUtils.tryParse(args[3]) == null
-		|| CommandUtils.tryParse(args[4]) == null)
+	if (CommandUtils.tryParse(args[1]) == null || CommandUtils.tryParse(args[2]) == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_USAGE, null);
 	    return;
 	}
+	
 	Crate crate = plugin.crateManager.getCrateById(CommandUtils.tryParse(args[1]));
 	if (crate == null)
 	{
@@ -63,22 +59,16 @@ public class SubCommandLootCrateCommand implements SubCommand
 		    ImmutableMap.of("id", "" + CommandUtils.tryParse(args[1])));
 	    return;
 	}
-	int min = CommandUtils.tryParse(args[2]);
-	int max = CommandUtils.tryParse(args[3]);
-	int chance = CommandUtils.tryParse(args[4]);
-
-	if (min > max && min >= 1)
-	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_MINMAX, null);
-	    return;
-	}
-	CrateItem item = new CrateItem(p.getInventory().getItemInMainHand(), min, max, chance,
-		Boolean.parseBoolean(args[5]), null);
-	crate.addItem(item);
+	
+	CrateItem item = plugin.crateManager.getCrateItemById(crate, Integer.parseInt(args[2]));
+	String command = CommandUtils.builder(args, 3);
+	item.getCommands().add(command);
+	crate.replaceItem(item);
 	plugin.crateManager.save(crate);
-	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_SUCCESS,
-		ImmutableMap.of("id", "" + CommandUtils.tryParse(args[1]), "name", crate.getName(), "item",
-			"" + item.getItem().getType(), "ItemId", "" + item.getId()));
+	
+	plugin.crateManager.save(crate);
+	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_SUCCESS,
+		ImmutableMap.of("id", "" + CommandUtils.tryParse(args[1]), "name", crate.getName(), "ItemId", "" + item.getId()));
 
 	plugin.messageManager.crateNotification(crate, sender);
     }
