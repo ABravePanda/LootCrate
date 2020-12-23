@@ -136,7 +136,6 @@ public class LocationManager
 	    Crate crate = plugin.crateManager.getCrateById(section.getInt("Crate"));
 	    if (crate == null || loc == null)
 		continue;
-	    System.out.println(loc + "->" + crate);
 	    locationList.put(loc, crate);
 	}
     }

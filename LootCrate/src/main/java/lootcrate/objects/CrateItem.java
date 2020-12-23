@@ -106,10 +106,7 @@ public class CrateItem implements Comparable<CrateItem>
 	Map<String, Object> map = new LinkedHashMap<String, Object>();
 
 	map.put("ID", getId());
-	map.put("Material", getItem().getType().toString());
-	map.put("Name", getItem().getItemMeta().getDisplayName());
-	map.put("Lore", getItem().getItemMeta().getLore());
-	map.put("Enchantments", serializeEnchantments());
+	map.put("Item", getItem().serialize());
 	map.put("Chance", getChance());
 	map.put("MinAmount", getMinAmount());
 	map.put("MaxAmount", getMaxAmount());
@@ -125,25 +122,12 @@ public class CrateItem implements Comparable<CrateItem>
 	Map<String, Object> map = new LinkedHashMap<String, Object>();
 
 	for (String s : section.getKeys(false))
-	{
 	    map.put(s, section.get(s));
-	}
 
 	
 	if(map.size() == 0) return null;
 	
-	ItemStack item = new ItemStack(Material.valueOf((String) map.get("Material")));
-	ItemMeta meta = item.getItemMeta();
-	
-	if (map.get("Name") != null)
-	    meta.setDisplayName((String) map.get("Name"));
-	if (map.get("Lore") != null)
-	    meta.setLore((List<String>) map.get("Lore"));
-	
-	item.setItemMeta(meta);
-	
-	if (map.get("Enchantments") != null)
-	    item = CrateItem.deserializeEnchantments(item, (ConfigurationSection) map.get("Enchantments"));
+	ItemStack item = ItemStack.deserialize(section.getConfigurationSection("Item").getValues(true));
 	
 	CrateItem crateItem = new CrateItem(item, (Integer) map.get("MinAmount"), (Integer) map.get("MaxAmount"),(Integer) map.get("Chance"), (Boolean) map.get("isDisplay"), (List<String>) map.get("Commands"));
 	crateItem.setId((Integer) map.get("ID"));

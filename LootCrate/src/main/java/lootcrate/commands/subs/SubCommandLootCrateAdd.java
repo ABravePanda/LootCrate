@@ -12,6 +12,7 @@ import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateKey;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
+import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.interfaces.SubCommand;
 
@@ -60,7 +61,7 @@ public class SubCommandLootCrateAdd implements SubCommand
 	if (crate == null)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
-		    ImmutableMap.of("id", "" + CommandUtils.tryParse(args[1])));
+		    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
 	    return;
 	}
 	int min = CommandUtils.tryParse(args[2]);
@@ -77,8 +78,8 @@ public class SubCommandLootCrateAdd implements SubCommand
 	crate.addItem(item);
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_SUCCESS,
-		ImmutableMap.of("id", "" + crate.getId(), "name", crate.getName(), "item",
-			"" + item.getItem().getType(), "ItemId", "" + item.getId()));
+		ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(), Placeholder.ITEM_TYPE,
+			"" + item.getItem().getType(), Placeholder.ITEM_ID, "" + item.getId(), Placeholder.ITEM_NAME, "" + item.getItem().getItemMeta().getDisplayName()));
 
 	plugin.messageManager.crateNotification(crate, sender);
     }

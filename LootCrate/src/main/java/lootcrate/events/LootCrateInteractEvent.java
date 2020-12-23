@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import com.google.common.collect.ImmutableMap;
@@ -21,6 +22,7 @@ import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.other.Message;
+import lootcrate.other.Placeholder;
 import lootcrate.utils.ObjUtils;
 
 public class LootCrateInteractEvent implements Listener
@@ -51,11 +53,12 @@ public class LootCrateInteractEvent implements Listener
 		e.setCancelled(true);
 
 		// get the crate
-		Crate crate = crateManager.getCrateById(plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation()).getId());
+		Crate crate = crateManager.getCrateById(
+			plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation()).getId());
 
 		if (!p.hasPermission("lootcrate.interact." + crate.getId()))
 		{
-		    messageManager.sendMessage(p, Message.NO_PERMISSION_LOOTCRATE_INTERACT, null);
+		    messageManager.sendMessage(p, Message.NO_PERMISSION_LOOTCRATE_INTERACT, ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
 		    return;
 		}
 
@@ -65,11 +68,11 @@ public class LootCrateInteractEvent implements Listener
 		    ItemStack item = p.getInventory().getItemInMainHand();
 
 		    // if they clicked w/same item as key && they match
-		    
+
 		    if (crate.getKey() == null)
 		    {
 			messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
-				ImmutableMap.of("name", crate.getName()));
+				ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, crate.getId() + ""));
 			return;
 		    }
 		    if (crate.getItems().size() == 0)
@@ -86,7 +89,7 @@ public class LootCrateInteractEvent implements Listener
 			p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 0.5f, 1f);
 
 			// notify
-			messageManager.sendMessage(p, Message.LOOTCRATE_OPEN, ImmutableMap.of("name", crate.getName()));
+			messageManager.sendMessage(p, Message.LOOTCRATE_OPEN, ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
 
 			CrateItem crateItem = crateManager.getRandomItem(crate);
 			int rnd = crateManager.getRandomAmount(crateItem);
@@ -97,15 +100,22 @@ public class LootCrateInteractEvent implements Listener
 			    for (int i = 0; i < rnd; i++)
 				p.getInventory().addItem(crateItem.getItem());
 			}
+
+			int i = 1;
+
 			for (String cmd : crateItem.getCommands())
 			{
-			    Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(),
-				    cmd.replace("{player}", p.getName()));
+			    if (Boolean.parseBoolean(
+				    messageManager.parseMessage(Message.DISPATCH_COMMAND_ITEM_AMOUNT, null)))
+				i = rnd;
+			    for (int j = 0; j < i; j++)
+				Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(),
+					cmd.replace("{player}", p.getName()));
 			}
 		    } else
 		    {
 			messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
-				ImmutableMap.of("name", crate.getName()));
+				ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
 			return;
 		    }
 		}
@@ -113,33 +123,35 @@ public class LootCrateInteractEvent implements Listener
 		// if left clicked
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK)
 		{
-		    // TODO Open menu of options
-		    invManager.openCrateInventory(p, crate);
+		    if (e.getHand() == EquipmentSlot.HAND)
+			invManager.openCrateInventory(p, crate);
 		}
 	    }
 	}
     }
-    
+
     @EventHandler
     public void onInventoryInteractEvent(InventoryInteractEvent e)
     {
-	if(e.getWhoClicked() instanceof Player)
+	if (e.getWhoClicked() instanceof Player)
 	{
 	    Player p = (Player) e.getWhoClicked();
-	    if(invManager.isInInventory(p)) e.setCancelled(true);
+	    if (invManager.isInInventory(p))
+		e.setCancelled(true);
 	}
     }
-    
+
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent e)
     {
-	if(e.getWhoClicked() instanceof Player)
+	if (e.getWhoClicked() instanceof Player)
 	{
 	    Player p = (Player) e.getWhoClicked();
-	    if(invManager.isInInventory(p)) e.setCancelled(true);
+	    if (invManager.isInInventory(p))
+		e.setCancelled(true);
 	}
     }
-    
+
     @EventHandler
     public void onInventoryCloseEvent(InventoryCloseEvent e)
     {

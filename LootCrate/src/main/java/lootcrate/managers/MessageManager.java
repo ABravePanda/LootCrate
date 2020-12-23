@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.other.Message;
+import lootcrate.other.Placeholder;
 
 public class MessageManager
 {
@@ -37,11 +38,28 @@ public class MessageManager
      * @param placeholders
      *            Placeholders to be replaced in message
      */
-    public void sendMessage(CommandSender p, Message message, ImmutableMap<String, String> placeholders)
+    public void sendMessage(CommandSender p, Message message, ImmutableMap<Placeholder, String> placeholders)
     {
 	String msg = this.parseMessage(message, placeholders);
 	if (msg != null)
 	    p.sendMessage(this.parseMessage(Message.PREFIX, null) + msg);
+    }
+    
+    /**
+     * Sends a message to specified player without the prefix
+     * 
+     * @param p
+     *            Player to whom shall recieve the message
+     * @param message
+     *            Message to be sent
+     * @param placeholders
+     *            Placeholders to be replaced in message
+     */
+    public void sendNoPrefixMessage(CommandSender p, Message message, ImmutableMap<Placeholder, String> placeholders)
+    {
+	String msg = this.parseMessage(message, placeholders);
+	if (msg != null)
+	    p.sendMessage(msg);
     }
 
     /**
@@ -53,7 +71,7 @@ public class MessageManager
      *            Placeholders to be replaced in message
      * @return Message with placeholders replaced
      */
-    public String parseMessage(Message message, ImmutableMap<String, String> placeholders)
+    public String parseMessage(Message message, ImmutableMap<Placeholder, String> placeholders)
     {
 	String msg = plugin.getConfig().getString(PREFIX + message.getKey());
 
@@ -64,9 +82,9 @@ public class MessageManager
 
 	if (placeholders != null)
 	{
-	    for (Map.Entry<String, String> entry : placeholders.entrySet())
+	    for (Map.Entry<Placeholder, String> entry : placeholders.entrySet())
 	    {
-		colorMsg = colorMsg.replaceAll("\\{" + entry.getKey() + "\\}", entry.getValue());
+		colorMsg = colorMsg.replaceAll("\\{" + entry.getKey().getKey() + "\\}", entry.getValue());
 		
 	    }
 	}
@@ -85,8 +103,8 @@ public class MessageManager
     {
 	if (crate.getChanceCount() != 100)
 	{
-	    this.sendMessage(sender, Message.LOOTCRATE_CHANCE_NOT_100, ImmutableMap.of("id", "" + crate.getId(), "name",
-		    crate.getName(), "ChanceTotal", "" + crate.getChanceCount()));
+	    this.sendMessage(sender, Message.LOOTCRATE_CHANCE_NOT_100, ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME,
+		    crate.getName(), Placeholder.TOTAL_CRATE_CHANCE, "" + crate.getChanceCount()));
 	}
     }
 }

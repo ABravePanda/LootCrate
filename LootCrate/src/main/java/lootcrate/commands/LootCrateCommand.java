@@ -3,66 +3,53 @@ package lootcrate.commands;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
 import lootcrate.commands.subs.SubCommandLootCrateAdd;
 import lootcrate.commands.subs.SubCommandLootCrateCommand;
 import lootcrate.commands.subs.SubCommandLootCrateCreate;
-import lootcrate.commands.subs.SubCommandLootCrateSet;
+import lootcrate.commands.subs.SubCommandLootCrateGet;
 import lootcrate.commands.subs.SubCommandLootCrateItems;
 import lootcrate.commands.subs.SubCommandLootCrateKey;
 import lootcrate.commands.subs.SubCommandLootCrateReload;
 import lootcrate.commands.subs.SubCommandLootCrateRemove;
-import lootcrate.commands.subs.SubCommandLootCrateGet;
-import lootcrate.managers.CrateManager;
-import lootcrate.managers.LocationManager;
-import lootcrate.managers.MessageManager;
+import lootcrate.commands.subs.SubCommandLootCrateSet;
 import lootcrate.objects.Crate;
 import lootcrate.other.Message;
 import lootcrate.utils.TabUtils;
+import lootcrate.utils.interfaces.Command;
 
-public class LootCrateCommand implements CommandExecutor, TabCompleter
+public class LootCrateCommand implements Command
 {
-    private LootCrate plugin;
-    private MessageManager messageManager;
-    private CrateManager crateManager;
-    private LocationManager locationManager;
 
-    public LootCrateCommand(LootCrate plugin)
+    private LootCrate plugin;
+    private String[] args;
+    private CommandSender sender;
+
+    public LootCrateCommand(LootCrate plugin, String[] args, CommandSender sender)
     {
 	this.plugin = plugin;
-	this.messageManager = plugin.messageManager;
-	this.crateManager = plugin.crateManager;
-	this.locationManager = plugin.locationManager;
-
-	plugin.getCommand("lootcrate").setExecutor(this);
-	plugin.getCommand("lootcrate").setTabCompleter(this);
+	this.args = args;
+	this.sender = sender;
     }
-
+    
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+    public void executeCommand()
     {
-
-	Player p = (Player) sender;
-
-	if (cmd.getName().equalsIgnoreCase("lootcrate"))
-	{
-	    // sender must be player
-	    if (!(sender instanceof Player))
+	 if (!(sender instanceof Player))
 	    {
-		messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
-		return false;
+		plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
+		return;
 	    }
+
+	    Player p = (Player) sender;
 
 	    if (args.length == 0)
 	    {
-		messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
-		return false;
+		plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
+		return;
 	    }
 
 	    if (args[0].equalsIgnoreCase("create"))
@@ -93,14 +80,11 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 		new SubCommandLootCrateReload(plugin, sender, args);
 
 	    else
-		messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
-	}
-
-	return false;
+		plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args)
+    public List<String> runTabComplete()
     {
 	List<String> list = new LinkedList<String>();
 	if (args.length == 1)
@@ -133,7 +117,7 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, crateManager);
+		TabUtils.addCratesToList(list, plugin.crateManager);
 	    }
 	    return list;
 	}
@@ -142,7 +126,7 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, crateManager);
+		TabUtils.addCratesToList(list, plugin.crateManager);
 	    }
 	    if (args.length == 3)
 		list.add("(Amount)");
@@ -153,7 +137,7 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, crateManager);
+		TabUtils.addCratesToList(list, plugin.crateManager);
 	    }
 	    return list;
 	}
@@ -162,8 +146,8 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		for (Crate crate : crateManager.load())
-		    TabUtils.addCratesToList(list, crateManager);
+		for (Crate crate : plugin.crateManager.load())
+		    TabUtils.addCratesToList(list, plugin.crateManager);
 	    }
 	    return list;
 	}
@@ -174,7 +158,7 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, crateManager);
+		TabUtils.addCratesToList(list, plugin.crateManager);
 	    }
 	    if (args.length == 3)
 		list.add("[MinimumAmount]");
@@ -191,7 +175,7 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, crateManager);
+		TabUtils.addCratesToList(list, plugin.crateManager);
 	    }
 	    if (args.length == 3)
 		list.add("[IsGlowing]");
@@ -202,12 +186,12 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, crateManager);
+		TabUtils.addCratesToList(list, plugin.crateManager);
 	    }
 	    if (args.length == 3)
 	    {
 		list.add("[ItemID]");
-		TabUtils.addCrateItemsToListFromID(list, crateManager, Integer.parseInt(args[1]));
+		TabUtils.addCrateItemsToListFromID(list, plugin.crateManager, Integer.parseInt(args[1]));
 	    }
 	    if (args.length == 4)
 		list.add("[Command] - Use {player} as placeholder");

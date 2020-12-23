@@ -9,6 +9,7 @@ import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
+import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.interfaces.SubCommand;
 
@@ -44,7 +45,7 @@ public class SubCommandLootCrateCreate implements SubCommand
 	Crate crate = new Crate(CommandUtils.builder(args, 1));
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,
-		ImmutableMap.of("name", crate.getName(), "id", "" + crate.getId()));
+		ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
     }
     
     

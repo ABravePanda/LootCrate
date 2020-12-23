@@ -3,13 +3,11 @@ package lootcrate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import lootcrate.commands.LootCrateCommand;
-import lootcrate.commands.MetaCommand;
 import lootcrate.events.LootCrateInteractEvent;
+import lootcrate.managers.CommandManager;
 import lootcrate.managers.CrateManager;
 import lootcrate.managers.InventoryManager;
 import lootcrate.managers.LocationManager;
@@ -22,6 +20,7 @@ public class LootCrate extends JavaPlugin
     public CrateManager crateManager;
     public LocationManager locationManager;
     public InventoryManager invManager;
+    public CommandManager commandManager;
     public List<Player> playersInInventory = new ArrayList<Player>();
 
     @Override
@@ -33,7 +32,7 @@ public class LootCrate extends JavaPlugin
 	locationManager = new LocationManager(this);
 	locationManager.populateLocations();
 	invManager = new InventoryManager(this);
-	registerCommands();
+	commandManager = new CommandManager(this);
 	registerEvents();
 	
     }
@@ -51,12 +50,6 @@ public class LootCrate extends JavaPlugin
     public void registerConfig()
     {
 	this.saveDefaultConfig();
-    }
-    
-    public void registerCommands()
-    {
-	new LootCrateCommand(this);
-	new MetaCommand(this);
     }
     
     public void reload()

@@ -17,6 +17,7 @@ import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateKey;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
+import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.interfaces.SubCommand;
 
@@ -51,8 +52,8 @@ public class SubCommandLootCrateSet implements SubCommand
 	}
 
 	Location l = p.getTargetBlock(null, 10).getLocation();
-	ImmutableMap<String, String> map1 = ImmutableMap.of("X", l.getBlockX() + "", "Y", l.getBlockY() + "",
-		"Z", l.getBlockZ() + "");
+	ImmutableMap<Placeholder, String> map1 = ImmutableMap.of(Placeholder.X, l.getBlockX() + "", Placeholder.Y, l.getBlockY() + "",
+		Placeholder.Z, l.getBlockZ() + "");
 	if (args[1].equalsIgnoreCase("none"))
 	{
 	    plugin.locationManager.removeCrateLocation(l);
@@ -70,11 +71,11 @@ public class SubCommandLootCrateSet implements SubCommand
 	if (crate == null)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
-		    ImmutableMap.of("id", "" + CommandUtils.tryParse(args[1])));
+		    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
 	    return;
 	}
-	ImmutableMap<String, String> map = ImmutableMap.of("id", crate.getId() + "", "name", crate.getName(),
-		"X", l.getBlockX() + "", "Y", l.getBlockY() + "", "Z", l.getBlockZ() + "");
+	ImmutableMap<Placeholder, String> map = ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+		Placeholder.X, l.getBlockX() + "", Placeholder.Y, l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 
 	plugin.locationManager.addCrateLocation(l, crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);

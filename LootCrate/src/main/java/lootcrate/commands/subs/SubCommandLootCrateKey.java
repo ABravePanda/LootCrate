@@ -11,6 +11,7 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateKey;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
+import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.interfaces.SubCommand;
 
@@ -57,7 +58,7 @@ public class SubCommandLootCrateKey implements SubCommand
 	if (crate == null)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
-		    ImmutableMap.of("id", "" + CommandUtils.tryParse(args[1])));
+		    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
 	    return;
 	}
 
@@ -65,7 +66,7 @@ public class SubCommandLootCrateKey implements SubCommand
 	crate.setKey(key);
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_SUCCESS,
-		ImmutableMap.of("name", "" + crate.getName(), "id", "" + crate.getId()));
+		ImmutableMap.of(Placeholder.CRATE_NAME, "" + crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
 	plugin.messageManager.crateNotification(crate, sender);
     }
     
