@@ -16,11 +16,27 @@ public class MessageManager
     private LootCrate plugin;
     private final String PREFIX = "messages.";
 
+    /**
+     * Constructor of MessageManager
+     * 
+     * @param plugin
+     *            Instance of plugin
+     */
     public MessageManager(LootCrate plugin)
     {
 	this.plugin = plugin;
     }
 
+    /**
+     * Sends a message to specified player
+     * 
+     * @param p
+     *            Player to whom shall recieve the message
+     * @param message
+     *            Message to be sent
+     * @param placeholders
+     *            Placeholders to be replaced in message
+     */
     public void sendMessage(CommandSender p, Message message, ImmutableMap<String, String> placeholders)
     {
 	String msg = this.parseMessage(message, placeholders);
@@ -28,6 +44,15 @@ public class MessageManager
 	    p.sendMessage(this.parseMessage(Message.PREFIX, null) + msg);
     }
 
+    /**
+     * Converts all placeholders in message
+     * 
+     * @param message
+     *            Message to be fixed
+     * @param placeholders
+     *            Placeholders to be replaced in message
+     * @return Message with placeholders replaced
+     */
     public String parseMessage(Message message, ImmutableMap<String, String> placeholders)
     {
 	String msg = plugin.getConfig().getString(PREFIX + message.getKey());
@@ -46,12 +71,21 @@ public class MessageManager
 	}
 	return colorMsg;
     }
-    
+
+    /**
+     * Sends a notification that crate is not complete
+     * 
+     * @param crate
+     *            Referenced crate
+     * @param sender
+     *            Whom shall receive the message
+     */
     public void crateNotification(Crate crate, CommandSender sender)
     {
-	if(crate.getChanceCount() != 100)
+	if (crate.getChanceCount() != 100)
 	{
-	    this.sendMessage(sender, Message.LOOTCRATE_CHANCE_NOT_100, ImmutableMap.of("id", "" + crate.getId(), "name", crate.getName(), "ChanceTotal", "" + crate.getChanceCount()));
+	    this.sendMessage(sender, Message.LOOTCRATE_CHANCE_NOT_100, ImmutableMap.of("id", "" + crate.getId(), "name",
+		    crate.getName(), "ChanceTotal", "" + crate.getChanceCount()));
 	}
     }
 }

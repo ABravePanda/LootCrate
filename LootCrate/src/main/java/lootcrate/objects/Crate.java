@@ -87,7 +87,9 @@ public class Crate
     
     public void addItem(CrateItem item)
     {
+	System.out.println(getItems().size());
 	getItems().add(item);
+	System.out.println(getItems().size());
     }
     
     public CrateItem getItem(int id)

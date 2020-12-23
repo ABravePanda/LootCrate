@@ -67,7 +67,11 @@ public class LootCrateInteractEvent implements Listener
 		    // if they clicked w/same item as key && they match
 		    
 		    if (crate.getKey() == null)
+		    {
+			messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
+				ImmutableMap.of("name", crate.getName()));
 			return;
+		    }
 		    if (crate.getItems().size() == 0)
 			return;
 

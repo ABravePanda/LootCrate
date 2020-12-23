@@ -13,11 +13,12 @@ import lootcrate.LootCrate;
 import lootcrate.commands.subs.SubCommandLootCrateAdd;
 import lootcrate.commands.subs.SubCommandLootCrateCommand;
 import lootcrate.commands.subs.SubCommandLootCrateCreate;
-import lootcrate.commands.subs.SubCommandLootCrateGet;
+import lootcrate.commands.subs.SubCommandLootCrateSet;
 import lootcrate.commands.subs.SubCommandLootCrateItems;
 import lootcrate.commands.subs.SubCommandLootCrateKey;
+import lootcrate.commands.subs.SubCommandLootCrateReload;
 import lootcrate.commands.subs.SubCommandLootCrateRemove;
-import lootcrate.commands.subs.SubCommandLootCrateSet;
+import lootcrate.commands.subs.SubCommandLootCrateGet;
 import lootcrate.managers.CrateManager;
 import lootcrate.managers.LocationManager;
 import lootcrate.managers.MessageManager;
@@ -67,26 +68,32 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args[0].equalsIgnoreCase("create"))
 		new SubCommandLootCrateCreate(plugin, sender, args);
 
-	    if (args[0].equalsIgnoreCase("key"))
+	    else if (args[0].equalsIgnoreCase("key"))
 		new SubCommandLootCrateKey(plugin, sender, args);
 
-	    if (args[0].equalsIgnoreCase("add"))
+	    else if (args[0].equalsIgnoreCase("add"))
 		new SubCommandLootCrateAdd(plugin, sender, args);
 
-	    if (args[0].equalsIgnoreCase("remove"))
+	    else if (args[0].equalsIgnoreCase("remove"))
 		new SubCommandLootCrateRemove(plugin, sender, args);
 
-	    if (args[0].equalsIgnoreCase("items"))
+	    else if (args[0].equalsIgnoreCase("items"))
 		new SubCommandLootCrateItems(plugin, sender, args);
 
-	    if (args[0].equalsIgnoreCase("set"))
+	    else if (args[0].equalsIgnoreCase("get"))
+		new SubCommandLootCrateGet(plugin, sender, args);
+
+	    else if (args[0].equalsIgnoreCase("set"))
 		new SubCommandLootCrateSet(plugin, sender, args);
 
-	    if (args[0].equalsIgnoreCase("get"))
-		new SubCommandLootCrateGet(plugin, sender, args);
-		
-	    if (args[0].equalsIgnoreCase("command"))
+	    else if (args[0].equalsIgnoreCase("command"))
 		new SubCommandLootCrateCommand(plugin, sender, args);
+
+	    else if (args[0].equalsIgnoreCase("reload"))
+		new SubCommandLootCrateReload(plugin, sender, args);
+
+	    else
+		messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
 	}
 
 	return false;
@@ -108,6 +115,7 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    list.add("items");
 	    list.add("list");
 	    list.add("command");
+	    list.add("reload");
 	    return list;
 	}
 
@@ -154,7 +162,7 @@ public class LootCrateCommand implements CommandExecutor, TabCompleter
 	    if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		for(Crate crate : crateManager.load())
+		for (Crate crate : crateManager.load())
 		    TabUtils.addCratesToList(list, crateManager);
 	    }
 	    return list;

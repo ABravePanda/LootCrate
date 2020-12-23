@@ -28,6 +28,12 @@ public class CrateManager
     File f;
     FileConfiguration config;
 
+    /**
+     * Constructor for CrateManager
+     * 
+     * @param plugin
+     *            An instance of the plugin
+     */
     public CrateManager(LootCrate plugin)
     {
 	this.plugin = plugin;
@@ -35,6 +41,12 @@ public class CrateManager
 	config = YamlConfiguration.loadConfiguration(f);
     }
 
+    /**
+     * Saves a crate to the proper configuration file
+     * 
+     * @param crate
+     *            The crate you would like to have saved
+     */
     public void save(Crate crate)
     {
 	config.set(PREFIX + crate.getId() + "", crate.serialize());
@@ -42,6 +54,19 @@ public class CrateManager
 	saveFile();
     }
 
+    /**
+     * Reloads the config file
+     */
+    public void reload()
+    {
+	config = YamlConfiguration.loadConfiguration(f);
+    }
+
+    /**
+     * Loads all the crates in the save file
+     * 
+     * @return A list of all crates
+     */
     public List<Crate> load()
     {
 	config = YamlConfiguration.loadConfiguration(f);
@@ -59,6 +84,13 @@ public class CrateManager
 	return crates;
     }
 
+    /**
+     * Retrieves a crate with the relative id
+     * 
+     * @param id
+     *            The id you are looking for
+     * @return The crate with the same id, or null
+     */
     public Crate getCrateById(int id)
     {
 	for (Crate crate : load())
@@ -68,7 +100,16 @@ public class CrateManager
 	}
 	return null;
     }
-    
+
+    /**
+     * Retrieves a crate item within the crate with the id
+     * 
+     * @param crate
+     *            The crate to be searched
+     * @param id
+     *            The id to be compared with
+     * @return The crate with the same id, or null
+     */
     public CrateItem getCrateItemById(Crate crate, int id)
     {
 	for (CrateItem item : crate.getItems())
@@ -79,21 +120,41 @@ public class CrateManager
 	return null;
     }
 
+    /**
+     * Retrieves a random CrateItem from the specified crate
+     * 
+     * @param crate
+     *            The crate wishing to be searched
+     * @return A random CrateItem from the crate
+     */
     public CrateItem getRandomItem(Crate crate)
     {
 	RandomCollection<String> items = new RandomCollection<String>();
-	
-	for(CrateItem item : crate.getItems())
+
+	for (CrateItem item : crate.getItems())
 	    items.add(item.getChance(), item);
 	return items.next();
     }
-    
+
+    /**
+     * Gets a random amount from a crate item
+     * 
+     * @param item
+     *            The CrateItem whos amount you want
+     * @return A random amount between getMinAmount() and getMaxAmount()
+     * @see CrateItem.getMaxAmount()
+     * @see CrateItem.getMinAmount()
+     */
     public int getRandomAmount(CrateItem item)
     {
-	if(item.getMaxAmount() < item.getMinAmount()) return 1;
+	if (item.getMaxAmount() < item.getMinAmount())
+	    return 1;
 	return ThreadLocalRandom.current().nextInt(item.getMinAmount(), item.getMaxAmount() + 1);
     }
 
+    /**
+     * Saves the crate file
+     */
     private void saveFile()
     {
 	try

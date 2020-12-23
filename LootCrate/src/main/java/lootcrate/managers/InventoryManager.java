@@ -20,26 +20,44 @@ public class InventoryManager
 {
 
     LootCrate plugin;
-    
+
+    /**
+     * Constructor for InventoryManager
+     * 
+     * @param plugin
+     *            An instance of the plugin
+     */
     public InventoryManager(LootCrate plugin)
     {
 	this.plugin = plugin;
     }
-    
+
+    /**
+     * Opens the crate inventory for specified player
+     * 
+     * @param p
+     *            Players who will view the inventory
+     * @param crate
+     *            Crate which should be opened
+     */
     public void openCrateInventory(Player p, Crate crate)
     {
-	if(isInInventory(p)) return;
-	
+	if (isInInventory(p))
+	    return;
+
 	Inventory inv = Bukkit.createInventory(null, crate.getItems().size() > 26 ? 54 : 27, crate.getName());
-	if(crate.getItems().size() > 54) return;
+
+	if (crate.getItems().size() > 54)
+	    return;
+
 	List<CrateItem> items = crate.getItems();
 	Collections.sort(items);
-	for(CrateItem item : items)
+	for (CrateItem item : items)
 	{
 	    item = ObjUtils.assignRandomIDToItem(plugin, item);
 	    ItemStack itemStack = item.getItem().clone();
 	    ItemMeta meta = itemStack.getItemMeta();
-	    
+
 	    List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
 	    lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Chance: " + ChatColor.RED + item.getChance() + "%");
 	    meta.setLore(lore);
@@ -49,14 +67,28 @@ public class InventoryManager
 	plugin.playersInInventory.add(p);
 	p.openInventory(inv);
     }
-    
+
+    /**
+     * Closes the inventory of specified player
+     * 
+     * @param p
+     *            Player whos inventory will be closed
+     */
     public void closeCrateInventory(Player p)
     {
-	if(!isInInventory(p)) return;
+	if (!isInInventory(p))
+	    return;
 	plugin.playersInInventory.remove(p);
 	p.closeInventory();
     }
-    
+
+    /**
+     * Checks if a player is viewing an inventory
+     * 
+     * @param p
+     *            Player to check if inventory is open or not
+     * @return If inventory is open
+     */
     public boolean isInInventory(Player p)
     {
 	return plugin.playersInInventory.contains(p);

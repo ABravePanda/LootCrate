@@ -3,6 +3,7 @@ package lootcrate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,6 +57,12 @@ public class LootCrate extends JavaPlugin
     {
 	new LootCrateCommand(this);
 	new MetaCommand(this);
+    }
+    
+    public void reload()
+    {
+	crateManager.reload();
+	locationManager.reload();
     }
 
 }

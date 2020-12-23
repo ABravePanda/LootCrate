@@ -17,26 +17,51 @@ import lootcrate.objects.Crate;
 
 public class LocationManager
 {
-    
+
     private Map<Location, Crate> locationList = new LinkedHashMap<Location, Crate>();
-    
+
     LootCrate plugin;
     String locationPrefix = "locations.";
     File f;
     FileConfiguration config;
+
+    /**
+     * Constructor for LocationManager
+     * 
+     * @param plugin
+     *            Instance of plugin
+     */
     public LocationManager(LootCrate plugin)
     {
 	this.plugin = plugin;
 	f = new File(plugin.getDataFolder(), File.separator + "locations.yml");
 	config = YamlConfiguration.loadConfiguration(f);
     }
-    
-   
-    
+
+    /**
+     * Reloads the config and repopulates location list
+     */
+    public void reload()
+    {
+	config = YamlConfiguration.loadConfiguration(f);
+	populateLocations();
+    }
+
+    /**
+     * Adds a crate to location list/file
+     * 
+     * @param l
+     *            Location to be added
+     * @param crate
+     *            Crate to be added
+     */
     public void addCrateLocation(Location l, Crate crate)
     {
 	locationList.put(l, crate);
 	UUID randomUUID = UUID.randomUUID();
+	String uuid = findUUIDByLocation(l);
+	if (uuid != null)
+	    randomUUID = UUID.fromString(uuid);
 	config.set(randomUUID + ".Crate", crate.getId());
 	config.set(randomUUID + ".Location", l.serialize());
 	try
@@ -47,14 +72,22 @@ public class LocationManager
 	    e.printStackTrace();
 	}
     }
-    
+
+    /**
+     * Removes crate from list/file
+     * 
+     * @param l
+     *            Location to be removed
+     */
     public void removeCrateLocation(Location l)
     {
 	config = YamlConfiguration.loadConfiguration(f);
 	String uuid = findUUIDByLocation(l);
-	if(uuid == null) return;
+	if (uuid == null)
+	    return;
 	config.set(uuid, null);
-	locationList.remove(l);
+	if (locationList.containsKey(l))
+	    locationList.remove(l);
 	try
 	{
 	    config.save(f);
@@ -64,30 +97,55 @@ public class LocationManager
 	    e.printStackTrace();
 	}
     }
-    
+
+    /**
+     * Returns the locations uuid as specified by the file
+     * 
+     * @param l
+     *            Location to be searched
+     * @return UUID of the location or null
+     */
     public String findUUIDByLocation(Location l)
     {
-	for(String s : config.getKeys(false))
+	for (String s : config.getKeys(false))
 	{
 	    MemorySection section = (MemorySection) config.get(s);
-	    Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")), (double) section.get("Location.x"), (double) section.get("Location.y"), (double) section.get("Location.z"));
-	    if(l.equals(loc)) return s;
+	    if (section.get("Location") == null)
+		continue;
+	    Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")),
+		    (double) section.get("Location.x"), (double) section.get("Location.y"),
+		    (double) section.get("Location.z"));
+	    if (l.equals(loc))
+		return s;
 	}
 	return null;
     }
-    
+
+    /**
+     * Populates the location file
+     */
     public void populateLocations()
     {
-	for(String s : config.getKeys(false))
+	locationList.clear();
+	for (String s : config.getKeys(false))
 	{
 	    MemorySection section = (MemorySection) config.get(s);
-	    Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")), (double) section.get("Location.x"), (double) section.get("Location.y"), (double) section.get("Location.z"));
+	    Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")),
+		    (double) section.get("Location.x"), (double) section.get("Location.y"),
+		    (double) section.get("Location.z"));
 	    Crate crate = plugin.crateManager.getCrateById(section.getInt("Crate"));
-	    if(crate == null || loc == null) continue;
+	    if (crate == null || loc == null)
+		continue;
+	    System.out.println(loc + "->" + crate);
 	    locationList.put(loc, crate);
 	}
     }
-    
+
+    /**
+     * Returns the location list
+     * 
+     * @return location list of all locations and crates
+     */
     public Map<Location, Crate> getLocationList()
     {
 	return locationList;
