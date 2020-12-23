@@ -15,7 +15,8 @@ public enum Placeholder
     ITEM_MIN_AMOUNT("item_min_amount"),
     ITEM_COMMANDS("item_commands"),
     X("X"), Y("Y"), Z("Z"),
-    TOTAL_CRATE_CHANCE("crate_total_chance");
+    TOTAL_CRATE_CHANCE("crate_total_chance"),
+    ENCHANTMENT_NAME("enchantment_name");
 
     String key;
     

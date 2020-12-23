@@ -16,6 +16,7 @@ messages:
     dispatch-command-item-time: true
     command-no-permission: "&cYou have no permission to do this."
     lootcrate-interact-no-permission: "&cYou do not have permission to interact with &e{crate_name}&c."
+    inventory-full: "&cYour inventory is full!"
     # {crate_name} - Name of crate
     must-be-player: "&cYou must be a player to do this."
     must-be-console: "&cYou must be the console to do this."
@@ -36,6 +37,8 @@ messages:
     lootcrate-item-not-found: "&cThe item &e#{item_id} &cin LootCrate with the id &e#{crate_id}&c was not found."
     # {item_id] - Id of item
     # {crate_id} - Id of crate
+    enchantment-not-found: "&cCould not find enchantment &e{enchantment_name}&c."
+    # {enchantment_name} - Name of enchantment
     lootcrate-command-create-usage: "&cUsage: /lootcrate create [name]"
     lootcrate-command-create-success: "&fCreated a LootCrate with the name &e{crate_name}&f. &fReference ID: &e#{crate_id}"
     # {crate_name] - Name of crate

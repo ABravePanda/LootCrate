@@ -23,6 +23,7 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.other.Message;
 import lootcrate.other.Placeholder;
+import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ObjUtils;
 
 public class LootCrateInteractEvent implements Listener
@@ -65,6 +66,8 @@ public class LootCrateInteractEvent implements Listener
 		// if right clicked
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
+		    if (e.getHand() != EquipmentSlot.HAND) return;
+		    
 		    ItemStack item = p.getInventory().getItemInMainHand();
 
 		    // if they clicked w/same item as key && they match
@@ -81,6 +84,11 @@ public class LootCrateInteractEvent implements Listener
 		    if (item.getType().equals(crate.getKey().getItem().getType())
 			    && ObjUtils.doKeysMatch(plugin, item, crate))
 		    {
+			if(InventoryUtils.isFull(p.getInventory()))
+			{
+			    messageManager.sendMessage(p, Message.INVENTORY_FULL, null);
+			    return;
+			}
 			// remove item
 			p.getInventory().getItemInMainHand().setAmount(item.getAmount() - 1);
 			p.updateInventory();

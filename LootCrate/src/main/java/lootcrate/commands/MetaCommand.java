@@ -9,9 +9,12 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.google.common.collect.ImmutableMap;
+
 import lootcrate.LootCrate;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
+import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.ItemUtils;
 import lootcrate.utils.interfaces.Command;
@@ -66,14 +69,27 @@ public class MetaCommand implements Command
 		p.getInventory().setItemInMainHand(ItemUtils.setLore(item, CommandUtils.builder(args, 1).split("\\|")));
 	    else if (args[0].equalsIgnoreCase("enchantment"))
 	    {
-		//if(args.le)
-		if(Enchantment.getByName(args[1]) == null)
+		if (args.length != 3)
 		{
-		   
+		    plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
+		    return;
 		}
-		 item.addUnsafeEnchantment(Enchantment.getByName(args[1]), Integer.parseInt(args[2]));
+		if (Enchantment.getByName(args[1]) == null)
+		{
+		    plugin.messageManager.sendMessage(sender, Message.ENCHANTMENT_NOT_FOUND, ImmutableMap.of(Placeholder.ENCHANTMENT_NAME, args[1]));
+		    return;
+		}
+		if(CommandUtils.tryParse(args[2]) == null)
+		{
+		    plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
+		    return;
+		}
+		
+		item.addUnsafeEnchantment(Enchantment.getByName(args[1]), Integer.parseInt(args[2]));
+		
 	    } else
 		plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
+	    return;
 	} else
 	    plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
 
