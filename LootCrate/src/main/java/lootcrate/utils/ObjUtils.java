@@ -13,15 +13,13 @@ import lootcrate.objects.CrateItem;
 
 public class ObjUtils
 {
-    public static int randomID(int length)
-    {
-	Random r = new Random(System.currentTimeMillis());
-	String idString = "";
-	for(int i = 0; i < length; i++)
-	{
-	    idString+=r.nextInt(10) + "";
-	}
-	return Integer.parseInt(idString);
+    public static int randomID(int length) {
+        int min = (int) Math.pow(10, length - 1);
+        int max = (int) Math.pow(10, length); // bound is exclusive
+
+        Random random = new Random();
+
+        return random.nextInt(max - min) + min;
     }
     
     public static String getRandomString(int length) {
