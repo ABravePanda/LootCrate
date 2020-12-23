@@ -67,6 +67,7 @@ public class MessageManager
 	    for (Map.Entry<String, String> entry : placeholders.entrySet())
 	    {
 		colorMsg = colorMsg.replaceAll("\\{" + entry.getKey() + "\\}", entry.getValue());
+		
 	    }
 	}
 	return colorMsg;
