@@ -3,6 +3,7 @@ package lootcrate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,6 +14,8 @@ import lootcrate.managers.InventoryManager;
 import lootcrate.managers.LocationManager;
 import lootcrate.managers.MessageManager;
 import lootcrate.managers.OptionManager;
+import lootcrate.managers.UpdateManager;
+import net.md_5.bungee.api.ChatColor;
 
 public class LootCrate extends JavaPlugin
 {
@@ -23,13 +26,17 @@ public class LootCrate extends JavaPlugin
     public InventoryManager invManager;
     public CommandManager commandManager;
     public OptionManager optionManager;
+    public UpdateManager updateManager;
     public List<Player> playersInInventory = new ArrayList<Player>();
 
     @Override
     public void onEnable()
     {
+	displayIntro();
 	registerConfig();
 	optionManager = new OptionManager(this);
+	updateManager = new UpdateManager(this);
+	updateManager.checkForUpdates();
 	messageManager = new MessageManager(this);
 	crateManager = new CrateManager(this);
 	locationManager = new LocationManager(this);
@@ -59,6 +66,15 @@ public class LootCrate extends JavaPlugin
     {
 	crateManager.reload();
 	locationManager.reload();
+    }
+    
+    public void displayIntro()
+    {
+	
+	Bukkit.getLogger().info("");
+	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "LootCrate" + ChatColor.GREEN + " v" + this.getDescription().getVersion());
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + this.getServer().getName() + " v" + this.getServer().getBukkitVersion());
+	Bukkit.getLogger().info("");
     }
 
 }

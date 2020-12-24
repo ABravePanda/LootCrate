@@ -1,14 +1,37 @@
-###############################
-#							  #
-# LootCrate 				  #
-#							  #
-# Developed by A_Brave_Panda  #
-#							  #
-###############################
+#+-------------------------------------+
+#|                                     |
+#|              LootCrate              | 
+#|            A_Brave_Panda            |
+#|                                     |
+#+-------------------------------------+
 #
+#
+#+------------------------------+
+#|                              |
+#|           Options            | 
+#|                              |
+#+------------------------------+
+#
+#   Description
+#   option: "value"
+    # value type - example/definition
 
 options:
+    # NO NOT TOUCH || WARNING WARNING || DO NOT TOUCH || WARNING WARNING
+    # Used for updater, this WILL break the plugin if touched
+    resource-id: 1
+    # integer - a whole number (1,2,3,4...)
+
+    #Should the commands on each item be dispatched the amount of times the item is recieved, or once?
     dispatch-command-item-time: true
+    # boolean - true/false
+    
+#+------------------------------+
+#|                              |
+#|          Messages            | 
+#|                              |
+#+------------------------------+
+    
 # Message Key
 # < > = Mandatory, must use at least one option
 # [ ] = Mandatory, must enter some custom input
