@@ -72,7 +72,8 @@ public class CrateManager
 	reload();
 	List<Crate> crates = new ArrayList<Crate>();
 	HashMap<String, Object> map = new HashMap<String, Object>();
-	if(config.getConfigurationSection(PREFIX) == null) return crates;
+	if (config.getConfigurationSection(PREFIX) == null)
+	    return crates;
 	for (String s : config.getConfigurationSection(PREFIX).getKeys(false))
 	{
 	    map.put(s, config.get(PREFIX + s));
@@ -83,6 +84,19 @@ public class CrateManager
 	    crates.add(crate);
 	}
 	return crates;
+    }
+
+    /**
+     * Deletes specified crate
+     * 
+     * @param crate
+     *            Crate to be deleted
+     */
+    public void deleteCrate(Crate crate)
+    {
+	reload();
+	config.set(PREFIX + crate.getId() + "", null);
+	saveFile();
     }
 
     /**

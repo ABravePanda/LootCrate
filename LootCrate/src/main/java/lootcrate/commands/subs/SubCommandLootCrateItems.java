@@ -1,6 +1,7 @@
 package lootcrate.commands.subs;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
+import lootcrate.utils.TabUtils;
 import lootcrate.utils.interfaces.SubCommand;
 
 public class SubCommandLootCrateItems implements SubCommand
@@ -31,7 +33,6 @@ public class SubCommandLootCrateItems implements SubCommand
 	this.plugin = plugin;
 	this.sender = sender;
 	this.args = args;
-	runSubCommand();
     }
 
     @Override
@@ -75,6 +76,19 @@ public class SubCommandLootCrateItems implements SubCommand
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_FORMAT,
 		    ImmutableMap.copyOf(map));
 	}
+    }
+
+    @Override
+    public List<String> runTabComplete()
+    {
+	List<String> list = new LinkedList<String>();
+	if (args.length == 2)
+	    {
+		list.add("[CrateID]");
+		for (Crate crate : plugin.crateManager.load())
+		    TabUtils.addCratesToList(list, plugin.crateManager);
+	    }
+	    return list;
     }
     
     

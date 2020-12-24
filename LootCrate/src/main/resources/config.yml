@@ -107,6 +107,14 @@ messages:
     # {crate_id} - Id of crate
     
     #Usage for command
+    lootcrate-command-delete-usage: "&cUsage: /lootcrate delete [crate id]"
+    
+    #Sent on completion of command
+    lootcrate-command-delete-success: "&Deleted the LootCrate with the name &e{crate_name}&f."
+    # {crate_name] - Name of crate
+    # {crate_id} - Id of crate
+    
+    #Usage for command
     lootcrate-command-key-usage: "&cUsage: /lootcrate key [crate id] [glowing]"
     
     #Sent on completion of command

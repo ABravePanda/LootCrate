@@ -10,6 +10,7 @@ import lootcrate.LootCrate;
 import lootcrate.commands.subs.SubCommandLootCrateAdd;
 import lootcrate.commands.subs.SubCommandLootCrateCommand;
 import lootcrate.commands.subs.SubCommandLootCrateCreate;
+import lootcrate.commands.subs.SubCommandLootCrateDelete;
 import lootcrate.commands.subs.SubCommandLootCrateDisplayChances;
 import lootcrate.commands.subs.SubCommandLootCrateGet;
 import lootcrate.commands.subs.SubCommandLootCrateItems;
@@ -18,7 +19,6 @@ import lootcrate.commands.subs.SubCommandLootCrateReload;
 import lootcrate.commands.subs.SubCommandLootCrateRemove;
 import lootcrate.commands.subs.SubCommandLootCrateSet;
 import lootcrate.commands.subs.SubCommandLootCrateVersion;
-import lootcrate.objects.Crate;
 import lootcrate.other.Message;
 import lootcrate.utils.TabUtils;
 import lootcrate.utils.interfaces.Command;
@@ -54,37 +54,40 @@ public class LootCrateCommand implements Command
 	}
 
 	if (args[0].equalsIgnoreCase("create"))
-	    new SubCommandLootCrateCreate(plugin, sender, args);
+	    new SubCommandLootCrateCreate(plugin, sender, args).runSubCommand();
 
 	else if (args[0].equalsIgnoreCase("key"))
-	    new SubCommandLootCrateKey(plugin, sender, args);
+	    new SubCommandLootCrateKey(plugin, sender, args).runSubCommand();
 
 	else if (args[0].equalsIgnoreCase("add"))
-	    new SubCommandLootCrateAdd(plugin, sender, args);
+	    new SubCommandLootCrateAdd(plugin, sender, args).runSubCommand();
 
 	else if (args[0].equalsIgnoreCase("remove"))
-	    new SubCommandLootCrateRemove(plugin, sender, args);
+	    new SubCommandLootCrateRemove(plugin, sender, args).runSubCommand();
 
 	else if (args[0].equalsIgnoreCase("items"))
-	    new SubCommandLootCrateItems(plugin, sender, args);
+	    new SubCommandLootCrateItems(plugin, sender, args).runSubCommand();
 
 	else if (args[0].equalsIgnoreCase("get"))
-	    new SubCommandLootCrateGet(plugin, sender, args);
+	    new SubCommandLootCrateGet(plugin, sender, args).runSubCommand();
 
 	else if (args[0].equalsIgnoreCase("set"))
-	    new SubCommandLootCrateSet(plugin, sender, args);
+	    new SubCommandLootCrateSet(plugin, sender, args).runSubCommand();
 
 	else if (args[0].equalsIgnoreCase("command"))
-	    new SubCommandLootCrateCommand(plugin, sender, args);
+	    new SubCommandLootCrateCommand(plugin, sender, args).runSubCommand();
 
 	else if (args[0].equalsIgnoreCase("reload"))
-	    new SubCommandLootCrateReload(plugin, sender, args);
-	
+	    new SubCommandLootCrateReload(plugin, sender, args).runSubCommand();
+
 	else if (args[0].equalsIgnoreCase("displaychances"))
-	    new SubCommandLootCrateDisplayChances(plugin, sender, args);
-	
+	    new SubCommandLootCrateDisplayChances(plugin, sender, args).runSubCommand();
+
 	else if (args[0].equalsIgnoreCase("version"))
-	    new SubCommandLootCrateVersion(plugin, sender, args);
+	    new SubCommandLootCrateVersion(plugin, sender, args).runSubCommand();
+	
+	else if (args[0].equalsIgnoreCase("delete"))
+	    new SubCommandLootCrateDelete(plugin, sender, args).runSubCommand();
 
 	else
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
@@ -114,122 +117,33 @@ public class LootCrateCommand implements Command
 
 	list.clear();
 
-	// two arg commands
 	if (args[0].equalsIgnoreCase("create"))
-	{
-	    if (args.length == 2)
-		list.add("[CrateName]");
-	    return list;
-	}
+	    return new SubCommandLootCrateCreate(plugin, sender, args).runTabComplete();
+
 	if (args[0].equalsIgnoreCase("delete"))
-	{
-	    if (args.length == 2)
-	    {
-		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, plugin.crateManager);
-	    }
-	    return list;
-	}
+	    return new SubCommandLootCrateDelete(plugin, sender, args).runTabComplete();
+	
 	if (args[0].equalsIgnoreCase("get"))
-	{
-	    if (args.length == 2)
-	    {
-		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, plugin.crateManager);
-	    }
-	    if (args.length == 3)
-		list.add("(Amount)");
-	    return list;
-	}
+	    return new SubCommandLootCrateGet(plugin, sender, args).runTabComplete();
+
 	if (args[0].equalsIgnoreCase("set"))
-	{
-	    if (args.length == 2)
-	    {
-		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, plugin.crateManager);
-	    }
-	    return list;
-	}
+	    return new SubCommandLootCrateSet(plugin, sender, args).runTabComplete();
+
 	if (args[0].equalsIgnoreCase("items"))
-	{
-	    if (args.length == 2)
-	    {
-		list.add("[CrateID]");
-		for (Crate crate : plugin.crateManager.load())
-		    TabUtils.addCratesToList(list, plugin.crateManager);
-	    }
-	    return list;
-	}
+	    return new SubCommandLootCrateItems(plugin, sender, args).runTabComplete();
 
-	// others
 	if (args[0].equalsIgnoreCase("add"))
-	{
-	    if (args.length == 2)
-	    {
-		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, plugin.crateManager);
-	    }
-	    if (args.length == 3)
-		list.add("[MinimumAmount]");
-	    if (args.length == 4)
-		list.add("[MaximumAmount]");
-	    if (args.length == 5)
-		list.add("[Chance]");
-	    if (args.length == 6)
-	    {
-		list.add("[Is Display]");
-		list.add("true");
-		list.add("false");
-	    }
+	    return new SubCommandLootCrateAdd(plugin, sender, args).runTabComplete();
 
-	    return list;
-	}
 	if (args[0].equalsIgnoreCase("key"))
-	{
-	    if (args.length == 2)
-	    {
-		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, plugin.crateManager);
-	    }
-	    if (args.length == 3)
-	    {
-		list.add("[Is Glowing]");
-		list.add("true");
-		list.add("false");
-	    }
-	    return list;
-	}
+	    return new SubCommandLootCrateKey(plugin, sender, args).runTabComplete();
+
 	if (args[0].equalsIgnoreCase("command"))
-	{
-	    if (args.length == 2)
-	    {
-		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, plugin.crateManager);
-	    }
-	    if (args.length == 3)
-	    {
-		list.add("[ItemID]");
-		TabUtils.addCrateItemsToListFromID(list, plugin.crateManager, Integer.parseInt(args[1]));
-	    }
-	    if (args.length == 4)
-		list.add("[Command] - Use {player} as placeholder");
-	    return list;
-	}
+	    return new SubCommandLootCrateCommand(plugin, sender, args).runTabComplete();
+	
 	if (args[0].equalsIgnoreCase("displaychances"))
-	{
-	    if (args.length == 2)
-	    {
-		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, plugin.crateManager);
-	    }
-	    if (args.length == 3)
-	    {
-		list.add("[Will Display Chances]");
-		list.add("true");
-		list.add("false");
-	    }
-		
-	}
+	    return new SubCommandLootCrateDisplayChances(plugin, sender, args).runTabComplete();
+	
 	return list;
     }
 

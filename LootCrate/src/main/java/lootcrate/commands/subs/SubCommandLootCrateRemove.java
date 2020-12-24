@@ -1,5 +1,7 @@
 package lootcrate.commands.subs;
 
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,7 +29,6 @@ public class SubCommandLootCrateRemove implements SubCommand
 	this.plugin = plugin;
 	this.sender = sender;
 	this.args = args;
-	runSubCommand();
     }
 
     @Override
@@ -70,6 +71,13 @@ public class SubCommandLootCrateRemove implements SubCommand
 		ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(), Placeholder.ITEM_ID,
 			"" + CommandUtils.tryParse(args[2])));
 	plugin.messageManager.crateNotification(crate, sender);
+    }
+
+    @Override
+    public List<String> runTabComplete()
+    {
+	// TODO Auto-generated method stub
+	return null;
     }
     
     

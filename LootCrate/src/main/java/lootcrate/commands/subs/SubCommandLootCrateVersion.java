@@ -1,5 +1,7 @@
 package lootcrate.commands.subs;
 
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -23,7 +25,6 @@ public class SubCommandLootCrateVersion implements SubCommand
 	this.sender = sender;
 	this.args = args;
 	this.updateManager = plugin.updateManager;
-	runSubCommand();
     }
 
     @Override
@@ -50,6 +51,13 @@ public class SubCommandLootCrateVersion implements SubCommand
 	}
 	
 	
+    }
+
+    @Override
+    public List<String> runTabComplete()
+    {
+	// TODO Auto-generated method stub
+	return null;
     }
     
     

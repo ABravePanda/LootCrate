@@ -24,6 +24,7 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.other.Message;
 import lootcrate.other.Option;
+import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ObjUtils;
@@ -62,7 +63,7 @@ public class LootCrateInteractEvent implements Listener
 		Crate crate = crateManager.getCrateById(
 			plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation()).getId());
 
-		if (!p.hasPermission("lootcrate.interact." + crate.getId()))
+		if (!p.hasPermission(Permission.LOOTCRATE_INTERACT.getKey() + crate.getId()))
 		{
 		    messageManager.sendMessage(p, Message.NO_PERMISSION_LOOTCRATE_INTERACT, ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
 		    return;

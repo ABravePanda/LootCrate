@@ -1,5 +1,8 @@
 package lootcrate.commands.subs;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -24,7 +27,6 @@ public class SubCommandLootCrateCreate implements SubCommand
 	this.plugin = plugin;
 	this.sender = sender;
 	this.args = args;
-	runSubCommand();
     }
 
     @Override
@@ -46,6 +48,15 @@ public class SubCommandLootCrateCreate implements SubCommand
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,
 		ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
+    }
+
+    @Override
+    public List<String> runTabComplete()
+    {
+	List<String> list = new LinkedList<String>();
+	if (args.length == 2)
+		list.add("[CrateName]");
+	    return list;
     }
     
     

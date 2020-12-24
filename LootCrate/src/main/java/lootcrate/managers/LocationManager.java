@@ -21,6 +21,7 @@ public class LocationManager
     private Map<Location, Crate> locationList = new LinkedHashMap<Location, Crate>();
 
     LootCrate plugin;
+    CrateManager crateManager;
     String locationPrefix = "locations.";
     File f;
     FileConfiguration config;
@@ -34,6 +35,7 @@ public class LocationManager
     public LocationManager(LootCrate plugin)
     {
 	this.plugin = plugin;
+	this.crateManager = plugin.crateManager;
 	f = new File(plugin.getDataFolder(), File.separator + "locations.yml");
 	config = YamlConfiguration.loadConfiguration(f);
     }
@@ -101,6 +103,31 @@ public class LocationManager
     }
 
     /**
+     * Removes crate from list/file
+     * 
+     * @param crate
+     *            Crate to be removed
+     */
+    public void removeCrateLocation(Crate crate)
+    {
+	reload();
+	config = YamlConfiguration.loadConfiguration(f);
+	String uuid = findUUIDByCrate(crate);
+	if (uuid == null)
+	    return;
+	config.set(uuid, null);
+	try
+	{
+	    config.save(f);
+	} catch (IOException e)
+	{
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	populateLocations();
+    }
+
+    /**
      * Returns the locations uuid as specified by the file
      * 
      * @param l
@@ -121,6 +148,30 @@ public class LocationManager
 		    (double) section.get("Location.x"), (double) section.get("Location.y"),
 		    (double) section.get("Location.z"));
 	    if (l.equals(loc))
+		return s;
+	}
+	return null;
+    }
+
+    /**
+     * Returns the crates uud as specified by file
+     * 
+     * @param crate
+     *            Crate to be searched
+     * @return UUID of the crate or null
+     */
+    public String findUUIDByCrate(Crate crate)
+    {
+	reload();
+	for (String s : config.getKeys(false))
+	{
+	    MemorySection section = (MemorySection) config.get(s);
+	    if (section.get("Crate") == null)
+		continue;
+	    Crate crate2 = crateManager.getCrateById(section.getInt("Crate"));
+	    if (crate2 == null)
+		continue;
+	    if (crate.getId() == crate2.getId())
 		return s;
 	}
 	return null;

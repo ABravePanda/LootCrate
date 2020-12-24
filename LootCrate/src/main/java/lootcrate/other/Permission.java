@@ -4,6 +4,7 @@ public enum Permission
 {
     COMMAND_META("lootcrate.command.meta"),
     COMMAND_LOOTCRATE_CREATE("lootcrate.command.lootcrate.create"),
+    COMMAND_LOOTCRATE_DELETE("lootcrate.command.lootcrate.delete"),
     COMMAND_LOOTCRATE_KEY("lootcrate.command.lootcrate.key"),
     COMMAND_LOOTCRATE_ADD("lootcrate.command.lootcrate.add"),
     COMMAND_LOOTCRATE_REMOVE("lootcrate.command.lootcrate.remove"),
@@ -15,6 +16,7 @@ public enum Permission
     COMMAND_LOOTCRATE_DISPLAYCHANCES("lootcrate.command.lootcrate.displaychances"),
     COMMAND_LOOTCRATE_VERSION("lootcrate.command.lootcrate.version"),
     COMMAND_LOOTCRATE_ADMIN("lootcrate.command.*"),
+    LOOTCRATE_INTERACT("lootcrate.interact."),
     LOOTCRATE_INTERACT_ADMIN("lootcrate.interact.*");
 
     String key;
