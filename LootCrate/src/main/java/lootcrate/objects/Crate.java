@@ -125,10 +125,11 @@ public class Crate
     
     public static List<CrateItem> getDeseralizedItems(MemorySection section)
     {
-	
+	System.out.println("run");
 	List<CrateItem> item = new ArrayList<CrateItem>();
 	for (String s : section.getKeys(false))
 	{
+	    System.out.println(s);
 	    MemorySection itemSection = (MemorySection) section.get(s);
 	    CrateItem item2 = CrateItem.deserialize(itemSection);
 	    item.add(item2);
@@ -166,10 +167,9 @@ public class Crate
 	crate.id = config.getInt(location + ".Id");
 	crate.displayItemChances = config.getBoolean(location + ".DisplayChances");
 	if(config.get(location + ".Items") instanceof ArrayList)
-	    if(config.getList(location + ".Items").size() == 0);
-	else
+	    if(config.getList(location + ".Items").size() != 0);
 	if(config.get(location + ".Items") != null)
-	    crate.items = getDeseralizedItems((MemorySection) config.get(location + ".Items"));
+	    crate.items = Crate.getDeseralizedItems((MemorySection) config.get(location + ".Items"));
 	if(config.get(location + ".Key") != null)
 	    crate.key = CrateKey.deserialize((MemorySection) config.get(location + ".Key"));
 	return crate;
