@@ -2,6 +2,7 @@ name: ${project.name}
 main: lootcrate.LootCrate
 version: ${project.version}
 description: ${project.description}
+softdepend: [HolographicDisplays]
 author: A_Brave_Panda
 api-version: 1.13
 commands:

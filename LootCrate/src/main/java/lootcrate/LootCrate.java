@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import lootcrate.events.LootCrateInteractEvent;
 import lootcrate.managers.CommandManager;
 import lootcrate.managers.CrateManager;
+import lootcrate.managers.HologramManager;
 import lootcrate.managers.InventoryManager;
 import lootcrate.managers.LocationManager;
 import lootcrate.managers.MessageManager;
@@ -27,6 +28,7 @@ public class LootCrate extends JavaPlugin
     public CommandManager commandManager;
     public OptionManager optionManager;
     public UpdateManager updateManager;
+    public HologramManager holoManager;
     public List<Player> playersInInventory = new ArrayList<Player>();
 
     @Override
@@ -42,8 +44,10 @@ public class LootCrate extends JavaPlugin
 	locationManager.populateLocations();
 	invManager = new InventoryManager(this);
 	commandManager = new CommandManager(this);
+	if(holoHook())
+	    holoManager = new HologramManager(this);
 	registerEvents();
-	
+	reload();
     }
 
     @Override
@@ -63,8 +67,12 @@ public class LootCrate extends JavaPlugin
     
     public void reload()
     {
+	
 	crateManager.reload();
 	locationManager.reload();
+	System.out.println(locationManager.getLocationList().size());
+	holoManager.reload();
+	
     }
     
     public void displayIntro()
@@ -74,7 +82,14 @@ public class LootCrate extends JavaPlugin
 	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + this.getServer().getName() + " v" + this.getServer().getBukkitVersion());
 	if(updateManager.checkForUpdates())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion() + "). Download here: " + updateManager.getResourceURL());
+	if(holoHook())
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
 	Bukkit.getLogger().info("");
+    }
+    
+    public boolean holoHook()
+    {
+	return Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays");
     }
 
 }

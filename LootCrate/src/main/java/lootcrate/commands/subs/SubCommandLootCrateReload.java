@@ -39,8 +39,8 @@ public class SubCommandLootCrateReload implements SubCommand
 	    return;
 	}
 
-	plugin.reload();
 	plugin.reloadConfig();
+	plugin.reload();
 
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_RELOAD_SUCCESS, null);
     }

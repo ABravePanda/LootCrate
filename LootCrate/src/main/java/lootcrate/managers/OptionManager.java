@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 
 import com.google.common.collect.ImmutableMap;
@@ -45,10 +46,13 @@ public class OptionManager
 	    return (T) (List) plugin.getConfig().getList(PREFIX + option.getKey());
 	case STRING:
 	    return (T) (String) plugin.getConfig().getString(PREFIX + option.getKey());
+	case MINECRAFT_SOUND:
+	    return (T) Sound.valueOf((String) plugin.getConfig().getString(PREFIX + option.getKey()));
 	default:
 	    return null;
 
 	}
     }
+    
 
 }

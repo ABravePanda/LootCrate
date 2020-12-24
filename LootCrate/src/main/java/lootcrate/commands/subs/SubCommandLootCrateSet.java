@@ -1,21 +1,17 @@
 package lootcrate.commands.subs;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
+import lootcrate.managers.HologramManager;
 import lootcrate.objects.Crate;
-import lootcrate.objects.CrateItem;
-import lootcrate.objects.CrateKey;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
@@ -28,12 +24,14 @@ public class SubCommandLootCrateSet implements SubCommand
     private String[] args;
     private CommandSender sender;
     private LootCrate plugin;
+    private HologramManager holoManager;
     
     public SubCommandLootCrateSet(LootCrate plugin, CommandSender sender, String[] args)
     {
 	this.plugin = plugin;
 	this.sender = sender;
 	this.args = args;
+	this.holoManager = plugin.holoManager;
     }
 
     @Override
@@ -80,6 +78,11 @@ public class SubCommandLootCrateSet implements SubCommand
 		Placeholder.X, l.getBlockX() + "", Placeholder.Y, l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 
 	plugin.locationManager.addCrateLocation(l, crate);
+	
+	//create hologram
+	if(plugin.holoHook())
+	    holoManager.createHologram(l.getBlock(), crate);
+	
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
     }
 

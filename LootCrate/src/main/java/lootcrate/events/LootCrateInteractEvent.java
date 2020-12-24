@@ -99,8 +99,9 @@ public class LootCrateInteractEvent implements Listener
 			p.updateInventory();
 
 			// play sound
-			p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 0.5f, 1f);
-
+			if((Sound) optionManager.valueOf(Option.CRATE_OPEN_SOUND) != null)
+			    p.playSound(p.getLocation(), (Sound) optionManager.valueOf(Option.CRATE_OPEN_SOUND), 0.5f, 1f);
+			
 			// notify
 			messageManager.sendMessage(p, Message.LOOTCRATE_OPEN, ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
 

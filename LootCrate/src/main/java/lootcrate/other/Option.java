@@ -3,7 +3,12 @@ package lootcrate.other;
 public enum Option
 {
     DISPATCH_COMMAND_ITEM_AMOUNT("dispatch-command-item-time", DataType.BOOLEAN),
-    RESOURCE_ID("resource-id", DataType.INTEGER);
+    RESOURCE_ID("resource-id", DataType.INTEGER),
+    HOLOGRAM_LIST("hologram-lines", DataType.LIST),
+    HOLOGRAM_OFFSET_X("hologram-offset-x", DataType.DOUBLE),
+    HOLOGRAM_OFFSET_Y("hologram-offset-y", DataType.DOUBLE),
+    HOLOGRAM_OFFSET_Z("hologram-offset-z", DataType.DOUBLE),
+    CRATE_OPEN_SOUND("sound-crate-open", DataType.MINECRAFT_SOUND);
     
     String key;
     DataType type;
