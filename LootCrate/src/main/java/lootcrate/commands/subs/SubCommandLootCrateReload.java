@@ -20,7 +20,7 @@ public class SubCommandLootCrateReload implements SubCommand
     private String[] args;
     private CommandSender sender;
     private LootCrate plugin;
-    
+
     public SubCommandLootCrateReload(LootCrate plugin, CommandSender sender, String[] args)
     {
 	this.plugin = plugin;
@@ -32,19 +32,16 @@ public class SubCommandLootCrateReload implements SubCommand
     @Override
     public void runSubCommand()
     {
-	Player p = (Player) sender;
-	
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_ADD.getKey()))
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_RELOAD.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
-	}	
-	
+	}
+
 	plugin.reload();
 	plugin.reloadConfig();
-	
+
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_RELOAD_SUCCESS, null);
     }
-    
-    
+
 }

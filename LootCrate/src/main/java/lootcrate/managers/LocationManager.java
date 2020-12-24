@@ -71,6 +71,7 @@ public class LocationManager
 	{
 	    e.printStackTrace();
 	}
+	reload();
     }
 
     /**
@@ -81,6 +82,7 @@ public class LocationManager
      */
     public void removeCrateLocation(Location l)
     {
+	reload();
 	config = YamlConfiguration.loadConfiguration(f);
 	String uuid = findUUIDByLocation(l);
 	if (uuid == null)
@@ -107,10 +109,13 @@ public class LocationManager
      */
     public String findUUIDByLocation(Location l)
     {
+	reload();
 	for (String s : config.getKeys(false))
 	{
 	    MemorySection section = (MemorySection) config.get(s);
 	    if (section.get("Location") == null)
+		continue;
+	    if (Bukkit.getWorld((String) section.get("Location.world")) == null)
 		continue;
 	    Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")),
 		    (double) section.get("Location.x"), (double) section.get("Location.y"),

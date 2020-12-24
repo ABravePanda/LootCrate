@@ -32,14 +32,14 @@ public class SubCommandLootCrateCreate implements SubCommand
     {
 	Player p = (Player) sender;
 	
-	if (args.length <= 1)
-	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_USAGE, null);
-	    return;
-	}
 	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_CREATE.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
+	    return;
+	}
+	if (args.length <= 1)
+	{
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_USAGE, null);
 	    return;
 	}
 	Crate crate = new Crate(CommandUtils.builder(args, 1));

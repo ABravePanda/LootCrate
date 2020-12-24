@@ -69,9 +69,10 @@ public class CrateManager
      */
     public List<Crate> load()
     {
-	config = YamlConfiguration.loadConfiguration(f);
+	reload();
 	List<Crate> crates = new ArrayList<Crate>();
 	HashMap<String, Object> map = new HashMap<String, Object>();
+	if(config.getConfigurationSection(PREFIX) == null) return crates;
 	for (String s : config.getConfigurationSection(PREFIX).getKeys(false))
 	{
 	    map.put(s, config.get(PREFIX + s));

@@ -19,9 +19,11 @@ import lootcrate.LootCrate;
 import lootcrate.managers.CrateManager;
 import lootcrate.managers.InventoryManager;
 import lootcrate.managers.MessageManager;
+import lootcrate.managers.OptionManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.other.Message;
+import lootcrate.other.Option;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ObjUtils;
@@ -32,6 +34,7 @@ public class LootCrateInteractEvent implements Listener
     MessageManager messageManager;
     CrateManager crateManager;
     InventoryManager invManager;
+    OptionManager optionManager;
 
     public LootCrateInteractEvent(LootCrate plugin)
     {
@@ -39,6 +42,7 @@ public class LootCrateInteractEvent implements Listener
 	this.messageManager = plugin.messageManager;
 	this.crateManager = plugin.crateManager;
 	this.invManager = plugin.invManager;
+	this.optionManager = plugin.optionManager;
     }
 
     @EventHandler
@@ -47,6 +51,7 @@ public class LootCrateInteractEvent implements Listener
 	Player p = e.getPlayer();
 	if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_BLOCK)
 	{
+	    if (e.getHand() != EquipmentSlot.HAND) return;
 	    // if the player clicked on a lootcrate
 	    if (plugin.locationManager.getLocationList().containsKey(e.getClickedBlock().getLocation()))
 	    {
@@ -66,7 +71,6 @@ public class LootCrateInteractEvent implements Listener
 		// if right clicked
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
-		    if (e.getHand() != EquipmentSlot.HAND) return;
 		    
 		    ItemStack item = p.getInventory().getItemInMainHand();
 
@@ -113,8 +117,7 @@ public class LootCrateInteractEvent implements Listener
 
 			for (String cmd : crateItem.getCommands())
 			{
-			    if (Boolean.parseBoolean(
-				    messageManager.parseMessage(Message.DISPATCH_COMMAND_ITEM_AMOUNT, null)))
+			    if (optionManager.valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
 				i = rnd;
 			    for (int j = 0; j < i; j++)
 				Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(),
@@ -130,10 +133,7 @@ public class LootCrateInteractEvent implements Listener
 
 		// if left clicked
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK)
-		{
-		    if (e.getHand() == EquipmentSlot.HAND)
 			invManager.openCrateInventory(p, crate);
-		}
 	    }
 	}
     }

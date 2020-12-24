@@ -35,14 +35,14 @@ public class SubCommandLootCrateRemove implements SubCommand
     {
 	Player p = (Player) sender;
 	
-	if (args.length <= 2)
-	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_REMOVE_USAGE, null);
-	    return;
-	}
 	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_REMOVE.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
+	    return;
+	}
+	if (args.length <= 2)
+	{
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_REMOVE_USAGE, null);
 	    return;
 	}
 	if (CommandUtils.tryParse(args[1]) == null || CommandUtils.tryParse(args[2]) == null)

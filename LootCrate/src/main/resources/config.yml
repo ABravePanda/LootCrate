@@ -11,9 +11,12 @@
 # [ ] = Mandatory, must enter some custom input
 # ( ) = Optional,  may or may not enter some input
 # { } = Placeholder
+options:
+    dispatch-command-item-time: true
+    display-chance: true
 messages:
     prefix: "&e&lLOOTCRATE &r"
-    dispatch-command-item-time: true
+    
     command-no-permission: "&cYou have no permission to do this."
     lootcrate-interact-no-permission: "&cYou do not have permission to interact with &e{crate_name}&c."
     inventory-full: "&cYour inventory is full!"

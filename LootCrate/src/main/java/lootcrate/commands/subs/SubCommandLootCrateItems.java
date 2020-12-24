@@ -39,14 +39,14 @@ public class SubCommandLootCrateItems implements SubCommand
     {
 	Player p = (Player) sender;
 	
-	if (args.length != 2)
-	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_USAGE, null);
-	    return;
-	}
 	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_ITEMS.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
+	    return;
+	}
+	if (args.length != 2)
+	{
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_USAGE, null);
 	    return;
 	}
 	if (CommandUtils.tryParse(args[1]) == null)

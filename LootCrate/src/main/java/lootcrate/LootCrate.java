@@ -12,6 +12,7 @@ import lootcrate.managers.CrateManager;
 import lootcrate.managers.InventoryManager;
 import lootcrate.managers.LocationManager;
 import lootcrate.managers.MessageManager;
+import lootcrate.managers.OptionManager;
 
 public class LootCrate extends JavaPlugin
 {
@@ -21,12 +22,14 @@ public class LootCrate extends JavaPlugin
     public LocationManager locationManager;
     public InventoryManager invManager;
     public CommandManager commandManager;
+    public OptionManager optionManager;
     public List<Player> playersInInventory = new ArrayList<Player>();
 
     @Override
     public void onEnable()
     {
 	registerConfig();
+	optionManager = new OptionManager(this);
 	messageManager = new MessageManager(this);
 	crateManager = new CrateManager(this);
 	locationManager = new LocationManager(this);

@@ -34,53 +34,52 @@ public class LootCrateCommand implements Command
 	this.args = args;
 	this.sender = sender;
     }
-    
+
     @Override
     public void executeCommand()
     {
-	 if (!(sender instanceof Player))
-	    {
-		plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
-		return;
-	    }
+	if (!(sender instanceof Player) && args.length == 1 ? !args[0].equalsIgnoreCase("reload") ? true : false
+		: false)
+	{
+	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
+	    return;
+	}
 
-	    Player p = (Player) sender;
+	if (args.length == 0)
+	{
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
+	    return;
+	}
 
-	    if (args.length == 0)
-	    {
-		plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
-		return;
-	    }
+	if (args[0].equalsIgnoreCase("create"))
+	    new SubCommandLootCrateCreate(plugin, sender, args);
 
-	    if (args[0].equalsIgnoreCase("create"))
-		new SubCommandLootCrateCreate(plugin, sender, args);
+	else if (args[0].equalsIgnoreCase("key"))
+	    new SubCommandLootCrateKey(plugin, sender, args);
 
-	    else if (args[0].equalsIgnoreCase("key"))
-		new SubCommandLootCrateKey(plugin, sender, args);
+	else if (args[0].equalsIgnoreCase("add"))
+	    new SubCommandLootCrateAdd(plugin, sender, args);
 
-	    else if (args[0].equalsIgnoreCase("add"))
-		new SubCommandLootCrateAdd(plugin, sender, args);
+	else if (args[0].equalsIgnoreCase("remove"))
+	    new SubCommandLootCrateRemove(plugin, sender, args);
 
-	    else if (args[0].equalsIgnoreCase("remove"))
-		new SubCommandLootCrateRemove(plugin, sender, args);
+	else if (args[0].equalsIgnoreCase("items"))
+	    new SubCommandLootCrateItems(plugin, sender, args);
 
-	    else if (args[0].equalsIgnoreCase("items"))
-		new SubCommandLootCrateItems(plugin, sender, args);
+	else if (args[0].equalsIgnoreCase("get"))
+	    new SubCommandLootCrateGet(plugin, sender, args);
 
-	    else if (args[0].equalsIgnoreCase("get"))
-		new SubCommandLootCrateGet(plugin, sender, args);
+	else if (args[0].equalsIgnoreCase("set"))
+	    new SubCommandLootCrateSet(plugin, sender, args);
 
-	    else if (args[0].equalsIgnoreCase("set"))
-		new SubCommandLootCrateSet(plugin, sender, args);
+	else if (args[0].equalsIgnoreCase("command"))
+	    new SubCommandLootCrateCommand(plugin, sender, args);
 
-	    else if (args[0].equalsIgnoreCase("command"))
-		new SubCommandLootCrateCommand(plugin, sender, args);
+	else if (args[0].equalsIgnoreCase("reload"))
+	    new SubCommandLootCrateReload(plugin, sender, args);
 
-	    else if (args[0].equalsIgnoreCase("reload"))
-		new SubCommandLootCrateReload(plugin, sender, args);
-
-	    else
-		plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
+	else
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
     }
 
     @Override

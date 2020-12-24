@@ -13,6 +13,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
+import lootcrate.other.Message;
+import lootcrate.other.Option;
 import lootcrate.utils.ObjUtils;
 import net.md_5.bungee.api.ChatColor;
 
@@ -20,6 +22,8 @@ public class InventoryManager
 {
 
     LootCrate plugin;
+    MessageManager manager;
+    OptionManager optionManager;
 
     /**
      * Constructor for InventoryManager
@@ -30,6 +34,8 @@ public class InventoryManager
     public InventoryManager(LootCrate plugin)
     {
 	this.plugin = plugin;
+	manager = plugin.messageManager;
+	optionManager = plugin.optionManager;
     }
 
     /**
@@ -56,12 +62,15 @@ public class InventoryManager
 	{
 	    item = ObjUtils.assignRandomIDToItem(plugin, item);
 	    ItemStack itemStack = item.getItem().clone();
-	    ItemMeta meta = itemStack.getItemMeta();
+	    if (optionManager.valueOf(Option.DISPLAY_CHANCE))
+	    {
+		ItemMeta meta = itemStack.getItemMeta();
 
-	    List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
-	    lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Chance: " + ChatColor.RED + item.getChance() + "%");
-	    meta.setLore(lore);
-	    itemStack.setItemMeta(meta);
+		List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
+		lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Chance: " + ChatColor.RED + item.getChance() + "%");
+		meta.setLore(lore);
+		itemStack.setItemMeta(meta);
+	    }
 	    inv.addItem(itemStack);
 	}
 	plugin.playersInInventory.add(p);

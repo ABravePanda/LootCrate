@@ -16,7 +16,7 @@ public class Crate
     private String name;
     private CrateKey key;
     private List<CrateItem> items;
-    private int chanceCount;
+    private boolean displayItemChances = true;
     
     public Crate(String name, CrateKey key, List<CrateItem> items)
     {
@@ -24,10 +24,7 @@ public class Crate
 	this.setName(name);
 	this.setKey(key);
 	if(items != null)
-	{
 	    this.setItems(items);
-	    this.setChanceCount(0);   
-	}
 	else
 	    this.setItems(new ArrayList<CrateItem>());
     }
@@ -149,11 +146,6 @@ public class Crate
     {
 	return calculateChances();
     }
-
-    public void setChanceCount(int chanceCount)
-    {
-	this.chanceCount = chanceCount;
-    }
     
     public Map<String, Object> serialize()
     {
@@ -161,6 +153,7 @@ public class Crate
 	
 	map.put("Id", getId());
 	map.put("Name", getName());
+	map.put("DisplayChances", isDisplayItemChances());
 	map.put("Key", getKey() != null ? getKey().serialize() : null);
 	map.put("Items", getSeralizedItems());
 	
@@ -171,16 +164,25 @@ public class Crate
     {
 	Crate crate = new Crate(config.getString(location + ".Name"));
 	crate.id = config.getInt(location + ".Id");
+	crate.displayItemChances = config.getBoolean(location + ".DisplayChances");
 	if(config.get(location + ".Items") instanceof ArrayList)
-	{
 	    if(config.getList(location + ".Items").size() == 0);
-	}
 	else
 	if(config.get(location + ".Items") != null)
 	    crate.items = getDeseralizedItems((MemorySection) config.get(location + ".Items"));
 	if(config.get(location + ".Key") != null)
 	    crate.key = CrateKey.deserialize((MemorySection) config.get(location + ".Key"));
 	return crate;
+    }
+
+    public boolean isDisplayItemChances()
+    {
+	return displayItemChances;
+    }
+
+    public void setDisplayItemChances(boolean displayItemChances)
+    {
+	this.displayItemChances = displayItemChances;
     }
 
 }

@@ -39,7 +39,6 @@ public enum Message
     MESSAGE_COMMAND_FORMAT("message-command-format"),
     MESSAGE_COMMAND_USAGE("message-command-usage"),
     LOOTCRATE_OPEN("lootcrate-open"),
-    DISPATCH_COMMAND_ITEM_AMOUNT("dispatch-command-item-time"),
     LOOTCRATE_INCORRECT_KEY("lootcrate-wrong-key");
     
     String key;
