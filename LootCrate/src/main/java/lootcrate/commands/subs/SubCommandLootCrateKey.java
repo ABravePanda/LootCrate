@@ -34,7 +34,7 @@ public class SubCommandLootCrateKey implements SubCommand
     {
 	Player p = (Player) sender;
 	
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_KEY.getKey()))
+	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_KEY.getKey()) && !p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;

@@ -17,6 +17,7 @@ import lootcrate.commands.subs.SubCommandLootCrateKey;
 import lootcrate.commands.subs.SubCommandLootCrateReload;
 import lootcrate.commands.subs.SubCommandLootCrateRemove;
 import lootcrate.commands.subs.SubCommandLootCrateSet;
+import lootcrate.commands.subs.SubCommandLootCrateVersion;
 import lootcrate.objects.Crate;
 import lootcrate.other.Message;
 import lootcrate.utils.TabUtils;
@@ -81,6 +82,9 @@ public class LootCrateCommand implements Command
 	
 	else if (args[0].equalsIgnoreCase("displaychances"))
 	    new SubCommandLootCrateDisplayChances(plugin, sender, args);
+	
+	else if (args[0].equalsIgnoreCase("version"))
+	    new SubCommandLootCrateVersion(plugin, sender, args);
 
 	else
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
@@ -104,6 +108,7 @@ public class LootCrateCommand implements Command
 	    list.add("command");
 	    list.add("reload");
 	    list.add("displaychances");
+	    list.add("version");
 	    return list;
 	}
 

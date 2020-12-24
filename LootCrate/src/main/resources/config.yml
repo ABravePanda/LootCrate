@@ -195,6 +195,9 @@ messages:
     #Usage for command
     lootcrate-command-command-usage: "&cUsage: /lootcrate displaychances [crate id] [display chances]"
     
+    #Usage for command
+    lootcrate-command-version-usage: "&cUsage: /lootcrate version"
+    
     #Sent on completion of command
     lootcrate-command-reload-success: "&aPlugin has been reloaded."
     
