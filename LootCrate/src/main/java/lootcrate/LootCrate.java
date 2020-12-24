@@ -32,11 +32,10 @@ public class LootCrate extends JavaPlugin
     @Override
     public void onEnable()
     {
-	displayIntro();
 	registerConfig();
 	optionManager = new OptionManager(this);
 	updateManager = new UpdateManager(this);
-	updateManager.checkForUpdates();
+	displayIntro();
 	messageManager = new MessageManager(this);
 	crateManager = new CrateManager(this);
 	locationManager = new LocationManager(this);
@@ -70,10 +69,11 @@ public class LootCrate extends JavaPlugin
     
     public void displayIntro()
     {
-	
 	Bukkit.getLogger().info("");
 	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "LootCrate" + ChatColor.GREEN + " v" + this.getDescription().getVersion());
 	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + this.getServer().getName() + " v" + this.getServer().getBukkitVersion());
+	if(updateManager.checkForUpdates())
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion() + "). Download here: " + updateManager.getResourceURL());
 	Bukkit.getLogger().info("");
     }
 
