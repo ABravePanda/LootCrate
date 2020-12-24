@@ -125,11 +125,9 @@ public class Crate
     
     public static List<CrateItem> getDeseralizedItems(MemorySection section)
     {
-	System.out.println("run");
 	List<CrateItem> item = new ArrayList<CrateItem>();
 	for (String s : section.getKeys(false))
 	{
-	    System.out.println(s);
 	    MemorySection itemSection = (MemorySection) section.get(s);
 	    CrateItem item2 = CrateItem.deserialize(itemSection);
 	    item.add(item2);

@@ -2,7 +2,6 @@ package lootcrate.other;
 
 public enum Option
 {
-    DISPLAY_CHANCE("display-chance", DataType.BOOLEAN),
     DISPATCH_COMMAND_ITEM_AMOUNT("dispatch-command-item-time", DataType.BOOLEAN);
     
     String key;

@@ -62,7 +62,7 @@ public class InventoryManager
 	{
 	    item = ObjUtils.assignRandomIDToItem(plugin, item);
 	    ItemStack itemStack = item.getItem().clone();
-	    if (optionManager.valueOf(Option.DISPLAY_CHANCE))
+	    if (crate.isDisplayItemChances())
 	    {
 		ItemMeta meta = itemStack.getItemMeta();
 
