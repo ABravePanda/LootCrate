@@ -10,6 +10,7 @@ import lootcrate.LootCrate;
 import lootcrate.commands.subs.SubCommandLootCrateAdd;
 import lootcrate.commands.subs.SubCommandLootCrateCommand;
 import lootcrate.commands.subs.SubCommandLootCrateCreate;
+import lootcrate.commands.subs.SubCommandLootCrateDisplayChances;
 import lootcrate.commands.subs.SubCommandLootCrateGet;
 import lootcrate.commands.subs.SubCommandLootCrateItems;
 import lootcrate.commands.subs.SubCommandLootCrateKey;
@@ -77,6 +78,9 @@ public class LootCrateCommand implements Command
 
 	else if (args[0].equalsIgnoreCase("reload"))
 	    new SubCommandLootCrateReload(plugin, sender, args);
+	
+	else if (args[0].equalsIgnoreCase("displaychances"))
+	    new SubCommandLootCrateDisplayChances(plugin, sender, args);
 
 	else
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
@@ -99,6 +103,7 @@ public class LootCrateCommand implements Command
 	    list.add("list");
 	    list.add("command");
 	    list.add("reload");
+	    list.add("displaychances");
 	    return list;
 	}
 
@@ -166,7 +171,12 @@ public class LootCrateCommand implements Command
 	    if (args.length == 5)
 		list.add("[Chance]");
 	    if (args.length == 6)
-		list.add("[IsDisplay]");
+	    {
+		list.add("[Is Display]");
+		list.add("true");
+		list.add("false");
+	    }
+
 	    return list;
 	}
 	if (args[0].equalsIgnoreCase("key"))
@@ -177,7 +187,11 @@ public class LootCrateCommand implements Command
 		TabUtils.addCratesToList(list, plugin.crateManager);
 	    }
 	    if (args.length == 3)
-		list.add("[IsGlowing]");
+	    {
+		list.add("[Is Glowing]");
+		list.add("true");
+		list.add("false");
+	    }
 	    return list;
 	}
 	if (args[0].equalsIgnoreCase("command"))
@@ -195,6 +209,21 @@ public class LootCrateCommand implements Command
 	    if (args.length == 4)
 		list.add("[Command] - Use {player} as placeholder");
 	    return list;
+	}
+	if (args[0].equalsIgnoreCase("displaychances"))
+	{
+	    if (args.length == 2)
+	    {
+		list.add("[CrateID]");
+		TabUtils.addCratesToList(list, plugin.crateManager);
+	    }
+	    if (args.length == 3)
+	    {
+		list.add("[Will Display Chances]");
+		list.add("true");
+		list.add("false");
+	    }
+		
 	}
 	return list;
     }

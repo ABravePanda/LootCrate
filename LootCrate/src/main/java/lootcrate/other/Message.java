@@ -36,6 +36,8 @@ public enum Message
     LOOTCRATE_COMMAND_COMMAND_USAGE("lootcrate-command-command-usage"),
     LOOTCRATE_COMMAND_COMMAND_SUCCESS("lootcrate-command-command-success"),
     LOOTCRATE_COMMAND_RELOAD_SUCCESS("lootcrate-command-reload-success"),
+    LOOTCRATE_COMMAND_DISPLAY_SUCCESS("lootcrate-command-displaychances-success"),
+    LOOTCRATE_COMMAND_DISPLAY_USAGE("lootcrate-command-displaychances-usage"),
     MESSAGE_COMMAND_FORMAT("message-command-format"),
     MESSAGE_COMMAND_USAGE("message-command-usage"),
     LOOTCRATE_OPEN("lootcrate-open"),
