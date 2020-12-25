@@ -83,7 +83,7 @@ public class LootCrateInteractEvent implements Listener
 		    {
 			messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
 				ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, crate.getId() + ""));
-			PlayerUtils.knockBackPlayer(optionManager, p);
+			PlayerUtils.knockBackPlayer(crate, p);
 			return;
 		    }
 		    if (crate.getItems().size() == 0)
@@ -132,7 +132,7 @@ public class LootCrateInteractEvent implements Listener
 		    {
 			messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
 				ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
-			PlayerUtils.knockBackPlayer(optionManager, p);
+			PlayerUtils.knockBackPlayer(crate, p);
 			return;
 		    }
 		}

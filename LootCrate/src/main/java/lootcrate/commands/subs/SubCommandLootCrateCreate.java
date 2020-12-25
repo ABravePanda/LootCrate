@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
+import lootcrate.other.CrateOptionType;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
@@ -45,6 +46,8 @@ public class SubCommandLootCrateCreate implements SubCommand
 	    return;
 	}
 	Crate crate = new Crate(CommandUtils.builder(args, 1));
+	crate.addOption(CrateOptionType.KNOCK_BACK, 1.0D);
+	crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,
 		ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));

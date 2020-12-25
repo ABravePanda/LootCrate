@@ -3,13 +3,15 @@ package lootcrate.utils;
 import org.bukkit.entity.Player;
 
 import lootcrate.managers.OptionManager;
+import lootcrate.objects.Crate;
+import lootcrate.other.CrateOptionType;
 import lootcrate.other.Option;
 
 public class PlayerUtils
 {
-    public static void knockBackPlayer(OptionManager manager, Player p)
+    public static void knockBackPlayer(Crate crate, Player p)
     {
-	if(manager.valueOf(Option.CRATE_KNOCKBACK))
-	    p.setVelocity(p.getLocation().getDirection().multiply(-(double) manager.valueOf(Option.CRATE_KNOCKBACK_POWER)));
+	if(crate.getOption(CrateOptionType.KNOCK_BACK) != null)
+	    p.setVelocity(p.getLocation().getDirection().multiply(-(double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue()));
     }
 }

@@ -1,6 +1,7 @@
 package lootcrate.objects;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import lootcrate.other.CrateOptionType;
 import lootcrate.utils.ObjUtils;
 
 public class Crate
@@ -16,9 +18,9 @@ public class Crate
     private String name;
     private CrateKey key;
     private List<CrateItem> items;
-    private boolean displayItemChances = true;
+    private Map<CrateOptionType, Object> options;
     
-    public Crate(String name, CrateKey key, List<CrateItem> items)
+    public Crate(String name, CrateKey key, List<CrateItem> items, Map<CrateOptionType, Object> options)
     {
 	this.setId(ObjUtils.randomID(3));
 	this.setName(name);
@@ -27,6 +29,11 @@ public class Crate
 	    this.setItems(items);
 	else
 	    this.setItems(new ArrayList<CrateItem>());
+	if(options != null)
+	    this.setOptions(options);
+	else
+	    this.setOptions(new HashMap<CrateOptionType, Object>());
+	    
     }
     
     public Crate(String name)
@@ -35,6 +42,7 @@ public class Crate
 	this.setName(name);
 	this.setKey(null);
 	this.setItems(new ArrayList<CrateItem>());
+	this.setOptions(new HashMap<CrateOptionType, Object>());
     }
     
     private int calculateChances()
@@ -152,7 +160,7 @@ public class Crate
 	
 	map.put("Id", getId());
 	map.put("Name", getName());
-	map.put("DisplayChances", isDisplayItemChances());
+	map.put("Options", getSeralizedOptions());
 	map.put("Key", getKey() != null ? getKey().serialize() : null);
 	map.put("Items", getSeralizedItems());
 	
@@ -163,24 +171,67 @@ public class Crate
     {
 	Crate crate = new Crate(config.getString(location + ".Name"));
 	crate.id = config.getInt(location + ".Id");
-	crate.displayItemChances = config.getBoolean(location + ".DisplayChances");
 	if(config.get(location + ".Items") instanceof ArrayList)
 	    if(config.getList(location + ".Items").size() != 0);
 	if(config.get(location + ".Items") != null)
 	    crate.items = Crate.getDeseralizedItems((MemorySection) config.get(location + ".Items"));
 	if(config.get(location + ".Key") != null)
 	    crate.key = CrateKey.deserialize((MemorySection) config.get(location + ".Key"));
+	if(config.get(location + ".Options") != null)
+	    crate.options = Crate.getDeseralizedOptions((MemorySection) config.get(location + ".Options"));
+	System.out.println(config.get(location + ".Options"));
 	return crate;
     }
 
-    public boolean isDisplayItemChances()
+    public Map<CrateOptionType, Object> getOptions()
     {
-	return displayItemChances;
+	return options;
+    }
+    
+    public Map<String, Object> getSeralizedOptions()
+    {
+	Map<String, Object> map = new LinkedHashMap<String, Object>();
+	for(CrateOptionType type : getOptions().keySet())
+	{
+	    map.put(type.getKey(), getOptions().get(type));
+	}
+	return map;
+    }
+    
+    public static Map<CrateOptionType, Object> getDeseralizedOptions(MemorySection section)
+    {
+	Map<CrateOptionType, Object> item = new HashMap<CrateOptionType, Object>();
+	for (String s : section.getKeys(false))
+	{
+	    CrateOptionType type = CrateOptionType.fromKey(s);
+	    Object value = section.get(s);
+	    item.put(type, value);
+	}
+	return item;
     }
 
-    public void setDisplayItemChances(boolean displayItemChances)
+    public void setOptions(Map<CrateOptionType, Object> options)
     {
-	this.displayItemChances = displayItemChances;
+	this.options = options;
+    }
+    
+    public void addOption(CrateOptionType key, Object value)
+    {
+	getOptions().put(key, value);
+    }
+    
+    public CrateOption getOption(CrateOptionType type)
+    {
+	if(getOptions().containsKey(type))
+	    return new CrateOption(type, getOptions().get(type));
+	return null;
+    }
+    
+    public void setOption(CrateOption option)
+    {
+	if(getOptions().containsKey(option.getKey()))
+	    getOptions().remove(option.getKey());
+	getOptions().put(option.getKey(), option.getValue());
     }
 
 }

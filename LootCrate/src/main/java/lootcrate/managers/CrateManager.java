@@ -20,6 +20,7 @@ import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.RandomCollection;
+import lootcrate.other.CrateOptionType;
 
 public class CrateManager
 {

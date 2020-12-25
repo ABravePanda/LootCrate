@@ -13,6 +13,8 @@ import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateKey;
+import lootcrate.objects.CrateOption;
+import lootcrate.other.CrateOptionType;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
@@ -63,7 +65,7 @@ public class SubCommandLootCrateDisplayChances implements SubCommand
 	    return;
 	}
 
-	crate.setDisplayItemChances(Boolean.parseBoolean(args[2]));
+	crate.setOption(new CrateOption(CrateOptionType.DISPLAY_CHANCES, Boolean.parseBoolean(args[2])));
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_DISPLAY_SUCCESS,
 		ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),

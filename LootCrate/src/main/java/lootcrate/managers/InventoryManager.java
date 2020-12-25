@@ -13,6 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
+import lootcrate.other.CrateOptionType;
 import lootcrate.other.Message;
 import lootcrate.other.Option;
 import lootcrate.utils.ObjUtils;
@@ -62,7 +63,7 @@ public class InventoryManager
 	{
 	    item = ObjUtils.assignRandomIDToItem(plugin, item);
 	    ItemStack itemStack = item.getItem().clone();
-	    if (crate.isDisplayItemChances())
+	    if ((boolean) crate.getOption(CrateOptionType.DISPLAY_CHANCES).getValue())
 	    {
 		ItemMeta meta = itemStack.getItemMeta();
 
