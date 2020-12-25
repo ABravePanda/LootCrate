@@ -4,7 +4,8 @@ public enum Placeholder
 {
     MESSAGE("message"),
     PLAYER("player"),
-    PLAYER_NAME("player_name"), 
+    PLAYER_NAME("player_name"),
+    SENDER_NAME("sender_name"),
     CRATE_NAME("crate_name"),
     CRATE_ID("crate_id"),
     ITEM_TYPE("item_type"),

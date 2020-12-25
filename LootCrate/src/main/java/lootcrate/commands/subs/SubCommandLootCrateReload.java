@@ -33,7 +33,7 @@ public class SubCommandLootCrateReload implements SubCommand
     @Override
     public void runSubCommand()
     {
-	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_RELOAD.getKey()) && !sender.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey()))
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_RELOAD.getKey()) && !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;

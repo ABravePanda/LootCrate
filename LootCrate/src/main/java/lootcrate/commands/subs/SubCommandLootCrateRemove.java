@@ -1,5 +1,6 @@
 package lootcrate.commands.subs;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -16,6 +17,7 @@ import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
+import lootcrate.utils.TabUtils;
 import lootcrate.utils.interfaces.SubCommand;
 
 public class SubCommandLootCrateRemove implements SubCommand
@@ -36,7 +38,7 @@ public class SubCommandLootCrateRemove implements SubCommand
     {
 	Player p = (Player) sender;
 	
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_REMOVE.getKey()) && !p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey()))
+	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_REMOVE.getKey()) && !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
@@ -76,8 +78,24 @@ public class SubCommandLootCrateRemove implements SubCommand
     @Override
     public List<String> runTabComplete()
     {
-	// TODO Auto-generated method stub
-	return null;
+List<String> list = new LinkedList<String>();
+	
+	Player p = (Player) sender;
+	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_REMOVE.getKey())
+		&& !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
+	    return list;
+	
+	if (args.length == 2)
+	{
+	    list.add("[CrateID]");
+	    TabUtils.addCratesToList(list, plugin.crateManager);
+	}
+	if (args.length == 3)
+	{
+	    list.add("[ItemID]");
+	    TabUtils.addCrateItemsToListFromID(list, plugin.crateManager, Integer.parseInt(args[1]));
+	}
+	return list;
     }
     
     

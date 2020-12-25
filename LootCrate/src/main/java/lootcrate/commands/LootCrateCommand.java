@@ -12,7 +12,7 @@ import lootcrate.commands.subs.SubCommandLootCrateCommand;
 import lootcrate.commands.subs.SubCommandLootCrateCreate;
 import lootcrate.commands.subs.SubCommandLootCrateDelete;
 import lootcrate.commands.subs.SubCommandLootCrateDisplayChances;
-import lootcrate.commands.subs.SubCommandLootCrateGet;
+import lootcrate.commands.subs.SubCommandLootCrateGive;
 import lootcrate.commands.subs.SubCommandLootCrateItems;
 import lootcrate.commands.subs.SubCommandLootCrateKey;
 import lootcrate.commands.subs.SubCommandLootCrateReload;
@@ -20,7 +20,7 @@ import lootcrate.commands.subs.SubCommandLootCrateRemove;
 import lootcrate.commands.subs.SubCommandLootCrateSet;
 import lootcrate.commands.subs.SubCommandLootCrateVersion;
 import lootcrate.other.Message;
-import lootcrate.utils.TabUtils;
+import lootcrate.other.Permission;
 import lootcrate.utils.interfaces.Command;
 
 public class LootCrateCommand implements Command
@@ -68,8 +68,8 @@ public class LootCrateCommand implements Command
 	else if (args[0].equalsIgnoreCase("items"))
 	    new SubCommandLootCrateItems(plugin, sender, args).runSubCommand();
 
-	else if (args[0].equalsIgnoreCase("get"))
-	    new SubCommandLootCrateGet(plugin, sender, args).runSubCommand();
+	else if (args[0].equalsIgnoreCase("give"))
+	    new SubCommandLootCrateGive(plugin, sender, args).runSubCommand();
 
 	else if (args[0].equalsIgnoreCase("set"))
 	    new SubCommandLootCrateSet(plugin, sender, args).runSubCommand();
@@ -99,19 +99,19 @@ public class LootCrateCommand implements Command
 	List<String> list = new LinkedList<String>();
 	if (args.length == 1)
 	{
-	    list.add("create");
-	    list.add("delete");
-	    list.add("add");
-	    list.add("remove");
-	    list.add("set");
-	    list.add("get");
-	    list.add("key");
-	    list.add("items");
-	    list.add("list");
-	    list.add("command");
-	    list.add("reload");
-	    list.add("displaychances");
-	    list.add("version");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_CREATE)) list.add("create");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_DELETE)) list.add("delete");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_ADD)) list.add("add");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_REMOVE)) list.add("remove");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_SET)) list.add("set");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_GIVE)) list.add("give");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_KEY)) list.add("key");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_ITEMS)) list.add("items");
+	    //if(hasPermission(sender, Permission.)) list.add("list");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_COMMAND)) list.add("command");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_RELOAD)) list.add("reload");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES)) list.add("displaychances");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_VERSION)) list.add("version");
 	    return list;
 	}
 
@@ -123,8 +123,8 @@ public class LootCrateCommand implements Command
 	if (args[0].equalsIgnoreCase("delete"))
 	    return new SubCommandLootCrateDelete(plugin, sender, args).runTabComplete();
 	
-	if (args[0].equalsIgnoreCase("get"))
-	    return new SubCommandLootCrateGet(plugin, sender, args).runTabComplete();
+	if (args[0].equalsIgnoreCase("give"))
+	    return new SubCommandLootCrateGive(plugin, sender, args).runTabComplete();
 
 	if (args[0].equalsIgnoreCase("set"))
 	    return new SubCommandLootCrateSet(plugin, sender, args).runTabComplete();
@@ -137,6 +137,9 @@ public class LootCrateCommand implements Command
 
 	if (args[0].equalsIgnoreCase("key"))
 	    return new SubCommandLootCrateKey(plugin, sender, args).runTabComplete();
+	
+	if (args[0].equalsIgnoreCase("remove"))
+	    return new SubCommandLootCrateRemove(plugin, sender, args).runTabComplete();
 
 	if (args[0].equalsIgnoreCase("command"))
 	    return new SubCommandLootCrateCommand(plugin, sender, args).runTabComplete();
@@ -145,6 +148,11 @@ public class LootCrateCommand implements Command
 	    return new SubCommandLootCrateDisplayChances(plugin, sender, args).runTabComplete();
 	
 	return list;
+    }
+    
+    public boolean hasPermission(CommandSender sender, Permission permission)
+    {
+	return sender.hasPermission(permission.getKey()) || sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey());
     }
 
 }

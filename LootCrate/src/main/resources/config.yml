@@ -92,7 +92,7 @@ messages:
     # {crate_total_chance} - Total of all crate item chances
     
     #Usage for /lootcrate
-    lootcrate-command-basic-usage: "&cUsage: /lootcrate <create | delete | key | set | add | remove | get | items | list | reload>"
+    lootcrate-command-basic-usage: "&cUsage: /lootcrate <create | delete | key | set | add | remove | give | items | list | reload>"
     
     #Sent when lootcate cannot be found
     lootcrate-not-found: "&cThe LootCrate with the id &e#{crate_id}&c was not found."
@@ -194,12 +194,20 @@ messages:
     # {Z] - Z cord of position
     
     #Usage for command
-    lootcrate-command-get-usage: "&cUsage: /lootcrate get [crate id] (amount)"
+    lootcrate-command-give-usage: "&cUsage: /lootcrate give [player name] [crate id] (amount)"
     
-    #Sent on completion of command
-    lootcrate-command-get-success: "&fYou have received the key for the LootCrate &e{crate_name}&f."
+    #Sent on completion of command to receiver of key
+    lootcrate-command-give-success-to-receiver: "&fYou have received the key for the LootCrate &e{crate_name}&f."
     # {crate_name] - Name of crate
     # {crate_id} - Id of crate
+    # {sender_name} - Name of whoever sent the key
+    
+    #Sent on completion of command to sender of key
+    lootcrate-command-give-success-to-sender: "&fYou have sent the key for the LootCrate &e{crate_name}&f to &e{player_name}&f."
+    # {crate_name] - Name of crate
+    # {crate_id} - Id of crate
+    # {player_name} - Name of whoever received the key
+    
     
     #Usage for command
     lootcrate-command-command-usage: "&cUsage: /lootcrate command [crate id] [item id] [command]"

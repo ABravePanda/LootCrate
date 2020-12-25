@@ -70,7 +70,6 @@ public class LootCrate extends JavaPlugin
 	
 	crateManager.reload();
 	locationManager.reload();
-	System.out.println(locationManager.getLocationList().size());
 	holoManager.reload();
 	
     }

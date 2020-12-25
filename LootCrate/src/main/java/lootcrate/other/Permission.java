@@ -10,7 +10,7 @@ public enum Permission
     COMMAND_LOOTCRATE_REMOVE("lootcrate.command.lootcrate.remove"),
     COMMAND_LOOTCRATE_ITEMS("lootcrate.command.lootcrate.items"),
     COMMAND_LOOTCRATE_SET("lootcrate.command.lootcrate.set"),
-    COMMAND_LOOTCRATE_GET("lootcrate.command.lootcrate.get"),
+    COMMAND_LOOTCRATE_GIVE("lootcrate.command.lootcrate.give"),
     COMMAND_LOOTCRATE_COMMAND("lootcrate.command.lootcrate.command"),
     COMMAND_LOOTCRATE_RELOAD("lootcrate.command.lootcrate.reload"),
     COMMAND_LOOTCRATE_DISPLAYCHANCES("lootcrate.command.lootcrate.displaychances"),
