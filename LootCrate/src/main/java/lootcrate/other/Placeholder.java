@@ -8,6 +8,8 @@ public enum Placeholder
     SENDER_NAME("sender_name"),
     CRATE_NAME("crate_name"),
     CRATE_ID("crate_id"),
+    CRATE_ITEM_COUNT("crate_item_count"),
+    CRATE_KEY_TYPE("crate_key_type"),
     ITEM_TYPE("item_type"),
     ITEM_NAME("item_name"),
     ITEM_ID("item_id"),

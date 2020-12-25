@@ -8,7 +8,9 @@ public enum Option
     HOLOGRAM_OFFSET_X("hologram-offset-x", DataType.DOUBLE),
     HOLOGRAM_OFFSET_Y("hologram-offset-y", DataType.DOUBLE),
     HOLOGRAM_OFFSET_Z("hologram-offset-z", DataType.DOUBLE),
-    CRATE_OPEN_SOUND("sound-crate-open", DataType.MINECRAFT_SOUND);
+    CRATE_OPEN_SOUND("sound-crate-open", DataType.MINECRAFT_SOUND),
+    CRATE_KNOCKBACK("crate-knockback", DataType.BOOLEAN),
+    CRATE_KNOCKBACK_POWER("crate-knockback-power", DataType.DOUBLE);
     
     String key;
     DataType type;

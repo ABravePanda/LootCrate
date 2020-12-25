@@ -31,7 +31,7 @@ options:
       - "{crate_name}"
       - "&8Right-Click&7 to Unlock"
       - "&8Left-Click&7 to View"
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     
     #Offset of hologram position
@@ -43,6 +43,12 @@ options:
     #Sound played when crate is open
     #Sound List: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
     sound-crate-open: "UI_TOAST_CHALLENGE_COMPLETE"
+    
+    #Should knockback effect be played when attempting to open a crate?
+    crate-knockback: true
+    
+    #If knockback is true, how powerful?
+    crate-knockback-power: 5
     
 #+------------------------------+
 #|                              |
@@ -85,9 +91,12 @@ messages:
     #Sent to player if command requires them to hold an item
     must-be-holding-item: "&cYou must be holding an item in your main hand!"
     
+    #Sent to player when attempting to place a lootkey
+    cannot-place-lootkey: "&cYou cannot place a Loot Key."
+    
     #Sent to player if crate items total chance doesn't equal 100%
     lootcrate-chance-not-100: "&4Error: &cThe items in the LootCrate &e{crate_name} &conly total &e{crate_total_chance}&c."
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     # {crate_total_chance} - Total of all crate item chances
     
@@ -100,7 +109,7 @@ messages:
     
     #Sent when lootcrate has no key or it cannot be found
     key-not-found: "&cThe key for the LootCrate &e{crate_name}&c was not found."
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     
     #Sent when player cannot be found
@@ -109,7 +118,7 @@ messages:
     
     #Sent when item in lootcrate cannot be found
     lootcrate-item-not-found: "&cThe item &e#{item_id} &cin LootCrate with the id &e#{crate_id}&c was not found."
-    # {item_id] - Id of item
+    # {item_id} - Id of item
     # {crate_id} - Id of crate
     
     #Sent when specified enchantment could not be found
@@ -121,7 +130,7 @@ messages:
     
     #Sent on completion of command
     lootcrate-command-create-success: "&fCreated a LootCrate with the name &e{crate_name}&f. &fReference ID: &e#{crate_id}"
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     
     #Usage for command
@@ -129,7 +138,7 @@ messages:
     
     #Sent on completion of command
     lootcrate-command-delete-success: "&fDeleted the LootCrate with the name &e{crate_name}&f."
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     
     #Usage for command
@@ -137,7 +146,7 @@ messages:
     
     #Sent on completion of command
     lootcrate-command-key-success: "&fAdded a key to the LootCrate with the name &e{crate_name}&f."
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     
     #Usage for command
@@ -148,9 +157,9 @@ messages:
     
     #Sent on completion of command
     lootcrate-command-add-success: "&fAdded &e{item_type}&f to the LootCrate with the name &e{crate_name}&f. The item's id is &e#{item_id}&f."
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
-    # {item_id] - Id of item
+    # {item_id} - Id of item
     # {item_type} - Type of item
     # {item_name} - Name of item
     
@@ -159,52 +168,62 @@ messages:
     
     #Sent on completion of command
     lootcrate-command-remove-success: "&fRemoved item &e#{item_id}&f from the LootCrate with the name &e{crate_name}&f."
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
-    # {item_id] - Id of item
+    # {item_id} - Id of item
     
     #Usage for command
     lootcrate-command-items-usage: "&cUsage: /lootcrate items [crate id]"
     
     #Format of lootcrate items when being listed to player
-    lootcrate-command-items-format: "&7#{item_id} | &fType: &e{item_type}&f | Name: &e{item_name}&f | MinAmount: &e{item_min_amount}&f | MaxAmount: &e{item_max_amount}&f | Chance: &e{item_chance}&f | Commands: &e{item_commands}&f"
-    # {item_id] - Id of item
-    # {item_type] - Type of item
-    # {item_name] - Name of item
-    # {item_min_amount] - Min amount of item
-    # {item_max_amount] - Max amount of item
-    # {item_chance] - Chance of item
-    # {item_commands] - Amount of commands of item
+    lootcrate-command-items-format: "&7#{item_id}&f | Type: &e{item_type}&f | Name: &e{item_name}&f | MinAmount: &e{item_min_amount}&f | MaxAmount: &e{item_max_amount}&f | Chance: &e{item_chance}&f | Commands: &e{item_commands}&f"
+    # {item_id} - Id of item
+    # {item_type} - Type of item
+    # {item_name} - Name of item
+    # {item_min_amount} - Min amount of item
+    # {item_max_amount} - Max amount of item
+    # {item_chance} - Chance of item
+    # {item_commands} - Amount of commands of item
+    
+    #Usage for command
+    lootcrate-command-list-usage: "&cUsage: /lootcrate list"
+    
+    #Format of lootcrates when being listed to player
+    lootcrate-command-list-format: "&7#{crate_id}&f | Name: &e{crate_name}&f | Item Count: &e{crate_item_count}&f | Key Type: &e{crate_key_type}&f"
+    # {crate_id} - Id of crate
+    # {crate_name} - Name of crate
+    # {crate_item_count} - Count of items in crates
+    # {crate_key_type} - Type of material key is
     
     #Usage for command
     lootcrate-command-set-usage: "&cUsage: /lootcrate set [crate id]"
     
     #Sent on completion of command
     lootcrate-command-set-success: "&fSet &e{X}, {Y}, {Z} &fas a location for the LootCrate &e{crate_name}&f."
-    # {crate_id] - Id of crate
-    # {crate_name] - Name of crate
-    # {X] - X cord of position
-    # {Y] - Y cord of position
-    # {Z] - Z cord of position
+    # {crate_id} - Id of crate
+    # {crate_name} - Name of crate
+    # {X} - X cord of position
+    # {Y} - Y cord of position
+    # {Z} - Z cord of position
     
     #Sent on completion of command
     lootcrate-command-set-remove-success: "&fRemoved &e{X}, {Y}, {Z} &fas a LootCrate location."
-    # {X] - X cord of position
-    # {Y] - Y cord of position
-    # {Z] - Z cord of position
+    # {X} - X cord of position
+    # {Y} - Y cord of position
+    # {Z} - Z cord of position
     
     #Usage for command
     lootcrate-command-give-usage: "&cUsage: /lootcrate give [player name] [crate id] (amount)"
     
     #Sent on completion of command to receiver of key
     lootcrate-command-give-success-to-receiver: "&fYou have received the key for the LootCrate &e{crate_name}&f."
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     # {sender_name} - Name of whoever sent the key
     
     #Sent on completion of command to sender of key
     lootcrate-command-give-success-to-sender: "&fYou have sent the key for the LootCrate &e{crate_name}&f to &e{player_name}&f."
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     # {player_name} - Name of whoever received the key
     
@@ -214,7 +233,7 @@ messages:
     
     #Sent on completion of command
     lootcrate-command-command-success: "&fYou have added a command to Item &e#{item_id} for the LootCrate &e{crate_name}&f."
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     # {item_id} - Id of item
     # {item_type} - Type of item
@@ -222,7 +241,7 @@ messages:
     
     #Sent on completion of command
     lootcrate-command-displaychances-success: "&fYou have updated &e{crate_name}&f's option to display chances to: &e{value}&f"
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     # {value} - Value entered (true/false)
     
@@ -244,8 +263,8 @@ messages:
     
     #Sebt when player is opening a loot crate
     lootcrate-open: "&aOpening LootCrate &e{crate_name}"
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     
     lootcrate-wrong-key: "&cThis is the wrong key to open the LootCrate &e{crate_name}"
-    # {crate_name] - Name of crate
+    # {crate_name} - Name of crate
     # {crate_id} - Id of crate

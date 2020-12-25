@@ -13,6 +13,7 @@ public enum Permission
     COMMAND_LOOTCRATE_GIVE("lootcrate.command.lootcrate.give"),
     COMMAND_LOOTCRATE_COMMAND("lootcrate.command.lootcrate.command"),
     COMMAND_LOOTCRATE_RELOAD("lootcrate.command.lootcrate.reload"),
+    COMMAND_LOOTCRATE_LIST("lootcrate.command.lootcrate.list"),
     COMMAND_LOOTCRATE_DISPLAYCHANCES("lootcrate.command.lootcrate.displaychances"),
     COMMAND_LOOTCRATE_VERSION("lootcrate.command.lootcrate.version"),
     COMMAND_LOOTCRATE_ADMIN("lootcrate.command.*"),

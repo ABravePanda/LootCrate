@@ -15,6 +15,7 @@ import lootcrate.commands.subs.SubCommandLootCrateDisplayChances;
 import lootcrate.commands.subs.SubCommandLootCrateGive;
 import lootcrate.commands.subs.SubCommandLootCrateItems;
 import lootcrate.commands.subs.SubCommandLootCrateKey;
+import lootcrate.commands.subs.SubCommandLootCrateList;
 import lootcrate.commands.subs.SubCommandLootCrateReload;
 import lootcrate.commands.subs.SubCommandLootCrateRemove;
 import lootcrate.commands.subs.SubCommandLootCrateSet;
@@ -88,6 +89,9 @@ public class LootCrateCommand implements Command
 	
 	else if (args[0].equalsIgnoreCase("delete"))
 	    new SubCommandLootCrateDelete(plugin, sender, args).runSubCommand();
+	
+	else if (args[0].equalsIgnoreCase("list"))
+	    new SubCommandLootCrateList(plugin, sender, args).runSubCommand();
 
 	else
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);

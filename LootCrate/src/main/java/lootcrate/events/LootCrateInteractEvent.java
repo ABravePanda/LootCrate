@@ -28,6 +28,7 @@ import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ObjUtils;
+import lootcrate.utils.PlayerUtils;
 
 public class LootCrateInteractEvent implements Listener
 {
@@ -50,6 +51,8 @@ public class LootCrateInteractEvent implements Listener
     public void onPlayerInteractEvent(PlayerInteractEvent e)
     {
 	Player p = e.getPlayer();
+	
+	
 	if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_BLOCK)
 	{
 	    if (e.getHand() != EquipmentSlot.HAND) return;
@@ -72,15 +75,15 @@ public class LootCrateInteractEvent implements Listener
 		// if right clicked
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
-		    
 		    ItemStack item = p.getInventory().getItemInMainHand();
 
 		    // if they clicked w/same item as key && they match
 
-		    if (crate.getKey() == null)
+		    if (crate.getKey() == null || item == null)
 		    {
 			messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
 				ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, crate.getId() + ""));
+			PlayerUtils.knockBackPlayer(optionManager, p);
 			return;
 		    }
 		    if (crate.getItems().size() == 0)
@@ -129,6 +132,7 @@ public class LootCrateInteractEvent implements Listener
 		    {
 			messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
 				ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
+			PlayerUtils.knockBackPlayer(optionManager, p);
 			return;
 		    }
 		}
@@ -136,6 +140,14 @@ public class LootCrateInteractEvent implements Listener
 		// if left clicked
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK)
 			invManager.openCrateInventory(p, crate);
+	    }
+	    else
+	    {
+		if(ObjUtils.isKey(plugin, p.getInventory().getItemInMainHand()))
+		{
+		    e.setCancelled(true);
+		    messageManager.sendMessage(p, Message.CANNOT_PLACE_LOOTKEY, null);
+		}
 	    }
 	}
     }

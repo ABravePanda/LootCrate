@@ -64,4 +64,14 @@ public class ObjUtils
 	if(meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) != crate.getId()) return false;
 	return true;
     }
+    
+    public static boolean isKey(LootCrate plugin, ItemStack item)
+    {
+	NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
+	ItemMeta meta = item.getItemMeta();
+	if(meta == null) return false;
+	if(meta.getPersistentDataContainer() == null) return false;
+	if(meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == null) return false;
+	return true;
+    }
 }
