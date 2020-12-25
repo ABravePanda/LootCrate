@@ -66,7 +66,7 @@ public class LootCrateInteractEvent implements Listener
 		Crate crate = crateManager.getCrateById(
 			plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation()).getId());
 
-		if (!p.hasPermission(Permission.LOOTCRATE_INTERACT.getKey() + crate.getId()))
+		if (!p.hasPermission(Permission.LOOTCRATE_INTERACT.getKey() + crate.getId()) && !p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey()))
 		{
 		    messageManager.sendMessage(p, Message.NO_PERMISSION_LOOTCRATE_INTERACT, ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
 		    return;
