@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.tompkins-development.spigot</groupId>
    <artifactId>LootCrate</artifactId>
-   <version>BETA-0.1.0</version>
+   <version>BETA-0.1.1</version>
    <name>LootCrate</name>
    <description>A plugin to add lootcrates</description>
    <repositories>
@@ -13,34 +13,41 @@
          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
       </repository>
       <repository>
-    <id>codemc-repo</id>
-    <url>https://repo.codemc.io/repository/maven-public/</url>
-</repository>
+         <id>CodeMC</id>
+         <url>https://repo.codemc.org/repository/maven-public</url>
+      </repository>
+      <repository>
+         <id>codemc-repo</id>
+         <url>https://repo.codemc.io/repository/maven-public/</url>
+      </repository>
    </repositories>
    <dependencies>
       <!--This adds the Spigot API artifact to the build -->
       <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.16.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+         <groupId>org.spigotmc</groupId>
+         <artifactId>spigot</artifactId>
+         <version>1.16.4-R0.1-SNAPSHOT</version>
+         <scope>provided</scope>
+      </dependency>
       <dependency>
          <groupId>junit</groupId>
          <artifactId>junit</artifactId>
          <version>4.12</version>
          <type>jar</type>
          <scope>test</scope>
-         
       </dependency>
-      
       <dependency>
-    <groupId>com.gmail.filoghost.holographicdisplays</groupId>
-    <artifactId>holographicdisplays-api</artifactId>
-    <version>2.4.5</version>
-    <scope>provided</scope>
-</dependency>
-
+         <groupId>org.bstats</groupId>
+         <artifactId>bstats-bukkit</artifactId>
+         <version>1.8</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+         <artifactId>holographicdisplays-api</artifactId>
+         <version>2.4.5</version>
+         <scope>provided</scope>
+      </dependency>
    </dependencies>
    <build>
       <!-- Filter only plugin.yml -->
@@ -68,19 +75,42 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>2.3.2</version>
             <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
+               <source>1.7</source>
+               <target>1.7</target>
+            </configuration>
          </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
             <version>2.3.1</version>
             <configuration>
-            <source>1.7</source>
-                    <target>1.7</target>
+               <source>1.7</source>
+               <target>1.7</target>
                <outputDirectory>C:\Users\bears\Desktop\Desktop\Test server\plugins</outputDirectory>
             </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.1.0</version>
+            <!-- Do not include the <configuration>...</configuration> part if you are using Sponge! -->
+            <configuration>
+               <relocations>
+                  <relocation>
+                     <pattern>org.bstats</pattern>
+                     <!-- Replace this with your package! -->
+                     <shadedPattern>lootcrate</shadedPattern>
+                  </relocation>
+               </relocations>
+            </configuration>
+            <executions>
+               <execution>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>shade</goal>
+                  </goals>
+               </execution>
+            </executions>
          </plugin>
       </plugins>
    </build>

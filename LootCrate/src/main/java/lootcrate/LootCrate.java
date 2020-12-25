@@ -3,6 +3,7 @@ package lootcrate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -48,6 +49,8 @@ public class LootCrate extends JavaPlugin
 	    holoManager = new HologramManager(this);
 	registerEvents();
 	reload();
+	
+	
     }
 
     @Override
@@ -83,12 +86,21 @@ public class LootCrate extends JavaPlugin
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion() + "). Download here: " + updateManager.getResourceURL());
 	if(holoHook())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
+	if(initMetrics())
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW + "bStats Metrics" + ChatColor.DARK_GRAY + ".");
 	Bukkit.getLogger().info("");
     }
     
     public boolean holoHook()
     {
 	return Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays");
+    }
+    
+    public boolean initMetrics()
+    {
+	int pluginId = 9767;
+        Metrics metrics = new Metrics(this, pluginId);
+        return metrics.isEnabled();
     }
 
 }
