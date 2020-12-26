@@ -1,5 +1,6 @@
 package lootcrate.managers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -10,6 +11,7 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
+import lootcrate.other.CrateOptionType;
 import lootcrate.other.Option;
 import net.md_5.bungee.api.ChatColor;
 
@@ -35,27 +37,27 @@ public class HologramManager
     public void createHologram(Block block, Crate crate)
     {
 	Hologram hologram = HologramsAPI.createHologram(plugin,
-		block.getLocation().clone().add((double) optionManager.valueOf(Option.HOLOGRAM_OFFSET_X),
-			(double) optionManager.valueOf(Option.HOLOGRAM_OFFSET_Y),
-			(double) optionManager.valueOf(Option.HOLOGRAM_OFFSET_Z)));
+		block.getLocation().clone().add((double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_X).getValue(),
+			(double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Y).getValue(),
+			(double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Z).getValue()));
 
-	List<String> list = optionManager.valueOf(Option.HOLOGRAM_LIST);
+	List<String> list = (ArrayList) crate.getOption(CrateOptionType.HOLOGRAM_LINES).getValue();
 	for (String line : list)
 	{
 	    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', line).replace("{crate_name}",
 		    crate.getName().replace("{crate_id}", "" + crate.getId())));
 	}
     }
-    
+
     public void reload()
     {
-	for(Hologram holo : HologramsAPI.getHolograms(plugin))
+	for (Hologram holo : HologramsAPI.getHolograms(plugin))
 	    holo.delete();
-	for(Location l : locationManager.getLocationList().keySet())
+	for (Location l : locationManager.getLocationList().keySet())
 	{
 	    Crate crate = locationManager.getLocationList().get(l);
 	    createHologram(l.getBlock(), crate);
 	}
-	    
+
     }
 }

@@ -25,30 +25,7 @@ options:
     #Should the commands on each item be dispatched the amount of times the item is recieved, or once?
     dispatch-command-item-time: true
     # boolean - true/false
-    
-    #List of lines if holograms are enabled
-    hologram-lines:
-      - "{crate_name}"
-      - "&8Right-Click&7 to Unlock"
-      - "&8Left-Click&7 to View"
-    # {crate_name} - Name of crate
-    # {crate_id} - Id of crate
-    
-    #Offset of hologram position
-    hologram-offset-x: 0.5
-    hologram-offset-y: 1.8
-    hologram-offset-z: 0.5
-    # double - a number with decimal (1.1,1.2,1.23,...)
-    
-    #Sound played when crate is open
-    #Sound List: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
-    sound-crate-open: "UI_TOAST_CHALLENGE_COMPLETE"
-    
-    #Should knockback effect be played when attempting to open a crate?
-    crate-knockback: true
-    
-    #If knockback is true, how powerful?
-    crate-knockback-power: 5
+
     
 #+------------------------------+
 #|                              |

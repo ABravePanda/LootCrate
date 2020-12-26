@@ -32,7 +32,7 @@ public class Crate
 	if(options != null)
 	    this.setOptions(options);
 	else
-	    this.setOptions(new HashMap<CrateOptionType, Object>());
+	    this.setOptions(new LinkedHashMap<CrateOptionType, Object>());
 	    
     }
     
@@ -42,7 +42,7 @@ public class Crate
 	this.setName(name);
 	this.setKey(null);
 	this.setItems(new ArrayList<CrateItem>());
-	this.setOptions(new HashMap<CrateOptionType, Object>());
+	this.setOptions(new LinkedHashMap<CrateOptionType, Object>());
     }
     
     private int calculateChances()
@@ -92,9 +92,7 @@ public class Crate
     
     public void addItem(CrateItem item)
     {
-	System.out.println(getItems().size());
 	getItems().add(item);
-	System.out.println(getItems().size());
     }
     
     public CrateItem getItem(int id)
@@ -179,7 +177,6 @@ public class Crate
 	    crate.key = CrateKey.deserialize((MemorySection) config.get(location + ".Key"));
 	if(config.get(location + ".Options") != null)
 	    crate.options = Crate.getDeseralizedOptions((MemorySection) config.get(location + ".Options"));
-	System.out.println(config.get(location + ".Options"));
 	return crate;
     }
 
@@ -200,7 +197,7 @@ public class Crate
     
     public static Map<CrateOptionType, Object> getDeseralizedOptions(MemorySection section)
     {
-	Map<CrateOptionType, Object> item = new HashMap<CrateOptionType, Object>();
+	Map<CrateOptionType, Object> item = new LinkedHashMap<CrateOptionType, Object>();
 	for (String s : section.getKeys(false))
 	{
 	    CrateOptionType type = CrateOptionType.fromKey(s);

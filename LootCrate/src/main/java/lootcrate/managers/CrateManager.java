@@ -4,17 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.bukkit.Material;
-import org.bukkit.configuration.MemorySection;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
@@ -181,5 +178,30 @@ public class CrateManager
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
+    }
+
+    public void crateOpenEffects(Crate crate, Player p)
+    {
+	// play sound
+	if (crate.getOption(CrateOptionType.OPEN_SOUND).getValue() != null)
+	{
+	    if (crate.getOption(CrateOptionType.OPEN_SOUND).getValue().toString().equalsIgnoreCase("none"))
+		return;
+	    if (Sound.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue()) == null)
+		return;
+	    p.playSound(p.getLocation(), Sound.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue()),
+		    1, 1);
+	}
+
+	// get message, send it
+	if (crate.getOption(CrateOptionType.OPEN_MESSAGE).getValue() != null)
+	{
+	    if (crate.getOption(CrateOptionType.OPEN_MESSAGE).getValue().toString().equalsIgnoreCase("none"))
+		return;
+	    p.sendMessage(plugin.messageManager.getPrefix()
+		    + ChatColor.translateAlternateColorCodes('&', crate.getOption(CrateOptionType.OPEN_MESSAGE)
+			    .getValue().toString().replace("{crate_name}", crate.getName())));
+	}	
+
     }
 }

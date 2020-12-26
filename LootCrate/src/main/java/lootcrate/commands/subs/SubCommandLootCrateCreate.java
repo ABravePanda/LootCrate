@@ -1,8 +1,10 @@
 package lootcrate.commands.subs;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,7 +24,7 @@ public class SubCommandLootCrateCreate implements SubCommand
     private String[] args;
     private CommandSender sender;
     private LootCrate plugin;
-    
+
     public SubCommandLootCrateCreate(LootCrate plugin, CommandSender sender, String[] args)
     {
 	this.plugin = plugin;
@@ -34,8 +36,9 @@ public class SubCommandLootCrateCreate implements SubCommand
     public void runSubCommand()
     {
 	Player p = (Player) sender;
-	
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_CREATE.getKey()) && !p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey()))
+
+	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_CREATE.getKey())
+		&& !p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
@@ -45,10 +48,23 @@ public class SubCommandLootCrateCreate implements SubCommand
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_USAGE, null);
 	    return;
 	}
+
 	Crate crate = new Crate(CommandUtils.builder(args, 1));
+
+	String[] lines =
+	{ "{crate_name}", "&8Right-Click&7 to Unlock", "&8Left-Click&7 to View" };
+
 	crate.addOption(CrateOptionType.KNOCK_BACK, 1.0D);
 	crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);
+	crate.addOption(CrateOptionType.OPEN_SOUND, Sound.UI_TOAST_CHALLENGE_COMPLETE.toString());
+	crate.addOption(CrateOptionType.OPEN_MESSAGE, "&fYou have opened &e{crate_name}&f.");
+	crate.addOption(CrateOptionType.HOLOGRAM_LINES, Arrays.asList(lines));
+	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_X, 0.5D);
+	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Y, 1.8D);
+	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Z, 0.5D);
+
 	plugin.crateManager.save(crate);
+
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,
 		ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
     }
@@ -58,9 +74,8 @@ public class SubCommandLootCrateCreate implements SubCommand
     {
 	List<String> list = new LinkedList<String>();
 	if (args.length == 2)
-		list.add("[CrateName]");
-	    return list;
+	    list.add("[CrateName]");
+	return list;
     }
-    
-    
+
 }

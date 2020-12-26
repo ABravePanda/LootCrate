@@ -90,6 +90,11 @@ public class MessageManager
 	}
 	return colorMsg;
     }
+    
+    public String getPrefix()
+    {
+	return this.parseMessage(Message.PREFIX, null);
+    }
 
     /**
      * Sends a notification that crate is not complete
