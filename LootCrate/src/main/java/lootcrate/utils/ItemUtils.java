@@ -2,6 +2,7 @@ package lootcrate.utils;
 
 import java.util.Arrays;
 
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -23,6 +24,7 @@ public class ItemUtils
 	return item;
     }
     
+
     public static ItemStack setLore(ItemStack item, String...lore)
     {
 	ItemMeta meta = item.getItemMeta();

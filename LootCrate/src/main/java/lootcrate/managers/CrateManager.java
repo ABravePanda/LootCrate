@@ -3,6 +3,7 @@ package lootcrate.managers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -203,5 +204,22 @@ public class CrateManager
 			    .getValue().toString().replace("{crate_name}", crate.getName())));
 	}	
 
+    }
+    
+    public void addDefaultOptions(Crate crate)
+    {
+
+	String[] lines =
+	{ "{crate_name}", "&8Right-Click&7 to Unlock", "&8Left-Click&7 to View" };
+	
+	crate.addOption(CrateOptionType.KNOCK_BACK, 1.0D);
+	crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);
+	crate.addOption(CrateOptionType.OPEN_SOUND, Sound.UI_TOAST_CHALLENGE_COMPLETE.toString());
+	crate.addOption(CrateOptionType.OPEN_MESSAGE, "&fYou have opened &e{crate_name}&f.");
+	crate.addOption(CrateOptionType.HOLOGRAM_LINES, Arrays.asList(lines));
+	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_X, 0.5D);
+	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Y, 1.8D);
+	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Z, 0.5D);
+	crate.addOption(CrateOptionType.CRATE_FORMAT, null);
     }
 }

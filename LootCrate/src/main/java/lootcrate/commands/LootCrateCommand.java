@@ -92,6 +92,7 @@ public class LootCrateCommand implements Command
 	
 	else if (args[0].equalsIgnoreCase("list"))
 	    new SubCommandLootCrateList(plugin, sender, args).runSubCommand();
+	
 
 	else
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);

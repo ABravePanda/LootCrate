@@ -39,7 +39,7 @@
         <configuration>
           <source>1.7</source>
           <target>1.7</target>
-          <outputDirectory>C:\Users\bears\Desktop\Desktop\Test server\plugins</outputDirectory>
+          <outputDirectory>C:\Users\bears\Desktop\New folder (2)\Desktop\Test server\plugins</outputDirectory>
         </configuration>
       </plugin>
       <plugin>

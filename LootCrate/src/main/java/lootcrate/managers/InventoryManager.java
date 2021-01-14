@@ -2,10 +2,14 @@ package lootcrate.managers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,8 +18,6 @@ import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.other.CrateOptionType;
-import lootcrate.other.Message;
-import lootcrate.other.Option;
 import lootcrate.utils.ObjUtils;
 import net.md_5.bungee.api.ChatColor;
 

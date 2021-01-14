@@ -1,8 +1,10 @@
 package lootcrate.commands.subs;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -18,6 +20,7 @@ import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.interfaces.SubCommand;
+import net.minecraft.server.v1_16_R3.Material;
 
 public class SubCommandLootCrateCreate implements SubCommand
 {
@@ -38,7 +41,7 @@ public class SubCommandLootCrateCreate implements SubCommand
 	Player p = (Player) sender;
 
 	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_CREATE.getKey())
-		&& !p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey()))
+		&& !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
@@ -50,19 +53,7 @@ public class SubCommandLootCrateCreate implements SubCommand
 	}
 
 	Crate crate = new Crate(CommandUtils.builder(args, 1));
-
-	String[] lines =
-	{ "{crate_name}", "&8Right-Click&7 to Unlock", "&8Left-Click&7 to View" };
-
-	crate.addOption(CrateOptionType.KNOCK_BACK, 1.0D);
-	crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);
-	crate.addOption(CrateOptionType.OPEN_SOUND, Sound.UI_TOAST_CHALLENGE_COMPLETE.toString());
-	crate.addOption(CrateOptionType.OPEN_MESSAGE, "&fYou have opened &e{crate_name}&f.");
-	crate.addOption(CrateOptionType.HOLOGRAM_LINES, Arrays.asList(lines));
-	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_X, 0.5D);
-	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Y, 1.8D);
-	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Z, 0.5D);
-
+	plugin.crateManager.addDefaultOptions(crate);
 	plugin.crateManager.save(crate);
 
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,

@@ -1,9 +1,10 @@
 package lootcrate.events;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,7 +25,6 @@ import lootcrate.managers.MessageManager;
 import lootcrate.managers.OptionManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
-import lootcrate.other.CrateOptionType;
 import lootcrate.other.Message;
 import lootcrate.other.Option;
 import lootcrate.other.Permission;
@@ -91,16 +91,16 @@ public class LootCrateInteractEvent implements Listener
 			PlayerUtils.knockBackPlayer(crate, p);
 			return;
 		    }
-		    
-		    //if no items
+
+		    // if no items
 		    if (crate.getItems().size() == 0)
 			return;
 
-		    //if the keys match
+		    // if the keys match
 		    if (item.getType().equals(crate.getKey().getItem().getType())
 			    && ObjUtils.doKeysMatch(plugin, item, crate))
 		    {
-			//if inv is full
+			// if inv is full
 			if (InventoryUtils.isFull(p.getInventory()))
 			{
 			    messageManager.sendMessage(p, Message.INVENTORY_FULL, null);
@@ -112,7 +112,6 @@ public class LootCrateInteractEvent implements Listener
 
 			// play sound
 			crateManager.crateOpenEffects(crate, p);
-
 
 			CrateItem crateItem = crateManager.getRandomItem(crate);
 			int rnd = crateManager.getRandomAmount(crateItem);
@@ -183,6 +182,7 @@ public class LootCrateInteractEvent implements Listener
     public void onInventoryCloseEvent(InventoryCloseEvent e)
     {
 	Player p = (Player) e.getPlayer();
-	invManager.closeCrateInventory(p);
+	if (invManager.isInInventory(p))
+	    invManager.closeCrateInventory(p);
     }
 }
