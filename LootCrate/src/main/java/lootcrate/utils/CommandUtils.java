@@ -1,12 +1,9 @@
 package lootcrate.utils;
 
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-import com.google.common.collect.ImmutableMap;
-
-import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
-import lootcrate.other.Message;
+import lootcrate.other.Permission;
 import net.md_5.bungee.api.ChatColor;
 
 public class CommandUtils
@@ -44,6 +41,11 @@ public class CommandUtils
 	{
 	    return null;
 	}
+    }
+    
+    public static boolean hasCratePermission(Crate crate, Player p)
+    {
+	return p.hasPermission(Permission.LOOTCRATE_INTERACT.getKey() + crate.getId()) || p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey());
     }
     
 

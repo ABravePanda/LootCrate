@@ -8,7 +8,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import lootcrate.events.LootCrateInteractEvent;
+import lootcrate.events.listeners.LootCrateInteractEvent;
+import lootcrate.events.listeners.custom.CrateAccessListener;
+import lootcrate.events.listeners.custom.CrateOpenListener;
+import lootcrate.events.listeners.custom.CrateViewListener;
 import lootcrate.managers.CommandManager;
 import lootcrate.managers.CrateManager;
 import lootcrate.managers.HologramManager;
@@ -61,6 +64,9 @@ public class LootCrate extends JavaPlugin
     public void registerEvents()
     {
 	this.getServer().getPluginManager().registerEvents(new LootCrateInteractEvent(this), this);
+	this.getServer().getPluginManager().registerEvents(new CrateAccessListener(this), this);
+	this.getServer().getPluginManager().registerEvents(new CrateOpenListener(this), this);
+	this.getServer().getPluginManager().registerEvents(new CrateViewListener(this), this);
     }
     
     public void registerConfig()
