@@ -20,9 +20,9 @@ public class LocationManager
 
     private Map<Location, Crate> locationList = new LinkedHashMap<Location, Crate>();
 
-    LootCrate plugin;
-    CrateManager crateManager;
-    String locationPrefix = "locations.";
+    private LootCrate plugin;
+    private CrateManager crateManager;
+    private String locationPrefix = "locations.";
     File f;
     FileConfiguration config;
 

@@ -16,18 +16,16 @@ import lootcrate.events.custom.CrateAccessEvent;
 import lootcrate.managers.CrateManager;
 import lootcrate.managers.InventoryManager;
 import lootcrate.managers.MessageManager;
-import lootcrate.managers.OptionManager;
 import lootcrate.objects.Crate;
 import lootcrate.other.Message;
 import lootcrate.utils.ObjUtils;
 
 public class LootCrateInteractEvent implements Listener
 {
-    LootCrate plugin;
-    MessageManager messageManager;
-    CrateManager crateManager;
-    InventoryManager invManager;
-    OptionManager optionManager;
+    private LootCrate plugin;
+    private MessageManager messageManager;
+    private CrateManager crateManager;
+    private InventoryManager invManager;
 
     public LootCrateInteractEvent(LootCrate plugin)
     {
@@ -35,7 +33,6 @@ public class LootCrateInteractEvent implements Listener
 	this.messageManager = plugin.messageManager;
 	this.crateManager = plugin.crateManager;
 	this.invManager = plugin.invManager;
-	this.optionManager = plugin.optionManager;
     }
 
     @EventHandler

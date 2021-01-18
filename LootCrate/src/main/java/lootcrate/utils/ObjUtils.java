@@ -61,8 +61,7 @@ public class ObjUtils
 	ItemMeta meta = item.getItemMeta();
 	if(meta.getPersistentDataContainer() == null) return false;
 	if(meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == null) return false;
-	if(meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) != crate.getId()) return false;
-	return true;
+	return meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) != crate.getId();
     }
     
     public static boolean isKey(LootCrate plugin, ItemStack item)
@@ -71,7 +70,6 @@ public class ObjUtils
 	ItemMeta meta = item.getItemMeta();
 	if(meta == null) return false;
 	if(meta.getPersistentDataContainer() == null) return false;
-	if(meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == null) return false;
-	return true;
+	return meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) != null;
     }
 }

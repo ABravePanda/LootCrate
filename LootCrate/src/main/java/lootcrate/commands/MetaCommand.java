@@ -92,8 +92,6 @@ public class MetaCommand implements Command
 	    return;
 	} else
 	    plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
-
-	return;
     }
 
     @Override

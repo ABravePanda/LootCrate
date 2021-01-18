@@ -23,8 +23,7 @@ import lootcrate.managers.UpdateManager;
 import net.md_5.bungee.api.ChatColor;
 
 public class LootCrate extends JavaPlugin
-{
-    
+{ 
     public MessageManager messageManager;
     public CrateManager crateManager;
     public LocationManager locationManager;

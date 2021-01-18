@@ -93,7 +93,6 @@ public class LootCrateCommand implements Command
 	else if (args[0].equalsIgnoreCase("list"))
 	    new SubCommandLootCrateList(plugin, sender, args).runSubCommand();
 	
-
 	else
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
     }
@@ -112,7 +111,7 @@ public class LootCrateCommand implements Command
 	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_GIVE)) list.add("give");
 	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_KEY)) list.add("key");
 	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_ITEMS)) list.add("items");
-	    //if(hasPermission(sender, Permission.)) list.add("list");
+	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_LIST)) list.add("list");
 	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_COMMAND)) list.add("command");
 	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_RELOAD)) list.add("reload");
 	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES)) list.add("displaychances");

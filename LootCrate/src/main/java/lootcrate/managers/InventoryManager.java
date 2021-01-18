@@ -20,9 +20,7 @@ import net.md_5.bungee.api.ChatColor;
 public class InventoryManager
 {
 
-    LootCrate plugin;
-    MessageManager manager;
-    OptionManager optionManager;
+    private LootCrate plugin;
 
     /**
      * Constructor for InventoryManager
@@ -33,8 +31,6 @@ public class InventoryManager
     public InventoryManager(LootCrate plugin)
     {
 	this.plugin = plugin;
-	manager = plugin.messageManager;
-	optionManager = plugin.optionManager;
     }
 
     /**

@@ -11,7 +11,6 @@ import lootcrate.utils.interfaces.SubCommand;
 
 public class SubCommandLootCrateReload implements SubCommand
 {
-    private String[] args;
     private CommandSender sender;
     private LootCrate plugin;
 
@@ -19,7 +18,6 @@ public class SubCommandLootCrateReload implements SubCommand
     {
 	this.plugin = plugin;
 	this.sender = sender;
-	this.args = args;
     }
 
     @Override
@@ -40,7 +38,6 @@ public class SubCommandLootCrateReload implements SubCommand
     @Override
     public List<String> runTabComplete()
     {
-	// TODO Auto-generated method stub
 	return null;
     }
 
