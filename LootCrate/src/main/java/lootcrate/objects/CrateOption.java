@@ -3,8 +3,6 @@ package lootcrate.objects;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.bukkit.configuration.MemorySection;
-
 import lootcrate.other.CrateOptionType;
 
 public class CrateOption

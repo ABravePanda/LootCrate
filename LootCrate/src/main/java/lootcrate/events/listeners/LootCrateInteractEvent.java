@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+
 import lootcrate.LootCrate;
 import lootcrate.events.custom.CrateAccessEvent;
 import lootcrate.managers.CrateManager;

@@ -12,7 +12,6 @@ import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
-import lootcrate.objects.CrateKey;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;

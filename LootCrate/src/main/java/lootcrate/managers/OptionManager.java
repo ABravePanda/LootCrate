@@ -1,19 +1,11 @@
 package lootcrate.managers;
 
 import java.util.List;
-import java.util.Map;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
-
-import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
-import lootcrate.objects.Crate;
-import lootcrate.other.Message;
 import lootcrate.other.Option;
-import lootcrate.other.Placeholder;
 
 public class OptionManager
 {

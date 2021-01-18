@@ -4,21 +4,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
 import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
-import lootcrate.events.custom.CrateAccessEvent;
 import lootcrate.events.custom.CrateOpenEvent;
-import lootcrate.events.custom.CrateViewEvent;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.other.Message;
 import lootcrate.other.Option;
 import lootcrate.other.Placeholder;
-import lootcrate.utils.CommandUtils;
 import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ObjUtils;
 import lootcrate.utils.PlayerUtils;

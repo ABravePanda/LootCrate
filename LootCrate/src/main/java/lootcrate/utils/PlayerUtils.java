@@ -2,10 +2,8 @@ package lootcrate.utils;
 
 import org.bukkit.entity.Player;
 
-import lootcrate.managers.OptionManager;
 import lootcrate.objects.Crate;
 import lootcrate.other.CrateOptionType;
-import lootcrate.other.Option;
 
 public class PlayerUtils
 {

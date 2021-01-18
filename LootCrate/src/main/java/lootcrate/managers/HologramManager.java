@@ -12,7 +12,6 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.other.CrateOptionType;
-import lootcrate.other.Option;
 import net.md_5.bungee.api.ChatColor;
 
 public class HologramManager

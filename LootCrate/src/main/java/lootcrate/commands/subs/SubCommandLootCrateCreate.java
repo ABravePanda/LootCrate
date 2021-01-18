@@ -1,12 +1,8 @@
 package lootcrate.commands.subs;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -14,13 +10,11 @@ import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
-import lootcrate.other.CrateOptionType;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.interfaces.SubCommand;
-import net.minecraft.server.v1_16_R3.Material;
 
 public class SubCommandLootCrateCreate implements SubCommand
 {

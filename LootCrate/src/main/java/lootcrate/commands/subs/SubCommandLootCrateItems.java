@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -14,7 +13,6 @@ import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
-import lootcrate.objects.CrateKey;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
@@ -91,8 +89,7 @@ public class SubCommandLootCrateItems implements SubCommand
 	if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		for (Crate crate : plugin.crateManager.load())
-		    TabUtils.addCratesToList(list, plugin.crateManager);
+		TabUtils.addCratesToList(list, plugin.crateManager);
 	    }
 	    return list;
     }

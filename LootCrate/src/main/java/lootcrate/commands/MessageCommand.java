@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
-import lootcrate.objects.CrateItem;
 import lootcrate.other.Message;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
