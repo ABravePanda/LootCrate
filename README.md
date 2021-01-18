@@ -1,0 +1,5 @@
+[https://img.shields.io/spiget/download-size/87046?color=FF7474&label=File Size&style=for-the-badge][https://img.shields.io/spiget/version/87046?color=FF7474&label=Spigot%20Version&style=for-the-badge]
+[https://img.shields.io/github/v/tag/ABravePanda/LootCrate?color=FF7474&label=Github%20Version&style=for-the-badge]
+[https://img.shields.io/spiget/downloads/87046?color=FF7474&style=for-the-badge]
+[https://img.shields.io/github/issues/ABravePanda/LootCrate?color=FF7474&style=for-the-badge]
+[https://img.shields.io/codefactor/grade/github/ABravePanda/LootCrate?style=for-the-badge]
