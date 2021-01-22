@@ -38,8 +38,6 @@ public class LootCrateCommand implements Command
 	this.sender = sender;
     }
 
-    
-    
     @Override
     public void executeCommand()
     {
