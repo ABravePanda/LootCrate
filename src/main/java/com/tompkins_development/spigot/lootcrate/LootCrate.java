@@ -4,6 +4,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.tompkins_development.spigot.lootcrate.mgr.ManagerManager;
 import com.tompkins_development.spigot.lootcrate.obj.Crate;
 import com.tompkins_development.spigot.lootcrate.obj.Key;
 import com.tompkins_development.spigot.lootcrate.obj.Reward;
@@ -12,9 +13,13 @@ public class LootCrate extends JavaPlugin
 {
     private NamespacedKey namespacedKey = new NamespacedKey(this, "lootcrate");
     
+    private ManagerManager manager;
+    
     @Override
     public void onEnable()
     {
+	registerSerialization();
+	manager = new ManagerManager(this);
     }
     
     @Override
@@ -27,10 +32,16 @@ public class LootCrate extends JavaPlugin
 	return namespacedKey;
     }
     
+    public ManagerManager getManager()
+    {
+	return manager;
+    }
+    
     private void registerSerialization()
     {
 	ConfigurationSerialization.registerClass(Reward.class);
 	ConfigurationSerialization.registerClass(Crate.class);
 	ConfigurationSerialization.registerClass(Key.class);
     }
+    
 }
