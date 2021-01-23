@@ -15,7 +15,6 @@ import lootcrate.utils.ObjUtils;
 
 public class CrateItem implements Comparable<CrateItem>
 {
-    private int id;
     private ItemStack item;
     private int chance;
     private int minAmount;

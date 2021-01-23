@@ -97,4 +97,5 @@ public class InventoryManager
     {
 	return plugin.playersInInventory.contains(p);
     }
+    
 }

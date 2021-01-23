@@ -80,7 +80,9 @@ public class LootCrate extends JavaPlugin
     {
 	crateManager.reload();
 	locationManager.reload();
-	holoManager.reload();
+	
+	if(holoHook())
+	    holoManager.reload();
 	
     }
     
@@ -88,7 +90,7 @@ public class LootCrate extends JavaPlugin
     {
 	Bukkit.getLogger().info("");
 	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "LootCrate" + ChatColor.GREEN + " v" + this.getDescription().getVersion());
-	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + this.getServer().getName() + " v" + this.getServer().getBukkitVersion());
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + ChatColor.GRAY + this.getServer().getName() + " v" + this.getServer().getBukkitVersion());
 	if(updateManager.checkForUpdates())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion() + "). Download here: " + updateManager.getResourceURL());
 	if(holoHook())
