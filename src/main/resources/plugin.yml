@@ -1,5 +1,5 @@
 name: ${project.name}
-main: lootcrate.LootCrate
+main: com.tompkins_development.spigot.lootcrate.LootCrate
 version: ${project.version}
 description: ${project.description}
 softdepend: [HolographicDisplays]
