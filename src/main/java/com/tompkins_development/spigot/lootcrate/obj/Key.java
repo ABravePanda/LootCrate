@@ -1,5 +1,9 @@
 package com.tompkins_development.spigot.lootcrate.obj;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -39,7 +43,7 @@ public class Key implements ConfigurationSerializable
 
     public void setItem(ItemStack item)
     {
-	new KeyModifier(null).addCodeToItem(item);
+	new KeyModifier(getPlugin()).addCodeToItem(item);
 	this.item = item;
     }
 
@@ -51,5 +55,14 @@ public class Key implements ConfigurationSerializable
     private void setPlugin(LootCrate plugin)
     {
 	this.plugin = plugin;
+    }
+    
+    @Override
+    public Map<String, Object> serialize()
+    {
+	Map<String, Object> map = new LinkedHashMap<String, Object>();
+	map.put("uuid", getUuid());
+	map.put("item", getItem().serialize());
+	return map;
     }
 }

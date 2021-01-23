@@ -1,6 +1,5 @@
 package com.tompkins_development.spigot.lootcrate.obj;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
