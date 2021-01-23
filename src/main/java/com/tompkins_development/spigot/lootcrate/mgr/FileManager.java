@@ -41,15 +41,17 @@ public class FileManager
      * Saves the file at the given path with the given configuration
      * @param path Path at which file is located, including name and extension
      * @param config The FileConfiguration to save to the file
+     * @return If file was successfully saved
      */
-    public void saveFile(String path, FileConfiguration config)
+    public boolean saveFile(String path, FileConfiguration config)
     {
 	try
 	{
 	    config.save(getFile(path));
+	    return true;
 	} catch (IOException e)
 	{
-	    e.printStackTrace();
+	    return false;
 	}
     }
     
@@ -57,15 +59,17 @@ public class FileManager
      * Saves the given file with given configuration
      * @param file File to save
      * @param config The FileConfiguration to save to the file
+     * @return If file was successfully saved
      */
-    public void saveFile(File file, FileConfiguration config)
+    public boolean saveFile(File file, FileConfiguration config)
     {
 	try
 	{
 	    config.save(file);
+	    return true;
 	} catch (IOException e)
 	{
-	    e.printStackTrace();
+	    return false;
 	}
     }
     
