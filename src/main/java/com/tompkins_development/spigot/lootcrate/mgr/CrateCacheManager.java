@@ -59,7 +59,7 @@ public class CrateCacheManager
     }
     
     /**
-     * Adds a crate to the cache list, overrides any exisiting crates with same uuid
+     * Adds a crate to the cache list, overrides any existing crates with same uuid
      * @param crate Crate to add
      */
     public void addCrate(Crate crate)
