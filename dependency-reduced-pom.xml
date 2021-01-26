@@ -4,7 +4,7 @@
   <groupId>com.tompkins-development.spigot</groupId>
   <artifactId>LootCrate</artifactId>
   <name>LootCrate</name>
-  <version>0.2.2</version>
+  <version>0.2.3</version>
   <description>A plugin to add lootcrates</description>
   <build>
     <resources>
