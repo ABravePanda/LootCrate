@@ -20,6 +20,7 @@ public class LootCrate extends JavaPlugin
     {
 	registerSerialization();
 	manager = new ManagerManager(this);
+	manager.init();
     }
     
     @Override
