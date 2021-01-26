@@ -16,6 +16,7 @@ import lootcrate.other.Message;
 import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
+import lootcrate.utils.ObjUtils;
 import lootcrate.utils.TabUtils;
 import lootcrate.utils.interfaces.SubCommand;
 
@@ -72,6 +73,7 @@ public class SubCommandLootCrateKey implements SubCommand
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_SUCCESS, ImmutableMap
 		.of(Placeholder.CRATE_NAME, "" + crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
 	plugin.messageManager.crateNotification(crate, sender);
+	p.getInventory().setItemInMainHand(ObjUtils.assignCrateToItem(plugin, crate));
     }
 
     @Override

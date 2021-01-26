@@ -50,8 +50,10 @@ public class LootCrate extends JavaPlugin
 	locationManager.populateLocations();
 	invManager = new InventoryManager(this);
 	commandManager = new CommandManager(this);
+	
 	if(holoHook())
 	    holoManager = new HologramManager(this);
+	
 	registerEvents();
 	reload();
 	
@@ -80,6 +82,7 @@ public class LootCrate extends JavaPlugin
     {
 	crateManager.reload();
 	locationManager.reload();
+	
 	if(holoHook())
 	    holoManager.reload();
 	

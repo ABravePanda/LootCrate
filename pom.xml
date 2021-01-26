@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.tompkins-development.spigot</groupId>
    <artifactId>LootCrate</artifactId>
-   <version>0.2.2</version>
+   <version>0.2.3</version>
    <name>LootCrate</name>
    <description>A plugin to add lootcrates</description>
    <repositories>
@@ -86,7 +86,7 @@
             <configuration>
                <source>1.7</source>
                <target>1.7</target>
-               <outputDirectory>C:\Users\bears\Desktop\New folder (2)\Desktop\Test server\plugins</outputDirectory>
+               <outputDirectory>Z:\Spigot Test Server\plugins</outputDirectory>
             </configuration>
          </plugin>
          <plugin>

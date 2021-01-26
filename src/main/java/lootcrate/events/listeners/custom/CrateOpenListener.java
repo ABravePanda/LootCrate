@@ -33,7 +33,6 @@ public class CrateOpenListener implements Listener
     {
 	Player p = e.getPlayer();
 	Crate crate = e.getCrate();
-
 	ItemStack item = p.getInventory().getItemInMainHand();
 
 	// if they clicked w/same item as key && they match
@@ -49,7 +48,7 @@ public class CrateOpenListener implements Listener
 	// if no items
 	if (crate.getItems().size() == 0)
 	    return;
-
+	
 	// if the keys match
 	if (item.getType().equals(crate.getKey().getItem().getType()) && ObjUtils.doKeysMatch(plugin, item, crate))
 	{
