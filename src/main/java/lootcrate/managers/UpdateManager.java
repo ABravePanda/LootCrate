@@ -89,6 +89,7 @@ public class UpdateManager
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-	return !plugin.getDescription().getVersion().equals(newVersion);
+	return Integer.valueOf(plugin.getDescription().getVersion().replace(".", "")) < Integer.valueOf(newVersion.replace(".", ""));
+	//return !plugin.getDescription().getVersion().equals(newVersion);
     }
 }
