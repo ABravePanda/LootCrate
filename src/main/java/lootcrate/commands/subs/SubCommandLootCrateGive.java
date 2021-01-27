@@ -33,9 +33,14 @@ public class SubCommandLootCrateGive implements SubCommand
     }
 
     @Override
-    public void runSubCommand()
+    public void runSubCommand(boolean playerRequired)
     {
-
+	if(playerRequired && !(sender instanceof Player))
+	{
+	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
+	    return;
+	}
+	
 	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_GIVE.getKey())
 		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	{

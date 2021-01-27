@@ -23,7 +23,7 @@ public class SubCommandLootCrateRemove implements SubCommand
     private String[] args;
     private CommandSender sender;
     private LootCrate plugin;
-    
+
     public SubCommandLootCrateRemove(LootCrate plugin, CommandSender sender, String[] args)
     {
 	this.plugin = plugin;
@@ -32,11 +32,16 @@ public class SubCommandLootCrateRemove implements SubCommand
     }
 
     @Override
-    public void runSubCommand()
+    public void runSubCommand(boolean playerRequired)
     {
-	Player p = (Player) sender;
-	
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_REMOVE.getKey()) && !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
+	if(playerRequired && !(sender instanceof Player))
+	{
+	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
+	    return;
+	}
+
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_REMOVE.getKey())
+		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
@@ -61,28 +66,28 @@ public class SubCommandLootCrateRemove implements SubCommand
 	CrateItem item = crate.getItem(CommandUtils.tryParse(args[2]));
 	if (item == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_ITEM_NOT_FOUND, ImmutableMap.of(Placeholder.CRATE_ID,
-		    "" + CommandUtils.tryParse(args[1]), Placeholder.ITEM_ID, "" + CommandUtils.tryParse(args[2])));
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_ITEM_NOT_FOUND,
+		    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1]), Placeholder.ITEM_ID,
+			    "" + CommandUtils.tryParse(args[2])));
 	    return;
 	}
 	crate.removeItem(item);
 	plugin.crateManager.save(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_REMOVE_SUCCESS,
-		ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(), Placeholder.ITEM_ID,
-			"" + CommandUtils.tryParse(args[2])));
+		ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
+			Placeholder.ITEM_ID, "" + CommandUtils.tryParse(args[2])));
 	plugin.messageManager.crateNotification(crate, sender);
     }
 
     @Override
     public List<String> runTabComplete()
     {
-List<String> list = new LinkedList<String>();
-	
-	Player p = (Player) sender;
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_REMOVE.getKey())
-		&& !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
+	List<String> list = new LinkedList<String>();
+
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_REMOVE.getKey())
+		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	    return list;
-	
+
 	if (args.length == 2)
 	{
 	    list.add("[CrateID]");
@@ -95,6 +100,5 @@ List<String> list = new LinkedList<String>();
 	}
 	return list;
     }
-    
-    
+
 }

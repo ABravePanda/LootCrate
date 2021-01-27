@@ -33,8 +33,14 @@ public class SubCommandLootCrateAdd implements SubCommand
     }
 
     @Override
-    public void runSubCommand()
+    public void runSubCommand(boolean playerRequired)
     {
+	if(playerRequired && !(sender instanceof Player))
+	{
+	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
+	    return;
+	}
+	
 	Player p = (Player) sender;
 
 	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_ADD.getKey())
@@ -93,9 +99,8 @@ public class SubCommandLootCrateAdd implements SubCommand
     {
 	List<String> list = new LinkedList<String>();
 
-	Player p = (Player) sender;
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_ADD.getKey())
-		&& !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADD.getKey())
+		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	    return list;
 
 	if (args.length == 2)

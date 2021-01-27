@@ -33,12 +33,16 @@ public class SubCommandLootCrateDisplayChances implements SubCommand
     }
 
     @Override
-    public void runSubCommand()
+    public void runSubCommand(boolean playerRequired)
     {
-	Player p = (Player) sender;
+	if(playerRequired && !(sender instanceof Player))
+	{
+	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
+	    return;
+	}
 
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES.getKey())
-		&& !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES.getKey())
+		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
@@ -76,9 +80,8 @@ public class SubCommandLootCrateDisplayChances implements SubCommand
     {
 	List<String> list = new LinkedList<String>();
 	
-	Player p = (Player) sender;
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES.getKey())
-		&& !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES.getKey())
+		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	    return list;
 	
 	if (args.length == 2)

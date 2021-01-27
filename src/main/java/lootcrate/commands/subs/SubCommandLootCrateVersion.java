@@ -28,11 +28,15 @@ public class SubCommandLootCrateVersion implements SubCommand
     }
 
     @Override
-    public void runSubCommand()
+    public void runSubCommand(boolean playerRequired)
     {
-	Player p = (Player) sender;
+	if(playerRequired && !(sender instanceof Player))
+	{
+	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
+	    return;
+	}
 	
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_VERSION.getKey()) && !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_VERSION.getKey()) && !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
@@ -43,11 +47,11 @@ public class SubCommandLootCrateVersion implements SubCommand
 	    return;
 	}
 	
-	p.sendMessage(ChatColor.YELLOW + "Running " + plugin.getName() + " v" + plugin.getDescription().getVersion());
+	sender.sendMessage(ChatColor.YELLOW + "Running " + plugin.getName() + " v" + plugin.getDescription().getVersion());
 	if(updateManager.checkForUpdates())
 	{
-	    p.sendMessage(ChatColor.RED + "New update found! (v" + updateManager.getNewVersion() + ")." );
-	    p.sendMessage(ChatColor.RED + "Download @ " + updateManager.getResourceURL());
+	    sender.sendMessage(ChatColor.RED + "New update found! (v" + updateManager.getNewVersion() + ")." );
+	    sender.sendMessage(ChatColor.RED + "Download @ " + updateManager.getResourceURL());
 	}
 	
 	
@@ -56,7 +60,6 @@ public class SubCommandLootCrateVersion implements SubCommand
     @Override
     public List<String> runTabComplete()
     {
-	// TODO Auto-generated method stub
 	return null;
     }
     

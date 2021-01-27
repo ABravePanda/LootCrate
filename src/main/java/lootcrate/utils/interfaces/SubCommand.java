@@ -5,7 +5,7 @@ import java.util.List;
 public interface SubCommand {
 
 
-    void runSubCommand();
+    void runSubCommand(boolean playerRequired);
     List<String> runTabComplete();
 
 }
