@@ -35,10 +35,9 @@ public class SubCommandLootCrateGive implements SubCommand
     @Override
     public void runSubCommand()
     {
-	Player p = (Player) sender;
 
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_GIVE.getKey())
-		&& !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_GIVE.getKey())
+		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
@@ -95,7 +94,7 @@ public class SubCommandLootCrateGive implements SubCommand
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_SENDER,
 		ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(), Placeholder.PLAYER_NAME, player.getName()));
 	plugin.messageManager.sendMessage(player, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER,
-		ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(), Placeholder.SENDER_NAME,  p.getName()));
+		ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(), Placeholder.SENDER_NAME,  sender.getName()));
 
     }
 
@@ -103,10 +102,9 @@ public class SubCommandLootCrateGive implements SubCommand
     public List<String> runTabComplete()
     {
 	List<String> list = new LinkedList<String>();
-	
-	Player p = (Player) sender;
-	if (!p.hasPermission(Permission.COMMAND_LOOTCRATE_GIVE.getKey())
-		&& !p.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
+
+	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_GIVE.getKey())
+		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	    return list;
 	
 	if(args.length == 2)
