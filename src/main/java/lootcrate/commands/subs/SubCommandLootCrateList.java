@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.google.common.collect.ImmutableMap;
 

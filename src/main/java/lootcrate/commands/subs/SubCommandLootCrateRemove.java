@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.google.common.collect.ImmutableMap;
 

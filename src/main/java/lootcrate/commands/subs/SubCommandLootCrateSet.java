@@ -56,7 +56,8 @@ public class SubCommandLootCrateSet extends SubCommand
 	if (args[1].equalsIgnoreCase("none"))
 	{
 	    plugin.locationManager.removeCrateLocation(l);
-	    plugin.holoManager.reload();
+	    if(plugin.holoHook())
+		plugin.holoManager.reload();
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
 	    return;
 	}

@@ -3,7 +3,6 @@ package lootcrate.commands.subs;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
