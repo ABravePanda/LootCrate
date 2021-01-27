@@ -17,9 +17,8 @@ import lootcrate.other.Permission;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.ItemUtils;
-import lootcrate.utils.interfaces.Command;
 
-public class MetaCommand implements Command
+public class MetaCommand extends Command
 {
     private LootCrate plugin;
     private String[] args;

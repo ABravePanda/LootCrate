@@ -13,9 +13,8 @@ import lootcrate.LootCrate;
 import lootcrate.other.Message;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
-import lootcrate.utils.interfaces.Command;
 
-public class MessageCommand implements Command
+public class MessageCommand extends Command
 {
 
     private LootCrate plugin;

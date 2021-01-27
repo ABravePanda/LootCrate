@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
+import lootcrate.commands.SubCommand;
 import lootcrate.objects.Crate;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
@@ -17,9 +18,8 @@ import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.ObjUtils;
 import lootcrate.utils.TabUtils;
-import lootcrate.utils.interfaces.SubCommand;
 
-public class SubCommandLootCrateGive implements SubCommand
+public class SubCommandLootCrateGive extends SubCommand
 {
     private String[] args;
     private CommandSender sender;
@@ -27,6 +27,7 @@ public class SubCommandLootCrateGive implements SubCommand
 
     public SubCommandLootCrateGive(LootCrate plugin, CommandSender sender, String[] args)
     {
+	super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_GIVE, Permission.COMMAND_LOOTCRATE_ADMIN);
 	this.plugin = plugin;
 	this.sender = sender;
 	this.args = args;
@@ -35,18 +36,9 @@ public class SubCommandLootCrateGive implements SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(playerRequired && !(sender instanceof Player))
-	{
-	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
-	    return;
-	}
-	
-	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_GIVE.getKey())
-		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
-	{
-	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
-	    return;
-	}
+	if(this.testPlayer(playerRequired)) return;
+	this.testPermissions();
+
 	if (args.length < 3)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_GET_USAGE, null);
@@ -58,9 +50,9 @@ public class SubCommandLootCrateGive implements SubCommand
 		    ImmutableMap.of(Placeholder.PLAYER_NAME, args[1]));
 	    return;
 	}
-	
+
 	Player player = Bukkit.getPlayer(args[1]);
-	
+
 	if (CommandUtils.tryParse(args[2]) == null)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_GET_USAGE, null);
@@ -97,9 +89,11 @@ public class SubCommandLootCrateGive implements SubCommand
 	} else
 	    player.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_SENDER,
-		ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(), Placeholder.PLAYER_NAME, player.getName()));
+		ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+			Placeholder.PLAYER_NAME, player.getName()));
 	plugin.messageManager.sendMessage(player, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER,
-		ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(), Placeholder.SENDER_NAME,  sender.getName()));
+		ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+			Placeholder.SENDER_NAME, sender.getName()));
 
     }
 
@@ -111,10 +105,10 @@ public class SubCommandLootCrateGive implements SubCommand
 	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_GIVE.getKey())
 		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	    return list;
-	
-	if(args.length == 2)
+
+	if (args.length == 2)
 	{
-	    for(Player pl : Bukkit.getOnlinePlayers())
+	    for (Player pl : Bukkit.getOnlinePlayers())
 		list.add(pl.getName());
 	}
 	if (args.length == 3)

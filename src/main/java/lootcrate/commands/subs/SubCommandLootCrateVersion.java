@@ -6,13 +6,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
+import lootcrate.commands.SubCommand;
 import lootcrate.managers.UpdateManager;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
-import lootcrate.utils.interfaces.SubCommand;
 import net.md_5.bungee.api.ChatColor;
 
-public class SubCommandLootCrateVersion implements SubCommand
+public class SubCommandLootCrateVersion extends SubCommand
 {
     private String[] args;
     private CommandSender sender;
@@ -21,6 +21,7 @@ public class SubCommandLootCrateVersion implements SubCommand
     
     public SubCommandLootCrateVersion(LootCrate plugin, CommandSender sender, String[] args)
     {
+	super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_VERSION, Permission.COMMAND_LOOTCRATE_ADMIN);
 	this.plugin = plugin;
 	this.sender = sender;
 	this.args = args;
@@ -30,17 +31,9 @@ public class SubCommandLootCrateVersion implements SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(playerRequired && !(sender instanceof Player))
-	{
-	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
-	    return;
-	}
+	if(this.testPlayer(playerRequired)) return;
+	this.testPermissions();
 	
-	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_VERSION.getKey()) && !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
-	{
-	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
-	    return;
-	}
 	if (args.length != 1)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_VERION_USAGE, null);

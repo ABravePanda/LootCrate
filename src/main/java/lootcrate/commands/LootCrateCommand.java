@@ -22,9 +22,8 @@ import lootcrate.commands.subs.SubCommandLootCrateSet;
 import lootcrate.commands.subs.SubCommandLootCrateVersion;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
-import lootcrate.utils.interfaces.Command;
 
-public class LootCrateCommand implements Command
+public class LootCrateCommand extends Command
 {
 
     private LootCrate plugin;
@@ -150,7 +149,7 @@ public class LootCrateCommand implements Command
     
     public boolean hasPermission(CommandSender sender, Permission permission)
     {
-	return sender.hasPermission(permission.getKey()) || sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey());
+	return this.hasPermission(sender, permission, Permission.COMMAND_LOOTCRATE_ADMIN);
     }
 
 }
