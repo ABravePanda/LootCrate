@@ -93,6 +93,11 @@ public class SubCommandLootCrateCommand extends SubCommand
 	}
 	if (args.length == 3)
 	{
+	    if(CommandUtils.tryParse(args[1]) == null)
+	    {
+		list.add("Invalid Crate");
+		return list;
+	    }
 	    list.add("[ItemID]");
 	    TabUtils.addCrateItemsToListFromID(list, plugin.crateManager, Integer.parseInt(args[1]));
 	}
