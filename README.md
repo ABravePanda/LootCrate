@@ -11,4 +11,4 @@ More to come soon...
 [![Spigot Downloads](https://img.shields.io/spiget/downloads/87046?color=FF7474&style=for-the-badge)](https://www.spigotmc.org/resources/lootcrate-server-crate-plugin-1-16-x-server-must-have-free.87046/)
 [![Github Issues](https://img.shields.io/github/issues/ABravePanda/LootCrate?color=FF7474&style=for-the-badge)](https://github.com/ABravePanda/LootCrate/issues)
 [![Code Quality](https://img.shields.io/codefactor/grade/github/ABravePanda/LootCrate?style=for-the-badge)](https://github.com/ABravePanda/LootCrate)
-[![Commits](https://img.shields.io/github/commits-since/ABravePanda/LootCrate/latest?color=FF7474&style=for-the-badge)(https://github.com/ABravePanda/LootCrate/commits/master)
+[![Commits](https://img.shields.io/github/commits-since/ABravePanda/LootCrate/latest?color=FF7474&style=for-the-badge)](https://github.com/ABravePanda/LootCrate/commits/master)
