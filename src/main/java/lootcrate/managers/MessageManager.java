@@ -1,6 +1,7 @@
 package lootcrate.managers;
 
 import java.util.Map;
+import java.util.regex.Matcher;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -84,8 +85,7 @@ public class MessageManager
 	{
 	    for (Map.Entry<Placeholder, String> entry : placeholders.entrySet())
 	    {
-		colorMsg = colorMsg.replaceAll("\\{" + entry.getKey().getKey() + "\\}", entry.getValue());
-		
+		colorMsg = colorMsg.replaceAll("\\{" + entry.getKey().getKey() + "\\}", Matcher.quoteReplacement(entry.getValue()));
 	    }
 	}
 	return colorMsg;

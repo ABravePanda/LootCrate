@@ -46,47 +46,51 @@ public class LootCrateCommand extends Command
 	    return;
 	}
 
-	if (args[0].equalsIgnoreCase("create"))
+	switch (args[0].toLowerCase())
+	{
+	case "create":
 	    new SubCommandLootCrateCreate(plugin, sender, args).runSubCommand(false);
-
-	else if (args[0].equalsIgnoreCase("key"))
+	    break;
+	case "key":
 	    new SubCommandLootCrateKey(plugin, sender, args).runSubCommand(true);
-
-	else if (args[0].equalsIgnoreCase("add"))
+	    break;
+	case "add":
 	    new SubCommandLootCrateAdd(plugin, sender, args).runSubCommand(true);
-
-	else if (args[0].equalsIgnoreCase("remove"))
+	    break;
+	case "remove":
 	    new SubCommandLootCrateRemove(plugin, sender, args).runSubCommand(false);
-
-	else if (args[0].equalsIgnoreCase("items"))
+	    break;
+	case "items":
 	    new SubCommandLootCrateItems(plugin, sender, args).runSubCommand(false);
-
-	else if (args[0].equalsIgnoreCase("give"))
+	    break;
+	case "give":
 	    new SubCommandLootCrateGive(plugin, sender, args).runSubCommand(false);
-
-	else if (args[0].equalsIgnoreCase("set"))
+	    break;
+	case "set":
 	    new SubCommandLootCrateSet(plugin, sender, args).runSubCommand(true);
-
-	else if (args[0].equalsIgnoreCase("command"))
+	    break;
+	case "command":
 	    new SubCommandLootCrateCommand(plugin, sender, args).runSubCommand(false);
-
-	else if (args[0].equalsIgnoreCase("reload"))
+	    break;
+	case "reload":
 	    new SubCommandLootCrateReload(plugin, sender, args).runSubCommand(false);
-
-	else if (args[0].equalsIgnoreCase("displaychances"))
+	    break;
+	case "displaychances":
 	    new SubCommandLootCrateDisplayChances(plugin, sender, args).runSubCommand(false);
-
-	else if (args[0].equalsIgnoreCase("version"))
+	    break;
+	case "version":
 	    new SubCommandLootCrateVersion(plugin, sender, args).runSubCommand(false);
-	
-	else if (args[0].equalsIgnoreCase("delete"))
+	    break;
+	case "delete":
 	    new SubCommandLootCrateDelete(plugin, sender, args).runSubCommand(false);
-	
-	else if (args[0].equalsIgnoreCase("list"))
+	    break;
+	case "list":
 	    new SubCommandLootCrateList(plugin, sender, args).runSubCommand(false);
-	
-	else
+	    break;
+	default:
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
+	    break;
+	}
     }
 
     @Override
@@ -95,57 +99,70 @@ public class LootCrateCommand extends Command
 	List<String> list = new LinkedList<String>();
 	if (args.length == 1)
 	{
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_CREATE)) list.add("create");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_DELETE)) list.add("delete");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_ADD)) list.add("add");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_REMOVE)) list.add("remove");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_SET)) list.add("set");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_GIVE)) list.add("give");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_KEY)) list.add("key");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_ITEMS)) list.add("items");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_LIST)) list.add("list");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_COMMAND)) list.add("command");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_RELOAD)) list.add("reload");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES)) list.add("displaychances");
-	    if(hasPermission(sender, Permission.COMMAND_LOOTCRATE_VERSION)) list.add("version");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_CREATE))
+		list.add("create");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_DELETE))
+		list.add("delete");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_ADD))
+		list.add("add");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_REMOVE))
+		list.add("remove");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_SET))
+		list.add("set");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_GIVE))
+		list.add("give");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_KEY))
+		list.add("key");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_ITEMS))
+		list.add("items");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_LIST))
+		list.add("list");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_COMMAND))
+		list.add("command");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_RELOAD))
+		list.add("reload");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES))
+		list.add("displaychances");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_VERSION))
+		list.add("version");
 	    return list;
 	}
 
 	list.clear();
 
-	if (args[0].equalsIgnoreCase("create"))
+	switch (args[0].toLowerCase())
+	{
+	case "create":
 	    return new SubCommandLootCrateCreate(plugin, sender, args).runTabComplete();
-
-	if (args[0].equalsIgnoreCase("delete"))
-	    return new SubCommandLootCrateDelete(plugin, sender, args).runTabComplete();
-	
-	if (args[0].equalsIgnoreCase("give"))
-	    return new SubCommandLootCrateGive(plugin, sender, args).runTabComplete();
-
-	if (args[0].equalsIgnoreCase("set"))
-	    return new SubCommandLootCrateSet(plugin, sender, args).runTabComplete();
-
-	if (args[0].equalsIgnoreCase("items"))
-	    return new SubCommandLootCrateItems(plugin, sender, args).runTabComplete();
-
-	if (args[0].equalsIgnoreCase("add"))
-	    return new SubCommandLootCrateAdd(plugin, sender, args).runTabComplete();
-
-	if (args[0].equalsIgnoreCase("key"))
+	case "key":
 	    return new SubCommandLootCrateKey(plugin, sender, args).runTabComplete();
-	
-	if (args[0].equalsIgnoreCase("remove"))
+	case "add":
+	    return new SubCommandLootCrateAdd(plugin, sender, args).runTabComplete();
+	case "remove":
 	    return new SubCommandLootCrateRemove(plugin, sender, args).runTabComplete();
-
-	if (args[0].equalsIgnoreCase("command"))
+	case "items":
+	    return new SubCommandLootCrateItems(plugin, sender, args).runTabComplete();
+	case "give":
+	    return new SubCommandLootCrateGive(plugin, sender, args).runTabComplete();
+	case "set":
+	    return new SubCommandLootCrateSet(plugin, sender, args).runTabComplete();
+	case "command":
 	    return new SubCommandLootCrateCommand(plugin, sender, args).runTabComplete();
-	
-	if (args[0].equalsIgnoreCase("displaychances"))
+	case "reload":
+	    return new SubCommandLootCrateReload(plugin, sender, args).runTabComplete();
+	case "displaychances":
 	    return new SubCommandLootCrateDisplayChances(plugin, sender, args).runTabComplete();
-	
-	return list;
+	case "version":
+	    return new SubCommandLootCrateVersion(plugin, sender, args).runTabComplete();
+	case "delete":
+	    return new SubCommandLootCrateDelete(plugin, sender, args).runTabComplete();
+	case "list":
+	    return new SubCommandLootCrateList(plugin, sender, args).runTabComplete();
+	default:
+	    return list;
+	}
     }
-    
+
     public boolean hasPermission(CommandSender sender, Permission permission)
     {
 	return this.hasPermission(sender, permission, Permission.COMMAND_LOOTCRATE_ADMIN);
