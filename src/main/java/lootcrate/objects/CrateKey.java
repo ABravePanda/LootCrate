@@ -8,12 +8,13 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class CrateKey
+public class CrateKey implements ConfigurationSerializable
 {
     private ItemStack item;
     private boolean glowing;
@@ -22,6 +23,14 @@ public class CrateKey
     {
 	this.setItem(item);
 	this.setGlowing(glowing);
+    }
+    
+    public CrateKey(Map<String, Object> data)
+    {
+	if(data == null) return;
+	
+	this.item = ItemStack.deserialize((Map<String, Object>) data.get("Item"));
+	this.glowing = (boolean) data.get("Glowing");
     }
 
     public ItemStack getItem()
@@ -55,44 +64,9 @@ public class CrateKey
     {
 	Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-	map.put("Material", getItem().getType().toString());
-	map.put("Name", getItem().getItemMeta().getDisplayName());
-	map.put("Lore", getItem().getItemMeta().getLore());
+	map.put("Item", getItem().serialize());
 	map.put("Glowing", isGlowing());
 
 	return map;
-    }
-
-
-    public static CrateKey deserialize(MemorySection section)
-    {
-	Map<String, Object> map = new LinkedHashMap<String, Object>();
-
-	for (String s : section.getKeys(false))
-	    map.put(s, section.get(s));
-
-	ItemStack item = new ItemStack(Material.valueOf((String) map.get("Material")));
-	ItemMeta meta = item.getItemMeta();
-
-	if (map.get("Name") != null)
-	    meta.setDisplayName((String) map.get("Name"));
-	if (map.get("Lore") != null)
-	    meta.setLore((List<String>) map.get("Lore"));
-
-	item.setItemMeta(meta);
-
-	CrateKey key = new CrateKey(item, (Boolean) map.get("Glowing"));
-
-	return key;
-    }
-
-    public static ItemStack deserializeEnchantments(ItemStack item, ConfigurationSection section)
-    {
-	for (String s : section.getKeys(false))
-	{
-	    Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(s));
-	    item.addEnchantment(enchantment, (Integer) section.get(s));
-	}
-	return item;
     }
 }

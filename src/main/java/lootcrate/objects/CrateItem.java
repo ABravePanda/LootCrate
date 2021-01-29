@@ -8,15 +8,13 @@ import java.util.Map;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import lootcrate.other.CrateOptionType;
 import lootcrate.utils.ObjUtils;
-import net.md_5.bungee.api.ChatColor;
 
-public class CrateItem implements Comparable<CrateItem>
+public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializable
 {
     private int id;
     private ItemStack item;
@@ -38,6 +36,20 @@ public class CrateItem implements Comparable<CrateItem>
 	    this.setCommands(commands);
 	else
 	    this.setCommands(new ArrayList<String>());
+    }
+    
+    public CrateItem(Map<String,Object> data)
+    {
+	if(data == null) return;
+	
+	this.id = (int) data.get("ID");
+	this.item = (ItemStack) data.get("Item");
+	this.chance = (int) data.get("Chance");
+	this.minAmount = (int) data.get("MinAmount");
+	this.maxAmount = (int) data.get("MaxAmount");
+	this.commands = (List<String>) data.get("Commands");
+	this.isDisplay = (boolean) data.get("isDisplay");
+	
     }
 
     public int getId()
@@ -116,44 +128,6 @@ public class CrateItem implements Comparable<CrateItem>
 	return map;
     }
 
-    @SuppressWarnings("unchecked")
-    public static CrateItem deserialize(MemorySection section)
-    {
-	Map<String, Object> map = new LinkedHashMap<String, Object>();
-
-	for (String s : section.getKeys(false))
-	    map.put(s, section.get(s));
-
-	
-	if(map.size() == 0) return null;
-	
-	ItemStack item = ItemStack.deserialize(section.getConfigurationSection("Item").getValues(true));
-	
-	CrateItem crateItem = new CrateItem(item, (Integer) map.get("MinAmount"), (Integer) map.get("MaxAmount"),(Integer) map.get("Chance"), (Boolean) map.get("isDisplay"), (List<String>) map.get("Commands"));
-	crateItem.setId((Integer) map.get("ID"));
-	
-	return crateItem;
-    }
-
-    private Map<String, Integer> serializeEnchantments()
-    {
-	Map<String, Integer> map = new LinkedHashMap<String, Integer>();
-	for (Enchantment e : getItem().getEnchantments().keySet())
-	{
-	    map.put(e.getKey().getKey(), (Integer) getItem().getEnchantmentLevel(e));
-	}
-	return map;
-    }
-
-    public static ItemStack deserializeEnchantments(ItemStack item, ConfigurationSection section)
-    {
-	for (String s : section.getKeys(false))
-	{
-	    Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(s));
-	    item.addEnchantment(enchantment, (Integer) section.get(s));
-	}
-	return item;
-    }
 
     public boolean isDisplay()
     {
@@ -170,5 +144,6 @@ public class CrateItem implements Comparable<CrateItem>
     {
 	return Integer.valueOf(this.getChance()).compareTo(Integer.valueOf(o.getChance()));
     }
+
 
 }

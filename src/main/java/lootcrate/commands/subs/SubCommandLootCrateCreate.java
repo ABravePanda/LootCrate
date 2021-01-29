@@ -43,7 +43,7 @@ public class SubCommandLootCrateCreate extends SubCommand
 
 	Crate crate = new Crate(CommandUtils.builder(args, 1));
 	plugin.crateManager.addDefaultOptions(crate);
-	plugin.crateManager.save(crate);
+	plugin.cacheManager.update(crate);
 
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,
 		ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));

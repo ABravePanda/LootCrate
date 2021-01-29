@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
 import lootcrate.events.custom.CrateOpenEvent;
+import lootcrate.gui.frames.CrateOpenFrame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.other.Message;
@@ -92,6 +93,11 @@ public class CrateOpenListener implements Listener
 	    for (int j = 0; j < i; j++)
 		Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), cmd.replace("{player}", p.getName()));
 	}
+	
+	
+	CrateOpenFrame frame = new CrateOpenFrame(plugin, p, crate);
+	frame.open();
+	frame.showAnimation();
     }
 
 }

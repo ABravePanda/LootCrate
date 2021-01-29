@@ -47,7 +47,7 @@ public class SubCommandLootCrateRemove extends SubCommand
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_REMOVE_USAGE, null);
 	    return;
 	}
-	Crate crate = plugin.crateManager.getCrateById(CommandUtils.tryParse(args[1]));
+	Crate crate = plugin.cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
 	if (crate == null)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
@@ -63,7 +63,7 @@ public class SubCommandLootCrateRemove extends SubCommand
 	    return;
 	}
 	crate.removeItem(item);
-	plugin.crateManager.save(crate);
+	plugin.cacheManager.update(crate);
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_REMOVE_SUCCESS,
 		ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
 			Placeholder.ITEM_ID, "" + CommandUtils.tryParse(args[2])));
@@ -82,12 +82,12 @@ public class SubCommandLootCrateRemove extends SubCommand
 	if (args.length == 2)
 	{
 	    list.add("[CrateID]");
-	    TabUtils.addCratesToList(list, plugin.crateManager);
+	    TabUtils.addCratesToList(list, plugin.cacheManager);
 	}
 	if (args.length == 3)
 	{
 	    list.add("[ItemID]");
-	    TabUtils.addCrateItemsToListFromID(list, plugin.crateManager, Integer.parseInt(args[1]));
+	    TabUtils.addCrateItemsToListFromID(list, plugin.cacheManager, Integer.parseInt(args[1]));
 	}
 	return list;
     }

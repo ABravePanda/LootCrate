@@ -7,11 +7,12 @@ import java.util.Map;
 
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import lootcrate.other.CrateOptionType;
 import lootcrate.utils.ObjUtils;
 
-public class Crate
+public class Crate implements ConfigurationSerializable
 {
     private int id;
     private String name;
@@ -43,6 +44,16 @@ public class Crate
 	this.setItems(new ArrayList<CrateItem>());
 	this.setOptions(new LinkedHashMap<CrateOptionType, Object>());
     }
+    
+    public Crate(Map<String,Object> data)
+    {
+	this.id = (int) data.get("Id");
+	this.name = (String) data.get("Name");
+	this.key = new CrateKey((Map<String, Object>) data.get("Key"));
+	this.items = (List<CrateItem>) data.get("Items");
+	this.options = (Map<CrateOptionType, Object>) getDeseralizedOptions((MemorySection) data.get("Options"));
+    }
+    
     
     private int calculateChances()
     {
@@ -116,30 +127,7 @@ public class Crate
 	    if(item2.getId() == item.getId()) item2 = item;
 	}
     }
-    
-    public Map<Integer, Map<String, Object>> getSeralizedItems()
-    {
-	Map<Integer, Map<String, Object>> map = new LinkedHashMap<Integer, Map<String, Object>>();
-	if(getItems() == null) return map;
-	for(CrateItem item : getItems())
-	{
-	    map.put(item.getId(), item.serialize());
-	}
-	return map;
-    }
-    
-    public static List<CrateItem> getDeseralizedItems(MemorySection section)
-    {
-	List<CrateItem> item = new ArrayList<CrateItem>();
-	for (String s : section.getKeys(false))
-	{
-	    MemorySection itemSection = (MemorySection) section.get(s);
-	    CrateItem item2 = CrateItem.deserialize(itemSection);
-	    item.add(item2);
-	    
-	}
-	return item;
-    }
+   
 
     public void setItems(List<CrateItem> items)
     {
@@ -150,60 +138,10 @@ public class Crate
     {
 	return calculateChances();
     }
-    
-    public Map<String, Object> serialize()
-    {
-	Map<String, Object> map = new LinkedHashMap<String, Object>();
-	
-	map.put("Id", getId());
-	map.put("Name", getName());
-	map.put("Options", getSeralizedOptions());
-	map.put("Key", getKey() != null ? getKey().serialize() : null);
-	map.put("Items", getSeralizedItems());
-	
-	return map;
-    }
-    
-    public static Crate deserialize(String location, FileConfiguration config)
-    {
-	Crate crate = new Crate(config.getString(location + ".Name"));
-	crate.id = config.getInt(location + ".Id");
-	if(config.get(location + ".Items") instanceof ArrayList)
-	    if(config.getList(location + ".Items").size() != 0);
-	if(config.get(location + ".Items") != null)
-	    crate.items = Crate.getDeseralizedItems((MemorySection) config.get(location + ".Items"));
-	if(config.get(location + ".Key") != null)
-	    crate.key = CrateKey.deserialize((MemorySection) config.get(location + ".Key"));
-	if(config.get(location + ".Options") != null)
-	    crate.options = Crate.getDeseralizedOptions((MemorySection) config.get(location + ".Options"));
-	return crate;
-    }
 
     public Map<CrateOptionType, Object> getOptions()
     {
 	return options;
-    }
-    
-    public Map<String, Object> getSeralizedOptions()
-    {
-	Map<String, Object> map = new LinkedHashMap<String, Object>();
-	for(CrateOptionType type : getOptions().keySet())
-	{
-	    map.put(type.getKey(), getOptions().get(type));
-	}
-	return map;
-    }
-    
-    public static Map<CrateOptionType, Object> getDeseralizedOptions(MemorySection section)
-    {
-	Map<CrateOptionType, Object> item = new LinkedHashMap<CrateOptionType, Object>();
-	for (String s : section.getKeys(false))
-	{
-	    CrateOptionType type = CrateOptionType.fromKey(s);
-	    Object value = section.get(s);
-	    item.put(type, value);
-	}
-	return item;
     }
 
     public void setOptions(Map<CrateOptionType, Object> options)
@@ -228,6 +166,41 @@ public class Crate
 	if(getOptions().containsKey(option.getKey()))
 	    getOptions().remove(option.getKey());
 	getOptions().put(option.getKey(), option.getValue());
+    }
+    
+    
+    @Override
+    public Map<String, Object> serialize()
+    {
+	Map<String, Object> map = new LinkedHashMap<String, Object>();
+	map.put("Id", getId());
+	map.put("Name", getName());
+	map.put("Options", getSeralizedOptions());
+	map.put("Key", getKey() != null ? getKey().serialize() : null);
+	map.put("Items", getItems());
+	return map;
+    }
+    
+    public Map<String, Object> getSeralizedOptions()
+    {
+	Map<String, Object> map = new LinkedHashMap<String, Object>();
+	for(CrateOptionType type : getOptions().keySet())
+	{
+	    map.put(type.getKey(), getOptions().get(type));
+	}
+	return map;
+    }
+    
+    public Map<CrateOptionType, Object> getDeseralizedOptions(MemorySection section)
+    {
+	Map<CrateOptionType, Object> item = new LinkedHashMap<CrateOptionType, Object>();
+	for (String s : section.getKeys(false))
+	{
+	    CrateOptionType type = CrateOptionType.fromKey(s);
+	    Object value = section.get(s);
+	    item.put(type, value);
+	}
+	return item;
     }
 
 }

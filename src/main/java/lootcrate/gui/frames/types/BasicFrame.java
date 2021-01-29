@@ -2,10 +2,13 @@ package lootcrate.gui.frames.types;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
 import lootcrate.LootCrate;
+import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.items.GUIItem;
 
 public abstract class BasicFrame implements Frame, Listener
@@ -103,6 +106,22 @@ public abstract class BasicFrame implements Frame, Listener
     private Inventory createInventory()
     {
 	return Bukkit.createInventory(null, 45, getTitle());
+    }
+    
+    @EventHandler
+    public void onInventoryClickEvent(InventoryClickEvent e)
+    {
+	if (!((Player) e.getWhoClicked()).equals(this.getViewer()))
+	    return;
+	if (e.getInventory() != this.getInventory())
+	    return;
+	if (e.getCurrentItem() == null)
+	    return;
+
+	e.setCancelled(true);
+	
+	GUIItemClickEvent event = new GUIItemClickEvent((Player) e.getWhoClicked(), getContents()[e.getSlot()], this);
+	Bukkit.getPluginManager().callEvent(event);
     }
     
     

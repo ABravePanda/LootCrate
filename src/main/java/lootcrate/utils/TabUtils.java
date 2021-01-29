@@ -2,16 +2,16 @@ package lootcrate.utils;
 
 import java.util.List;
 
-import lootcrate.managers.CrateManager;
+import lootcrate.managers.CacheManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 
 public class TabUtils
 {
 
-    public static void addCratesToList(List<String> list, CrateManager manager)
+    public static void addCratesToList(List<String> list, CacheManager manager)
     {
-	for (Crate crate : manager.load())
+	for (Crate crate : manager.getCache())
 	{
 	    list.add(crate.getId() + "");
 	}
@@ -25,7 +25,7 @@ public class TabUtils
 	}
     }
     
-    public static void addCrateItemsToListFromID(List<String> list, CrateManager manager, int id)
+    public static void addCrateItemsToListFromID(List<String> list, CacheManager manager, int id)
     {
 	Crate crate = manager.getCrateById(id);
 	if(crate == null) return;

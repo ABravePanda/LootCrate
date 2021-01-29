@@ -3,9 +3,11 @@ package lootcrate.objects;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+
 import lootcrate.other.CrateOptionType;
 
-public class CrateOption
+public class CrateOption implements ConfigurationSerializable
 {
     private CrateOptionType key;
     private Object value;
@@ -14,6 +16,12 @@ public class CrateOption
     {
 	this.setKey(key);
 	this.setValue(value);
+    }
+    
+    public CrateOption(Map<String,Object> data)
+    {
+	this.key = CrateOptionType.valueOf((String) data.keySet().toArray()[0]);
+	this.value = data.get(getKey());
     }
     
     public CrateOptionType getKey()
@@ -36,11 +44,11 @@ public class CrateOption
 	this.value = value;
     }
 
-    public Map<CrateOptionType, Object> serialize()
+    public Map<String, Object> serialize()
     {
-	Map<CrateOptionType, Object> map = new LinkedHashMap<CrateOptionType, Object>();
+	Map<String, Object> map = new LinkedHashMap<String, Object>();
 	
-	map.put(getKey(), getValue());
+	map.put("DUH", getValue());
 	
 	return map;
     }

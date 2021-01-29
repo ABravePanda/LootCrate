@@ -49,7 +49,7 @@ public class SubCommandLootCrateItems extends SubCommand
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_USAGE, null);
 	    return;
 	}
-	Crate crate = plugin.crateManager.getCrateById(CommandUtils.tryParse(args[1]));
+	Crate crate = plugin.cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
 	if (crate == null)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
@@ -84,7 +84,7 @@ public class SubCommandLootCrateItems extends SubCommand
 	if (args.length == 2)
 	    {
 		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, plugin.crateManager);
+		TabUtils.addCratesToList(list, plugin.cacheManager);
 	    }
 	    return list;
     }

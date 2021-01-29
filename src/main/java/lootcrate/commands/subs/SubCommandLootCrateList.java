@@ -42,7 +42,7 @@ public class SubCommandLootCrateList extends SubCommand
 	    return;
 	}
 
-	List<Crate> crates = plugin.crateManager.load();
+	List<Crate> crates = plugin.cacheManager.getCache();
 	for (Crate crate : crates)
 	{
 	    Map<Placeholder, String> map = new HashMap<Placeholder, String>();

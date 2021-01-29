@@ -13,7 +13,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import lootcrate.LootCrate;
 import lootcrate.events.custom.CrateAccessEvent;
-import lootcrate.managers.CrateManager;
+import lootcrate.managers.CacheManager;
 import lootcrate.managers.InventoryManager;
 import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
@@ -24,14 +24,14 @@ public class LootCrateInteractEvent implements Listener
 {
     private LootCrate plugin;
     private MessageManager messageManager;
-    private CrateManager crateManager;
+    private CacheManager cacheManager;
     private InventoryManager invManager;
 
     public LootCrateInteractEvent(LootCrate plugin)
     {
 	this.plugin = plugin;
 	this.messageManager = plugin.messageManager;
-	this.crateManager = plugin.crateManager;
+	this.cacheManager = plugin.cacheManager;
 	this.invManager = plugin.invManager;
     }
 
@@ -49,7 +49,7 @@ public class LootCrateInteractEvent implements Listener
 	    {
 		e.setCancelled(true);
 		
-		Crate crate = crateManager.getCrateById(plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation()).getId());
+		Crate crate = cacheManager.getCrateById(plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation()).getId());
 		
 		CrateAccessEvent event = new CrateAccessEvent(crate, p, e.getAction());
 		Bukkit.getPluginManager().callEvent(event);

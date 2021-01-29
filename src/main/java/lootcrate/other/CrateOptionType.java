@@ -9,8 +9,8 @@ public enum CrateOptionType
     HOLOGRAM_LINES("Hologram-Lines", DataType.LIST),
     HOLOGRAM_OFFSET_X("Hologram-Offset-X", DataType.BOOLEAN),
     HOLOGRAM_OFFSET_Y("Hologram-Offset-Y", DataType.BOOLEAN),
-    HOLOGRAM_OFFSET_Z("Hologram-Offset-Z", DataType.BOOLEAN),
-    CRATE_FORMAT("Crate-Format", DataType.MAP);
+    HOLOGRAM_OFFSET_Z("Hologram-Offset-Z", DataType.BOOLEAN);
+    //CRATE_FORMAT("Crate-Format", DataType.MAP);
     
     String key;
     DataType type;

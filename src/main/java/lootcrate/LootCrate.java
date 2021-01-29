@@ -2,10 +2,10 @@ package lootcrate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,21 +13,27 @@ import lootcrate.events.listeners.LootCrateInteractEvent;
 import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
-import lootcrate.gui.frames.CrateViewFrame;
-import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
 import lootcrate.managers.CommandManager;
 import lootcrate.managers.CrateManager;
+import lootcrate.managers.FileManager;
 import lootcrate.managers.HologramManager;
 import lootcrate.managers.InventoryManager;
 import lootcrate.managers.LocationManager;
 import lootcrate.managers.MessageManager;
 import lootcrate.managers.OptionManager;
 import lootcrate.managers.UpdateManager;
+import lootcrate.objects.Crate;
+import lootcrate.objects.CrateItem;
+import lootcrate.objects.CrateKey;
+import lootcrate.objects.CrateOption;
 import net.md_5.bungee.api.ChatColor;
 
 public class LootCrate extends JavaPlugin
 { 
     public MessageManager messageManager;
+    public FileManager fileManager;
+    public CacheManager cacheManager;
     public CrateManager crateManager;
     public LocationManager locationManager;
     public InventoryManager invManager;
@@ -43,11 +49,16 @@ public class LootCrate extends JavaPlugin
     @Override
     public void onEnable()
     {
+	initSerial();
+	
 	registerConfig();
 	optionManager = new OptionManager(this);
 	updateManager = new UpdateManager(this);
-	displayIntro();
 	messageManager = new MessageManager(this);
+	fileManager = new FileManager(this);
+	cacheManager = new CacheManager(this);
+	cacheManager.load();
+	displayIntro();
 	crateManager = new CrateManager(this);
 	locationManager = new LocationManager(this);
 	locationManager.populateLocations();
@@ -81,7 +92,7 @@ public class LootCrate extends JavaPlugin
     
     public void reload()
     {
-	crateManager.reload();
+	cacheManager.reload();
 	locationManager.reload();
 	
 	if(holoHook())
@@ -96,6 +107,8 @@ public class LootCrate extends JavaPlugin
 	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + this.getServer().getName() + " v" + this.getServer().getBukkitVersion());
 	if(updateManager.checkForUpdates())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion() + "). Download here: " + updateManager.getResourceURL());
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Cached " + ChatColor.YELLOW
+		+ cacheManager.getCache().size() + ChatColor.DARK_GRAY + " crate(s).");
 	if(holoHook())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
 	if(initMetrics())
@@ -113,6 +126,14 @@ public class LootCrate extends JavaPlugin
 	int pluginId = 9767;
         Metrics metrics = new Metrics(this, pluginId);
         return metrics.isEnabled();
+    }
+    
+    public void initSerial()
+    {
+	ConfigurationSerialization.registerClass(Crate.class);
+	ConfigurationSerialization.registerClass(CrateKey.class);
+	ConfigurationSerialization.registerClass(CrateOption.class);
+	ConfigurationSerialization.registerClass(CrateItem.class);
     }
 
 }
