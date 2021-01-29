@@ -2,6 +2,7 @@ package lootcrate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -12,6 +13,7 @@ import lootcrate.events.listeners.LootCrateInteractEvent;
 import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
+import lootcrate.gui.items.GUIItem;
 import lootcrate.managers.CommandManager;
 import lootcrate.managers.CrateManager;
 import lootcrate.managers.HologramManager;
@@ -56,8 +58,6 @@ public class LootCrate extends JavaPlugin
 	
 	registerEvents();
 	reload();
-	
-	
     }
 
     @Override
