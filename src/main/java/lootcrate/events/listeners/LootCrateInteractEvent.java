@@ -40,22 +40,17 @@ public class LootCrateInteractEvent implements Listener
     {
 	Player p = e.getPlayer();
 
-	//if the player right or left clicks the block
 	if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_BLOCK)
 	{
 	    if (e.getHand() != EquipmentSlot.HAND)
 		return;
 	    
-	    // if the player clicked on a lootcrate
 	    if (plugin.locationManager.getLocationList().containsKey(e.getClickedBlock().getLocation()))
 	    {
-		// cancel it
 		e.setCancelled(true);
 		
-		//get the crate
 		Crate crate = crateManager.getCrateById(plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation()).getId());
 		
-		//call access event
 		CrateAccessEvent event = new CrateAccessEvent(crate, p, e.getAction());
 		Bukkit.getPluginManager().callEvent(event);
 		if(event.isCancelled()) e.setCancelled(true);		  

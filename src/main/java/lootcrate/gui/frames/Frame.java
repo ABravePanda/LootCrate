@@ -11,4 +11,8 @@ public interface Frame
     String getTitle();
     GUIItem[] getContents();
     Inventory getInventory();
+    void setItem(int slot, GUIItem item);
+    void open();
+    void close();
+    abstract void generateFrame();
 }

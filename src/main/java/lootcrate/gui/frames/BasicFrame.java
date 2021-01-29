@@ -17,7 +17,12 @@ public abstract class BasicFrame implements Frame
     {
 	this.player = p;
 	this.title = title;
-	this.contents = contents;
+	
+	if(contents.length != 45)
+	    this.contents = new GUIItem[45];
+	else
+	    this.contents = contents;
+	
 	this.inventory = createInventory();
     }
     
@@ -53,9 +58,34 @@ public abstract class BasicFrame implements Frame
 	return this.inventory;
     }
     
+    @Override
+    public void open()
+    {
+	player.closeInventory();
+	player.openInventory(getInventory());
+    }
+    
+    @Override
+    public void close()
+    {
+	player.closeInventory();
+    }
+    
+    public abstract void generateFrame();
+    
+    public void setItem(int slot, GUIItem item)
+    {
+	if(slot >= contents.length || slot < 0) return;
+	
+	contents[slot] = item;
+	getInventory().setItem(slot, item.getItemStack());
+    }
+    
     private Inventory createInventory()
     {
 	return Bukkit.createInventory(null, 45, getTitle());
     }
+    
+    
 
 }
