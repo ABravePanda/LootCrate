@@ -1,6 +1,5 @@
 package lootcrate.gui.items;
 
-
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
@@ -11,44 +10,48 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import lootcrate.gui.events.custom.GUIItemClickEvent;
+
 public class GUIItem implements Listener
 {
     private ItemStack item;
     private Callable<Integer> function;
-    
+
     public GUIItem(ItemStack item, String name, String... lore)
     {
-	this.item = editMeta(item,name,lore);
+	this.item = editMeta(item, name, lore);
     }
-    
+
     public GUIItem(Material mat, String name, String... lore)
     {
-	this.item = editMeta(new ItemStack(mat),name,lore);
+	this.item = editMeta(new ItemStack(mat), name, lore);
     }
-    
+
     public GUIItem(Material mat)
     {
 	this.item = new ItemStack(mat);
     }
-    
+
     public GUIItem(ItemStack item)
     {
 	this.item = item;
     }
-    
-    public GUIItem() {}
-    
+
+    public GUIItem()
+    {
+    }
+
     public ItemStack getItemStack()
     {
 	return this.item;
     }
-    
+
     public void setClickHandler(Callable<Integer> function)
     {
 	this.function = function;
     }
-    
-    private ItemStack editMeta(ItemStack item, String name, String...lore)
+
+    private ItemStack editMeta(ItemStack item, String name, String... lore)
     {
 	ItemMeta meta = item.getItemMeta();
 	meta.setDisplayName(name);
@@ -57,17 +60,14 @@ public class GUIItem implements Listener
 	return item;
     }
 
-    
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent e) throws Exception
+    public void onGUIClick(GUIItemClickEvent e) throws Exception
     {
-	if(e.getCurrentItem() == null) return;
-	
-	if(e.getCurrentItem().equals(getItemStack()))
-	{
-	    if(function != null)
-		function.call();
-	    e.setCancelled(true);
-	}
+	if (e.getItem() != this)
+	    return;
+
+	if (function != null)
+	    function.call();
+	e.setCancelled(true);
     }
 }

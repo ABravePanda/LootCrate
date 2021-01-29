@@ -34,26 +34,16 @@ public class InventoryManager
     }
 
     /**
-     * Opens the crate inventory for specified player
      * 
-     * @param p
-     *            Players who will view the inventory
      * @param crate
-     *            Crate which should be opened
+     * @return
      */
-    public void openCrateInventory(Player p, Crate crate)
+    public List<CrateItem> addCrateEffects(Crate crate)
     {
-	if (isInInventory(p))
-	    return;
-
-	Inventory inv = Bukkit.createInventory(null, crate.getItems().size() > 26 ? 54 : 27, crate.getName());
-
-	if (crate.getItems().size() > 54)
-	    return;
-
 	List<CrateItem> items = crate.getItems();
+	List<CrateItem> newList = new ArrayList<CrateItem>();
 	Collections.sort(items);
-	for (CrateItem item : items)
+	for (CrateItem item : new ArrayList<CrateItem>(items))
 	{
 	    item = ObjUtils.assignRandomIDToItem(plugin, item);
 	    ItemStack itemStack = item.getItem().clone();
@@ -65,11 +55,11 @@ public class InventoryManager
 		lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Chance: " + ChatColor.RED + item.getChance() + "%");
 		meta.setLore(lore);
 		itemStack.setItemMeta(meta);
+		item.setItem(itemStack);
+		newList.add(item);
 	    }
-	    inv.addItem(itemStack);
 	}
-	plugin.playersInInventory.add(p);
-	p.openInventory(inv);
+	return newList;
     }
 
     /**

@@ -10,8 +10,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import lootcrate.other.CrateOptionType;
 import lootcrate.utils.ObjUtils;
+import net.md_5.bungee.api.ChatColor;
 
 public class CrateItem implements Comparable<CrateItem>
 {

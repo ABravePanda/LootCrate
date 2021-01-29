@@ -1,20 +1,24 @@
-package lootcrate.gui.frames;
+package lootcrate.gui.frames.types;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 
+import lootcrate.LootCrate;
 import lootcrate.gui.items.GUIItem;
 
-public abstract class BasicFrame implements Frame
+public abstract class BasicFrame implements Frame, Listener
 {
+    private LootCrate plugin;
     private Player player;
     private String title;
     private GUIItem[] contents;
     private Inventory inventory;
     
-    public BasicFrame(Player p, String title, GUIItem[] contents)
+    public BasicFrame(LootCrate plugin, Player p, String title, GUIItem[] contents)
     {
+	this.plugin = plugin;
 	this.player = p;
 	this.title = title;
 	
@@ -26,8 +30,9 @@ public abstract class BasicFrame implements Frame
 	this.inventory = createInventory();
     }
     
-    public BasicFrame(Player p, String title)
+    public BasicFrame(LootCrate plugin, Player p, String title)
     {
+	this.plugin = plugin;
 	this.player = p;
 	this.title = title;
 	this.contents = new GUIItem[45];
@@ -69,6 +74,20 @@ public abstract class BasicFrame implements Frame
     public void close()
     {
 	player.closeInventory();
+    }
+    
+    @Override
+    public void registerItems()
+    {
+	for(GUIItem item : getContents())
+	    if(item != null)
+		plugin.getServer().getPluginManager().registerEvents(item, plugin);
+    }
+    
+    @Override
+    public void registerFrame()
+    {
+	plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     
     public abstract void generateFrame();

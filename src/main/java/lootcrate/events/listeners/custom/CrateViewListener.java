@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 
 import lootcrate.LootCrate;
 import lootcrate.events.custom.CrateViewEvent;
+import lootcrate.gui.frames.CrateViewFrame;
 
 public class CrateViewListener implements Listener
 {
@@ -18,7 +19,9 @@ public class CrateViewListener implements Listener
     @EventHandler
     public void onView(CrateViewEvent e)
     {
-	    plugin.invManager.openCrateInventory(e.getPlayer(), e.getCrate());
+	   // plugin.invManager.openCrateInventory(e.getPlayer(), e.getCrate());
+	    CrateViewFrame frame = new CrateViewFrame(plugin, e.getPlayer(), e.getCrate());
+	    frame.open();
     }
 
 }

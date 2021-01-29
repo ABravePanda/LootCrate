@@ -59,11 +59,6 @@ public class LootCrate extends JavaPlugin
 	
 	registerEvents();
 	reload();
-	
-	
-	//TESTING ONLY
-	//CrateViewFrame frame = new CrateViewFrame(Bukkit.getPlayer("A_Brave_Panda"), "Title");
-	//frame.open();
     }
 
     @Override
@@ -77,7 +72,6 @@ public class LootCrate extends JavaPlugin
 	this.getServer().getPluginManager().registerEvents(new CrateAccessListener(this), this);
 	this.getServer().getPluginManager().registerEvents(new CrateOpenListener(this), this);
 	this.getServer().getPluginManager().registerEvents(new CrateViewListener(this), this);
-	this.getServer().getPluginManager().registerEvents(new GUIItem(), this);
     }
     
     public void registerConfig()
