@@ -69,7 +69,6 @@ public class LootCrate extends JavaPlugin
 	    holoManager = new HologramManager(this);
 	
 	registerEvents();
-	reload();
     }
 
     @Override

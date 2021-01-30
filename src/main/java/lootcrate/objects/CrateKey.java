@@ -1,18 +1,16 @@
 package lootcrate.objects;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import lootcrate.utils.ObjUtils;
 
 public class CrateKey implements ConfigurationSerializable
 {
@@ -31,6 +29,16 @@ public class CrateKey implements ConfigurationSerializable
 	
 	this.item = ItemStack.deserialize((Map<String, Object>) data.get("Item"));
 	this.glowing = (boolean) data.get("Glowing");
+    }
+    
+    public CrateKey(MemorySection section)
+    {
+    	Map<String, Object> map = ObjUtils.MemoryToMap(section);
+   	
+    	if(map.get("Item") == null) return;
+    	
+	this.item = ItemStack.deserialize(ObjUtils.MemoryToMap((MemorySection) map.get("Item")));
+	this.glowing = (boolean) map.get("Glowing");
     }
 
     public ItemStack getItem()
@@ -64,6 +72,8 @@ public class CrateKey implements ConfigurationSerializable
     {
 	Map<String, Object> map = new LinkedHashMap<String, Object>();
 
+	if(item == null) return map;
+	
 	map.put("Item", getItem().serialize());
 	map.put("Glowing", isGlowing());
 

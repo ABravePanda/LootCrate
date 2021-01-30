@@ -47,9 +47,9 @@ public class FileManager
 	    map.put("Options", m.get("Options"));
 	    map.put("Key", m.get("Key"));
 	    map.put("Items", m.get("Items"));
-	    return new Crate(map);
+	    return new Crate(plugin, map);
 	} else
-	    return new Crate((Map<String, Object>) config.get(CRATE_PREFIX + name));
+	    return new Crate(plugin, (Map<String, Object>) config.get(CRATE_PREFIX + name));
     }
 
     /**

@@ -36,10 +36,10 @@ public class InventoryManager
      * @param crate
      * @return
      */
-    public List<CrateItem> addCrateEffects(Crate crate)
+    public List<ItemStack> addCrateEffects(Crate crate)
     {
-	List<CrateItem> items = crate.getItems();
-	List<CrateItem> newList = new ArrayList<CrateItem>();
+	List<CrateItem> items = new ArrayList<CrateItem>(crate.getItems());
+	List<ItemStack> newList = new ArrayList<ItemStack>();
 	Collections.sort(items);
 	for (CrateItem item : new ArrayList<CrateItem>(items))
 	{
@@ -53,8 +53,7 @@ public class InventoryManager
 		lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Chance: " + ChatColor.RED + item.getChance() + "%");
 		meta.setLore(lore);
 		itemStack.setItemMeta(meta);
-		item.setItem(itemStack);
-		newList.add(item);
+		newList.add(itemStack);
 	    }
 	}
 	return newList;

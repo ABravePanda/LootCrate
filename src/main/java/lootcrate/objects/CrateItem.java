@@ -5,11 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 import lootcrate.utils.ObjUtils;
@@ -32,24 +29,34 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
 	this.setMinAmount(minAmount);
 	this.setMaxAmount(maxAmount);
 	this.setDisplay(isDisplay);
-	if(commands != null)
+	if (commands != null)
 	    this.setCommands(commands);
 	else
 	    this.setCommands(new ArrayList<String>());
     }
-    
-    public CrateItem(Map<String,Object> data)
+
+    public CrateItem(Map<String, Object> data)
     {
-	if(data == null) return;
-	
+	if (data == null)
+	    return;
+
 	this.id = (int) data.get("ID");
-	this.item = (ItemStack) data.get("Item");
+	
+	//TODO remove
+	//Old Version Support - will be removed in update after
+	if (data.get("Item") instanceof MemorySection)
+	{
+	    Map<String, Object> map = ObjUtils.MemoryToMap((MemorySection)data.get("Item"));
+	    this.item = ItemStack.deserialize(map);
+	} else
+	    this.item = ItemStack.deserialize((Map<String, Object>) data.get("Item"));
+	
 	this.chance = (int) data.get("Chance");
 	this.minAmount = (int) data.get("MinAmount");
 	this.maxAmount = (int) data.get("MaxAmount");
 	this.commands = (List<String>) data.get("Commands");
 	this.isDisplay = (boolean) data.get("isDisplay");
-	
+
     }
 
     public int getId()
@@ -117,6 +124,9 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
     {
 	Map<String, Object> map = new LinkedHashMap<String, Object>();
 
+	if (getItem() == null)
+	    return map;
+
 	map.put("ID", getId());
 	map.put("Item", getItem().serialize());
 	map.put("Chance", getChance());
@@ -127,7 +137,6 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
 
 	return map;
     }
-
 
     public boolean isDisplay()
     {
@@ -144,6 +153,5 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
     {
 	return Integer.valueOf(this.getChance()).compareTo(Integer.valueOf(o.getChance()));
     }
-
 
 }

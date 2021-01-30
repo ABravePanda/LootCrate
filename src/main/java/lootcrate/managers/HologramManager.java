@@ -40,7 +40,7 @@ public class HologramManager
 			(double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Y).getValue(),
 			(double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Z).getValue()));
 
-	List<String> list = (ArrayList) crate.getOption(CrateOptionType.HOLOGRAM_LINES).getValue();
+	List<String> list = (List<String>) crate.getOption(CrateOptionType.HOLOGRAM_LINES).getValue();
 	for (String line : list)
 	{
 	    hologram.appendTextLine(ChatColor.translateAlternateColorCodes('&', line).replace("{crate_name}",

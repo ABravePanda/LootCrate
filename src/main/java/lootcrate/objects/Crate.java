@@ -5,12 +5,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
+import lootcrate.LootCrate;
 import lootcrate.other.CrateOptionType;
 import lootcrate.utils.ObjUtils;
+import net.md_5.bungee.api.ChatColor;
 
 public class Crate implements ConfigurationSerializable
 {
@@ -45,13 +47,39 @@ public class Crate implements ConfigurationSerializable
 	this.setOptions(new LinkedHashMap<CrateOptionType, Object>());
     }
     
-    public Crate(Map<String,Object> data)
+    public Crate(LootCrate plugin, Map<String,Object> data)
     {
+	boolean convert = false;
+	
 	this.id = (int) data.get("Id");
 	this.name = (String) data.get("Name");
-	this.key = new CrateKey((Map<String, Object>) data.get("Key"));
-	this.items = (List<CrateItem>) data.get("Items");
+	this.key = new CrateKey((MemorySection) data.get("Key"));
+	
+	//TODO remove
+	//Old Version Support - will be removed in update after
+	if(data.get("Items") instanceof MemorySection)
+	{
+	    convert = true;
+	    this.items = new ArrayList<CrateItem>();
+	    Map<String, Object> map = ObjUtils.MemoryToMap((MemorySection)data.get("Items"));
+	    for(String s : map.keySet())
+	    {
+		items.add(new CrateItem(ObjUtils.MemoryToMap((MemorySection) map.get(s))));
+	    }
+	} 
+	else
+	    this.items = (List<CrateItem>) data.get("Items");
 	this.options = (Map<CrateOptionType, Object>) getDeseralizedOptions((MemorySection) data.get("Options"));
+	
+	//TODO remove
+	//Old Version Support - will be removed in update after
+	if(convert)
+	{
+	    plugin.cacheManager.remove(this);
+	    plugin.cacheManager.save();
+	    plugin.cacheManager.update(this);
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "LOOTCRATE " + ChatColor.WHITE + "Crates.yml file has been converted to fit to new version. You must remake each Crate's keys");
+	}
     }
     
     

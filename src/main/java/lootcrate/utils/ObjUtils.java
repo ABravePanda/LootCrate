@@ -1,8 +1,11 @@
 package lootcrate.utils;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -71,5 +74,16 @@ public class ObjUtils
 	if(meta == null) return false;
 	if(meta.getPersistentDataContainer() == null) return false;
 	return meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) != null;
+    }
+    
+    public static Map<String,Object> MemoryToMap(MemorySection section)
+    {
+	Map<String, Object> map = new LinkedHashMap<String, Object>();
+	if(section == null) return map;
+
+	for (String s : section.getKeys(false))
+	    map.put(s, section.get(s));
+	
+	return map;
     }
 }

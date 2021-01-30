@@ -38,7 +38,7 @@ public class CrateOpenListener implements Listener
 
 	// if they clicked w/same item as key && they match
 
-	if (crate.getKey() == null || item == null)
+	if (crate.getKey() == null || crate.getKey().getItem() == null|| item == null)
 	{
 	    plugin.messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
 		    ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, crate.getId() + ""));

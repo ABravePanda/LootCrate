@@ -12,7 +12,6 @@ import lootcrate.LootCrate;
 import lootcrate.events.custom.CrateAccessEvent;
 import lootcrate.events.custom.CrateOpenEvent;
 import lootcrate.events.custom.CrateViewEvent;
-import lootcrate.gui.frames.CrateOpenFrame;
 import lootcrate.objects.Crate;
 import lootcrate.other.Message;
 import lootcrate.other.Placeholder;

@@ -57,7 +57,7 @@ public class CacheManager
 
 	for (Crate cacheCrate : copiedCache)
 	{
-	    if (cacheCrate.getName().equalsIgnoreCase(Crate.getName()))
+	    if (cacheCrate.getId() == Crate.getId())
 		cache.remove(cacheCrate);
 	}
     }

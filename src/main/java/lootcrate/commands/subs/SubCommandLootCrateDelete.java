@@ -56,6 +56,7 @@ public class SubCommandLootCrateDelete extends SubCommand
 	}
 	plugin.locationManager.removeCrateLocation(crate);
 	plugin.cacheManager.remove(crate);
+	plugin.cacheManager.save();
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_DELETE_SUCCESS,
 		ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
     }

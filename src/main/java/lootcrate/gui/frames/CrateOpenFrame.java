@@ -12,7 +12,6 @@ import lootcrate.LootCrate;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
-import lootcrate.objects.CrateItem;
 
 public class CrateOpenFrame extends BasicFrame
 {
