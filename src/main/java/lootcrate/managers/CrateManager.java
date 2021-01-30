@@ -121,7 +121,6 @@ public class CrateManager
 
 	for (String cmd : crateItem.getCommands())
 	{
-	    System.out.println(cmd);
 	    if (plugin.optionManager.valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
 		i = rnd;
 	    for (int j = 0; j < i; j++)

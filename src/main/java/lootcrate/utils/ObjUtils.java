@@ -8,6 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import lootcrate.LootCrate;
@@ -62,9 +63,11 @@ public class ObjUtils
     {
 	NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
 	ItemMeta meta = item.getItemMeta();
-	if(meta.getPersistentDataContainer() == null) return false;
-	if(meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == null) return false;
-	return meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == crate.getId();
+	PersistentDataContainer container = meta.getPersistentDataContainer();
+	if(container == null) return false;
+	if(!container.has(key, PersistentDataType.INTEGER)) return false;
+	if(container.get(key, PersistentDataType.INTEGER) == null) return false;
+	return container.get(key, PersistentDataType.INTEGER) == crate.getId();
     }
     
     public static boolean isKey(LootCrate plugin, ItemStack item)

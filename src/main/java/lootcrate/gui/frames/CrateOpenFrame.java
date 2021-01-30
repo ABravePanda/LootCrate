@@ -43,16 +43,12 @@ public class CrateOpenFrame extends BasicFrame
     @Override
     public void generateFrame()
     {
-	int index = 0;
-	while (index < getInventory().getSize())
-	{
-	    this.setItem(index, new GUIItem(Material.WHITE_STAINED_GLASS_PANE));
-	    index++;
-	}
-	this.setItem(13, new GUIItem(Material.REDSTONE_TORCH, "&cReward"));
-	this.setItem(31, new GUIItem(Material.REDSTONE_TORCH, "&cReward"));
+	fillBackground(Material.WHITE_STAINED_GLASS_PANE, true);
     }
 
+    /**
+     * Displays animations for open sequence
+     */
     public void showAnimation()
     {
 	final int backgroundID = animateBackground();
@@ -69,9 +65,10 @@ public class CrateOpenFrame extends BasicFrame
 		{
 		    Bukkit.getScheduler().cancelTask(backgroundID);
 		    Bukkit.getScheduler().cancelTask(rewardID);
+		    fillBackground(Material.LIME_STAINED_GLASS_PANE, false);
 		    giveRewards(getContents()[22].getCrateItem());
 		}
-		if (timeLeft == -2)
+		if (timeLeft == -3)
 		{
 		    close();
 		    Bukkit.getScheduler().cancelTask(taskID);
@@ -81,6 +78,7 @@ public class CrateOpenFrame extends BasicFrame
 	}, 0L, 20L);
     }
 
+    // animates background
     private int animateBackground()
     {
 	return Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable()
@@ -98,6 +96,7 @@ public class CrateOpenFrame extends BasicFrame
 	}, 0L, this.backgroundSpeed);
     }
 
+    // animates rewards
     private int animateReward()
     {
 	return Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable()
@@ -134,6 +133,22 @@ public class CrateOpenFrame extends BasicFrame
 	glass.add(Material.WHITE_STAINED_GLASS_PANE);
 	glass.add(Material.RED_STAINED_GLASS_PANE);
 	return glass.get(new Random().nextInt(glass.size() - 1));
+    }
+
+    public void fillBackground(Material m, boolean showRewardsPointer)
+    {
+	int index = 0;
+	while (index < getInventory().getSize())
+	{
+	    if (index != 22)
+		this.setItem(index, new GUIItem(m));
+	    index++;
+	}
+	if (showRewardsPointer)
+	{
+	    this.setItem(13, new GUIItem(Material.REDSTONE_TORCH, "&cReward"));
+	    this.setItem(31, new GUIItem(Material.REDSTONE_TORCH, "&cReward"));
+	}
     }
 
 }

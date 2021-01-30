@@ -76,7 +76,8 @@ public abstract class BasicFrame implements Frame, Listener
     @Override
     public void close()
     {
-	player.closeInventory();
+	if(player.getOpenInventory().getTitle().equalsIgnoreCase(getTitle()))
+	    player.closeInventory();
     }
     
     @Override
