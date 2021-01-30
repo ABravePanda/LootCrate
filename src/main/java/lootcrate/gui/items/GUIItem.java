@@ -3,6 +3,7 @@ package lootcrate.gui.items;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,9 +11,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import lootcrate.gui.events.custom.GUIItemClickEvent;
+import lootcrate.objects.CrateItem;
 
 public class GUIItem implements Listener
 {
+    private CrateItem crateItem;
     private ItemStack item;
     private Callable<Integer> function;
 
@@ -35,6 +38,12 @@ public class GUIItem implements Listener
     {
 	this.item = item;
     }
+    
+    public GUIItem(CrateItem item)
+    {
+	this.crateItem = item;
+	this.item = crateItem.getItem();
+    }
 
     public GUIItem()
     {
@@ -44,6 +53,11 @@ public class GUIItem implements Listener
     {
 	return this.item;
     }
+    
+    public CrateItem getCrateItem()
+    {
+	return this.crateItem;
+    }
 
     public void setClickHandler(Callable<Integer> function)
     {
@@ -52,6 +66,8 @@ public class GUIItem implements Listener
 
     private ItemStack editMeta(ItemStack item, String name, String... lore)
     {
+	name = ChatColor.translateAlternateColorCodes('&', name);
+	
 	ItemMeta meta = item.getItemMeta();
 	meta.setDisplayName(name);
 	meta.setLore(Arrays.asList(lore));

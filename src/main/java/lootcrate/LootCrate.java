@@ -1,12 +1,8 @@
 package lootcrate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import lootcrate.events.listeners.LootCrateInteractEvent;
@@ -41,10 +37,6 @@ public class LootCrate extends JavaPlugin
     public OptionManager optionManager;
     public UpdateManager updateManager;
     public HologramManager holoManager;
-    public List<Player> playersInInventory = new ArrayList<Player>();
-
-    
-    
     
     @Override
     public void onEnable()
@@ -66,7 +58,10 @@ public class LootCrate extends JavaPlugin
 	commandManager = new CommandManager(this);
 	
 	if(holoHook())
+	{
 	    holoManager = new HologramManager(this);
+	    holoManager.reload();
+	}
 	
 	registerEvents();
     }

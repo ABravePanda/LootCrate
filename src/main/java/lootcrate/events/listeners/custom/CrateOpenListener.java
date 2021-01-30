@@ -1,6 +1,5 @@
 package lootcrate.events.listeners.custom;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,9 +11,7 @@ import lootcrate.LootCrate;
 import lootcrate.events.custom.CrateOpenEvent;
 import lootcrate.gui.frames.CrateOpenFrame;
 import lootcrate.objects.Crate;
-import lootcrate.objects.CrateItem;
 import lootcrate.other.Message;
-import lootcrate.other.Option;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ObjUtils;
@@ -72,31 +69,11 @@ public class CrateOpenListener implements Listener
 
 	// play sound
 	plugin.crateManager.crateOpenEffects(crate, p);
-
-	CrateItem crateItem = plugin.crateManager.getRandomItem(crate);
-	int rnd = plugin.crateManager.getRandomAmount(crateItem);
-
-	// TODO open crate
-	if (!crateItem.isDisplay())
-	{
-	    for (int i = 0; i < rnd; i++)
-		p.getInventory().addItem(crateItem.getItem());
-	}
-
-	int i = 1;
-
-	for (String cmd : crateItem.getCommands())
-	{
-	    System.out.println(cmd);
-	    if (plugin.optionManager.valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
-		i = rnd;
-	    for (int j = 0; j < i; j++)
-		Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), cmd.replace("{player}", p.getName()));
-	}
 	
 	
-	CrateOpenFrame frame = new CrateOpenFrame(plugin, p, crate);
+	CrateOpenFrame frame = new CrateOpenFrame(plugin, p, crate, 5, 10, 5);
 	frame.open();
+	
 	frame.showAnimation();
     }
 

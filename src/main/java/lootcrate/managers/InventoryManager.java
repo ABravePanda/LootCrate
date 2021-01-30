@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -59,29 +58,4 @@ public class InventoryManager
 	return newList;
     }
 
-    /**
-     * Closes the inventory of specified player
-     * 
-     * @param p
-     *            Player whos inventory will be closed
-     */
-    public void closeCrateInventory(Player p)
-    {
-	if (!isInInventory(p))
-	    return;
-	plugin.playersInInventory.remove(p);
-	p.closeInventory();
-    }
-
-    /**
-     * Checks if a player is viewing an inventory
-     * 
-     * @param p
-     *            Player to check if inventory is open or not
-     * @return If inventory is open
-     */
-    public boolean isInInventory(Player p)
-    {
-	return plugin.playersInInventory.contains(p);
-    }
 }

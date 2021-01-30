@@ -31,7 +31,7 @@ public class UpdateManager
 	this.plugin = plugin;
 	this.optionManager = plugin.optionManager;
 	this.newVersion = plugin.getDescription().getVersion();
-	this.project = optionManager.valueOf(Option.RESOURCE_ID);
+	this.project = 87046;
 	try
 	{
 	    this.checkURL = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + getProjectID());

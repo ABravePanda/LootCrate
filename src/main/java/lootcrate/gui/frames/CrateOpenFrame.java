@@ -12,19 +12,28 @@ import lootcrate.LootCrate;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
+import lootcrate.objects.CrateItem;
 
 public class CrateOpenFrame extends BasicFrame
 {
 
     private LootCrate plugin;
     private Crate crate;
+    private long backgroundSpeed;
+    private long rewardSpeed;
+    private int duration;
+    private int taskID;
 
-    public CrateOpenFrame(LootCrate plugin, Player p, Crate crate)
+    public CrateOpenFrame(LootCrate plugin, Player p, Crate crate, long backgroundSpeed, long rewardSpeed, int duration)
     {
 	super(plugin, p, crate.getName());
 
 	this.plugin = plugin;
 	this.crate = crate;
+
+	this.backgroundSpeed = backgroundSpeed;
+	this.rewardSpeed = rewardSpeed;
+	this.duration = duration;
 
 	generateFrame();
 	registerItems();
@@ -40,8 +49,8 @@ public class CrateOpenFrame extends BasicFrame
 	    this.setItem(index, new GUIItem(Material.WHITE_STAINED_GLASS_PANE));
 	    index++;
 	}
-	this.setItem(13, new GUIItem(Material.ARROW, "Reward"));
-	this.setItem(31, new GUIItem(Material.ARROW, "Reward"));
+	this.setItem(13, new GUIItem(Material.REDSTONE_TORCH, "&cReward"));
+	this.setItem(31, new GUIItem(Material.REDSTONE_TORCH, "&cReward"));
     }
 
     public void showAnimation()
@@ -49,9 +58,9 @@ public class CrateOpenFrame extends BasicFrame
 	final int backgroundID = animateBackground();
 	final int rewardID = animateReward();
 
-	Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable()
+	taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable()
 	{
-	    int timeLeft = 10;
+	    int timeLeft = duration;
 
 	    @Override
 	    public void run()
@@ -60,9 +69,14 @@ public class CrateOpenFrame extends BasicFrame
 		{
 		    Bukkit.getScheduler().cancelTask(backgroundID);
 		    Bukkit.getScheduler().cancelTask(rewardID);
+		    giveRewards(getContents()[22].getCrateItem());
 		}
-		else
-		    timeLeft--;
+		if (timeLeft == -2)
+		{
+		    close();
+		    Bukkit.getScheduler().cancelTask(taskID);
+		}
+		timeLeft--;
 	    }
 	}, 0L, 20L);
     }
@@ -81,7 +95,7 @@ public class CrateOpenFrame extends BasicFrame
 		    setItem(i, new GUIItem(randomGlass()));
 		}
 	    }
-	}, 0L, 5L);
+	}, 0L, this.backgroundSpeed);
     }
 
     private int animateReward()
@@ -91,9 +105,14 @@ public class CrateOpenFrame extends BasicFrame
 	    @Override
 	    public void run()
 	    {
-		setItem(22, new GUIItem(plugin.crateManager.getRandomItem(crate).getItem()));
+		setItem(22, new GUIItem(plugin.crateManager.getRandomItem(crate)));
 	    }
-	}, 0L, 20L);
+	}, 0L, this.rewardSpeed);
+    }
+
+    private void giveRewards(CrateItem crateItem)
+    {
+	plugin.crateManager.giveReward(crateItem, getViewer());
     }
 
     private Material randomGlass()

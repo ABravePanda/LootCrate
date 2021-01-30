@@ -3,6 +3,7 @@ package lootcrate.managers;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -12,6 +13,7 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.RandomCollection;
 import lootcrate.other.CrateOptionType;
+import lootcrate.other.Option;
 
 public class CrateManager
 {
@@ -103,6 +105,28 @@ public class CrateManager
 			    .getValue().toString().replace("{crate_name}", crate.getName())));
 	}	
 
+    }
+    
+    public void giveReward(CrateItem crateItem, Player p)
+    {
+	int rnd = plugin.crateManager.getRandomAmount(crateItem);
+
+	if (!crateItem.isDisplay())
+	{
+	    for (int i = 0; i < rnd; i++)
+		p.getInventory().addItem(crateItem.getItem());
+	}
+
+	int i = 1;
+
+	for (String cmd : crateItem.getCommands())
+	{
+	    System.out.println(cmd);
+	    if (plugin.optionManager.valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
+		i = rnd;
+	    for (int j = 0; j < i; j++)
+		Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), cmd.replace("{player}", p.getName()));
+	}
     }
     
     public void addDefaultOptions(Crate crate)

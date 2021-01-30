@@ -17,13 +17,8 @@
     # value type - example/definition
 
 options:
-    # NO NOT TOUCH || WARNING WARNING || DO NOT TOUCH || WARNING WARNING
-    # Used for updater, this WILL break the plugin if touched
-    resource-id: 87046
-    # integer - a whole number (1,2,3,4...)
-
     #Should the commands on each item be dispatched the amount of times the item is recieved, or once?
-    dispatch-command-item-time: true
+    dispatch-command-item-time: false
     # boolean - true/false
 
     
