@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import lootcrate.LootCrate;
@@ -90,11 +91,18 @@ public class CacheManager
     }
 
     /**
-     * Loads the cache
+     * Loads the cache asynchronously
      */
     public void load()
     {
-	cache = plugin.fileManager.loadAllCrates();
+	Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable()
+	{
+	    @Override
+	    public void run()
+	    {
+		cache = plugin.fileManager.loadAllCrates();
+	    }
+	});
     }
 
     /**

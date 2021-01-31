@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import lootcrate.LootCrate;
@@ -57,16 +58,24 @@ public class UpdateManager
 
     public String getNewVersion()
     {
-	URLConnection con;
-	try
+	Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable()
 	{
-	    con = checkURL.openConnection();
-	    return new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-	} catch (IOException e)
-	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
+	    @Override
+	    public void run()
+	    {
+		URLConnection con;
+		try
+		{
+		    con = checkURL.openConnection();
+		    newVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
+		} catch (IOException e)
+		{
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
+	    }
+	});
+	if(newVersion != null) return newVersion;
 	return "None";
     }
 
