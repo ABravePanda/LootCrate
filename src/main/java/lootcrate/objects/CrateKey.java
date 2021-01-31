@@ -1,8 +1,10 @@
 package lootcrate.objects;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
@@ -35,6 +37,18 @@ public class CrateKey implements ConfigurationSerializable
     {
     	Map<String, Object> map = ObjUtils.MemoryToMap(section);
    	
+    	//TODO remove
+    	//Old Version Support - will be removed in update after
+    	if(map.get("Material") != null)
+    	{
+    	    this.item = new ItemStack(Material.valueOf((String) map.get("Material")));
+    	    ItemMeta meta = this.item.getItemMeta();
+    	    meta.setDisplayName((String) map.get("Name"));
+    	    meta.setLore((List<String>) map.get("Lore"));
+    	    this.item.setItemMeta(meta);
+    	    this.glowing = (boolean) map.get("Glowing");
+    	}
+    	
     	if(map.get("Item") == null) return;
     	
 	this.item = ItemStack.deserialize(ObjUtils.MemoryToMap((MemorySection) map.get("Item")));
