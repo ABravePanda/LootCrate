@@ -54,8 +54,7 @@ public class SubCommandLootCrateAdd extends SubCommand
 	    return;
 	}
 
-	if (CommandUtils.tryParse(args[2]) == null || CommandUtils.tryParse(args[3]) == null
-		|| CommandUtils.tryParse(args[4]) == null)
+	if (CommandUtils.tryParse(args[2]) == null || CommandUtils.tryParse(args[3]) == null)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
 	    return;
@@ -69,7 +68,7 @@ public class SubCommandLootCrateAdd extends SubCommand
 	}
 	int min = CommandUtils.tryParse(args[2]);
 	int max = CommandUtils.tryParse(args[3]);
-	int chance = CommandUtils.tryParse(args[4]);
+	double chance = CommandUtils.tryParseDouble(args[4]);
 
 	if (min > max && min >= 1)
 	{

@@ -15,13 +15,13 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
 {
     private int id;
     private ItemStack item;
-    private int chance;
+    private double chance;
     private int minAmount;
     private int maxAmount;
     private List<String> commands;
     private boolean isDisplay;
 
-    public CrateItem(ItemStack item, int minAmount, int maxAmount, int chance, boolean isDisplay, List<String> commands)
+    public CrateItem(ItemStack item, int minAmount, int maxAmount, double chance, boolean isDisplay, List<String> commands)
     {
 	this.setId(ObjUtils.randomID(5));
 	this.setItem(item);
@@ -51,7 +51,7 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
 	} else
 	    this.item = ItemStack.deserialize((Map<String, Object>) data.get("Item"));
 	
-	this.chance = (int) data.get("Chance");
+	this.chance = (double) data.get("Chance");
 	this.minAmount = (int) data.get("MinAmount");
 	this.maxAmount = (int) data.get("MaxAmount");
 	this.commands = (List<String>) data.get("Commands");
@@ -80,12 +80,12 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
 	this.item = item;
     }
 
-    public int getChance()
+    public double getChance()
     {
 	return chance;
     }
 
-    public void setChance(int chance)
+    public void setChance(double chance)
     {
 	this.chance = chance;
     }
@@ -151,7 +151,7 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
     @Override
     public int compareTo(CrateItem o)
     {
-	return Integer.valueOf(this.getChance()).compareTo(Integer.valueOf(o.getChance()));
+	return Double.valueOf(this.getChance()).compareTo(Double.valueOf(o.getChance()));
     }
 
 }

@@ -43,6 +43,17 @@ public class CommandUtils
 	}
     }
     
+    public static double tryParseDouble(String text)
+    {
+	try
+	{
+	    return Double.parseDouble(text);
+	} catch (NumberFormatException e)
+	{
+	    return 0.0;
+	}
+    }
+    
     public static boolean hasCratePermission(Crate crate, Player p)
     {
 	return p.hasPermission(Permission.LOOTCRATE_INTERACT.getKey() + crate.getId()) || p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey());
