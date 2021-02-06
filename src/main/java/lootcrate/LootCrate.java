@@ -26,7 +26,7 @@ import lootcrate.objects.CrateOption;
 import net.md_5.bungee.api.ChatColor;
 
 public class LootCrate extends JavaPlugin
-{ 
+{
     public MessageManager messageManager;
     public FileManager fileManager;
     public CacheManager cacheManager;
@@ -37,12 +37,12 @@ public class LootCrate extends JavaPlugin
     public OptionManager optionManager;
     public UpdateManager updateManager;
     public HologramManager holoManager;
-    
+
     @Override
     public void onEnable()
     {
 	initSerial();
-	
+
 	registerConfig();
 	optionManager = new OptionManager(this);
 	updateManager = new UpdateManager(this);
@@ -56,13 +56,13 @@ public class LootCrate extends JavaPlugin
 	locationManager.populateLocations();
 	invManager = new InventoryManager(this);
 	commandManager = new CommandManager(this);
-	
-	if(holoHook())
+
+	if (holoHook())
 	{
 	    holoManager = new HologramManager(this);
 	    holoManager.reload();
 	}
-	
+
 	registerEvents();
     }
 
@@ -78,50 +78,55 @@ public class LootCrate extends JavaPlugin
 	this.getServer().getPluginManager().registerEvents(new CrateOpenListener(this), this);
 	this.getServer().getPluginManager().registerEvents(new CrateViewListener(this), this);
     }
-    
+
     public void registerConfig()
     {
 	this.saveDefaultConfig();
     }
-    
+
     public void reload()
     {
 	cacheManager.reload();
 	locationManager.reload();
-	
-	if(holoHook())
+
+	if (holoHook())
 	    holoManager.reload();
-	
+
     }
-    
+
     public void displayIntro()
     {
 	Bukkit.getLogger().info("");
-	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "LootCrate" + ChatColor.GREEN + " v" + this.getDescription().getVersion());
-	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + this.getServer().getName() + " v" + this.getServer().getBukkitVersion());
-	if(updateManager.checkForUpdates())
-	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion() + "). Download here: " + updateManager.getResourceURL());
+	Bukkit.getConsoleSender().sendMessage(
+		ChatColor.YELLOW + "LootCrate" + ChatColor.GREEN + " v" + this.getDescription().getVersion());
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + this.getServer().getName() + " v"
+		+ this.getServer().getBukkitVersion());
+	if (updateManager.checkForUpdates())
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion()
+		    + "). Download here: " + updateManager.getResourceURL());
 	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Cached " + ChatColor.YELLOW
 		+ cacheManager.getCache().size() + ChatColor.DARK_GRAY + " crate(s).");
-	if(holoHook())
-	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
-	if(initMetrics())
-	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW + "bStats Metrics" + ChatColor.DARK_GRAY + ".");
+	if (holoHook())
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
+		    + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
+	if (initMetrics())
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
+		    + "bStats Metrics" + ChatColor.DARK_GRAY + ".");
 	Bukkit.getLogger().info("");
     }
-    
+
     public boolean holoHook()
     {
 	return Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays");
     }
-    
+
     public boolean initMetrics()
     {
 	int pluginId = 9767;
-        Metrics metrics = new Metrics(this, pluginId);
-        return metrics.isEnabled();
+	Metrics metrics = new Metrics(this, pluginId);
+	return metrics.isEnabled();
     }
-    
+
     public void initSerial()
     {
 	ConfigurationSerialization.registerClass(Crate.class);

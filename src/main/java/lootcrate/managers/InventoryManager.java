@@ -42,7 +42,7 @@ public class InventoryManager
 	Collections.sort(items);
 	for (CrateItem item : new ArrayList<CrateItem>(items))
 	{
-	    item = ObjUtils.assignRandomIDToItem(plugin, item);
+	   // item = ObjUtils.assignRandomIDToItem(plugin, item);
 	    ItemStack itemStack = item.getItem().clone();
 	    if ((boolean) crate.getOption(CrateOptionType.DISPLAY_CHANCES).getValue())
 	    {

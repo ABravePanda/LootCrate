@@ -93,7 +93,8 @@ public class CacheManager
     /**
      * Loads the cache asynchronously
      */
-    public void load()
+    @Deprecated
+    public void loadAsync()
     {
 	Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable()
 	{
@@ -101,8 +102,17 @@ public class CacheManager
 	    public void run()
 	    {
 		cache = plugin.fileManager.loadAllCrates();
+
 	    }
 	});
+    }
+
+    /**
+     * Loads the cache
+     */
+    public void load()
+    {
+	cache = plugin.fileManager.loadAllCrates();
     }
 
     /**

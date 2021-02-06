@@ -74,9 +74,11 @@ public class ObjUtils
     {
 	NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
 	ItemMeta meta = item.getItemMeta();
+	PersistentDataContainer container = meta.getPersistentDataContainer();
 	if(meta == null) return false;
-	if(meta.getPersistentDataContainer() == null) return false;
-	return meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) != null;
+	if(container == null) return false;
+	if(!container.has(key, PersistentDataType.INTEGER)) return false;
+	return container.get(key, PersistentDataType.INTEGER) != null;
     }
     
     public static Map<String,Object> MemoryToMap(MemorySection section)
