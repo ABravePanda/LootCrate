@@ -28,23 +28,29 @@ public abstract class SubCommand {
      * Checks if sender has the given permissions
      * @param sender Sender to check
      * @param perm Permissions to check
-     * @return True if all permissions pass, false if even one permission is missing
+     * @return True if even just one permission is passed. False if none pass
      */
     public boolean hasPermission(Permission... perm)
     {
 	for(Permission p : perm)
-	    if(!sender.hasPermission(p.getKey())) return false;
-	return true;
+	    if(sender.hasPermission(p.getKey())) return true;
+	return false;
     }
     
     /**
      * Tests if sender has the given permissions for command
      * @param sender Sender to check if they have permissions
+     * @return 
      */
-    public void testPermissions()
+    public boolean testPermissions()
     {
 	if (!hasPermission(permissions))
+	{
 	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
+	    return false;
+	}
+	
+	return true;
     }
     
     /**

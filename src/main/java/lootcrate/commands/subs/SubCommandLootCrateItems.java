@@ -37,7 +37,7 @@ public class SubCommandLootCrateItems extends SubCommand
     public void runSubCommand(boolean playerRequired)
     {
 	if(this.testPlayer(playerRequired)) return;
-	this.testPermissions();
+	if(!this.testPermissions()) return;
 	
 	if (args.length != 2)
 	{

@@ -53,10 +53,13 @@ public class HologramManager
 	    holo.delete();
 	for (Location l : locationManager.getLocationList().keySet())
 	{
-	    if(l == null) return;
-	    if(l.getBlock() == null) return;
+	    if(l == null) continue;
+	    if(l.getBlock() == null) continue;
 	    
 	    Crate crate = locationManager.getLocationList().get(l);
+	    
+	    if(crate == null) continue;
+	    
 	    createHologram(l.getBlock(), crate);
 	}
 

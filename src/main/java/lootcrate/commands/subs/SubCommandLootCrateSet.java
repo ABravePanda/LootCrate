@@ -42,7 +42,7 @@ public class SubCommandLootCrateSet extends SubCommand
 	
 	Player p = (Player) sender;
 	
-	this.testPermissions();
+	if(!this.testPermissions()) return;
 	
 	if (args.length != 2)
 	{

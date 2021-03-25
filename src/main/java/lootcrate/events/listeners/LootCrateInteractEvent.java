@@ -50,8 +50,12 @@ public class LootCrateInteractEvent implements Listener
 		Bukkit.getPluginManager().callEvent(event);
 		if (event.isCancelled())
 		    e.setCancelled(true);
+		
 	    } else
 	    {
+		
+		if(p.getInventory().getItemInMainHand() == null) return;
+		
 		if (ObjUtils.isKey(plugin, p.getInventory().getItemInMainHand()))
 		{
 		    e.setCancelled(true);
