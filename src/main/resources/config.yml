@@ -58,7 +58,7 @@ messages:
     must-be-console: "&cYou must be the console to do this."
     
     #Usage for /meta
-    meta-command-usage: "&cUsage: /meta <name | lore | enchant>"
+    meta-command-usage: "&cUsage: /meta <name | lore | enchantment>"
     
     #Sent to player if command requires them to hold an item
     must-be-holding-item: "&cYou must be holding an item in your main hand!"
