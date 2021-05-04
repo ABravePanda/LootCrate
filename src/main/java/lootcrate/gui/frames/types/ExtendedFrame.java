@@ -14,7 +14,7 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.utils.ObjUtils;
 
-public abstract class BasicFrame implements Frame, Listener
+public abstract class ExtendedFrame implements Frame, Listener
 {
     private LootCrate plugin;
     private int id;
@@ -23,28 +23,28 @@ public abstract class BasicFrame implements Frame, Listener
     private GUIItem[] contents;
     private Inventory inventory;
     
-    public BasicFrame(LootCrate plugin, Player p, String title, GUIItem[] contents)
+    public ExtendedFrame(LootCrate plugin, Player p, String title, GUIItem[] contents)
     {
 	this.id = ObjUtils.randomID(5);
 	this.plugin = plugin;
 	this.player = p;
 	this.title = title;
 	
-	if(contents.length != 45)
-	    this.contents = new GUIItem[45];
+	if(contents.length != 54)
+	    this.contents = new GUIItem[54];
 	else
 	    this.contents = contents;
 	
 	this.inventory = createInventory();
     }
     
-    public BasicFrame(LootCrate plugin, Player p, String title)
+    public ExtendedFrame(LootCrate plugin, Player p, String title)
     {
 	this.id = ObjUtils.randomID(5);
 	this.plugin = plugin;
 	this.player = p;
 	this.title = title;
-	this.contents = new GUIItem[45];
+	this.contents = new GUIItem[54];
 	this.inventory = createInventory();
     }
     
@@ -118,7 +118,7 @@ public abstract class BasicFrame implements Frame, Listener
     
     private Inventory createInventory()
     {
-	return Bukkit.createInventory(null, 45, getTitle());
+	return Bukkit.createInventory(null, 54, getTitle());
     }
     
     @EventHandler
@@ -139,8 +139,8 @@ public abstract class BasicFrame implements Frame, Listener
     
     @EventHandler
     public void onInventoryCloseEvent(InventoryCloseEvent e)
-    {	
-	if (!e.getPlayer().equals(this.getViewer()))
+    {
+	if (!Bukkit.getPlayer(e.getPlayer().getUniqueId()).equals(this.getViewer()))
 	    return;
 	if (e.getInventory() != this.getInventory())
 	    return;

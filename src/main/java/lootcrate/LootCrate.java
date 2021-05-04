@@ -9,6 +9,7 @@ import lootcrate.events.listeners.LootCrateInteractEvent;
 import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
+import lootcrate.gui.events.listeners.GUICloseListener;
 import lootcrate.managers.CacheManager;
 import lootcrate.managers.CommandManager;
 import lootcrate.managers.CrateManager;
@@ -77,6 +78,7 @@ public class LootCrate extends JavaPlugin
 	this.getServer().getPluginManager().registerEvents(new CrateAccessListener(this), this);
 	this.getServer().getPluginManager().registerEvents(new CrateOpenListener(this), this);
 	this.getServer().getPluginManager().registerEvents(new CrateViewListener(this), this);
+	this.getServer().getPluginManager().registerEvents(new GUICloseListener(), this);
     }
 
     public void registerConfig()

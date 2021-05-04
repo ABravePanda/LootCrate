@@ -9,20 +9,18 @@ import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 
-public class GUIItemClickEvent extends Event implements Cancellable
+public class GUICloseEvent extends Event implements Cancellable
 {
 
     private boolean cancelled;
     private Player player;
-    private GUIItem item;
     private Frame frame;
     
     private static final HandlerList HANDLERS_LIST = new HandlerList();
     
-    public GUIItemClickEvent(Player p, GUIItem item, Frame frame)
+    public GUICloseEvent(Player p, Frame frame)
     {
 	this.player = p;
-	this.item = item;
 	this.frame = frame;
     }
     
@@ -54,11 +52,6 @@ public class GUIItemClickEvent extends Event implements Cancellable
     public Player getPlayer()
     {
 	return this.player;
-    }
-    
-    public GUIItem getItem()
-    {
-	return this.item;
     }
     
     public Frame getFrame()

@@ -165,7 +165,7 @@ public class LootCrateCommand extends Command
 
     public boolean hasPermission(CommandSender sender, Permission permission)
     {
-	return this.hasPermission(sender, permission, Permission.COMMAND_LOOTCRATE_ADMIN);
+	return this.hasPermission(sender, Permission.COMMAND_LOOTCRATE_ADMIN, permission);
     }
 
 }

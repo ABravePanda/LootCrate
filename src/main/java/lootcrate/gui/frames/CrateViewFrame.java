@@ -5,10 +5,11 @@ import org.bukkit.inventory.ItemStack;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.frames.types.BasicFrame;
+import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 
-public class CrateViewFrame extends BasicFrame
+public class CrateViewFrame extends ExtendedFrame
 {
 
     private LootCrate plugin;

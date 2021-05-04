@@ -44,24 +44,34 @@ public class ObjUtils
 
     public static ItemStack assignCrateToItem(LootCrate plugin, Crate crate)
     {
-	return assignPersistentData(plugin, crate.getKey().getItem(), PersistentDataType.INTEGER, crate.getId());
+	ItemStack item = crate.getKey().getItem();
+	NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
+	ItemMeta itemMeta = item.getItemMeta();
+	itemMeta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, crate.getId());
+	item.setItemMeta(itemMeta);
+	return item;
     }
 
     public static CrateItem assignRandomIDToItem(LootCrate plugin, CrateItem crateItem)
     {
-	crateItem.setItem(
-		assignPersistentData(plugin, crateItem.getItem(), PersistentDataType.STRING, getRandomString(9)));
+	ItemStack item = crateItem.getItem();
+	NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
+	ItemMeta itemMeta = item.getItemMeta();
+	itemMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, getRandomString(9));
+	item.setItemMeta(itemMeta);
+	crateItem.setItem(item);
 	return crateItem;
     }
 
     public static boolean doKeysMatch(LootCrate plugin, ItemStack item, Crate crate)
     {
-	if(!isKey(plugin, item)) return false;
-	
+	if (!isKey(plugin, item))
+	    return false;
+
 	NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
 	ItemMeta meta = item.getItemMeta();
 	PersistentDataContainer container = meta.getPersistentDataContainer();
-	
+
 	return container.get(key, PersistentDataType.INTEGER) == crate.getId();
     }
 
@@ -93,15 +103,5 @@ public class ObjUtils
 	    map.put(s, section.get(s));
 
 	return map;
-    }
-
-    public static ItemStack assignPersistentData(LootCrate plugin, ItemStack item, PersistentDataType type,
-	    Object object)
-    {
-	NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
-	ItemMeta itemMeta = item.getItemMeta();
-	itemMeta.getPersistentDataContainer().set(key, type, type);
-	item.setItemMeta(itemMeta);
-	return item;
     }
 }

@@ -7,6 +7,7 @@ import lootcrate.gui.items.GUIItem;
 
 public interface Frame
 {
+    int getId();
     Player getViewer();
     String getTitle();
     GUIItem[] getContents();
