@@ -11,7 +11,6 @@ public class GUICloseListener implements Listener
     @EventHandler
     public void onClose(GUICloseEvent e)
     {
-	System.out.println(e.getFrame());
     }
     
 }

@@ -34,10 +34,10 @@ public class HologramManager
 
     public void createHologram(Block block, Crate crate)
     {
-	Hologram hologram = HologramsAPI.createHologram(plugin,
-		block.getLocation().clone().add((double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_X).getValue(),
-			(double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Y).getValue(),
-			(double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Z).getValue()));
+	double xOffset = (double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_X).getValue();
+	double yOffset = (double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Y).getValue();
+	double zOffset = (double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Z).getValue();
+	Hologram hologram = HologramsAPI.createHologram(plugin, block.getLocation().clone().add(xOffset, yOffset, zOffset));
 
 	List<String> list = (List<String>) crate.getOption(CrateOptionType.HOLOGRAM_LINES).getValue();
 	for (String line : list)
@@ -54,6 +54,8 @@ public class HologramManager
 	for (Location l : locationManager.getLocationList().keySet())
 	{
 	    if(l == null) continue;
+	    if(!l.isWorldLoaded()) continue;
+	    if(l.getWorld() == null) continue;
 	    if(l.getBlock() == null) continue;
 	    
 	    Crate crate = locationManager.getLocationList().get(l);

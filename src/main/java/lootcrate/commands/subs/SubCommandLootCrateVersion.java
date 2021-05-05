@@ -39,12 +39,7 @@ public class SubCommandLootCrateVersion extends SubCommand
 	    return;
 	}
 	
-	sender.sendMessage(ChatColor.YELLOW + "Running " + plugin.getName() + " v" + plugin.getDescription().getVersion());
-	if(updateManager.checkForUpdates())
-	{
-	    sender.sendMessage(ChatColor.RED + "New update found! (v" + updateManager.getNewVersion() + ")." );
-	    sender.sendMessage(ChatColor.RED + "Download @ " + updateManager.getResourceURL());
-	}
+	updateManager.sendNotificationCommandSender(sender);
 	
 	
     }
