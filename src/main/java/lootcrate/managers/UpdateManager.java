@@ -8,10 +8,12 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import lootcrate.LootCrate;
-import lootcrate.other.Option;
+import net.md_5.bungee.api.ChatColor;
 
 public class UpdateManager
 {
@@ -100,5 +102,25 @@ public class UpdateManager
 	}
 	return Integer.valueOf(plugin.getDescription().getVersion().replace(".", "")) < Integer.valueOf(newVersion.replace(".", ""));
 	//return !plugin.getDescription().getVersion().equals(newVersion);
+    }
+    
+    public void sendNotificationCommandSender(CommandSender p)
+    {
+	p.sendMessage(ChatColor.YELLOW + "Running " + plugin.getName() + " v" + plugin.getDescription().getVersion());
+	if(checkForUpdates())
+	{
+	    p.sendMessage(ChatColor.RED + "New update found! (v" + getNewVersion() + ")." );
+	    p.sendMessage(ChatColor.RED + "Download @ " + getResourceURL());
+	}
+    }
+    
+    public void sendNotificationPlayer(Player p)
+    {
+	p.sendMessage(ChatColor.YELLOW + "Running " + plugin.getName() + " v" + plugin.getDescription().getVersion());
+	if(checkForUpdates())
+	{
+	    p.sendMessage(ChatColor.RED + "New update found! (v" + getNewVersion() + ")." );
+	    p.sendMessage(ChatColor.RED + "Download @ " + getResourceURL());
+	}
     }
 }

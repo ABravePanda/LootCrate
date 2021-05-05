@@ -18,7 +18,8 @@ public enum Permission
     COMMAND_LOOTCRATE_VERSION("lootcrate.command.lootcrate.version"),
     COMMAND_LOOTCRATE_ADMIN("lootcrate.command.*"),
     LOOTCRATE_INTERACT("lootcrate.interact."),
-    LOOTCRATE_INTERACT_ADMIN("lootcrate.interact.*");
+    LOOTCRATE_INTERACT_ADMIN("lootcrate.interact.*"),
+    LOOTCRATE_UPDATE_NOTIFICATION("lootcrate.notification");
 
     String key;
     

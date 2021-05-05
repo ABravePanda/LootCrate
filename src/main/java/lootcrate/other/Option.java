@@ -3,7 +3,7 @@ package lootcrate.other;
 public enum Option
 {
     DISPATCH_COMMAND_ITEM_AMOUNT("dispatch-command-item-time", DataType.BOOLEAN),
-    RESOURCE_ID("resource-id", DataType.INTEGER);
+    ADMIN_NOTIFICATIONS("admin-update-notification", DataType.BOOLEAN);
     
     String key;
     DataType type;

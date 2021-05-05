@@ -16,13 +16,13 @@ import lootcrate.objects.Crate;
 import lootcrate.other.Message;
 import lootcrate.utils.ObjUtils;
 
-public class LootCrateInteractEvent implements Listener
+public class LootCrateInteractListener implements Listener
 {
     private LootCrate plugin;
     private MessageManager messageManager;
     private CacheManager cacheManager;
 
-    public LootCrateInteractEvent(LootCrate plugin)
+    public LootCrateInteractListener(LootCrate plugin)
     {
 	this.plugin = plugin;
 	this.messageManager = plugin.messageManager;

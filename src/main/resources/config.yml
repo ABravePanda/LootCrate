@@ -20,6 +20,10 @@ options:
     #Should the commands on each item be dispatched the amount of times the item is recieved, or once?
     dispatch-command-item-time: false
     # boolean - true/false
+    
+    #Should people with op or required permission recieve login notifications about a new update for the plugin
+    admin-update-notification: true
+    # boolean - true/false
 
     
 #+------------------------------+
