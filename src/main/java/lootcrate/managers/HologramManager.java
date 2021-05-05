@@ -53,8 +53,9 @@ public class HologramManager
 	    holo.delete();
 	for (Location l : locationManager.getLocationList().keySet())
 	{
+	    System.out.println(l);
+	    System.out.println(l.getWorld());
 	    if(l == null) continue;
-	    if(!l.isWorldLoaded()) continue;
 	    if(l.getWorld() == null) continue;
 	    if(l.getBlock() == null) continue;
 	    

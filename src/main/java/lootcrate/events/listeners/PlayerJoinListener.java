@@ -6,17 +6,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import lootcrate.LootCrate;
+import lootcrate.managers.OptionManager;
 import lootcrate.managers.UpdateManager;
+import lootcrate.other.Option;
 import lootcrate.other.Permission;
 
 public class PlayerJoinListener implements Listener
 {
-    
+    private OptionManager optionManager;
     private UpdateManager updateManager;
 
     public PlayerJoinListener(LootCrate plugin)
     {
 	this.updateManager = plugin.updateManager;
+	this.optionManager = plugin.optionManager;
     }
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e)
@@ -26,7 +29,8 @@ public class PlayerJoinListener implements Listener
 	if(!p.hasPermission(Permission.LOOTCRATE_UPDATE_NOTIFICATION.getKey()))
 	    return;
 	
-	updateManager.sendNotificationPlayer(p);
+	if(optionManager.valueOf(Option.ADMIN_NOTIFICATIONS))
+	    updateManager.sendNotificationPlayer(p);
 	
 	
 	
