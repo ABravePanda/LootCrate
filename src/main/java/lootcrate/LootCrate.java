@@ -85,18 +85,22 @@ public class LootCrate extends JavaPlugin
 
     }
 
-    public void displayIntro()
+    public void displayIntro(long cacheTime)
     {
 	Bukkit.getLogger().info("");
-	Bukkit.getConsoleSender().sendMessage(
-		ChatColor.YELLOW + "LootCrate" + ChatColor.GREEN + " v" + this.getDescription().getVersion());
-	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + this.getServer().getName() + " v"
-		+ this.getServer().getBukkitVersion());
+	Bukkit.getLogger().info("");
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "[  " +
+		ChatColor.YELLOW + "LootCrate" + ChatColor.GREEN + " v" + this.getDescription().getVersion() + ChatColor.DARK_GRAY + "  ]");
+	Bukkit.getLogger().info("");
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + ChatColor.YELLOW + this.getServer().getName() + " v"
+		+ this.getServer().getBukkitVersion() + ChatColor.DARK_GRAY + ".");
 	if (updateManager.checkForUpdates())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion()
-		    + "). Download here: " + updateManager.getResourceURL());
+		    + "). Download here: " + updateManager.getResourceURL() + ChatColor.DARK_GRAY + ".");
 	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Cached " + ChatColor.YELLOW
 		+ cacheManager.getCache().size() + ChatColor.DARK_GRAY + " crate(s).");
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Caching Took " + ChatColor.YELLOW
+		+ cacheTime + ChatColor.DARK_GRAY + " Nanoseconds or " + ChatColor.YELLOW + cacheTime / 1000000 + ChatColor.DARK_GRAY + " Miliseconds.");
 	if (holoHook())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
 		    + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
@@ -126,15 +130,18 @@ public class LootCrate extends JavaPlugin
 	ConfigurationSerialization.registerClass(CrateItem.class);
     }
 
-    public void onAsyncDone()
+    public void onAsyncDone(long starttime)
     {
+	long endTime = System.nanoTime();
+	long timeElapsed = endTime - starttime;
+	
 	crateManager = new CrateManager(this);
 	locationManager = new LocationManager(this);
 	locationManager.populateLocations();
 	invManager = new InventoryManager(this);
 	commandManager = new CommandManager(this);
-	
-	displayIntro();
+
+	displayIntro(timeElapsed);
 
 	if (holoHook())
 	{

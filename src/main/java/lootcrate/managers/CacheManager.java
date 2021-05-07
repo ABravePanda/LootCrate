@@ -95,6 +95,7 @@ public class CacheManager
      */
     public void loadAsync(final LootCrate callback)
     {
+	final long startTime = System.nanoTime();
 	Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable()
 	{
 	    @Override
@@ -105,7 +106,7 @@ public class CacheManager
 		Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        callback.onAsyncDone();
+                        callback.onAsyncDone(startTime);
                     }
                 });
 	    }
