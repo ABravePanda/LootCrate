@@ -51,21 +51,8 @@ public class LootCrate extends JavaPlugin
 	messageManager = new MessageManager(this);
 	fileManager = new FileManager(this);
 	cacheManager = new CacheManager(this);
-	cacheManager.load();
-	displayIntro();
-	crateManager = new CrateManager(this);
-	locationManager = new LocationManager(this);
-	locationManager.populateLocations();
-	invManager = new InventoryManager(this);
-	commandManager = new CommandManager(this);
+	cacheManager.loadAsync(this);
 
-	if (holoHook())
-	{
-	    holoManager = new HologramManager(this);
-	    holoManager.reload();
-	}
-
-	registerEvents();
     }
 
     @Override
@@ -137,6 +124,25 @@ public class LootCrate extends JavaPlugin
 	ConfigurationSerialization.registerClass(CrateKey.class);
 	ConfigurationSerialization.registerClass(CrateOption.class);
 	ConfigurationSerialization.registerClass(CrateItem.class);
+    }
+
+    public void onAsyncDone()
+    {
+	crateManager = new CrateManager(this);
+	locationManager = new LocationManager(this);
+	locationManager.populateLocations();
+	invManager = new InventoryManager(this);
+	commandManager = new CommandManager(this);
+	
+	displayIntro();
+
+	if (holoHook())
+	{
+	    holoManager = new HologramManager(this);
+	    holoManager.reload();
+	}
+
+	registerEvents();
     }
 
 }

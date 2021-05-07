@@ -93,8 +93,7 @@ public class CacheManager
     /**
      * Loads the cache asynchronously
      */
-    @Deprecated
-    public void loadAsync()
+    public void loadAsync(final LootCrate callback)
     {
 	Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable()
 	{
@@ -103,6 +102,12 @@ public class CacheManager
 	    {
 		cache = plugin.fileManager.loadAllCrates();
 
+		Bukkit.getScheduler().runTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onAsyncDone();
+                    }
+                });
 	    }
 	});
     }
