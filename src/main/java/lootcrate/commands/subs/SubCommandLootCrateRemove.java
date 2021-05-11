@@ -67,7 +67,6 @@ public class SubCommandLootCrateRemove extends SubCommand
 	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_REMOVE_SUCCESS,
 		ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
 			Placeholder.ITEM_ID, "" + CommandUtils.tryParse(args[2])));
-	plugin.messageManager.crateNotification(crate, sender);
     }
 
     @Override

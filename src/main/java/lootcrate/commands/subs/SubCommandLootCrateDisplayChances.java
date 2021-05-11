@@ -63,7 +63,6 @@ public class SubCommandLootCrateDisplayChances extends SubCommand
 		ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
 			Placeholder.VALUE, Boolean.parseBoolean(args[2]) + ""));
 
-	plugin.messageManager.crateNotification(crate, sender);
     }
 
     @Override

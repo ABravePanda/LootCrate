@@ -84,7 +84,6 @@ public class SubCommandLootCrateAdd extends SubCommand
 			Placeholder.ITEM_TYPE, "" + item.getItem().getType(), Placeholder.ITEM_ID, "" + item.getId(),
 			Placeholder.ITEM_NAME, "" + item.getItem().getItemMeta().getDisplayName()));
 
-	plugin.messageManager.crateNotification(crate, sender);
     }
 
     @Override

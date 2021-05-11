@@ -104,6 +104,7 @@ public class MessageManager
      * @param sender
      *            Whom shall receive the message
      */
+    @Deprecated
     public void crateNotification(Crate crate, CommandSender sender)
     {
 	if (crate.getChanceCount() != 100)
