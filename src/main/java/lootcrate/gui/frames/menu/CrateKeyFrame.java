@@ -14,6 +14,7 @@ import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateKey;
+import lootcrate.utils.ObjUtils;
 import net.md_5.bungee.api.ChatColor;
 
 public class CrateKeyFrame extends BasicFrame implements Listener
@@ -53,16 +54,16 @@ public class CrateKeyFrame extends BasicFrame implements Listener
     {
 	for (int i = 0; i < getInventory().getSize(); i++)
 	{
-	    this.setItem(i, new GUIItem(i,m));
+	    this.setItem(i, new GUIItem(i, m));
 	}
     }
 
     public void fillOptions()
     {
-	this.setItem(13, new GUIItem(13,crate.getKey()));
-	this.setItem(29, new GUIItem(29,Material.LIME_DYE, ChatColor.GREEN + "Set Key"));
-	this.setItem(31, new GUIItem(31,Material.AIR));
-	this.setItem(33, new GUIItem(33,Material.RED_DYE, ChatColor.RED + "Cancel"));
+	this.setItem(13, new GUIItem(13, crate.getKey()));
+	this.setItem(29, new GUIItem(29, Material.LIME_DYE, ChatColor.GREEN + "Set Key"));
+	this.setItem(31, new GUIItem(31, Material.AIR));
+	this.setItem(33, new GUIItem(33, Material.RED_DYE, ChatColor.RED + "Cancel"));
     }
 
     // events
@@ -70,15 +71,20 @@ public class CrateKeyFrame extends BasicFrame implements Listener
     @EventHandler
     public void onGUIItemClick(GUIItemClickEvent e)
     {
+	Player p = e.getPlayer();
 
 	if (!e.sameFrame(this))
 	    return;
 
-	if (e.getSlot() == 31 || e.getSlot() == 13)
+	if (e.getSlot() == 31)
 	    return;
 
-	Player p = e.getPlayer();
-	
+	if (e.getSlot() == 13)
+	{
+	    p.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
+	    return;
+	}
+
 	ItemStack item = e.getItem().getItemStack();
 
 	switch (item.getType())
@@ -95,7 +101,7 @@ public class CrateKeyFrame extends BasicFrame implements Listener
 	    if (p.getOpenInventory().getTopInventory().getItem(31) == null)
 		return;
 	    p.getInventory().addItem(this.getInventory().getItem(31));
-	    this.setItem(31, new GUIItem(31,Material.AIR));
+	    this.setItem(31, new GUIItem(31, Material.AIR));
 	    break;
 	default:
 	    return;
