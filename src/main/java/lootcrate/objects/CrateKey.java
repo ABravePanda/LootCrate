@@ -69,6 +69,7 @@ public class CrateKey implements ConfigurationSerializable
 
     public void setItem(ItemStack item)
     {
+	item.setAmount(1);
 	this.item = item;
     }
 

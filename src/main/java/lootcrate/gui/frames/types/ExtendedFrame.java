@@ -128,12 +128,14 @@ public abstract class ExtendedFrame implements Frame, Listener
 	    return;
 	if (e.getInventory() != this.getInventory())
 	    return;
+	if (e.getClickedInventory() != this.getInventory())
+	    return;
 	if (e.getCurrentItem() == null)
 	    return;
 
 	e.setCancelled(true);
 	
-	GUIItemClickEvent event = new GUIItemClickEvent((Player) e.getWhoClicked(), getContents()[e.getSlot()], this);
+	GUIItemClickEvent event = new GUIItemClickEvent((Player) e.getWhoClicked(), getContents()[e.getSlot()], this, e.getSlot());
 	Bukkit.getPluginManager().callEvent(event);
     }
     
@@ -148,7 +150,6 @@ public abstract class ExtendedFrame implements Frame, Listener
 	GUICloseEvent event = new GUICloseEvent(Bukkit.getPlayer(e.getPlayer().getUniqueId()), this);
 	Bukkit.getPluginManager().callEvent(event);
     }
-    
     
 
 }

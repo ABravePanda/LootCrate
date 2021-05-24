@@ -103,12 +103,14 @@ public class CacheManager
 	    {
 		cache = plugin.fileManager.loadAllCrates();
 
-		Bukkit.getScheduler().runTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onAsyncDone(startTime);
-                    }
-                });
+		Bukkit.getScheduler().runTask(plugin, new Runnable()
+		{
+		    @Override
+		    public void run()
+		    {
+			callback.onAsyncDone(startTime);
+		    }
+		});
 	    }
 	});
     }

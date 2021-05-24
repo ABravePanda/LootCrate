@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import lootcrate.LootCrate;
+import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
@@ -34,9 +35,15 @@ public class CrateViewFrame extends ExtendedFrame
 	for(ItemStack item : plugin.invManager.addCrateEffects(crate))
 	{
 	    if(index < getInventory().getSize())
-		this.setItem(index, new GUIItem(item));
+		this.setItem(index, new GUIItem(index,item));
 	    index++;
 	}
+    }
+    
+    @Override
+    public void unregisterFrame()
+    {
+	GUIItemClickEvent.getHandlerList().unregister(this);
     }
 
 

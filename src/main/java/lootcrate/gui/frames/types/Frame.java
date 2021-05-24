@@ -17,5 +17,6 @@ public interface Frame
     void close();
     void registerItems();
     void registerFrame();
+    void unregisterFrame();
     abstract void generateFrame();
 }

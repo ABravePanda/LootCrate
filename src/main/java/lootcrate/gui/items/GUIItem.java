@@ -12,37 +12,50 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.objects.CrateItem;
+import lootcrate.objects.CrateKey;
 
 public class GUIItem implements Listener
 {
     private CrateItem crateItem;
     private ItemStack item;
+    private int slot;
     private Callable<Integer> function;
 
-    public GUIItem(ItemStack item, String name, String... lore)
+    public GUIItem(int slot, ItemStack item, String name, String... lore)
     {
+	this.slot = slot;
 	this.item = editMeta(item, name, lore);
     }
 
-    public GUIItem(Material mat, String name, String... lore)
+    public GUIItem(int slot, Material mat, String name, String... lore)
     {
+	this.slot = slot;
 	this.item = editMeta(new ItemStack(mat), name, lore);
     }
 
-    public GUIItem(Material mat)
+    public GUIItem(int slot, Material mat)
     {
+	this.slot = slot;
 	this.item = new ItemStack(mat);
     }
 
-    public GUIItem(ItemStack item)
+    public GUIItem(int slot, ItemStack item)
     {
+	this.slot = slot;
 	this.item = item;
     }
     
-    public GUIItem(CrateItem item)
+    public GUIItem(int slot, CrateItem item)
     {
+	this.slot = slot;
 	this.crateItem = item;
 	this.item = crateItem.getItem();
+    }
+    
+    public GUIItem(int slot, CrateKey key)
+    {
+	this.slot = slot;
+	this.item = key.getItem();
     }
 
     public GUIItem()
@@ -57,6 +70,16 @@ public class GUIItem implements Listener
     public CrateItem getCrateItem()
     {
 	return this.crateItem;
+    }
+
+    public int getSlot()
+    {
+	return slot;
+    }
+
+    public void setSlot(int slot)
+    {
+	this.slot = slot;
     }
 
     public void setClickHandler(Callable<Integer> function)

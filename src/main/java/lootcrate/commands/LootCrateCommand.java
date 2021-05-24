@@ -12,6 +12,7 @@ import lootcrate.commands.subs.SubCommandLootCrateCreate;
 import lootcrate.commands.subs.SubCommandLootCrateDelete;
 import lootcrate.commands.subs.SubCommandLootCrateDisplayChances;
 import lootcrate.commands.subs.SubCommandLootCrateGive;
+import lootcrate.commands.subs.SubCommandLootCrateGui;
 import lootcrate.commands.subs.SubCommandLootCrateItems;
 import lootcrate.commands.subs.SubCommandLootCrateKey;
 import lootcrate.commands.subs.SubCommandLootCrateList;
@@ -87,6 +88,9 @@ public class LootCrateCommand extends Command
 	case "list":
 	    new SubCommandLootCrateList(plugin, sender, args).runSubCommand(false);
 	    break;
+	case "gui":
+	    new SubCommandLootCrateGui(plugin, sender, args).runSubCommand(false);
+	    break;
 	default:
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
 	    break;
@@ -158,6 +162,8 @@ public class LootCrateCommand extends Command
 	    return new SubCommandLootCrateDelete(plugin, sender, args).runTabComplete();
 	case "list":
 	    return new SubCommandLootCrateList(plugin, sender, args).runTabComplete();
+	case "gui":
+	    return new SubCommandLootCrateGui(plugin, sender, args).runTabComplete();
 	default:
 	    return list;
 	}

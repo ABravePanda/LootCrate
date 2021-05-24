@@ -16,14 +16,16 @@ public class GUIItemClickEvent extends Event implements Cancellable
     private Player player;
     private GUIItem item;
     private Frame frame;
+    private int slot;
     
     private static final HandlerList HANDLERS_LIST = new HandlerList();
     
-    public GUIItemClickEvent(Player p, GUIItem item, Frame frame)
+    public GUIItemClickEvent(Player p, GUIItem item, Frame frame, int slot)
     {
 	this.player = p;
 	this.item = item;
 	this.frame = frame;
+	this.slot = slot;
     }
     
     
@@ -64,6 +66,16 @@ public class GUIItemClickEvent extends Event implements Cancellable
     public Frame getFrame()
     {
 	return this.frame;
+    }
+    
+    public int getSlot()
+    {
+	return slot;
+    }
+
+    public boolean sameFrame(Frame frame)
+    {
+	return this.frame == frame;
     }
 
 }

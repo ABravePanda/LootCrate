@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
+import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
@@ -44,6 +45,12 @@ public class CrateOpenFrame extends BasicFrame
     public void generateFrame()
     {
 	fillBackground(Material.WHITE_STAINED_GLASS_PANE, true);
+    }
+    
+    @Override
+    public void unregisterFrame()
+    {
+	GUIItemClickEvent.getHandlerList().unregister(this);
     }
 
     /**
@@ -90,7 +97,7 @@ public class CrateOpenFrame extends BasicFrame
 		{
 		    if (i == 22 || i == 13 || i == 31)
 			continue;
-		    setItem(i, new GUIItem(randomGlass()));
+		    setItem(i, new GUIItem(i,randomGlass()));
 		}
 	    }
 	}, 0L, this.backgroundSpeed);
@@ -104,7 +111,7 @@ public class CrateOpenFrame extends BasicFrame
 	    @Override
 	    public void run()
 	    {
-		setItem(22, new GUIItem(plugin.crateManager.getRandomItem(crate)));
+		setItem(22, new GUIItem(22,plugin.crateManager.getRandomItem(crate)));
 	    }
 	}, 0L, this.rewardSpeed);
     }
@@ -141,13 +148,13 @@ public class CrateOpenFrame extends BasicFrame
 	while (index < getInventory().getSize())
 	{
 	    if (index != 22)
-		this.setItem(index, new GUIItem(m));
+		this.setItem(index, new GUIItem(index,m));
 	    index++;
 	}
 	if (showRewardsPointer)
 	{
-	    this.setItem(13, new GUIItem(Material.REDSTONE_TORCH, "&cReward"));
-	    this.setItem(31, new GUIItem(Material.REDSTONE_TORCH, "&cReward"));
+	    this.setItem(13, new GUIItem(13,Material.REDSTONE_TORCH, "&cReward"));
+	    this.setItem(31, new GUIItem(31,Material.REDSTONE_TORCH, "&cReward"));
 	}
     }
 

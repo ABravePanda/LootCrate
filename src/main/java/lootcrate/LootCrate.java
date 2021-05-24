@@ -89,18 +89,20 @@ public class LootCrate extends JavaPlugin
     {
 	Bukkit.getLogger().info("");
 	Bukkit.getLogger().info("");
-	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "[  " +
-		ChatColor.YELLOW + "LootCrate" + ChatColor.GREEN + " v" + this.getDescription().getVersion() + ChatColor.DARK_GRAY + "  ]");
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "[  " + ChatColor.YELLOW + "LootCrate"
+		+ ChatColor.GREEN + " v" + this.getDescription().getVersion() + ChatColor.DARK_GRAY + "  ]");
 	Bukkit.getLogger().info("");
-	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + ChatColor.YELLOW + this.getServer().getName() + " v"
-		+ this.getServer().getBukkitVersion() + ChatColor.DARK_GRAY + ".");
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + ChatColor.YELLOW
+		+ this.getServer().getName() + " v" + this.getServer().getBukkitVersion() + ChatColor.DARK_GRAY + ".");
 	if (updateManager.checkForUpdates())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion()
 		    + "). Download here: " + updateManager.getResourceURL() + ChatColor.DARK_GRAY + ".");
 	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Cached " + ChatColor.YELLOW
 		+ cacheManager.getCache().size() + ChatColor.DARK_GRAY + " crate(s).");
-	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Caching Took " + ChatColor.YELLOW
-		+ cacheTime + ChatColor.DARK_GRAY + " Nanoseconds or " + ChatColor.YELLOW + cacheTime / 1000000 + ChatColor.DARK_GRAY + " Miliseconds.");
+	Bukkit.getConsoleSender()
+		.sendMessage(ChatColor.DARK_GRAY + "Caching took " + ChatColor.YELLOW + cacheTime + ChatColor.DARK_GRAY
+			+ " nanoseconds or " + ChatColor.YELLOW + cacheTime / 1000000 + ChatColor.DARK_GRAY
+			+ " miliseconds.");
 	if (holoHook())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
 		    + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
@@ -134,7 +136,7 @@ public class LootCrate extends JavaPlugin
     {
 	long endTime = System.nanoTime();
 	long timeElapsed = endTime - starttime;
-	
+
 	crateManager = new CrateManager(this);
 	locationManager = new LocationManager(this);
 	locationManager.populateLocations();

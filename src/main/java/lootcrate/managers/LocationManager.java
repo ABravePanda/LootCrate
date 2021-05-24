@@ -2,7 +2,9 @@ package lootcrate.managers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -204,5 +206,24 @@ public class LocationManager
     public Map<Location, Crate> getLocationList()
     {
 	return locationList;
+    }
+
+    /**
+     * Returns a list of all locations for a specified crate
+     * 
+     * @param crate
+     *            Crate to find locations for
+     * 
+     * @return List of all locations attached to crate
+     */
+    public List<Location> getCrateLocations(Crate crate)
+    {
+	List<Location> locations = new ArrayList<Location>();
+
+	for (Location l : getLocationList().keySet())
+	    if (getLocationList().get(l) == crate)
+		locations.add(l);
+
+	return locations;
     }
 }
