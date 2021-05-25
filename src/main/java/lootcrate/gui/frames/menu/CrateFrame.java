@@ -1,7 +1,5 @@
 package lootcrate.gui.frames.menu;
 
-import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +22,7 @@ public class CrateFrame extends BasicFrame implements Listener
 
     public CrateFrame(LootCrate plugin, Player p, Crate crate)
     {
-	super(plugin, p, crate.getName());
+	super(plugin, p, crate.getName() + " : " + crate.getId());
 
 	this.plugin = plugin;
 	this.crate = crate;
@@ -40,7 +38,7 @@ public class CrateFrame extends BasicFrame implements Listener
 	fillBackground(Material.WHITE_STAINED_GLASS_PANE);
 	fillOptions();
     }
-    
+
     @Override
     public void unregisterFrame()
     {
@@ -59,10 +57,14 @@ public class CrateFrame extends BasicFrame implements Listener
 
     public void fillOptions()
     {
-	this.setItem(10, new GUIItem(10,Material.BRICKS, ChatColor.RED + "Items", ChatColor.GRAY + "All the items in the crate."));
-	this.setItem(13, new GUIItem(13,Material.TRIPWIRE_HOOK, ChatColor.RED + "Key", ChatColor.GRAY + "Used to unlock the crate."));
-	this.setItem(16, new GUIItem(16,Material.ENDER_PEARL, ChatColor.RED + "Locations", ChatColor.GRAY + "All the places the crate is set."));
-	this.setItem(31, new GUIItem(31,Material.ANVIL, ChatColor.RED + "Options", ChatColor.GRAY + "Edit crate name, hologram, knockback, etc..."));
+	this.setItem(10, new GUIItem(10, Material.BRICKS, ChatColor.RED + "Items",
+		ChatColor.GRAY + "All the items in the crate."));
+	this.setItem(13, new GUIItem(13, Material.TRIPWIRE_HOOK, ChatColor.RED + "Key",
+		ChatColor.GRAY + "Used to unlock the crate."));
+	this.setItem(16, new GUIItem(16, Material.ENDER_PEARL, ChatColor.RED + "Locations",
+		ChatColor.GRAY + "All the places the crate is set."));
+	this.setItem(31, new GUIItem(31, Material.ANVIL, ChatColor.RED + "Options",
+		ChatColor.GRAY + "Edit crate name, hologram, knockback, etc..."));
     }
 
     // events
@@ -70,14 +72,15 @@ public class CrateFrame extends BasicFrame implements Listener
     @EventHandler
     public void onGUIItemClick(GUIItemClickEvent e)
     {
-	if(!e.sameFrame(this)) return;
-	
+	if (!e.sameFrame(this))
+	    return;
+
 	Player p = e.getPlayer();
 	ItemStack item = e.getItem().getItemStack();
-	
+
 	Frame frameToOpen = null;
-	
-	switch(item.getType())
+
+	switch (item.getType())
 	{
 	case BRICKS:
 	    frameToOpen = new CrateItemFrame(plugin, p, crate);
@@ -90,7 +93,8 @@ public class CrateFrame extends BasicFrame implements Listener
 	    break;
 	case ANVIL:
 	    break;
-	default: return;
+	default:
+	    return;
 	}
 
 	this.close();

@@ -1,7 +1,5 @@
 package lootcrate.gui.frames.menu;
 
-import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -76,10 +74,10 @@ public class CrateKeyFrame extends BasicFrame implements Listener
 	if (!e.sameFrame(this))
 	    return;
 
-	if (e.getSlot() == 31)
+	if (e.getClickEvent().getSlot() == 31)
 	    return;
 
-	if (e.getSlot() == 13)
+	if (e.getClickEvent().getSlot() == 13)
 	{
 	    p.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
 	    return;

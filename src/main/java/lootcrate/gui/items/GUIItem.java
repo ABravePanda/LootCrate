@@ -73,6 +73,11 @@ public class GUIItem implements Listener
     {
 	return this.crateItem;
     }
+    
+    public void setCrateItem(CrateItem item)
+    {
+	this.crateItem = item;
+    }
 
     public int getSlot()
     {
@@ -112,9 +117,6 @@ public class GUIItem implements Listener
     @EventHandler
     public void onGUIClick(GUIItemClickEvent e) throws Exception
     {
-	if (e.getItem() != this)
-	    return;
-
 	if (function != null)
 	    function.call();
 	e.setCancelled(true);

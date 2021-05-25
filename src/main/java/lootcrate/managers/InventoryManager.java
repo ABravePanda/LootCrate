@@ -11,7 +11,6 @@ import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.other.CrateOptionType;
-import lootcrate.utils.ObjUtils;
 import net.md_5.bungee.api.ChatColor;
 
 public class InventoryManager

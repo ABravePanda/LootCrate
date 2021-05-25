@@ -9,7 +9,6 @@ import lootcrate.commands.SubCommand;
 import lootcrate.managers.UpdateManager;
 import lootcrate.other.Message;
 import lootcrate.other.Permission;
-import net.md_5.bungee.api.ChatColor;
 
 public class SubCommandLootCrateVersion extends SubCommand
 {

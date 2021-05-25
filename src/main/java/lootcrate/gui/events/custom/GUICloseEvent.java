@@ -5,9 +5,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
-import lootcrate.gui.items.GUIItem;
 
 public class GUICloseEvent extends Event implements Cancellable
 {
