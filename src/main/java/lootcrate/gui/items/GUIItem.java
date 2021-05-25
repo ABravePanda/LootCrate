@@ -1,6 +1,8 @@
 package lootcrate.gui.items;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.bukkit.ChatColor;
@@ -96,6 +98,15 @@ public class GUIItem implements Listener
 	meta.setLore(Arrays.asList(lore));
 	item.setItemMeta(meta);
 	return item;
+    }
+    
+    public void addLoreLine(String line)
+    {
+	ItemMeta meta = item.getItemMeta();
+	List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
+	lore.add(line);
+	meta.setLore(lore);
+	item.setItemMeta(meta);
     }
 
     @EventHandler

@@ -132,11 +132,10 @@ public abstract class ExtendedFrame implements Frame, Listener
 	    return;
 	if (e.getCurrentItem() == null)
 	    return;
-
-	e.setCancelled(true);
 	
-	GUIItemClickEvent event = new GUIItemClickEvent((Player) e.getWhoClicked(), getContents()[e.getSlot()], this, e.getSlot());
+	GUIItemClickEvent event = new GUIItemClickEvent(e, getContents()[e.getSlot()], this);
 	Bukkit.getPluginManager().callEvent(event);
+	e.setCancelled(event.isCancelled());
     }
     
     @EventHandler

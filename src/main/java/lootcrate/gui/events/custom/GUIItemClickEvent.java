@@ -4,6 +4,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
@@ -13,22 +16,19 @@ public class GUIItemClickEvent extends Event implements Cancellable
 {
 
     private boolean cancelled;
-    private Player player;
     private GUIItem item;
     private Frame frame;
-    private int slot;
-    
+    private InventoryClickEvent clickEvent;
+
     private static final HandlerList HANDLERS_LIST = new HandlerList();
-    
-    public GUIItemClickEvent(Player p, GUIItem item, Frame frame, int slot)
+
+    public GUIItemClickEvent(InventoryClickEvent clickEvent, GUIItem item, Frame frame)
     {
-	this.player = p;
+	this.clickEvent = clickEvent;
 	this.item = item;
 	this.frame = frame;
-	this.slot = slot;
     }
-    
-    
+
     @Override
     public boolean isCancelled()
     {
@@ -52,25 +52,26 @@ public class GUIItemClickEvent extends Event implements Cancellable
 	return HANDLERS_LIST;
     }
 
-    
     public Player getPlayer()
     {
-	return this.player;
+	if (clickEvent.getWhoClicked() instanceof Player)
+	    return (Player) clickEvent.getWhoClicked();
+	return null;
     }
-    
+
     public GUIItem getItem()
     {
 	return this.item;
     }
-    
+
     public Frame getFrame()
     {
 	return this.frame;
     }
-    
-    public int getSlot()
+
+    public InventoryClickEvent getClickEvent()
     {
-	return slot;
+	return clickEvent;
     }
 
     public boolean sameFrame(Frame frame)
