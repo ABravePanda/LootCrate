@@ -12,6 +12,7 @@ import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.RandomCollection;
+import lootcrate.other.AnimationStyle;
 import lootcrate.other.CrateOptionType;
 import lootcrate.other.Option;
 
@@ -135,6 +136,7 @@ public class CrateManager
 	{ "{crate_name}", "&8Right-Click&7 to Unlock", "&8Left-Click&7 to View" };
 	
 	crate.addOption(CrateOptionType.KNOCK_BACK, 1.0D);
+	crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
 	crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);
 	crate.addOption(CrateOptionType.OPEN_SOUND, Sound.UI_TOAST_CHALLENGE_COMPLETE.toString());
 	crate.addOption(CrateOptionType.OPEN_MESSAGE, "&fYou have opened &e{crate_name}&f.");

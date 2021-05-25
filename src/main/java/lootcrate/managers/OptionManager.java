@@ -5,6 +5,7 @@ import java.util.List;
 import org.bukkit.Sound;
 
 import lootcrate.LootCrate;
+import lootcrate.other.AnimationStyle;
 import lootcrate.other.Option;
 
 public class OptionManager
@@ -40,6 +41,8 @@ public class OptionManager
 	    return (T) (String) plugin.getConfig().getString(PREFIX + option.getKey());
 	case MINECRAFT_SOUND:
 	    return (T) Sound.valueOf((String) plugin.getConfig().getString(PREFIX + option.getKey()));
+	case ANIMATION_STYLE:
+	    return (T) AnimationStyle.valueOf((String) plugin.getConfig().getString(PREFIX + option.getKey()));
 	default:
 	    return null;
 

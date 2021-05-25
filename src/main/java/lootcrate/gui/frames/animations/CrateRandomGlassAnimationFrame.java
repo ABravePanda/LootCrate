@@ -1,4 +1,4 @@
-package lootcrate.gui.frames;
+package lootcrate.gui.frames.animations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,31 +10,27 @@ import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.types.BasicFrame;
+import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 
-public class CrateOpenFrame extends BasicFrame
+public class CrateRandomGlassAnimationFrame extends AnimatedFrame
 {
 
     private LootCrate plugin;
     private Crate crate;
-    private long backgroundSpeed;
-    private long rewardSpeed;
-    private int duration;
+    private long backgroundSpeed = 2;
+    private long rewardSpeed = 3;
+    private int duration = 6;
     private int taskID;
 
-    public CrateOpenFrame(LootCrate plugin, Player p, Crate crate, long backgroundSpeed, long rewardSpeed, int duration)
+    public CrateRandomGlassAnimationFrame(LootCrate plugin, Player p, Crate crate)
     {
 	super(plugin, p, crate.getName());
 
 	this.plugin = plugin;
 	this.crate = crate;
-
-	this.backgroundSpeed = backgroundSpeed;
-	this.rewardSpeed = rewardSpeed;
-	this.duration = duration;
 
 	generateFrame();
 	registerItems();

@@ -1,7 +1,14 @@
 package lootcrate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
 import org.bstats.bukkit.Metrics;
+import org.bstats.bukkit.Metrics.AdvancedPie;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,10 +32,13 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateKey;
 import lootcrate.objects.CrateOption;
+import lootcrate.other.AnimationStyle;
+import lootcrate.other.CrateOptionType;
 import net.md_5.bungee.api.ChatColor;
 
 public class LootCrate extends JavaPlugin
 {
+    private Metrics metrics;
     public MessageManager messageManager;
     public FileManager fileManager;
     public CacheManager cacheManager;
@@ -44,6 +54,7 @@ public class LootCrate extends JavaPlugin
     public void onEnable()
     {
 	initSerial();
+	initMetrics();
 
 	registerConfig();
 	optionManager = new OptionManager(this);
@@ -106,7 +117,7 @@ public class LootCrate extends JavaPlugin
 	if (holoHook())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
 		    + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
-	if (initMetrics())
+	if (metricsHook())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
 		    + "bStats Metrics" + ChatColor.DARK_GRAY + ".");
 	Bukkit.getLogger().info("");
@@ -117,10 +128,14 @@ public class LootCrate extends JavaPlugin
 	return Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays");
     }
 
-    public boolean initMetrics()
+    public void initMetrics()
     {
 	int pluginId = 9767;
-	Metrics metrics = new Metrics(this, pluginId);
+	metrics = new Metrics(this, pluginId);
+    }
+
+    public boolean metricsHook()
+    {
 	return metrics.isEnabled();
     }
 
@@ -137,12 +152,21 @@ public class LootCrate extends JavaPlugin
 	long endTime = System.nanoTime();
 	long timeElapsed = endTime - starttime;
 
+	// TODO
+	// WILL BE REMOVED EVENTUALLY
+	for (Crate crate : new ArrayList<Crate>(cacheManager.getCache()))
+	    if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null)
+	    {
+		crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
+		cacheManager.update(crate);
+	    }
+
 	crateManager = new CrateManager(this);
 	locationManager = new LocationManager(this);
 	locationManager.populateLocations();
 	invManager = new InventoryManager(this);
 	commandManager = new CommandManager(this);
-
+  
 	displayIntro(timeElapsed);
 
 	if (holoHook())

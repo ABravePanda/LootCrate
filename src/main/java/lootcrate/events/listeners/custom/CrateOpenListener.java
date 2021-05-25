@@ -9,8 +9,13 @@ import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
 import lootcrate.events.custom.CrateOpenEvent;
-import lootcrate.gui.frames.CrateOpenFrame;
+import lootcrate.gui.frames.animations.CrateCSGOAnimationFrame;
+import lootcrate.gui.frames.animations.CrateRandomGlassAnimationFrame;
+import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.objects.Crate;
+import lootcrate.objects.CrateOption;
+import lootcrate.other.AnimationStyle;
+import lootcrate.other.CrateOptionType;
 import lootcrate.other.Message;
 import lootcrate.other.Placeholder;
 import lootcrate.utils.InventoryUtils;
@@ -70,8 +75,29 @@ public class CrateOpenListener implements Listener
 	// play sound
 	plugin.crateManager.crateOpenEffects(crate, p);
 	
+	openAnimation(crate, p);
+    }
+    
+    private void openAnimation(Crate crate, Player p)
+    {
+	AnimatedFrame frame = null;
+	CrateOption opt = crate.getOption(CrateOptionType.ANIMATION_STYLE);
+	AnimationStyle type = AnimationStyle.valueOf((String) opt.getValue());
 	
-	CrateOpenFrame frame = new CrateOpenFrame(plugin, p, crate, 5, 10, 5);
+	switch(type)
+	{
+	case CSGO:
+	    frame = new CrateCSGOAnimationFrame(plugin, p, crate);
+	    break;
+	case RANDOM_GLASS:
+	    frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
+	    break;
+	default:
+	    frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
+	    break;
+	
+	}
+;
 	frame.open();
 	
 	frame.showAnimation();
