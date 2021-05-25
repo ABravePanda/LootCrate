@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
@@ -79,7 +80,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener
 	for (String command : item.getCommands())
 	    guiItem.addLoreLine(ChatColor.GRAY + "  - /" + ChatColor.GOLD + command);
 	guiItem.addLoreLine(" ");
-	guiItem.addLoreLine(ChatColor.RED + "Left-Click to Remove");
+	guiItem.addLoreLine(ChatColor.RED + "Shift-Click to Remove");
 	guiItem.setCrateItem(item);
 	return guiItem;
     }
@@ -96,9 +97,10 @@ public class CrateItemFrame extends ExtendedFrame implements Listener
 
 	GUIItem itemClicked = e.getItem();
 
-	
 	if (itemClicked.getItemStack().getType() == BACKGROUND)
 	    return;
+	
+	if(e.getClickEvent().getAction() != InventoryAction.MOVE_TO_OTHER_INVENTORY) return;
 	
 	CrateItem item = crate.getItem(this.getContents()[e.getItem().getSlot()].getCrateItem().getId());
 	crate.removeItem(item);

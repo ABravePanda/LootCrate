@@ -1,4 +1,4 @@
-package lootcrate.gui.frames.menu;
+package lootcrate.gui.frames.menu.option;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,22 +8,24 @@ import org.bukkit.inventory.ItemStack;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.option.CrateOptionMainMenuFrame;
+import lootcrate.gui.frames.menu.CrateItemFrame;
+import lootcrate.gui.frames.menu.CrateKeyFrame;
+import lootcrate.gui.frames.menu.CrateLocationFrame;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import net.md_5.bungee.api.ChatColor;
 
-public class CrateFrame extends BasicFrame implements Listener
+public class CrateOptionMainMenuFrame extends BasicFrame implements Listener
 {
 
     private LootCrate plugin;
     private Crate crate;
 
-    public CrateFrame(LootCrate plugin, Player p, Crate crate)
+    public CrateOptionMainMenuFrame(LootCrate plugin, Player p, Crate crate)
     {
-	super(plugin, p, crate.getName() + " : " + crate.getId());
+	super(plugin, p, crate.getName());
 
 	this.plugin = plugin;
 	this.crate = crate;
@@ -58,14 +60,16 @@ public class CrateFrame extends BasicFrame implements Listener
 
     public void fillOptions()
     {
-	this.setItem(10, new GUIItem(10, Material.BRICKS, ChatColor.RED + "Items",
-		ChatColor.GRAY + "All the items in the crate."));
-	this.setItem(13, new GUIItem(13, Material.TRIPWIRE_HOOK, ChatColor.RED + "Key",
-		ChatColor.GRAY + "Used to unlock the crate."));
-	this.setItem(16, new GUIItem(16, Material.ENDER_PEARL, ChatColor.RED + "Locations",
-		ChatColor.GRAY + "All the places the crate is set."));
-	this.setItem(31, new GUIItem(31, Material.ANVIL, ChatColor.RED + "Options",
-		ChatColor.GRAY + "Edit crate name, hologram, knockback, etc..."));
+	this.setItem(10, new GUIItem(10, Material.NAME_TAG, ChatColor.RED + "Name",
+		ChatColor.GRAY + "Change the crate name.", "", ChatColor.DARK_RED + "Coming soon..."));
+	this.setItem(13, new GUIItem(13, Material.STICK, ChatColor.RED + "Knockback Level",
+		ChatColor.GRAY + "Change how far the crate knocks you back."));
+	this.setItem(16, new GUIItem(16, Material.JUKEBOX, ChatColor.RED + "Open Sound",
+		ChatColor.GRAY + "Change the sound that plays when a crate is opened.", "", ChatColor.DARK_RED + "Coming soon..."));
+	this.setItem(30, new GUIItem(30, Material.BLAZE_POWDER, ChatColor.RED + "Animation Style",
+		ChatColor.GRAY + "Change the open animation.", "", ChatColor.DARK_RED + "Coming soon..."));
+	this.setItem(32, new GUIItem(32, Material.COMMAND_BLOCK, ChatColor.RED + "Open Message",
+		ChatColor.GRAY + "Change the message player recieves upon crate opening.", "", ChatColor.DARK_RED + "Coming soon..."));
     }
 
     // events
@@ -83,17 +87,8 @@ public class CrateFrame extends BasicFrame implements Listener
 
 	switch (item.getType())
 	{
-	case BRICKS:
-	    frameToOpen = new CrateItemFrame(plugin, p, crate);
-	    break;
-	case TRIPWIRE_HOOK:
-	    frameToOpen = new CrateKeyFrame(plugin, p, crate);
-	    break;
-	case ENDER_PEARL:
-	    frameToOpen = new CrateLocationFrame(plugin, p, crate);
-	    break;
-	case ANVIL:
-	    frameToOpen = new CrateOptionMainMenuFrame(plugin, p, crate);
+	case STICK:
+	    frameToOpen = new CrateOptionKnockBackFrame(plugin, p, crate);
 	    break;
 	default:
 	    return;

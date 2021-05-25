@@ -1,4 +1,6 @@
-package lootcrate.gui.frames.menu;
+package lootcrate.gui.frames.menu.option;
+
+import java.text.DecimalFormat;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,22 +10,26 @@ import org.bukkit.inventory.ItemStack;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.option.CrateOptionMainMenuFrame;
+import lootcrate.gui.frames.menu.CrateItemFrame;
+import lootcrate.gui.frames.menu.CrateKeyFrame;
+import lootcrate.gui.frames.menu.CrateLocationFrame;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
+import lootcrate.objects.CrateOption;
+import lootcrate.other.CrateOptionType;
 import net.md_5.bungee.api.ChatColor;
 
-public class CrateFrame extends BasicFrame implements Listener
+public class CrateOptionKnockBackFrame extends BasicFrame implements Listener
 {
 
     private LootCrate plugin;
     private Crate crate;
 
-    public CrateFrame(LootCrate plugin, Player p, Crate crate)
+    public CrateOptionKnockBackFrame(LootCrate plugin, Player p, Crate crate)
     {
-	super(plugin, p, crate.getName() + " : " + crate.getId());
+	super(plugin, p, crate.getName());
 
 	this.plugin = plugin;
 	this.crate = crate;
@@ -58,14 +64,12 @@ public class CrateFrame extends BasicFrame implements Listener
 
     public void fillOptions()
     {
-	this.setItem(10, new GUIItem(10, Material.BRICKS, ChatColor.RED + "Items",
-		ChatColor.GRAY + "All the items in the crate."));
-	this.setItem(13, new GUIItem(13, Material.TRIPWIRE_HOOK, ChatColor.RED + "Key",
-		ChatColor.GRAY + "Used to unlock the crate."));
-	this.setItem(16, new GUIItem(16, Material.ENDER_PEARL, ChatColor.RED + "Locations",
-		ChatColor.GRAY + "All the places the crate is set."));
-	this.setItem(31, new GUIItem(31, Material.ANVIL, ChatColor.RED + "Options",
-		ChatColor.GRAY + "Edit crate name, hologram, knockback, etc..."));
+	DecimalFormat df = new DecimalFormat("###.#");
+	double crateKnockback = (double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue();
+	this.setItem(13, new GUIItem(13, Material.STICK, ChatColor.GOLD + "Knockback Level",
+		ChatColor.GRAY + "" + df.format(crateKnockback)));
+	this.setItem(30, new GUIItem(30, Material.IRON_NUGGET, ChatColor.RED + "- 0.1"));
+	this.setItem(32, new GUIItem(32, Material.IRON_INGOT, ChatColor.GREEN + "+ 0.1"));
     }
 
     // events
@@ -79,28 +83,23 @@ public class CrateFrame extends BasicFrame implements Listener
 	Player p = e.getPlayer();
 	ItemStack item = e.getItem().getItemStack();
 
-	Frame frameToOpen = null;
-
 	switch (item.getType())
 	{
-	case BRICKS:
-	    frameToOpen = new CrateItemFrame(plugin, p, crate);
+	case IRON_NUGGET:
+	    crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK, (Double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue() - 0.100));
+	    plugin.cacheManager.update(crate);
 	    break;
-	case TRIPWIRE_HOOK:
-	    frameToOpen = new CrateKeyFrame(plugin, p, crate);
-	    break;
-	case ENDER_PEARL:
-	    frameToOpen = new CrateLocationFrame(plugin, p, crate);
-	    break;
-	case ANVIL:
-	    frameToOpen = new CrateOptionMainMenuFrame(plugin, p, crate);
+	case IRON_INGOT:
+	    crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK, (Double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue() + 0.100));
+	    plugin.cacheManager.update(crate);
 	    break;
 	default:
 	    return;
 	}
 
 	this.close();
-	frameToOpen.open();
+	new CrateOptionKnockBackFrame(plugin, p, crate).open();
+
     }
 
 }
