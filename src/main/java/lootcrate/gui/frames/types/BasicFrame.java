@@ -17,13 +17,13 @@ import lootcrate.utils.ObjUtils;
 
 public abstract class BasicFrame implements Frame, Listener
 {
-    private LootCrate plugin;
-    private int id;
-    private Player player;
-    private String title;
-    private GUIItem[] contents;
-    private Inventory inventory;
-    private int size = 45;
+    protected LootCrate plugin;
+    protected int id;
+    protected Player player;
+    protected String title;
+    protected GUIItem[] contents;
+    protected Inventory inventory;
+    protected int size = 45;
 
     public BasicFrame(LootCrate plugin, Player p, String title, GUIItem[] contents, int size)
     {
