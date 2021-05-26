@@ -116,7 +116,7 @@ public abstract class AnimatedFrame implements Frame, Listener
 	contents[slot] = item;
 	getInventory().setItem(slot, item.getItemStack());
     }
-    
+
     public abstract void showAnimation();
 
     private Inventory createInventory()
@@ -135,7 +135,6 @@ public abstract class AnimatedFrame implements Frame, Listener
 	    return;
 	if (e.getCurrentItem() == null)
 	    return;
-
 
 	GUIItemClickEvent event = new GUIItemClickEvent(e, this);
 	Bukkit.getPluginManager().callEvent(event);

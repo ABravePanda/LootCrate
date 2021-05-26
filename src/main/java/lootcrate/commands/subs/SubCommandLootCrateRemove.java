@@ -34,9 +34,11 @@ public class SubCommandLootCrateRemove extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
-	if(!this.testPermissions()) return;
-	
+	if (this.testPlayer(playerRequired))
+	    return;
+	if (!this.testPermissions())
+	    return;
+
 	if (args.length <= 2)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_REMOVE_USAGE, null);

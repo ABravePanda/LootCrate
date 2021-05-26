@@ -13,16 +13,15 @@ public class GUICloseEvent extends Event implements Cancellable
     private boolean cancelled;
     private Player player;
     private Frame frame;
-    
+
     private static final HandlerList HANDLERS_LIST = new HandlerList();
-    
+
     public GUICloseEvent(Player p, Frame frame)
     {
 	this.player = p;
 	this.frame = frame;
     }
-    
-    
+
     @Override
     public boolean isCancelled()
     {
@@ -46,12 +45,11 @@ public class GUICloseEvent extends Event implements Cancellable
 	return HANDLERS_LIST;
     }
 
-    
     public Player getPlayer()
     {
 	return this.player;
     }
-    
+
     public Frame getFrame()
     {
 	return this.frame;

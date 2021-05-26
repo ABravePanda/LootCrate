@@ -36,13 +36,14 @@ public class SubCommandLootCrateAdd extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
-	
+	if (this.testPlayer(playerRequired))
+	    return;
+
 	Player p = (Player) sender;
 
-	if(!this.testPermissions()) return;
+	if (!this.testPermissions())
+	    return;
 
-	
 	if (args.length <= 5)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);

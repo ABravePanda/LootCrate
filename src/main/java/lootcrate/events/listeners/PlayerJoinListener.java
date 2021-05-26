@@ -21,19 +21,18 @@ public class PlayerJoinListener implements Listener
 	this.updateManager = plugin.updateManager;
 	this.optionManager = plugin.optionManager;
     }
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e)
     {
 	Player p = e.getPlayer();
-	
-	if(!p.hasPermission(Permission.LOOTCRATE_UPDATE_NOTIFICATION.getKey()))
+
+	if (!p.hasPermission(Permission.LOOTCRATE_UPDATE_NOTIFICATION.getKey()))
 	    return;
-	
-	if(optionManager.valueOf(Option.ADMIN_NOTIFICATIONS))
+
+	if (optionManager.valueOf(Option.ADMIN_NOTIFICATIONS))
 	    updateManager.sendNotificationPlayer(p);
-	
-	
-	
+
     }
-    
+
 }

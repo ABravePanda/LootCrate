@@ -21,7 +21,8 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
     private List<String> commands;
     private boolean isDisplay;
 
-    public CrateItem(ItemStack item, int minAmount, int maxAmount, double chance, boolean isDisplay, List<String> commands)
+    public CrateItem(ItemStack item, int minAmount, int maxAmount, double chance, boolean isDisplay,
+	    List<String> commands)
     {
 	this.setId(ObjUtils.randomID(5));
 	this.setItem(item);
@@ -41,16 +42,16 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
 	    return;
 
 	this.id = (int) data.get("ID");
-	
-	//TODO remove
-	//Old Version Support - will be removed in update after
+
+	// TODO remove
+	// Old Version Support - will be removed in update after
 	if (data.get("Item") instanceof MemorySection)
 	{
-	    Map<String, Object> map = ObjUtils.MemoryToMap((MemorySection)data.get("Item"));
+	    Map<String, Object> map = ObjUtils.MemoryToMap((MemorySection) data.get("Item"));
 	    this.item = ItemStack.deserialize(map);
 	} else
 	    this.item = ItemStack.deserialize((Map<String, Object>) data.get("Item"));
-	
+
 	this.chance = (double) data.get("Chance");
 	this.minAmount = (int) data.get("MinAmount");
 	this.maxAmount = (int) data.get("MaxAmount");

@@ -19,8 +19,8 @@ public class CrateViewListener implements Listener
     @EventHandler
     public void onView(CrateViewEvent e)
     {
-	    CrateViewFrame frame = new CrateViewFrame(plugin, e.getPlayer(), e.getCrate());
-	    frame.open();
+	CrateViewFrame frame = new CrateViewFrame(plugin, e.getPlayer(), e.getCrate());
+	frame.open();
     }
 
 }

@@ -49,9 +49,9 @@ public class CrateAccessListener implements Listener
 	    if (event.isCancelled())
 		e.setCancelled(true);
 	}
-	
-	//if it was right click, check if key
-	if(action == Action.RIGHT_CLICK_BLOCK)
+
+	// if it was right click, check if key
+	if (action == Action.RIGHT_CLICK_BLOCK)
 	{
 	    CrateOpenEvent event = new CrateOpenEvent(crate, p);
 	    Bukkit.getPluginManager().callEvent(event);

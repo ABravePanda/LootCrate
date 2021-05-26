@@ -49,7 +49,7 @@ public enum Message
     MESSAGE_COMMAND_USAGE("message-command-usage"),
     LOOTCRATE_OPEN("lootcrate-open"),
     LOOTCRATE_INCORRECT_KEY("lootcrate-wrong-key");
-    
+
     String key;
 
     Message(String key)

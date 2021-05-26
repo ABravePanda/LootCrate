@@ -11,7 +11,6 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import lootcrate.other.ChatState;
 import lootcrate.other.CrateOptionType;
-import lootcrate.other.Permission;
 import net.md_5.bungee.api.ChatColor;
 
 public class PlayerChatListener implements Listener
@@ -46,7 +45,8 @@ public class PlayerChatListener implements Listener
 	    break;
 	case CHANGE_CRATE_SOUND:
 	    Sound sound = Sound.valueOf(e.getMessage());
-	    if(sound == null) return;
+	    if (sound == null)
+		return;
 	    crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.toString()));
 	    p.playSound(p.getLocation(), sound, 1, 1);
 	    break;

@@ -66,13 +66,13 @@ public class SubCommandLootCrateGui extends SubCommand
     public List<String> runTabComplete()
     {
 	List<String> list = new LinkedList<String>();
-	
+
 	if (args.length == 2)
 	{
 	    list.add("[CrateID]");
 	    TabUtils.addCratesToList(list, plugin.cacheManager);
 	}
-	
+
 	return list;
     }
 

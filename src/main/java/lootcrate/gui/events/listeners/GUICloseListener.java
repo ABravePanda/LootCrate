@@ -12,5 +12,5 @@ public class GUICloseListener implements Listener
     public void onClose(GUICloseEvent e)
     {
     }
-    
+
 }

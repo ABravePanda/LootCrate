@@ -134,7 +134,6 @@ public abstract class BasicFrame implements Frame, Listener
 	if (e.getCurrentItem() == null)
 	    return;
 
-
 	GUIItemClickEvent event = new GUIItemClickEvent(e, this);
 	Bukkit.getPluginManager().callEvent(event);
 	e.setCancelled(event.isCancelled());

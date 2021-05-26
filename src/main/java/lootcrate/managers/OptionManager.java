@@ -24,7 +24,6 @@ public class OptionManager
 	this.plugin = plugin;
     }
 
-
     public <T> T valueOf(Option option)
     {
 	switch (option.getType())
@@ -48,6 +47,5 @@ public class OptionManager
 
 	}
     }
-    
 
 }

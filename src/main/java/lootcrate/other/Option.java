@@ -4,7 +4,7 @@ public enum Option
 {
     DISPATCH_COMMAND_ITEM_AMOUNT("dispatch-command-item-time", DataType.BOOLEAN),
     ADMIN_NOTIFICATIONS("admin-update-notification", DataType.BOOLEAN);
-    
+
     String key;
     DataType type;
 
@@ -18,7 +18,7 @@ public enum Option
     {
 	return this.key;
     }
-    
+
     public DataType getType()
     {
 	return this.type;

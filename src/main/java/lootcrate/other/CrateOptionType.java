@@ -11,8 +11,8 @@ public enum CrateOptionType
     HOLOGRAM_OFFSET_Y("Hologram-Offset-Y", DataType.BOOLEAN),
     HOLOGRAM_OFFSET_Z("Hologram-Offset-Z", DataType.BOOLEAN),
     ANIMATION_STYLE("Animation-Style", DataType.STRING);
-    //CRATE_FORMAT("Crate-Format", DataType.MAP);
-    
+    // CRATE_FORMAT("Crate-Format", DataType.MAP);
+
     String key;
     DataType type;
 
@@ -26,23 +26,24 @@ public enum CrateOptionType
     {
 	return this.key;
     }
-    
+
     public DataType getType()
     {
 	return this.type;
     }
-    
+
     @Override
     public String toString()
     {
 	return key;
     }
-    
+
     public static CrateOptionType fromKey(String key)
     {
-	for(CrateOptionType value : CrateOptionType.values())
+	for (CrateOptionType value : CrateOptionType.values())
 	{
-	    if(key.equals(value.getKey())) return value;
+	    if (key.equals(value.getKey()))
+		return value;
 	}
 	return null;
     }

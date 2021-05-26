@@ -40,14 +40,14 @@ public class CrateOpenListener implements Listener
 
 	// if they clicked w/same item as key && they match
 
-	if (crate.getKey() == null || crate.getKey().getItem() == null|| item == null)
+	if (crate.getKey() == null || crate.getKey().getItem() == null || item == null)
 	{
 	    plugin.messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
 		    ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, crate.getId() + ""));
 	    PlayerUtils.knockBackPlayer(crate, p);
 	    return;
 	}
-	
+
 	// if no items
 	if (crate.getItems().size() == 0)
 	    return;
@@ -60,31 +60,31 @@ public class CrateOpenListener implements Listener
 	    PlayerUtils.knockBackPlayer(crate, p);
 	    return;
 	}
-	
+
 	// if inv is full
 	if (InventoryUtils.isFull(p.getInventory()))
 	{
 	    plugin.messageManager.sendMessage(p, Message.INVENTORY_FULL, null);
 	    return;
 	}
-	
+
 	// remove item
 	p.getInventory().getItemInMainHand().setAmount(item.getAmount() - 1);
 	p.updateInventory();
 
 	// play sound
 	plugin.crateManager.crateOpenEffects(crate, p);
-	
+
 	openAnimation(crate, p);
     }
-    
+
     private void openAnimation(Crate crate, Player p)
     {
 	AnimatedFrame frame = null;
 	CrateOption opt = crate.getOption(CrateOptionType.ANIMATION_STYLE);
 	AnimationStyle type = AnimationStyle.valueOf((String) opt.getValue());
-	
-	switch(type)
+
+	switch (type)
 	{
 	case CSGO:
 	    frame = new CrateCSGOAnimationFrame(plugin, p, crate);
@@ -95,11 +95,11 @@ public class CrateOpenListener implements Listener
 	default:
 	    frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
 	    break;
-	
+
 	}
-;
+	;
 	frame.open();
-	
+
 	frame.showAnimation();
     }
 

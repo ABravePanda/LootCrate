@@ -53,7 +53,7 @@ public class GUIItemClickEvent extends Event implements Cancellable
 	    return (Player) clickEvent.getWhoClicked();
 	return null;
     }
-    
+
     public GUIItem getItem()
     {
 	return frame.getContents()[clickEvent.getSlot()];

@@ -33,9 +33,11 @@ public class SubCommandLootCrateList extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
-	if(!this.testPermissions()) return;
-	
+	if (this.testPlayer(playerRequired))
+	    return;
+	if (!this.testPermissions())
+	    return;
+
 	if (args.length != 1)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_LIST_USAGE, null);
@@ -49,7 +51,8 @@ public class SubCommandLootCrateList extends SubCommand
 	    map.put(Placeholder.CRATE_ID, crate.getId() + "");
 	    map.put(Placeholder.CRATE_NAME, crate.getName());
 	    map.put(Placeholder.CRATE_ITEM_COUNT, crate.getItems().size() + "");
-	    map.put(Placeholder.CRATE_KEY_TYPE, crate.getKey().getItem() == null ? "None" : crate.getKey().getItem().getType() + "");
+	    map.put(Placeholder.CRATE_KEY_TYPE,
+		    crate.getKey().getItem() == null ? "None" : crate.getKey().getItem().getType() + "");
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_LIST_FORMAT, ImmutableMap.copyOf(map));
 	}
     }

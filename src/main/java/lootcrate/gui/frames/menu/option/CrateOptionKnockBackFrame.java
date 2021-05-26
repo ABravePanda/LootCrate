@@ -10,11 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.CrateItemFrame;
-import lootcrate.gui.frames.menu.CrateKeyFrame;
-import lootcrate.gui.frames.menu.CrateLocationFrame;
 import lootcrate.gui.frames.types.BasicFrame;
-import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
@@ -86,11 +82,13 @@ public class CrateOptionKnockBackFrame extends BasicFrame implements Listener
 	switch (item.getType())
 	{
 	case IRON_NUGGET:
-	    crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK, (Double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue() - 0.100));
+	    crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK,
+		    (Double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue() - 0.100));
 	    plugin.cacheManager.update(crate);
 	    break;
 	case IRON_INGOT:
-	    crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK, (Double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue() + 0.100));
+	    crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK,
+		    (Double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue() + 0.100));
 	    plugin.cacheManager.update(crate);
 	    break;
 	default:

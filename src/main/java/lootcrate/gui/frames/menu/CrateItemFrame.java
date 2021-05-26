@@ -99,9 +99,10 @@ public class CrateItemFrame extends ExtendedFrame implements Listener
 
 	if (itemClicked.getItemStack().getType() == BACKGROUND)
 	    return;
-	
-	if(e.getClickEvent().getAction() != InventoryAction.MOVE_TO_OTHER_INVENTORY) return;
-	
+
+	if (e.getClickEvent().getAction() != InventoryAction.MOVE_TO_OTHER_INVENTORY)
+	    return;
+
 	CrateItem item = crate.getItem(this.getContents()[e.getItem().getSlot()].getCrateItem().getId());
 	crate.removeItem(item);
 	plugin.cacheManager.update(crate);

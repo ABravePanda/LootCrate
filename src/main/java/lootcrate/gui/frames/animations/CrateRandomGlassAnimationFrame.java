@@ -42,7 +42,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame
     {
 	fillBackground(Material.WHITE_STAINED_GLASS_PANE, true);
     }
-    
+
     @Override
     public void unregisterFrame()
     {
@@ -93,7 +93,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame
 		{
 		    if (i == 22 || i == 13 || i == 31)
 			continue;
-		    setItem(i, new GUIItem(i,randomGlass()));
+		    setItem(i, new GUIItem(i, randomGlass()));
 		}
 	    }
 	}, 0L, this.backgroundSpeed);
@@ -107,7 +107,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame
 	    @Override
 	    public void run()
 	    {
-		setItem(22, new GUIItem(22,plugin.crateManager.getRandomItem(crate)));
+		setItem(22, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
 	    }
 	}, 0L, this.rewardSpeed);
     }
@@ -144,13 +144,13 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame
 	while (index < getInventory().getSize())
 	{
 	    if (index != 22)
-		this.setItem(index, new GUIItem(index,m));
+		this.setItem(index, new GUIItem(index, m));
 	    index++;
 	}
 	if (showRewardsPointer)
 	{
-	    this.setItem(13, new GUIItem(13,Material.REDSTONE_TORCH, "&cReward"));
-	    this.setItem(31, new GUIItem(31,Material.REDSTONE_TORCH, "&cReward"));
+	    this.setItem(13, new GUIItem(13, Material.REDSTONE_TORCH, "&cReward"));
+	    this.setItem(31, new GUIItem(31, Material.REDSTONE_TORCH, "&cReward"));
 	}
     }
 

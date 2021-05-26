@@ -37,12 +37,14 @@ public class SubCommandLootCrateKey extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
+	if (this.testPlayer(playerRequired))
+	    return;
 
 	Player p = (Player) sender;
 
-	if(!this.testPermissions()) return;
-	
+	if (!this.testPermissions())
+	    return;
+
 	if (args.length <= 2)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_USAGE, null);
@@ -82,7 +84,7 @@ public class SubCommandLootCrateKey extends SubCommand
 	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_KEY.getKey())
 		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	    return list;
-	
+
 	if (args.length == 2)
 	{
 	    list.add("[CrateID]");

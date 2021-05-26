@@ -58,8 +58,8 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener
 
     public void fillOptions()
     {
-	this.setItem(10, new GUIItem(10, Material.NAME_TAG, ChatColor.RED + "Name",
-		ChatColor.GRAY + "Change the crate name."));
+	this.setItem(10,
+		new GUIItem(10, Material.NAME_TAG, ChatColor.RED + "Name", ChatColor.GRAY + "Change the crate name."));
 	this.setItem(13, new GUIItem(13, Material.STICK, ChatColor.RED + "Knockback Level",
 		ChatColor.GRAY + "Change how far the crate knocks you back."));
 	this.setItem(16, new GUIItem(16, Material.JUKEBOX, ChatColor.RED + "Open Sound",

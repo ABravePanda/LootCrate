@@ -42,7 +42,7 @@ public class CommandUtils
 	    return null;
 	}
     }
-    
+
     public static double tryParseDouble(String text)
     {
 	try
@@ -53,11 +53,11 @@ public class CommandUtils
 	    return 0.0;
 	}
     }
-    
+
     public static boolean hasCratePermission(Crate crate, Player p)
     {
-	return p.hasPermission(Permission.LOOTCRATE_INTERACT.getKey() + crate.getId()) || p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey());
+	return p.hasPermission(Permission.LOOTCRATE_INTERACT.getKey() + crate.getId())
+		|| p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey());
     }
-    
 
 }

@@ -49,7 +49,7 @@ public class CrateManager
 	}
 	return null;
     }
-    
+
     /**
      * Retrieves a random CrateItem from the specified crate
      * 
@@ -82,7 +82,6 @@ public class CrateManager
 	return ThreadLocalRandom.current().nextInt(item.getMinAmount(), item.getMaxAmount() + 1);
     }
 
-
     public void crateOpenEffects(Crate crate, Player p)
     {
 	// play sound
@@ -104,10 +103,10 @@ public class CrateManager
 	    p.sendMessage(plugin.messageManager.getPrefix()
 		    + ChatColor.translateAlternateColorCodes('&', crate.getOption(CrateOptionType.OPEN_MESSAGE)
 			    .getValue().toString().replace("{crate_name}", crate.getName())));
-	}	
+	}
 
     }
-    
+
     public void giveReward(CrateItem crateItem, Player p)
     {
 	int rnd = plugin.crateManager.getRandomAmount(crateItem);
@@ -128,13 +127,13 @@ public class CrateManager
 		Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), cmd.replace("{player}", p.getName()));
 	}
     }
-    
+
     public void addDefaultOptions(Crate crate)
     {
 
 	String[] lines =
 	{ "{crate_name}", "&8Right-Click&7 to Unlock", "&8Left-Click&7 to View" };
-	
+
 	crate.addOption(CrateOptionType.KNOCK_BACK, 1.0D);
 	crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
 	crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);

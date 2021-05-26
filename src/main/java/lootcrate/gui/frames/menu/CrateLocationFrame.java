@@ -38,7 +38,7 @@ public class CrateLocationFrame extends BasicFrame
 	fillBackground(Material.WHITE_STAINED_GLASS_PANE);
 	fillLocations();
     }
-    
+
     @Override
     public void unregisterFrame()
     {
@@ -58,20 +58,23 @@ public class CrateLocationFrame extends BasicFrame
     public void fillLocations()
     {
 	int index = 0;
-	for(final Location l : plugin.locationManager.getCrateLocations(crate))
+	for (final Location l : plugin.locationManager.getCrateLocations(crate))
 	{
-	    GUIItem item = new GUIItem(index,l.getBlock().getType(), ChatColor.GOLD + "" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ(), ChatColor.AQUA + "" + l.getWorld().getName());
-	    
-	    item.setClickHandler(new Callable<Integer>() {
-		   public Integer call() {
-		       	p.teleport(l);
-		        return 1;
-		   }
-		});
-	    
+	    GUIItem item = new GUIItem(index, l.getBlock().getType(),
+		    ChatColor.GOLD + "" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ(),
+		    ChatColor.AQUA + "" + l.getWorld().getName());
+
+	    item.setClickHandler(new Callable<Integer>()
+	    {
+		public Integer call()
+		{
+		    p.teleport(l);
+		    return 1;
+		}
+	    });
+
 	    this.setItem(index, item);
 	}
     }
-
 
 }

@@ -46,14 +46,14 @@ public class GUIItem implements Listener
 	this.slot = slot;
 	this.item = item;
     }
-    
+
     public GUIItem(int slot, CrateItem item)
     {
 	this.slot = slot;
 	this.crateItem = item;
 	this.item = crateItem.getItem();
     }
-    
+
     public GUIItem(int slot, CrateKey key)
     {
 	this.slot = slot;
@@ -68,12 +68,12 @@ public class GUIItem implements Listener
     {
 	return this.item;
     }
-    
+
     public CrateItem getCrateItem()
     {
 	return this.crateItem;
     }
-    
+
     public void setCrateItem(CrateItem item)
     {
 	this.crateItem = item;
@@ -97,21 +97,21 @@ public class GUIItem implements Listener
     private ItemStack editMeta(ItemStack item, String name, String... lore)
     {
 	name = ChatColor.translateAlternateColorCodes('&', name);
-	
+
 	ItemMeta meta = item.getItemMeta();
 	meta.setDisplayName(name);
 	meta.setLore(Arrays.asList(lore));
 	item.setItemMeta(meta);
 	return item;
     }
-    
+
     public void setName(String name)
     {
 	ItemMeta meta = item.getItemMeta();
 	meta.setDisplayName(name);
 	item.setItemMeta(meta);
     }
-    
+
     public void addLoreLine(String line)
     {
 	ItemMeta meta = item.getItemMeta();

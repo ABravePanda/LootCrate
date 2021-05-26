@@ -27,7 +27,6 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame
 	this.plugin = plugin;
 	this.crate = crate;
 
-
 	generateFrame();
 	registerItems();
 	registerFrame();
@@ -39,7 +38,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame
 	fillBackground(Material.WHITE_STAINED_GLASS_PANE, true);
 	initLineup();
     }
-    
+
     @Override
     public void unregisterFrame()
     {
@@ -76,7 +75,6 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame
 	}, 0L, 20L);
     }
 
-
     // animates rewards
     private int animateReward()
     {
@@ -90,18 +88,18 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame
 		setItem(22, getContents()[23]);
 		setItem(23, getContents()[24]);
 		setItem(24, new GUIItem(24, plugin.crateManager.getRandomItem(crate)));
-		//getContents()[]
+		// getContents()[]
 	    }
 	}, 0L, this.rewardSpeed);
     }
-    
+
     private void initLineup()
     {
-	setItem(20, new GUIItem(22,plugin.crateManager.getRandomItem(crate)));
-	setItem(21, new GUIItem(22,plugin.crateManager.getRandomItem(crate)));
-	setItem(22, new GUIItem(22,plugin.crateManager.getRandomItem(crate)));
-	setItem(23, new GUIItem(22,plugin.crateManager.getRandomItem(crate)));
-	setItem(24, new GUIItem(22,plugin.crateManager.getRandomItem(crate)));
+	setItem(20, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
+	setItem(21, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
+	setItem(22, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
+	setItem(23, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
+	setItem(24, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
     }
 
     private void giveRewards(CrateItem crateItem)
@@ -109,20 +107,19 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame
 	plugin.crateManager.giveReward(crateItem, getViewer());
     }
 
-
     public void fillBackground(Material m, boolean showRewardsPointer)
     {
 	int index = 0;
 	while (index < getInventory().getSize())
 	{
 	    if (index != 22)
-		this.setItem(index, new GUIItem(index,m));
+		this.setItem(index, new GUIItem(index, m));
 	    index++;
 	}
 	if (showRewardsPointer)
 	{
-	    this.setItem(13, new GUIItem(13,Material.REDSTONE_TORCH, "&cReward"));
-	    this.setItem(31, new GUIItem(31,Material.REDSTONE_TORCH, "&cReward"));
+	    this.setItem(13, new GUIItem(13, Material.REDSTONE_TORCH, "&cReward"));
+	    this.setItem(31, new GUIItem(31, Material.REDSTONE_TORCH, "&cReward"));
 	}
     }
 

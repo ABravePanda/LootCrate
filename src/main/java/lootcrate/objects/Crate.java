@@ -21,23 +21,23 @@ public class Crate implements ConfigurationSerializable
     private CrateKey key;
     private List<CrateItem> items;
     private Map<CrateOptionType, Object> options;
-    
+
     public Crate(String name, CrateKey key, List<CrateItem> items, Map<CrateOptionType, Object> options)
     {
 	this.setId(ObjUtils.randomID(3));
 	this.setName(name);
 	this.setKey(key);
-	if(items != null)
+	if (items != null)
 	    this.setItems(items);
 	else
 	    this.setItems(new ArrayList<CrateItem>());
-	if(options != null)
+	if (options != null)
 	    this.setOptions(options);
 	else
 	    this.setOptions(new LinkedHashMap<CrateOptionType, Object>());
-	    
+
     }
-    
+
     public Crate(String name)
     {
 	this.setId(ObjUtils.randomID(3));
@@ -46,48 +46,47 @@ public class Crate implements ConfigurationSerializable
 	this.setItems(new ArrayList<CrateItem>());
 	this.setOptions(new LinkedHashMap<CrateOptionType, Object>());
     }
-    
-    public Crate(LootCrate plugin, Map<String,Object> data)
+
+    public Crate(LootCrate plugin, Map<String, Object> data)
     {
 	boolean convert = false;
-	
+
 	this.id = (int) data.get("Id");
 	this.name = (String) data.get("Name");
 	this.key = new CrateKey((MemorySection) data.get("Key"));
-	
-	//TODO remove
-	//Old Version Support - will be removed in update after
-	if(data.get("Items") instanceof MemorySection)
+
+	// TODO remove
+	// Old Version Support - will be removed in update after
+	if (data.get("Items") instanceof MemorySection)
 	{
 	    convert = true;
 	    this.items = new ArrayList<CrateItem>();
-	    Map<String, Object> map = ObjUtils.MemoryToMap((MemorySection)data.get("Items"));
-	    for(String s : map.keySet())
+	    Map<String, Object> map = ObjUtils.MemoryToMap((MemorySection) data.get("Items"));
+	    for (String s : map.keySet())
 	    {
 		items.add(new CrateItem(ObjUtils.MemoryToMap((MemorySection) map.get(s))));
 	    }
-	} 
-	else
+	} else
 	    this.items = (List<CrateItem>) data.get("Items");
 	this.options = (Map<CrateOptionType, Object>) getDeseralizedOptions((MemorySection) data.get("Options"));
-	
-	//TODO remove
-	//Old Version Support - will be removed in update after
-	if(convert)
+
+	// TODO remove
+	// Old Version Support - will be removed in update after
+	if (convert)
 	{
 	    plugin.cacheManager.remove(this);
 	    plugin.cacheManager.update(this);
-	    Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "LOOTCRATE " + ChatColor.WHITE + "Crates.yml file has been converted to fit to new version. You must remake each Crate's keys");
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "LOOTCRATE " + ChatColor.WHITE
+		    + "Crates.yml file has been converted to fit to new version. You must remake each Crate's keys");
 	}
     }
-    
-    
+
     private int calculateChances()
     {
 	int chance = 0;
-	for(CrateItem item : getItems())
+	for (CrateItem item : getItems())
 	{
-	    chance+=item.getChance();
+	    chance += item.getChance();
 	}
 	return chance;
     }
@@ -126,35 +125,36 @@ public class Crate implements ConfigurationSerializable
     {
 	return items;
     }
-    
+
     public void addItem(CrateItem item)
     {
 	getItems().add(item);
     }
-    
+
     public CrateItem getItem(int id)
     {
-	for(CrateItem item : getItems())
+	for (CrateItem item : getItems())
 	{
-	    if(item.getId() == id) return item;
+	    if (item.getId() == id)
+		return item;
 	}
 	return null;
     }
-    
+
     public void removeItem(CrateItem item)
     {
-	if(getItems().contains(item))
+	if (getItems().contains(item))
 	    getItems().remove(item);
     }
-    
+
     public void replaceItem(CrateItem item)
     {
-	for(CrateItem item2 : getItems())
+	for (CrateItem item2 : getItems())
 	{
-	    if(item2.getId() == item.getId()) item2 = item;
+	    if (item2.getId() == item.getId())
+		item2 = item;
 	}
     }
-   
 
     public void setItems(List<CrateItem> items)
     {
@@ -175,27 +175,26 @@ public class Crate implements ConfigurationSerializable
     {
 	this.options = options;
     }
-    
+
     public void addOption(CrateOptionType key, Object value)
     {
 	getOptions().put(key, value);
     }
-    
+
     public CrateOption getOption(CrateOptionType type)
     {
-	if(getOptions().containsKey(type))
+	if (getOptions().containsKey(type))
 	    return new CrateOption(type, getOptions().get(type));
 	return null;
     }
-    
+
     public void setOption(CrateOption option)
     {
-	if(getOptions().containsKey(option.getKey()))
+	if (getOptions().containsKey(option.getKey()))
 	    getOptions().remove(option.getKey());
 	getOptions().put(option.getKey(), option.getValue());
     }
-    
-    
+
     @Override
     public Map<String, Object> serialize()
     {
@@ -207,17 +206,17 @@ public class Crate implements ConfigurationSerializable
 	map.put("Items", getItems());
 	return map;
     }
-    
+
     public Map<String, Object> getSeralizedOptions()
     {
 	Map<String, Object> map = new LinkedHashMap<String, Object>();
-	for(CrateOptionType type : getOptions().keySet())
+	for (CrateOptionType type : getOptions().keySet())
 	{
 	    map.put(type.getKey(), getOptions().get(type));
 	}
 	return map;
     }
-    
+
     public Map<CrateOptionType, Object> getDeseralizedOptions(MemorySection section)
     {
 	Map<CrateOptionType, Object> item = new LinkedHashMap<CrateOptionType, Object>();

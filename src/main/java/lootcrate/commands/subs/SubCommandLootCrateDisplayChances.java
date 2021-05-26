@@ -35,9 +35,11 @@ public class SubCommandLootCrateDisplayChances extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
-	if(!this.testPermissions()) return;
-	
+	if (this.testPlayer(playerRequired))
+	    return;
+	if (!this.testPermissions())
+	    return;
+
 	if (args.length <= 2)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_DISPLAY_USAGE, null);
@@ -69,11 +71,11 @@ public class SubCommandLootCrateDisplayChances extends SubCommand
     public List<String> runTabComplete()
     {
 	List<String> list = new LinkedList<String>();
-	
+
 	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES.getKey())
 		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	    return list;
-	
+
 	if (args.length == 2)
 	{
 	    list.add("[CrateID]");

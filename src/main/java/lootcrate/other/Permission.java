@@ -23,7 +23,7 @@ public enum Permission
     LOOTCRATE_UPDATE_NOTIFICATION("lootcrate.notification");
 
     String key;
-    
+
     Permission(String key)
     {
 	this.key = key;

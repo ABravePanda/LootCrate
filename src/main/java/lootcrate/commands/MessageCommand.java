@@ -45,7 +45,8 @@ public class MessageCommand extends Command
 
 	if (Bukkit.getPlayer(args[0]) == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.PLAYER_NOT_FOUND, ImmutableMap.of(Placeholder.PLAYER_NAME, args[0]));
+	    plugin.messageManager.sendMessage(sender, Message.PLAYER_NOT_FOUND,
+		    ImmutableMap.of(Placeholder.PLAYER_NAME, args[0]));
 	    return;
 	}
 
@@ -68,7 +69,7 @@ public class MessageCommand extends Command
 	    }
 	    return list;
 	}
-	if(args.length == 2)
+	if (args.length == 2)
 	    list.add("[Message]");
 	return list;
     }

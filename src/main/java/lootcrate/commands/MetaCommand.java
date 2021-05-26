@@ -75,17 +75,18 @@ public class MetaCommand extends Command
 		}
 		if (Enchantment.getByName(args[1]) == null)
 		{
-		    plugin.messageManager.sendMessage(sender, Message.ENCHANTMENT_NOT_FOUND, ImmutableMap.of(Placeholder.ENCHANTMENT_NAME, args[1]));
+		    plugin.messageManager.sendMessage(sender, Message.ENCHANTMENT_NOT_FOUND,
+			    ImmutableMap.of(Placeholder.ENCHANTMENT_NAME, args[1]));
 		    return;
 		}
-		if(CommandUtils.tryParse(args[2]) == null)
+		if (CommandUtils.tryParse(args[2]) == null)
 		{
 		    plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
 		    return;
 		}
-		
+
 		item.addUnsafeEnchantment(Enchantment.getByName(args[1]), Integer.parseInt(args[2]));
-		
+
 	    } else
 		plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
 	    return;

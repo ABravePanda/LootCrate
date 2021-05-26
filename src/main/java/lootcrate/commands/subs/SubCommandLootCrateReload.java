@@ -24,8 +24,10 @@ public class SubCommandLootCrateReload extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
-	if(!this.testPermissions()) return;
+	if (this.testPlayer(playerRequired))
+	    return;
+	if (!this.testPermissions())
+	    return;
 
 	plugin.reloadConfig();
 	plugin.reload();

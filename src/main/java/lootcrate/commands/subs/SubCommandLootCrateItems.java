@@ -24,7 +24,7 @@ public class SubCommandLootCrateItems extends SubCommand
     private String[] args;
     private CommandSender sender;
     private LootCrate plugin;
-    
+
     public SubCommandLootCrateItems(LootCrate plugin, CommandSender sender, String[] args)
     {
 	super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_ITEMS, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -36,9 +36,11 @@ public class SubCommandLootCrateItems extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
-	if(!this.testPermissions()) return;
-	
+	if (this.testPlayer(playerRequired))
+	    return;
+	if (!this.testPermissions())
+	    return;
+
 	if (args.length != 2)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_USAGE, null);
@@ -65,10 +67,10 @@ public class SubCommandLootCrateItems extends SubCommand
 	    map.put(Placeholder.ITEM_MIN_AMOUNT, item.getMinAmount() + "");
 	    map.put(Placeholder.ITEM_MAX_AMOUNT, item.getMaxAmount() + "");
 	    map.put(Placeholder.ITEM_CHANCE, item.getChance() + "");
-	    map.put(Placeholder.ITEM_NAME, item.getItem().getItemMeta().getDisplayName().length() == 0 ? "None" : item.getItem().getItemMeta().getDisplayName());
+	    map.put(Placeholder.ITEM_NAME, item.getItem().getItemMeta().getDisplayName().length() == 0 ? "None"
+		    : item.getItem().getItemMeta().getDisplayName());
 	    map.put(Placeholder.ITEM_COMMANDS, item.getCommands().size() + "");
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_FORMAT,
-		    ImmutableMap.copyOf(map));
+	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_FORMAT, ImmutableMap.copyOf(map));
 	}
     }
 
@@ -76,18 +78,17 @@ public class SubCommandLootCrateItems extends SubCommand
     public List<String> runTabComplete()
     {
 	List<String> list = new LinkedList<String>();
-	
+
 	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_ITEMS.getKey())
 		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	    return list;
-	
+
 	if (args.length == 2)
-	    {
-		list.add("[CrateID]");
-		TabUtils.addCratesToList(list, plugin.cacheManager);
-	    }
-	    return list;
+	{
+	    list.add("[CrateID]");
+	    TabUtils.addCratesToList(list, plugin.cacheManager);
+	}
+	return list;
     }
-    
-    
+
 }

@@ -83,7 +83,7 @@ public class FileManager
     public void saveCrate(Crate crate)
     {
 	FileConfiguration config = YamlConfiguration.loadConfiguration(crateFile);
-	config.set(CRATE_PREFIX + crate.getId(),crate.serialize());
+	config.set(CRATE_PREFIX + crate.getId(), crate.serialize());
 	saveFile(config);
     }
 

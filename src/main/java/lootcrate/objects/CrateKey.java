@@ -24,33 +24,35 @@ public class CrateKey implements ConfigurationSerializable
 	this.setItem(item);
 	this.setGlowing(glowing);
     }
-    
+
     public CrateKey(Map<String, Object> data)
     {
-	if(data == null) return;
-	
+	if (data == null)
+	    return;
+
 	this.item = ItemStack.deserialize((Map<String, Object>) data.get("Item"));
 	this.glowing = (boolean) data.get("Glowing");
     }
-    
+
     public CrateKey(MemorySection section)
     {
-    	Map<String, Object> map = ObjUtils.MemoryToMap(section);
-   	
-    	//TODO remove
-    	//Old Version Support - will be removed in update after
-    	if(map.get("Material") != null)
-    	{
-    	    this.item = new ItemStack(Material.valueOf((String) map.get("Material")));
-    	    ItemMeta meta = this.item.getItemMeta();
-    	    meta.setDisplayName((String) map.get("Name"));
-    	    meta.setLore((List<String>) map.get("Lore"));
-    	    this.item.setItemMeta(meta);
-    	    this.glowing = (boolean) map.get("Glowing");
-    	}
-    	
-    	if(map.get("Item") == null) return;
-    	
+	Map<String, Object> map = ObjUtils.MemoryToMap(section);
+
+	// TODO remove
+	// Old Version Support - will be removed in update after
+	if (map.get("Material") != null)
+	{
+	    this.item = new ItemStack(Material.valueOf((String) map.get("Material")));
+	    ItemMeta meta = this.item.getItemMeta();
+	    meta.setDisplayName((String) map.get("Name"));
+	    meta.setLore((List<String>) map.get("Lore"));
+	    this.item.setItemMeta(meta);
+	    this.glowing = (boolean) map.get("Glowing");
+	}
+
+	if (map.get("Item") == null)
+	    return;
+
 	this.item = ItemStack.deserialize(ObjUtils.MemoryToMap((MemorySection) map.get("Item")));
 	this.glowing = (boolean) map.get("Glowing");
     }
@@ -87,8 +89,9 @@ public class CrateKey implements ConfigurationSerializable
     {
 	Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-	if(item == null) return map;
-	
+	if (item == null)
+	    return map;
+
 	map.put("Item", getItem().serialize());
 	map.put("Glowing", isGlowing());
 

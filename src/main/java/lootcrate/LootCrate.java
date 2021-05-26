@@ -166,7 +166,7 @@ public class LootCrate extends JavaPlugin
 	invManager = new InventoryManager(this);
 	commandManager = new CommandManager(this);
 	chatManager = new ChatManager(this);
-  
+
 	displayIntro(timeElapsed);
 
 	if (holoHook())

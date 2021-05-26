@@ -55,7 +55,7 @@ public class UpdateManager
 
     public String getResourceURL()
     {
-	return "https://www.spigotmc.org/resources/" + project;	
+	return "https://www.spigotmc.org/resources/" + project;
     }
 
     public String getNewVersion()
@@ -77,7 +77,8 @@ public class UpdateManager
 		}
 	    }
 	});
-	if(newVersion != null) return newVersion;
+	if (newVersion != null)
+	    return newVersion;
 	return "None";
     }
 
@@ -100,26 +101,27 @@ public class UpdateManager
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-	return Integer.valueOf(plugin.getDescription().getVersion().replace(".", "")) < Integer.valueOf(newVersion.replace(".", ""));
-	//return !plugin.getDescription().getVersion().equals(newVersion);
+	return Integer.valueOf(plugin.getDescription().getVersion().replace(".", "")) < Integer
+		.valueOf(newVersion.replace(".", ""));
+	// return !plugin.getDescription().getVersion().equals(newVersion);
     }
-    
+
     public void sendNotificationCommandSender(CommandSender p)
     {
 	p.sendMessage(ChatColor.YELLOW + "Running " + plugin.getName() + " v" + plugin.getDescription().getVersion());
-	if(checkForUpdates())
+	if (checkForUpdates())
 	{
-	    p.sendMessage(ChatColor.RED + "New update found! (v" + getNewVersion() + ")." );
+	    p.sendMessage(ChatColor.RED + "New update found! (v" + getNewVersion() + ").");
 	    p.sendMessage(ChatColor.RED + "Download @ " + getResourceURL());
 	}
     }
-    
+
     public void sendNotificationPlayer(Player p)
     {
 	p.sendMessage(ChatColor.YELLOW + "Running " + plugin.getName() + " v" + plugin.getDescription().getVersion());
-	if(checkForUpdates())
+	if (checkForUpdates())
 	{
-	    p.sendMessage(ChatColor.RED + "New update found! (v" + getNewVersion() + ")." );
+	    p.sendMessage(ChatColor.RED + "New update found! (v" + getNewVersion() + ").");
 	    p.sendMessage(ChatColor.RED + "Download @ " + getResourceURL());
 	}
     }

@@ -34,8 +34,10 @@ public class SubCommandLootCrateCommand extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
-	if(!this.testPermissions()) return;
+	if (this.testPlayer(playerRequired))
+	    return;
+	if (!this.testPermissions())
+	    return;
 
 	if (args.length <= 3)
 	{
@@ -92,7 +94,7 @@ public class SubCommandLootCrateCommand extends SubCommand
 	}
 	if (args.length == 3)
 	{
-	    if(CommandUtils.tryParse(args[1]) == null)
+	    if (CommandUtils.tryParse(args[1]) == null)
 	    {
 		list.add("Invalid Crate");
 		return list;

@@ -16,7 +16,7 @@ public class SubCommandLootCrateVersion extends SubCommand
     private CommandSender sender;
     private LootCrate plugin;
     private UpdateManager updateManager;
-    
+
     public SubCommandLootCrateVersion(LootCrate plugin, CommandSender sender, String[] args)
     {
 	super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_VERSION, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -29,18 +29,19 @@ public class SubCommandLootCrateVersion extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
-	if(!this.testPermissions()) return;
-	
+	if (this.testPlayer(playerRequired))
+	    return;
+	if (!this.testPermissions())
+	    return;
+
 	if (args.length != 1)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_VERION_USAGE, null);
 	    return;
 	}
-	
+
 	updateManager.sendNotificationCommandSender(sender);
-	
-	
+
     }
 
     @Override
@@ -48,6 +49,5 @@ public class SubCommandLootCrateVersion extends SubCommand
     {
 	return null;
     }
-    
-    
+
 }

@@ -45,7 +45,7 @@ public class MessageManager
 	if (msg != null)
 	    p.sendMessage(this.parseMessage(Message.PREFIX, null) + msg);
     }
-    
+
     /**
      * Sends a message to specified player without the prefix
      * 
@@ -85,12 +85,13 @@ public class MessageManager
 	{
 	    for (Map.Entry<Placeholder, String> entry : placeholders.entrySet())
 	    {
-		colorMsg = colorMsg.replaceAll("\\{" + entry.getKey().getKey() + "\\}", Matcher.quoteReplacement(entry.getValue()));
+		colorMsg = colorMsg.replaceAll("\\{" + entry.getKey().getKey() + "\\}",
+			Matcher.quoteReplacement(entry.getValue()));
 	    }
 	}
 	return colorMsg;
     }
-    
+
     public String getPrefix()
     {
 	return this.parseMessage(Message.PREFIX, null);
@@ -109,8 +110,9 @@ public class MessageManager
     {
 	if (crate.getChanceCount() != 100)
 	{
-	    this.sendMessage(sender, Message.LOOTCRATE_CHANCE_NOT_100, ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME,
-		    crate.getName(), Placeholder.TOTAL_CRATE_CHANCE, "" + crate.getChanceCount()));
+	    this.sendMessage(sender, Message.LOOTCRATE_CHANCE_NOT_100,
+		    ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
+			    Placeholder.TOTAL_CRATE_CHANCE, "" + crate.getChanceCount()));
 	}
     }
 }

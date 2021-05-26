@@ -33,9 +33,11 @@ public class SubCommandLootCrateDelete extends SubCommand
     @Override
     public void runSubCommand(boolean playerRequired)
     {
-	if(this.testPlayer(playerRequired)) return;
-	if(!this.testPermissions()) return;
-	
+	if (this.testPlayer(playerRequired))
+	    return;
+	if (!this.testPermissions())
+	    return;
+
 	if (args.length <= 1)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_DELETE_USAGE, null);
@@ -65,11 +67,11 @@ public class SubCommandLootCrateDelete extends SubCommand
     public List<String> runTabComplete()
     {
 	List<String> list = new LinkedList<String>();
-	
+
 	if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_DELETE.getKey())
 		&& !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
 	    return list;
-	
+
 	if (args.length == 2)
 	{
 	    list.add("[CrateID]");
