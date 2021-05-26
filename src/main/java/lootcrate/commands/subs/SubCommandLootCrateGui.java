@@ -28,7 +28,7 @@ public class SubCommandLootCrateGui extends SubCommand
 
     public SubCommandLootCrateGui(LootCrate plugin, CommandSender sender, String[] args)
     {
-	super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_ADD, Permission.COMMAND_LOOTCRATE_ADMIN);
+	super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_GUI, Permission.COMMAND_LOOTCRATE_ADMIN);
 	this.plugin = plugin;
 	this.sender = sender;
 	this.args = args;

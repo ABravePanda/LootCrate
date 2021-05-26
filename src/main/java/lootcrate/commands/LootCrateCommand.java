@@ -129,6 +129,8 @@ public class LootCrateCommand extends Command
 		list.add("displaychances");
 	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_VERSION))
 		list.add("version");
+	    if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_GUI))
+		list.add("gui");
 	    return list;
 	}
 
