@@ -105,6 +105,13 @@ public class GUIItem implements Listener
 	return item;
     }
     
+    public void setName(String name)
+    {
+	ItemMeta meta = item.getItemMeta();
+	meta.setDisplayName(name);
+	item.setItemMeta(meta);
+    }
+    
     public void addLoreLine(String line)
     {
 	ItemMeta meta = item.getItemMeta();

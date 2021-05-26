@@ -8,9 +8,6 @@ import org.bukkit.inventory.ItemStack;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.CrateItemFrame;
-import lootcrate.gui.frames.menu.CrateKeyFrame;
-import lootcrate.gui.frames.menu.CrateLocationFrame;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
@@ -67,7 +64,7 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener
 	this.setItem(16, new GUIItem(16, Material.JUKEBOX, ChatColor.RED + "Open Sound",
 		ChatColor.GRAY + "Change the sound that plays when a crate is opened.", "", ChatColor.DARK_RED + "Coming soon..."));
 	this.setItem(30, new GUIItem(30, Material.BLAZE_POWDER, ChatColor.RED + "Animation Style",
-		ChatColor.GRAY + "Change the open animation.", "", ChatColor.DARK_RED + "Coming soon..."));
+		ChatColor.GRAY + "Change the open animation."));
 	this.setItem(32, new GUIItem(32, Material.COMMAND_BLOCK, ChatColor.RED + "Open Message",
 		ChatColor.GRAY + "Change the message player recieves upon crate opening.", "", ChatColor.DARK_RED + "Coming soon..."));
     }
@@ -89,6 +86,9 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener
 	{
 	case STICK:
 	    frameToOpen = new CrateOptionKnockBackFrame(plugin, p, crate);
+	    break;
+	case BLAZE_POWDER:
+	    frameToOpen = new CrateOptionAnimationFrame(plugin, p, crate);
 	    break;
 	default:
 	    return;
