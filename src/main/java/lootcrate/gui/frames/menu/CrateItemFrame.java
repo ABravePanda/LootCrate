@@ -48,14 +48,6 @@ public class CrateItemFrame extends ExtendedFrame implements Listener
 
     // methods
 
-    public void fillBackground(Material m)
-    {
-	for (int i = 0; i < getInventory().getSize(); i++)
-	{
-	    this.setItem(i, new GUIItem(i, m));
-	}
-    }
-
     public void fillItems()
     {
 	int index = 0;

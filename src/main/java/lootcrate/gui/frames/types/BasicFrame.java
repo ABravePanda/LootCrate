@@ -1,6 +1,7 @@
 package lootcrate.gui.frames.types;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +23,24 @@ public abstract class BasicFrame implements Frame, Listener
     private String title;
     private GUIItem[] contents;
     private Inventory inventory;
+    private int size = 45;
 
+    public BasicFrame(LootCrate plugin, Player p, String title, GUIItem[] contents, int size)
+    {
+	this.id = ObjUtils.randomID(5);
+	this.plugin = plugin;
+	this.player = p;
+	this.title = title;
+	this.size = size;
+
+	if (contents.length != size)
+	    this.contents = new GUIItem[size];
+	else
+	    this.contents = contents;
+
+	this.inventory = createInventory();
+    }
+    
     public BasicFrame(LootCrate plugin, Player p, String title, GUIItem[] contents)
     {
 	this.id = ObjUtils.randomID(5);
@@ -30,21 +48,32 @@ public abstract class BasicFrame implements Frame, Listener
 	this.player = p;
 	this.title = title;
 
-	if (contents.length != 45)
-	    this.contents = new GUIItem[45];
+	if (contents.length != size)
+	    this.contents = new GUIItem[size];
 	else
 	    this.contents = contents;
 
 	this.inventory = createInventory();
     }
 
+    public BasicFrame(LootCrate plugin, Player p, String title, int size)
+    {
+	this.id = ObjUtils.randomID(5);
+	this.plugin = plugin;
+	this.player = p;
+	this.title = title;
+	this.contents = new GUIItem[size];
+	this.size = size;
+	this.inventory = createInventory();
+    }
+    
     public BasicFrame(LootCrate plugin, Player p, String title)
     {
 	this.id = ObjUtils.randomID(5);
 	this.plugin = plugin;
 	this.player = p;
 	this.title = title;
-	this.contents = new GUIItem[45];
+	this.contents = new GUIItem[size];
 	this.inventory = createInventory();
     }
 
@@ -105,6 +134,15 @@ public abstract class BasicFrame implements Frame, Listener
     {
 	plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
+    
+    @Override
+    public void fillBackground(Material m)
+    {
+	for (int i = 0; i < getInventory().getSize(); i++)
+	{
+	    this.setItem(i, new GUIItem(i, m, " "));
+	}
+    }
 
     public abstract void generateFrame();
 
@@ -117,9 +155,9 @@ public abstract class BasicFrame implements Frame, Listener
 	getInventory().setItem(slot, item.getItemStack());
     }
 
-    private Inventory createInventory()
+    public Inventory createInventory()
     {
-	return Bukkit.createInventory(null, 45, getTitle());
+	return Bukkit.createInventory(null, size, getTitle());
     }
 
     @EventHandler

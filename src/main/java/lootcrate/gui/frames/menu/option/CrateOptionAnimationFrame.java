@@ -92,7 +92,6 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener
 	if (!e.sameFrame(this))
 	    return;
 
-	Player p = e.getPlayer();
 	ItemStack item = e.getItem().getItemStack();
 	AnimationStyle style = AnimationStyle.RANDOM_GLASS;
 

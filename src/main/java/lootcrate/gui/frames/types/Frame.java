@@ -1,5 +1,6 @@
 package lootcrate.gui.frames.types;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -16,6 +17,8 @@ public interface Frame
     GUIItem[] getContents();
 
     Inventory getInventory();
+    
+    Inventory createInventory();
 
     void setItem(int slot, GUIItem item);
 
@@ -29,5 +32,8 @@ public interface Frame
 
     void unregisterFrame();
 
+    void fillBackground(Material m);
+    
     abstract void generateFrame();
+    
 }

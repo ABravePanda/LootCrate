@@ -28,11 +28,23 @@ public class GUIItem implements Listener
 	this.slot = slot;
 	this.item = editMeta(item, name, lore);
     }
+    
+    public GUIItem(int slot, ItemStack item, String name)
+    {
+	this.slot = slot;
+	this.item = editMeta(item, name);
+    }
 
     public GUIItem(int slot, Material mat, String name, String... lore)
     {
 	this.slot = slot;
 	this.item = editMeta(new ItemStack(mat), name, lore);
+    }
+    
+    public GUIItem(int slot, Material mat, String name)
+    {
+	this.slot = slot;
+	this.item = editMeta(new ItemStack(mat), name);
     }
 
     public GUIItem(int slot, Material mat)
@@ -101,6 +113,16 @@ public class GUIItem implements Listener
 	ItemMeta meta = item.getItemMeta();
 	meta.setDisplayName(name);
 	meta.setLore(Arrays.asList(lore));
+	item.setItemMeta(meta);
+	return item;
+    }
+    
+    private ItemStack editMeta(ItemStack item, String name)
+    {
+	name = ChatColor.translateAlternateColorCodes('&', name);
+
+	ItemMeta meta = item.getItemMeta();
+	meta.setDisplayName(name);
 	item.setItemMeta(meta);
 	return item;
     }

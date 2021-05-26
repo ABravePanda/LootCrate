@@ -45,16 +45,9 @@ public class CrateFrame extends BasicFrame implements Listener
     {
 	GUIItemClickEvent.getHandlerList().unregister(this);
     }
+    
 
     // methods
-
-    public void fillBackground(Material m)
-    {
-	for (int i = 0; i < getInventory().getSize(); i++)
-	{
-	    this.setItem(i, new GUIItem(i, m));
-	}
-    }
 
     public void fillOptions()
     {
