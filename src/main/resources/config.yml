@@ -244,3 +244,4 @@ messages:
     lootcrate-wrong-key: "&cThis is the wrong key to open the LootCrate &e{crate_name}"
     # {crate_name} - Name of crate
     # {crate_id} - Id of crate
+   

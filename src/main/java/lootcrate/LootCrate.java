@@ -1,24 +1,21 @@
 package lootcrate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 import org.bstats.bukkit.Metrics;
-import org.bstats.bukkit.Metrics.AdvancedPie;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import lootcrate.events.listeners.LootCrateInteractListener;
+import lootcrate.events.listeners.PlayerChatListener;
 import lootcrate.events.listeners.PlayerJoinListener;
 import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
 import lootcrate.gui.events.listeners.GUICloseListener;
 import lootcrate.managers.CacheManager;
+import lootcrate.managers.ChatManager;
 import lootcrate.managers.CommandManager;
 import lootcrate.managers.CrateManager;
 import lootcrate.managers.FileManager;
@@ -49,6 +46,7 @@ public class LootCrate extends JavaPlugin
     public OptionManager optionManager;
     public UpdateManager updateManager;
     public HologramManager holoManager;
+    public ChatManager chatManager;
 
     @Override
     public void onEnable()
@@ -79,6 +77,7 @@ public class LootCrate extends JavaPlugin
 	this.getServer().getPluginManager().registerEvents(new CrateViewListener(this), this);
 	this.getServer().getPluginManager().registerEvents(new GUICloseListener(), this);
 	this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+	this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
     }
 
     public void registerConfig()
@@ -166,6 +165,7 @@ public class LootCrate extends JavaPlugin
 	locationManager.populateLocations();
 	invManager = new InventoryManager(this);
 	commandManager = new CommandManager(this);
+	chatManager = new ChatManager(this);
   
 	displayIntro(timeElapsed);
 

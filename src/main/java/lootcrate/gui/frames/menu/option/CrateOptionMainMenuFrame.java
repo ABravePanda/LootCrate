@@ -12,6 +12,7 @@ import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
+import lootcrate.other.ChatState;
 import net.md_5.bungee.api.ChatColor;
 
 public class CrateOptionMainMenuFrame extends BasicFrame implements Listener
@@ -58,15 +59,15 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener
     public void fillOptions()
     {
 	this.setItem(10, new GUIItem(10, Material.NAME_TAG, ChatColor.RED + "Name",
-		ChatColor.GRAY + "Change the crate name.", "", ChatColor.DARK_RED + "Coming soon..."));
+		ChatColor.GRAY + "Change the crate name."));
 	this.setItem(13, new GUIItem(13, Material.STICK, ChatColor.RED + "Knockback Level",
 		ChatColor.GRAY + "Change how far the crate knocks you back."));
 	this.setItem(16, new GUIItem(16, Material.JUKEBOX, ChatColor.RED + "Open Sound",
-		ChatColor.GRAY + "Change the sound that plays when a crate is opened.", "", ChatColor.DARK_RED + "Coming soon..."));
+		ChatColor.GRAY + "Change the sound that plays when a crate is opened."));
 	this.setItem(30, new GUIItem(30, Material.BLAZE_POWDER, ChatColor.RED + "Animation Style",
 		ChatColor.GRAY + "Change the open animation."));
 	this.setItem(32, new GUIItem(32, Material.COMMAND_BLOCK, ChatColor.RED + "Open Message",
-		ChatColor.GRAY + "Change the message player recieves upon crate opening.", "", ChatColor.DARK_RED + "Coming soon..."));
+		ChatColor.GRAY + "Change the message player recieves upon crate opening."));
     }
 
     // events
@@ -90,6 +91,27 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener
 	case BLAZE_POWDER:
 	    frameToOpen = new CrateOptionAnimationFrame(plugin, p, crate);
 	    break;
+	case NAME_TAG:
+	    ChatState state = ChatState.CHANGE_CRATE_NAME;
+	    state.setCrate(crate);
+	    plugin.chatManager.addPlayer(p, state);
+	    plugin.chatManager.sendNotification(p);
+	    this.close();
+	    return;
+	case COMMAND_BLOCK:
+	    ChatState state1 = ChatState.CHANGE_CRATE_MESSAGE;
+	    state1.setCrate(crate);
+	    plugin.chatManager.addPlayer(p, state1);
+	    plugin.chatManager.sendNotification(p);
+	    this.close();
+	    return;
+	case JUKEBOX:
+	    ChatState state2 = ChatState.CHANGE_CRATE_SOUND;
+	    state2.setCrate(crate);
+	    plugin.chatManager.addPlayer(p, state2);
+	    plugin.chatManager.sendNotification(p);
+	    this.close();
+	    return;
 	default:
 	    return;
 	}
