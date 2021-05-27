@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.AnimationStyle;
+import lootcrate.enums.CrateOptionType;
 import lootcrate.objects.Crate;
 
 public class CacheManager
@@ -91,6 +93,7 @@ public class CacheManager
     }
 
     /**
+     * @deprecated
      * Loads the cache asynchronously
      */
     public void loadAsync(final LootCrate callback)
@@ -108,7 +111,7 @@ public class CacheManager
 		    @Override
 		    public void run()
 		    {
-			callback.onAsyncDone(startTime);
+			//callback.onAsyncDone(startTime);
 		    }
 		});
 	    }
@@ -121,6 +124,13 @@ public class CacheManager
     public void load()
     {
 	cache = plugin.fileManager.loadAllCrates();
+	
+	for (Crate crate : new ArrayList<Crate>(this.getCache()))
+	    if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null)
+	    {
+		crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
+		this.update(crate);
+	    }
     }
 
     /**

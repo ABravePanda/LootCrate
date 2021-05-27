@@ -60,8 +60,23 @@ public class LootCrate extends JavaPlugin
 	messageManager = new MessageManager(this);
 	fileManager = new FileManager(this);
 	cacheManager = new CacheManager(this);
-	cacheManager.loadAsync(this);
+	cacheManager.load();
+	crateManager = new CrateManager(this);
+	locationManager = new LocationManager(this);
+	locationManager.populateLocations();
+	invManager = new InventoryManager(this);
+	commandManager = new CommandManager(this);
+	chatManager = new ChatManager(this);
 
+	displayIntro();
+
+	if (holoHook())
+	{
+	    holoManager = new HologramManager(this);
+	    holoManager.reload();
+	}
+
+	registerEvents();
     }
 
     @Override
@@ -95,7 +110,7 @@ public class LootCrate extends JavaPlugin
 
     }
 
-    public void displayIntro(long cacheTime)
+    public void displayIntro()
     {
 	Bukkit.getLogger().info("");
 	Bukkit.getLogger().info("");
@@ -107,12 +122,8 @@ public class LootCrate extends JavaPlugin
 	if (updateManager.checkForUpdates())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Update Available (v" + updateManager.getNewVersion()
 		    + "). Download here: " + updateManager.getResourceURL() + ChatColor.DARK_GRAY + ".");
-	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Cached " + ChatColor.YELLOW
+	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Loaded " + ChatColor.YELLOW
 		+ cacheManager.getCache().size() + ChatColor.DARK_GRAY + " crate(s).");
-	Bukkit.getConsoleSender()
-		.sendMessage(ChatColor.DARK_GRAY + "Caching took " + ChatColor.YELLOW + cacheTime + ChatColor.DARK_GRAY
-			+ " nanoseconds or " + ChatColor.YELLOW + cacheTime / 1000000 + ChatColor.DARK_GRAY
-			+ " miliseconds.");
 	if (holoHook())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
 		    + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
@@ -144,38 +155,6 @@ public class LootCrate extends JavaPlugin
 	ConfigurationSerialization.registerClass(CrateKey.class);
 	ConfigurationSerialization.registerClass(CrateOption.class);
 	ConfigurationSerialization.registerClass(CrateItem.class);
-    }
-
-    public void onAsyncDone(long starttime)
-    {
-	long endTime = System.nanoTime();
-	long timeElapsed = endTime - starttime;
-
-	// TODO
-	// WILL BE REMOVED EVENTUALLY
-	for (Crate crate : new ArrayList<Crate>(cacheManager.getCache()))
-	    if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null)
-	    {
-		crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
-		cacheManager.update(crate);
-	    }
-
-	crateManager = new CrateManager(this);
-	locationManager = new LocationManager(this);
-	locationManager.populateLocations();
-	invManager = new InventoryManager(this);
-	commandManager = new CommandManager(this);
-	chatManager = new ChatManager(this);
-
-	displayIntro(timeElapsed);
-
-	if (holoHook())
-	{
-	    holoManager = new HologramManager(this);
-	    holoManager.reload();
-	}
-
-	registerEvents();
     }
 
 }
