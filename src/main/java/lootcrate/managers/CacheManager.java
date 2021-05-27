@@ -32,7 +32,7 @@ public class CacheManager
      */
     public void update(Crate Crate)
     {
-	plugin.fileManager.saveCrate(Crate);
+	plugin.getFileManager().saveCrate(Crate);
 
 	if (cache.contains(Crate))
 	    cache.remove(Crate);
@@ -41,7 +41,7 @@ public class CacheManager
 
     public void rename(String oldCrate, Crate Crate)
     {
-	plugin.fileManager.overrideSave(oldCrate, Crate);
+	plugin.getFileManager().overrideSave(oldCrate, Crate);
 	if (cache.contains(oldCrate))
 	    cache.remove(oldCrate);
 	cache.add(Crate);
@@ -55,7 +55,7 @@ public class CacheManager
      */
     public void remove(Crate Crate)
     {
-	plugin.fileManager.removeCrate(Crate);
+	plugin.getFileManager().removeCrate(Crate);
 	List<Crate> copiedCache = new ArrayList<Crate>(cache);
 
 	for (Crate cacheCrate : copiedCache)
@@ -104,7 +104,7 @@ public class CacheManager
 	    @Override
 	    public void run()
 	    {
-		cache = plugin.fileManager.loadAllCrates();
+		cache = plugin.getFileManager().loadAllCrates();
 
 		Bukkit.getScheduler().runTask(plugin, new Runnable()
 		{
@@ -123,7 +123,7 @@ public class CacheManager
      */
     public void load()
     {
-	cache = plugin.fileManager.loadAllCrates();
+	cache = plugin.getFileManager().loadAllCrates();
 	
 	for (Crate crate : new ArrayList<Crate>(this.getCache()))
 	    if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null)
@@ -156,7 +156,7 @@ public class CacheManager
 
 	for (Crate Crate : cache)
 	{
-	    plugin.fileManager.saveCrate(Crate);
+	    plugin.getFileManager().saveCrate(Crate);
 	}
     }
 

@@ -87,7 +87,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame
 		setItem(21, getContents()[22]);
 		setItem(22, getContents()[23]);
 		setItem(23, getContents()[24]);
-		setItem(24, new GUIItem(24, plugin.crateManager.getRandomItem(crate)));
+		setItem(24, new GUIItem(24, plugin.getCrateManager().getRandomItem(crate)));
 		// getContents()[]
 	    }
 	}, 0L, this.rewardSpeed);
@@ -95,16 +95,16 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame
 
     private void initLineup()
     {
-	setItem(20, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
-	setItem(21, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
-	setItem(22, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
-	setItem(23, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
-	setItem(24, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
+	setItem(20, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
+	setItem(21, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
+	setItem(22, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
+	setItem(23, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
+	setItem(24, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
     }
 
     private void giveRewards(CrateItem crateItem)
     {
-	plugin.crateManager.giveReward(crateItem, getViewer());
+	plugin.getCrateManager().giveReward(crateItem, getViewer());
     }
 
     public void fillBackground(Material m, boolean showRewardsPointer)

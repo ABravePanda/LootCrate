@@ -83,7 +83,7 @@ public class CrateKeyFrame extends BasicFrame implements Listener
 	    if (p.getOpenInventory().getTopInventory().getItem(31) == null)
 		return;
 	    crate.setKey(new CrateKey(this.getInventory().getItem(31), false));
-	    plugin.cacheManager.update(crate);
+	    plugin.getCacheManager().update(crate);
 	    this.close();
 	    new CrateKeyFrame(plugin, p, crate).open();
 	    break;

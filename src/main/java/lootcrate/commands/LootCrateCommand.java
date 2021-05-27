@@ -43,7 +43,7 @@ public class LootCrateCommand extends Command
 
 	if (args.length == 0)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
 	    return;
 	}
 
@@ -92,7 +92,7 @@ public class LootCrateCommand extends Command
 	    new SubCommandLootCrateGui(plugin, sender, args).runSubCommand(false);
 	    break;
 	default:
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
 	    break;
 	}
     }

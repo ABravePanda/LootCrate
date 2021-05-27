@@ -51,7 +51,7 @@ public class CrateLocationFrame extends BasicFrame
     public void fillLocations()
     {
 	int index = 0;
-	for (final Location l : plugin.locationManager.getCrateLocations(crate))
+	for (final Location l : plugin.getLocationManager().getCrateLocations(crate))
 	{
 	    GUIItem item = new GUIItem(index, l.getBlock().getType(),
 		    ChatColor.GOLD + "" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ(),

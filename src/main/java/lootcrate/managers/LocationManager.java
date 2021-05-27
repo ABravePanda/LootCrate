@@ -37,7 +37,7 @@ public class LocationManager
     public LocationManager(LootCrate plugin)
     {
 	this.plugin = plugin;
-	this.crateManager = plugin.crateManager;
+	this.crateManager = plugin.getCrateManager();
 	f = new File(plugin.getDataFolder(), File.separator + "locations.yml");
 	config = YamlConfiguration.loadConfiguration(f);
     }
@@ -170,7 +170,7 @@ public class LocationManager
 	    MemorySection section = (MemorySection) config.get(s);
 	    if (section.get("Crate") == null)
 		continue;
-	    Crate crate2 = plugin.cacheManager.getCrateById(section.getInt("Crate"));
+	    Crate crate2 = plugin.getCacheManager().getCrateById(section.getInt("Crate"));
 	    if (crate2 == null)
 		continue;
 	    if (crate.getId() == crate2.getId())
@@ -191,7 +191,7 @@ public class LocationManager
 	    Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")),
 		    (double) section.get("Location.x"), (double) section.get("Location.y"),
 		    (double) section.get("Location.z"));
-	    Crate crate = plugin.cacheManager.getCrateById(section.getInt("Crate"));
+	    Crate crate = plugin.getCacheManager().getCrateById(section.getInt("Crate"));
 	    if (crate == null || loc == null)
 		continue;
 	    locationList.put(loc, crate);

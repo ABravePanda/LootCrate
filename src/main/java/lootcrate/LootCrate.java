@@ -1,15 +1,11 @@
 package lootcrate;
 
-import java.util.ArrayList;
-
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import lootcrate.enums.AnimationStyle;
-import lootcrate.enums.CrateOptionType;
 import lootcrate.events.listeners.LootCrateInteractListener;
 import lootcrate.events.listeners.PlayerChatListener;
 import lootcrate.events.listeners.PlayerJoinListener;
@@ -37,17 +33,17 @@ import net.md_5.bungee.api.ChatColor;
 public class LootCrate extends JavaPlugin
 {
     private Metrics metrics;
-    public MessageManager messageManager;
-    public FileManager fileManager;
-    public CacheManager cacheManager;
-    public CrateManager crateManager;
-    public LocationManager locationManager;
-    public InventoryManager invManager;
-    public CommandManager commandManager;
-    public OptionManager optionManager;
-    public UpdateManager updateManager;
-    public HologramManager holoManager;
-    public ChatManager chatManager;
+    private MessageManager messageManager;
+    private FileManager fileManager;
+    private CacheManager cacheManager;
+    private CrateManager crateManager;
+    private LocationManager locationManager;
+    private InventoryManager invManager;
+    private CommandManager commandManager;
+    private OptionManager optionManager;
+    private UpdateManager updateManager;
+    private HologramManager holoManager;
+    private ChatManager chatManager;
 
     @Override
     public void onEnable()
@@ -167,6 +163,94 @@ public class LootCrate extends JavaPlugin
 	ConfigurationSerialization.registerClass(CrateKey.class);
 	ConfigurationSerialization.registerClass(CrateOption.class);
 	ConfigurationSerialization.registerClass(CrateItem.class);
+    }
+
+    /**
+     * @return the invManager
+     */
+    public InventoryManager getInvManager()
+    {
+	return invManager;
+    }
+
+    /**
+     * @return the messageManager
+     */
+    public MessageManager getMessageManager()
+    {
+	return messageManager;
+    }
+
+    /**
+     * @return the fileManager
+     */
+    public FileManager getFileManager()
+    {
+	return fileManager;
+    }
+
+    /**
+     * @return the cacheManager
+     */
+    public CacheManager getCacheManager()
+    {
+	return cacheManager;
+    }
+
+    /**
+     * @return the crateManager
+     */
+    public CrateManager getCrateManager()
+    {
+	return crateManager;
+    }
+
+    /**
+     * @return the locationManager
+     */
+    public LocationManager getLocationManager()
+    {
+	return locationManager;
+    }
+
+    /**
+     * @return the commandManager
+     */
+    public CommandManager getCommandManager()
+    {
+	return commandManager;
+    }
+
+    /**
+     * @return the optionManager
+     */
+    public OptionManager getOptionManager()
+    {
+	return optionManager;
+    }
+
+    /**
+     * @return the updateManager
+     */
+    public UpdateManager getUpdateManager()
+    {
+	return updateManager;
+    }
+
+    /**
+     * @return the holoManager
+     */
+    public HologramManager getHoloManager()
+    {
+	return holoManager;
+    }
+
+    /**
+     * @return the chatManager
+     */
+    public ChatManager getChatManager()
+    {
+	return chatManager;
     }
 
 }

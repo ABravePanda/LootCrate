@@ -84,12 +84,12 @@ public class CrateOptionKnockBackFrame extends BasicFrame implements Listener
 	case IRON_NUGGET:
 	    crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK,
 		    (Double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue() - 0.100));
-	    plugin.cacheManager.update(crate);
+	    plugin.getCacheManager().update(crate);
 	    break;
 	case IRON_INGOT:
 	    crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK,
 		    (Double) crate.getOption(CrateOptionType.KNOCK_BACK).getValue() + 0.100));
-	    plugin.cacheManager.update(crate);
+	    plugin.getCacheManager().update(crate);
 	    break;
 	default:
 	    return;

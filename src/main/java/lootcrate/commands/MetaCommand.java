@@ -37,7 +37,7 @@ public class MetaCommand extends Command
 	// sender must be player
 	if (!(sender instanceof Player))
 	{
-	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.MUST_BE_PLAYER, null);
 	    return;
 	}
 
@@ -46,14 +46,14 @@ public class MetaCommand extends Command
 	// player needs to have permission
 	if (!p.hasPermission(Permission.COMMAND_META.getKey()))
 	{
-	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return;
 	}
 
 	if (p.getInventory().getItemInMainHand() == null
 		|| p.getInventory().getItemInMainHand().getType() == Material.AIR)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.MUST_HOLD_ITEM, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.MUST_HOLD_ITEM, null);
 	    return;
 	}
 
@@ -70,28 +70,28 @@ public class MetaCommand extends Command
 	    {
 		if (args.length != 3)
 		{
-		    plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
+		    plugin.getMessageManager().sendMessage(sender, Message.META_USAGE, null);
 		    return;
 		}
 		if (Enchantment.getByName(args[1]) == null)
 		{
-		    plugin.messageManager.sendMessage(sender, Message.ENCHANTMENT_NOT_FOUND,
+		    plugin.getMessageManager().sendMessage(sender, Message.ENCHANTMENT_NOT_FOUND,
 			    ImmutableMap.of(Placeholder.ENCHANTMENT_NAME, args[1]));
 		    return;
 		}
 		if (CommandUtils.tryParse(args[2]) == null)
 		{
-		    plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
+		    plugin.getMessageManager().sendMessage(sender, Message.META_USAGE, null);
 		    return;
 		}
 
 		item.addUnsafeEnchantment(Enchantment.getByName(args[1]), Integer.parseInt(args[2]));
 
 	    } else
-		plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
+		plugin.getMessageManager().sendMessage(sender, Message.META_USAGE, null);
 	    return;
 	} else
-	    plugin.messageManager.sendMessage(sender, Message.META_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.META_USAGE, null);
     }
 
     @Override

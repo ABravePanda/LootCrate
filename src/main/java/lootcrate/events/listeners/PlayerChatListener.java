@@ -28,10 +28,10 @@ public class PlayerChatListener implements Listener
     {
 	Player p = e.getPlayer();
 
-	if (!plugin.chatManager.hasState(p))
+	if (!plugin.getChatManager().hasState(p))
 	    return;
 
-	ChatState state = plugin.chatManager.getState(p);
+	ChatState state = plugin.getChatManager().getState(p);
 	Crate crate = state.getCrate();
 
 	switch (state)
@@ -55,8 +55,8 @@ public class PlayerChatListener implements Listener
 	}
 
 	e.setCancelled(true);
-	plugin.cacheManager.update(crate);
-	plugin.chatManager.removePlayer(p);
+	plugin.getCacheManager().update(crate);
+	plugin.getChatManager().removePlayer(p);
 
     }
 

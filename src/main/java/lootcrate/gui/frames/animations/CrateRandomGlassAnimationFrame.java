@@ -107,14 +107,14 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame
 	    @Override
 	    public void run()
 	    {
-		setItem(22, new GUIItem(22, plugin.crateManager.getRandomItem(crate)));
+		setItem(22, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
 	    }
 	}, 0L, this.rewardSpeed);
     }
 
     private void giveRewards(CrateItem crateItem)
     {
-	plugin.crateManager.giveReward(crateItem, getViewer());
+	plugin.getCrateManager().giveReward(crateItem, getViewer());
     }
 
     private Material randomGlass()

@@ -53,7 +53,7 @@ public abstract class SubCommand
     {
 	if (!hasPermission(permissions))
 	{
-	    plugin.messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
 	    return false;
 	}
 
@@ -71,7 +71,7 @@ public abstract class SubCommand
     {
 	if (playerRequired && !(sender instanceof Player))
 	{
-	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.MUST_BE_PLAYER, null);
 	    return true;
 	}
 	return false;

@@ -42,7 +42,7 @@ public class CrateOpenListener implements Listener
 
 	if (crate.getKey() == null || crate.getKey().getItem() == null || item == null)
 	{
-	    plugin.messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
+	    plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
 		    ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, crate.getId() + ""));
 	    PlayerUtils.knockBackPlayer(crate, p);
 	    return;
@@ -55,7 +55,7 @@ public class CrateOpenListener implements Listener
 	// if the keys match
 	if (!item.getType().equals(crate.getKey().getItem().getType()) || !ObjUtils.doKeysMatch(plugin, item, crate))
 	{
-	    plugin.messageManager.sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
+	    plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
 		    ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
 	    PlayerUtils.knockBackPlayer(crate, p);
 	    return;
@@ -64,7 +64,7 @@ public class CrateOpenListener implements Listener
 	// if inv is full
 	if (InventoryUtils.isFull(p.getInventory()))
 	{
-	    plugin.messageManager.sendMessage(p, Message.INVENTORY_FULL, null);
+	    plugin.getMessageManager().sendMessage(p, Message.INVENTORY_FULL, null);
 	    return;
 	}
 
@@ -73,7 +73,7 @@ public class CrateOpenListener implements Listener
 	p.updateInventory();
 
 	// play sound
-	plugin.crateManager.crateOpenEffects(crate, p);
+	plugin.getCrateManager().crateOpenEffects(crate, p);
 
 	openAnimation(crate, p);
     }

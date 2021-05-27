@@ -28,8 +28,8 @@ public class HologramManager
     public HologramManager(LootCrate plugin)
     {
 	this.plugin = plugin;
-	this.optionManager = plugin.optionManager;
-	this.locationManager = plugin.locationManager;
+	this.optionManager = plugin.getOptionManager();
+	this.locationManager = plugin.getLocationManager();
     }
 
     public void createHologram(Block block, Crate crate)

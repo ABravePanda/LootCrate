@@ -32,7 +32,7 @@ public class SubCommandLootCrateSet extends SubCommand
 	this.plugin = plugin;
 	this.sender = sender;
 	this.args = args;
-	this.holoManager = plugin.holoManager;
+	this.holoManager = plugin.getHoloManager();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SubCommandLootCrateSet extends SubCommand
 
 	if (args.length != 2)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
 	    return;
 	}
 
@@ -57,23 +57,23 @@ public class SubCommandLootCrateSet extends SubCommand
 		l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 	if (args[1].equalsIgnoreCase("none"))
 	{
-	    plugin.locationManager.removeCrateLocation(l);
+	    plugin.getLocationManager().removeCrateLocation(l);
 	    if (plugin.holoHook())
-		plugin.holoManager.reload();
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
+		plugin.getHoloManager().reload();
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
 	    return;
 	}
 
 	if (CommandUtils.tryParse(args[1]) == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
 	    return;
 	}
 
-	Crate crate = plugin.cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
+	Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
 	if (crate == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
 		    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
 	    return;
 	}
@@ -81,13 +81,13 @@ public class SubCommandLootCrateSet extends SubCommand
 		Placeholder.CRATE_NAME, crate.getName(), Placeholder.X, l.getBlockX() + "", Placeholder.Y,
 		l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 
-	plugin.locationManager.addCrateLocation(l, crate);
+	plugin.getLocationManager().addCrateLocation(l, crate);
 
 	// create hologram
 	if (plugin.holoHook())
 	    holoManager.createHologram(l.getBlock(), crate);
 
-	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
+	plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class SubCommandLootCrateSet extends SubCommand
 	{
 	    list.add("[CrateID]");
 	    list.add("none");
-	    TabUtils.addCratesToList(list, plugin.cacheManager);
+	    TabUtils.addCratesToList(list, plugin.getCacheManager());
 	}
 	return list;
     }

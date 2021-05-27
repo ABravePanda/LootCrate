@@ -36,7 +36,7 @@ public class CrateAccessListener implements Listener
 	// if player has permission to interact with the crate
 	if (!CommandUtils.hasCratePermission(crate, p))
 	{
-	    plugin.messageManager.sendMessage(p, Message.NO_PERMISSION_LOOTCRATE_INTERACT,
+	    plugin.getMessageManager().sendMessage(p, Message.NO_PERMISSION_LOOTCRATE_INTERACT,
 		    ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
 	    return;
 	}

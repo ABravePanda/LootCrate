@@ -112,7 +112,7 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener
 	}
 
 	crate.addOption(CrateOptionType.ANIMATION_STYLE, style.toString());
-	plugin.cacheManager.update(crate);
+	plugin.getCacheManager().update(crate);
 	this.setItem(21, csgoItem);
 	this.setItem(23, glassItem);
     }

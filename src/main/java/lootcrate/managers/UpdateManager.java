@@ -32,7 +32,7 @@ public class UpdateManager
     public UpdateManager(LootCrate plugin)
     {
 	this.plugin = plugin;
-	this.optionManager = plugin.optionManager;
+	this.optionManager = plugin.getOptionManager();
 	this.newVersion = plugin.getDescription().getVersion();
 	this.project = 87046;
 	try

@@ -32,7 +32,7 @@ public class SubCommandLootCrateReload extends SubCommand
 	plugin.reloadConfig();
 	plugin.reload();
 
-	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_RELOAD_SUCCESS, null);
+	plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_RELOAD_SUCCESS, null);
     }
 
     @Override

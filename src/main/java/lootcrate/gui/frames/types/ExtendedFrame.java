@@ -2,6 +2,7 @@ package lootcrate.gui.frames.types;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+
 import lootcrate.LootCrate;
 import lootcrate.gui.items.GUIItem;
 

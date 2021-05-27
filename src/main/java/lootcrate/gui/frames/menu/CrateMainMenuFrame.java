@@ -26,7 +26,7 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener
 	super(plugin, p, ChatColor.GOLD + "Main Menu");
 
 	this.plugin = plugin;
-	crates = plugin.cacheManager.getCache();
+	crates = plugin.getCacheManager().getCache();
 
 	generateFrame();
 	registerItems();
@@ -72,7 +72,7 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener
 	    return;
 
 	String idFromLore = ChatColor.stripColor(item.getItemMeta().getLore().get(0));
-	Crate crate = plugin.cacheManager.getCrateById(Integer.parseInt(idFromLore));
+	Crate crate = plugin.getCacheManager().getCrateById(Integer.parseInt(idFromLore));
 
 	CrateFrame crateFrame = new CrateFrame(plugin, p, crate);
 	this.close();

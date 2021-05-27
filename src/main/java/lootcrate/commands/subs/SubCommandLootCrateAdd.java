@@ -48,24 +48,24 @@ public class SubCommandLootCrateAdd extends SubCommand
 
 	if (args.length <= 5)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
 	    return;
 	}
 	if (mainHandItem.getType() == Material.AIR)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.MUST_HOLD_ITEM, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.MUST_HOLD_ITEM, null);
 	    return;
 	}
 
 	if (CommandUtils.tryParse(args[2]) == null || CommandUtils.tryParse(args[3]) == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
 	    return;
 	}
-	Crate crate = plugin.cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
+	Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
 	if (crate == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
 		    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
 	    return;
 	}
@@ -75,14 +75,14 @@ public class SubCommandLootCrateAdd extends SubCommand
 
 	if (min > max && min >= 1)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_MINMAX, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_MINMAX, null);
 	    return;
 	}
 	CrateItem item = new CrateItem(mainHandItem, min, max, chance,
 		Boolean.parseBoolean(args[5]), null);
 	crate.addItem(item);
-	plugin.cacheManager.update(crate);
-	plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_SUCCESS,
+	plugin.getCacheManager().update(crate);
+	plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_SUCCESS,
 		ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
 			Placeholder.ITEM_TYPE, "" + item.getItem().getType(), Placeholder.ITEM_ID, "" + item.getId(),
 			Placeholder.ITEM_NAME, "" + item.getItem().getItemMeta().getDisplayName()));
@@ -101,7 +101,7 @@ public class SubCommandLootCrateAdd extends SubCommand
 	if (args.length == 2)
 	{
 	    list.add("[CrateID]");
-	    TabUtils.addCratesToList(list, plugin.cacheManager);
+	    TabUtils.addCratesToList(list, plugin.getCacheManager());
 	}
 	if (args.length == 3)
 	    list.add("[MinimumAmount]");

@@ -18,8 +18,8 @@ public class PlayerJoinListener implements Listener
 
     public PlayerJoinListener(LootCrate plugin)
     {
-	this.updateManager = plugin.updateManager;
-	this.optionManager = plugin.optionManager;
+	this.updateManager = plugin.getUpdateManager();
+	this.optionManager = plugin.getOptionManager();
     }
 
     @EventHandler

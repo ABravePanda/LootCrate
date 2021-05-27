@@ -74,8 +74,8 @@ public class Crate implements ConfigurationSerializable
 	// Old Version Support - will be removed in update after
 	if (convert)
 	{
-	    plugin.cacheManager.remove(this);
-	    plugin.cacheManager.update(this);
+	    plugin.getCacheManager().remove(this);
+	    plugin.getCacheManager().update(this);
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "LOOTCRATE " + ChatColor.WHITE
 		    + "Crates.yml file has been converted to fit to new version. You must remake each Crate's keys");
 	}

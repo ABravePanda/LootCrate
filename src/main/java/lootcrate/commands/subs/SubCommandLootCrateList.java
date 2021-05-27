@@ -40,11 +40,11 @@ public class SubCommandLootCrateList extends SubCommand
 
 	if (args.length != 1)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_LIST_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_LIST_USAGE, null);
 	    return;
 	}
 
-	List<Crate> crates = plugin.cacheManager.getCache();
+	List<Crate> crates = plugin.getCacheManager().getCache();
 	for (Crate crate : crates)
 	{
 	    Map<Placeholder, String> map = new HashMap<Placeholder, String>();
@@ -53,7 +53,7 @@ public class SubCommandLootCrateList extends SubCommand
 	    map.put(Placeholder.CRATE_ITEM_COUNT, crate.getItems().size() + "");
 	    map.put(Placeholder.CRATE_KEY_TYPE,
 		    crate.getKey().getItem() == null ? "None" : crate.getKey().getItem().getType() + "");
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_LIST_FORMAT, ImmutableMap.copyOf(map));
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_LIST_FORMAT, ImmutableMap.copyOf(map));
 	}
     }
 

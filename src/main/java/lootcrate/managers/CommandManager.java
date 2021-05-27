@@ -22,9 +22,9 @@ public class CommandManager implements CommandExecutor, TabCompleter
     public CommandManager(LootCrate plugin)
     {
 	this.plugin = plugin;
-	this.messageManager = plugin.messageManager;
-	this.crateManager = plugin.crateManager;
-	this.locationManager = plugin.locationManager;
+	this.messageManager = plugin.getMessageManager();
+	this.crateManager = plugin.getCrateManager();
+	this.locationManager = plugin.getLocationManager();
 
 	plugin.getCommand("message").setExecutor(this);
 	plugin.getCommand("message").setTabCompleter(this);

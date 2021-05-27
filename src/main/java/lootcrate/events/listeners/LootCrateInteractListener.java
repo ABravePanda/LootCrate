@@ -25,8 +25,8 @@ public class LootCrateInteractListener implements Listener
     public LootCrateInteractListener(LootCrate plugin)
     {
 	this.plugin = plugin;
-	this.messageManager = plugin.messageManager;
-	this.cacheManager = plugin.cacheManager;
+	this.messageManager = plugin.getMessageManager();
+	this.cacheManager = plugin.getCacheManager();
     }
 
     @EventHandler
@@ -39,12 +39,12 @@ public class LootCrateInteractListener implements Listener
 	    if (e.getHand() != EquipmentSlot.HAND)
 		return;
 
-	    if (plugin.locationManager.getLocationList().containsKey(e.getClickedBlock().getLocation()))
+	    if (plugin.getLocationManager().getLocationList().containsKey(e.getClickedBlock().getLocation()))
 	    {
 		e.setCancelled(true);
 
 		Crate crate = cacheManager.getCrateById(
-			plugin.locationManager.getLocationList().get(e.getClickedBlock().getLocation()).getId());
+			plugin.getLocationManager().getLocationList().get(e.getClickedBlock().getLocation()).getId());
 
 		CrateAccessEvent event = new CrateAccessEvent(crate, p, e.getAction());
 		Bukkit.getPluginManager().callEvent(event);

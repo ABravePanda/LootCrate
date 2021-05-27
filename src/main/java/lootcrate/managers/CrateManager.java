@@ -100,7 +100,7 @@ public class CrateManager
 	{
 	    if (crate.getOption(CrateOptionType.OPEN_MESSAGE).getValue().toString().equalsIgnoreCase("none"))
 		return;
-	    p.sendMessage(plugin.messageManager.getPrefix()
+	    p.sendMessage(plugin.getMessageManager().getPrefix()
 		    + ChatColor.translateAlternateColorCodes('&', crate.getOption(CrateOptionType.OPEN_MESSAGE)
 			    .getValue().toString().replace("{crate_name}", crate.getName())));
 	}
@@ -109,7 +109,7 @@ public class CrateManager
 
     public void giveReward(CrateItem crateItem, Player p)
     {
-	int rnd = plugin.crateManager.getRandomAmount(crateItem);
+	int rnd = plugin.getCrateManager().getRandomAmount(crateItem);
 
 	if (!crateItem.isDisplay())
 	{
@@ -121,7 +121,7 @@ public class CrateManager
 
 	for (String cmd : crateItem.getCommands())
 	{
-	    if (plugin.optionManager.valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
+	    if (plugin.getOptionManager().valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
 		i = rnd;
 	    for (int j = 0; j < i; j++)
 		Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), cmd.replace("{player}", p.getName()));

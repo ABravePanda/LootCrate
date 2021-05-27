@@ -94,22 +94,22 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener
 	case NAME_TAG:
 	    ChatState state = ChatState.CHANGE_CRATE_NAME;
 	    state.setCrate(crate);
-	    plugin.chatManager.addPlayer(p, state);
-	    plugin.chatManager.sendNotification(p);
+	    plugin.getChatManager().addPlayer(p, state);
+	    plugin.getChatManager().sendNotification(p);
 	    this.close();
 	    return;
 	case COMMAND_BLOCK:
 	    ChatState state1 = ChatState.CHANGE_CRATE_MESSAGE;
 	    state1.setCrate(crate);
-	    plugin.chatManager.addPlayer(p, state1);
-	    plugin.chatManager.sendNotification(p);
+	    plugin.getChatManager().addPlayer(p, state1);
+	    plugin.getChatManager().sendNotification(p);
 	    this.close();
 	    return;
 	case JUKEBOX:
 	    ChatState state2 = ChatState.CHANGE_CRATE_SOUND;
 	    state2.setCrate(crate);
-	    plugin.chatManager.addPlayer(p, state2);
-	    plugin.chatManager.sendNotification(p);
+	    plugin.getChatManager().addPlayer(p, state2);
+	    plugin.getChatManager().sendNotification(p);
 	    this.close();
 	    return;
 	default:

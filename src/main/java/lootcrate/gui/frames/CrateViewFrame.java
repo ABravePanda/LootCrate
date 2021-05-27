@@ -20,7 +20,7 @@ public class CrateViewFrame extends ExtendedFrame
 	super(plugin, p, crate.getName());
 
 	this.plugin = plugin;
-	this.crate = crate;
+	this.crate = plugin.getCacheManager().getCrateById(crate.getId());
 
 	generateFrame();
 	registerItems();
@@ -31,7 +31,7 @@ public class CrateViewFrame extends ExtendedFrame
     public void generateFrame()
     {
 	int index = 0;
-	for (ItemStack item : plugin.invManager.addCrateEffects(crate))
+	for (ItemStack item : plugin.getInvManager().addCrateEffects(crate))
 	{
 	    if (index < getInventory().getSize())
 		this.setItem(index, new GUIItem(index, item));

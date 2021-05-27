@@ -43,18 +43,18 @@ public class SubCommandLootCrateItems extends SubCommand
 
 	if (args.length != 2)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_USAGE, null);
 	    return;
 	}
 	if (CommandUtils.tryParse(args[1]) == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_USAGE, null);
 	    return;
 	}
-	Crate crate = plugin.cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
+	Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
 	if (crate == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
 		    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
 	    return;
 	}
@@ -70,7 +70,7 @@ public class SubCommandLootCrateItems extends SubCommand
 	    map.put(Placeholder.ITEM_NAME, item.getItem().getItemMeta().getDisplayName().length() == 0 ? "None"
 		    : item.getItem().getItemMeta().getDisplayName());
 	    map.put(Placeholder.ITEM_COMMANDS, item.getCommands().size() + "");
-	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_FORMAT, ImmutableMap.copyOf(map));
+	    plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_FORMAT, ImmutableMap.copyOf(map));
 	}
     }
 
@@ -86,7 +86,7 @@ public class SubCommandLootCrateItems extends SubCommand
 	if (args.length == 2)
 	{
 	    list.add("[CrateID]");
-	    TabUtils.addCratesToList(list, plugin.cacheManager);
+	    TabUtils.addCratesToList(list, plugin.getCacheManager());
 	}
 	return list;
     }

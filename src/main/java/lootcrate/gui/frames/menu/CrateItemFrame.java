@@ -26,7 +26,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener
 	super(plugin, p, crate.getName());
 
 	this.plugin = plugin;
-	this.crate = crate;
+	this.crate = plugin.getCacheManager().getCrateById(crate.getId());
 
 	generateFrame();
 	registerItems();
@@ -97,7 +97,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener
 
 	CrateItem item = crate.getItem(this.getContents()[e.getItem().getSlot()].getCrateItem().getId());
 	crate.removeItem(item);
-	plugin.cacheManager.update(crate);
+	plugin.getCacheManager().update(crate);
 	this.close();
 	new CrateItemFrame(plugin, p, crate).open();
     }

@@ -33,26 +33,26 @@ public class MessageCommand extends Command
     {
 	if (sender instanceof Player)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.MUST_BE_CONSOLE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.MUST_BE_CONSOLE, null);
 	    return;
 	}
 
 	if (args.length < 2)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.MESSAGE_COMMAND_USAGE, null);
+	    plugin.getMessageManager().sendMessage(sender, Message.MESSAGE_COMMAND_USAGE, null);
 	    return;
 	}
 
 	if (Bukkit.getPlayer(args[0]) == null)
 	{
-	    plugin.messageManager.sendMessage(sender, Message.PLAYER_NOT_FOUND,
+	    plugin.getMessageManager().sendMessage(sender, Message.PLAYER_NOT_FOUND,
 		    ImmutableMap.of(Placeholder.PLAYER_NAME, args[0]));
 	    return;
 	}
 
 	Player p = Bukkit.getPlayer(args[0]);
 
-	plugin.messageManager.sendNoPrefixMessage(p, Message.MESSAGE_COMMAND_FORMAT,
+	plugin.getMessageManager().sendNoPrefixMessage(p, Message.MESSAGE_COMMAND_FORMAT,
 		ImmutableMap.of(Placeholder.PLAYER, args[0], Placeholder.MESSAGE, CommandUtils.builder(args, 1)));
     }
 
