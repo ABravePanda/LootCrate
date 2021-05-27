@@ -6,16 +6,17 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
+import lootcrate.enums.Message;
+import lootcrate.enums.Permission;
+import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
-import lootcrate.other.Message;
-import lootcrate.other.Permission;
-import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
 
@@ -40,6 +41,7 @@ public class SubCommandLootCrateAdd extends SubCommand
 	    return;
 
 	Player p = (Player) sender;
+	ItemStack mainHandItem = p.getInventory().getItemInMainHand();
 
 	if (!this.testPermissions())
 	    return;
@@ -49,7 +51,7 @@ public class SubCommandLootCrateAdd extends SubCommand
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
 	    return;
 	}
-	if (p.getInventory().getItemInMainHand().getType() == Material.AIR)
+	if (mainHandItem.getType() == Material.AIR)
 	{
 	    plugin.messageManager.sendMessage(sender, Message.MUST_HOLD_ITEM, null);
 	    return;
@@ -76,7 +78,7 @@ public class SubCommandLootCrateAdd extends SubCommand
 	    plugin.messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_MINMAX, null);
 	    return;
 	}
-	CrateItem item = new CrateItem(p.getInventory().getItemInMainHand(), min, max, chance,
+	CrateItem item = new CrateItem(mainHandItem, min, max, chance,
 		Boolean.parseBoolean(args[5]), null);
 	crate.addItem(item);
 	plugin.cacheManager.update(crate);

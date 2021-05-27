@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
-import lootcrate.other.ChatState;
+import lootcrate.enums.ChatState;
 import net.md_5.bungee.api.ChatColor;
 
 public class ChatManager

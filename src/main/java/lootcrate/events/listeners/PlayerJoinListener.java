@@ -6,10 +6,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.Option;
+import lootcrate.enums.Permission;
 import lootcrate.managers.OptionManager;
 import lootcrate.managers.UpdateManager;
-import lootcrate.other.Option;
-import lootcrate.other.Permission;
 
 public class PlayerJoinListener implements Listener
 {

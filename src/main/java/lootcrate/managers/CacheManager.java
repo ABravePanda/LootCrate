@@ -31,7 +31,7 @@ public class CacheManager
     public void update(Crate Crate)
     {
 	plugin.fileManager.saveCrate(Crate);
-	;
+
 	if (cache.contains(Crate))
 	    cache.remove(Crate);
 	cache.add(Crate);

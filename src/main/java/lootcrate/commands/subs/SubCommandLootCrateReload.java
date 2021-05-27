@@ -6,8 +6,8 @@ import org.bukkit.command.CommandSender;
 
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
-import lootcrate.other.Message;
-import lootcrate.other.Permission;
+import lootcrate.enums.Message;
+import lootcrate.enums.Permission;
 
 public class SubCommandLootCrateReload extends SubCommand
 {

@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import lootcrate.enums.AnimationStyle;
+import lootcrate.enums.CrateOptionType;
 import lootcrate.events.listeners.LootCrateInteractListener;
 import lootcrate.events.listeners.PlayerChatListener;
 import lootcrate.events.listeners.PlayerJoinListener;
@@ -29,8 +31,6 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateKey;
 import lootcrate.objects.CrateOption;
-import lootcrate.other.AnimationStyle;
-import lootcrate.other.CrateOptionType;
 import net.md_5.bungee.api.ChatColor;
 
 public class LootCrate extends JavaPlugin

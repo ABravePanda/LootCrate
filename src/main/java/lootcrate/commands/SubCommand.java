@@ -6,8 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
-import lootcrate.other.Message;
-import lootcrate.other.Permission;
+import lootcrate.enums.Message;
+import lootcrate.enums.Permission;
 
 public abstract class SubCommand
 {

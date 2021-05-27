@@ -9,12 +9,12 @@ import org.bukkit.event.block.Action;
 import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.Message;
+import lootcrate.enums.Placeholder;
 import lootcrate.events.custom.CrateAccessEvent;
 import lootcrate.events.custom.CrateOpenEvent;
 import lootcrate.events.custom.CrateViewEvent;
 import lootcrate.objects.Crate;
-import lootcrate.other.Message;
-import lootcrate.other.Placeholder;
 import lootcrate.utils.CommandUtils;
 
 public class CrateAccessListener implements Listener

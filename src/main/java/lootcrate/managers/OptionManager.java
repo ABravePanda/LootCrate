@@ -5,8 +5,8 @@ import java.util.List;
 import org.bukkit.Sound;
 
 import lootcrate.LootCrate;
-import lootcrate.other.AnimationStyle;
-import lootcrate.other.Option;
+import lootcrate.enums.AnimationStyle;
+import lootcrate.enums.Option;
 
 public class OptionManager
 {

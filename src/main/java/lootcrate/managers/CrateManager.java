@@ -9,12 +9,12 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.AnimationStyle;
+import lootcrate.enums.CrateOptionType;
+import lootcrate.enums.Option;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.RandomCollection;
-import lootcrate.other.AnimationStyle;
-import lootcrate.other.CrateOptionType;
-import lootcrate.other.Option;
 
 public class CrateManager
 {

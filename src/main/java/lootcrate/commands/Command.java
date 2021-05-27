@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import lootcrate.other.Permission;
+import lootcrate.enums.Permission;
 
 public abstract class Command
 {

@@ -10,7 +10,7 @@ import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import lootcrate.LootCrate;
-import lootcrate.other.CrateOptionType;
+import lootcrate.enums.CrateOptionType;
 import lootcrate.utils.ObjUtils;
 import net.md_5.bungee.api.ChatColor;
 
@@ -228,5 +228,6 @@ public class Crate implements ConfigurationSerializable
 	}
 	return item;
     }
+
 
 }

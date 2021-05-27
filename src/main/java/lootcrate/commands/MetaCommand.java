@@ -12,9 +12,9 @@ import org.bukkit.inventory.ItemStack;
 import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
-import lootcrate.other.Message;
-import lootcrate.other.Permission;
-import lootcrate.other.Placeholder;
+import lootcrate.enums.Message;
+import lootcrate.enums.Permission;
+import lootcrate.enums.Placeholder;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.ItemUtils;
 

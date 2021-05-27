@@ -11,10 +11,10 @@ import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
+import lootcrate.enums.Message;
+import lootcrate.enums.Permission;
+import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
-import lootcrate.other.Message;
-import lootcrate.other.Permission;
-import lootcrate.other.Placeholder;
 
 public class SubCommandLootCrateList extends SubCommand
 {

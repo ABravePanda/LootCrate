@@ -7,10 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.ChatState;
+import lootcrate.enums.CrateOptionType;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
-import lootcrate.other.ChatState;
-import lootcrate.other.CrateOptionType;
 import net.md_5.bungee.api.ChatColor;
 
 public class PlayerChatListener implements Listener

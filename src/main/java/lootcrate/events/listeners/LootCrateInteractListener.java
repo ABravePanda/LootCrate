@@ -9,11 +9,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.Message;
 import lootcrate.events.custom.CrateAccessEvent;
 import lootcrate.managers.CacheManager;
 import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
-import lootcrate.other.Message;
 import lootcrate.utils.ObjUtils;
 
 public class LootCrateInteractListener implements Listener

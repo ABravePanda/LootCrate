@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
-import lootcrate.other.CrateOptionType;
+import lootcrate.enums.CrateOptionType;
 
 public class CrateOption implements ConfigurationSerializable
 {

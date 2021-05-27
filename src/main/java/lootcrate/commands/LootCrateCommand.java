@@ -20,8 +20,8 @@ import lootcrate.commands.subs.SubCommandLootCrateReload;
 import lootcrate.commands.subs.SubCommandLootCrateRemove;
 import lootcrate.commands.subs.SubCommandLootCrateSet;
 import lootcrate.commands.subs.SubCommandLootCrateVersion;
-import lootcrate.other.Message;
-import lootcrate.other.Permission;
+import lootcrate.enums.Message;
+import lootcrate.enums.Permission;
 
 public class LootCrateCommand extends Command
 {

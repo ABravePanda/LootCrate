@@ -1,4 +1,4 @@
-package lootcrate.other;
+package lootcrate.enums;
 
 public enum Option
 {

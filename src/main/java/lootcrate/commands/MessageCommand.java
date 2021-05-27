@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
-import lootcrate.other.Message;
-import lootcrate.other.Placeholder;
+import lootcrate.enums.Message;
+import lootcrate.enums.Placeholder;
 import lootcrate.utils.CommandUtils;
 
 public class MessageCommand extends Command

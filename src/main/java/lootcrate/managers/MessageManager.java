@@ -9,9 +9,9 @@ import org.bukkit.command.CommandSender;
 import com.google.common.collect.ImmutableMap;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.Message;
+import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
-import lootcrate.other.Message;
-import lootcrate.other.Placeholder;
 
 public class MessageManager
 {

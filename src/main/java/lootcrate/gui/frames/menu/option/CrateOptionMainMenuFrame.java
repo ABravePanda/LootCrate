@@ -7,12 +7,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.ChatState;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
-import lootcrate.other.ChatState;
 import net.md_5.bungee.api.ChatColor;
 
 public class CrateOptionMainMenuFrame extends BasicFrame implements Listener

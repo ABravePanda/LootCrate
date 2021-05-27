@@ -9,12 +9,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
-import lootcrate.other.CrateOptionType;
 import net.md_5.bungee.api.ChatColor;
 
 public class CrateOptionKnockBackFrame extends BasicFrame implements Listener

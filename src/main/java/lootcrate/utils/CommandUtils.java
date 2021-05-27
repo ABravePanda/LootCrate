@@ -2,8 +2,8 @@ package lootcrate.utils;
 
 import org.bukkit.entity.Player;
 
+import lootcrate.enums.Permission;
 import lootcrate.objects.Crate;
-import lootcrate.other.Permission;
 import net.md_5.bungee.api.ChatColor;
 
 public class CommandUtils
