@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import lootcrate.enums.AnimationStyle;
@@ -76,7 +77,7 @@ public class LootCrate extends JavaPlugin
 	    holoManager.reload();
 	}
 
-	registerEvents();
+	initEvents();
     }
 
     @Override
@@ -84,15 +85,26 @@ public class LootCrate extends JavaPlugin
     {
     }
 
-    public void registerEvents()
+    private void initEvents()
     {
-	this.getServer().getPluginManager().registerEvents(new LootCrateInteractListener(this), this);
-	this.getServer().getPluginManager().registerEvents(new CrateAccessListener(this), this);
-	this.getServer().getPluginManager().registerEvents(new CrateOpenListener(this), this);
-	this.getServer().getPluginManager().registerEvents(new CrateViewListener(this), this);
-	this.getServer().getPluginManager().registerEvents(new GUICloseListener(), this);
-	this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
-	this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
+	Listener[] array =
+	{
+		new LootCrateInteractListener(this),
+		new CrateAccessListener(this),
+		new CrateOpenListener(this),
+		new CrateViewListener(this),
+		new GUICloseListener(),
+		new PlayerJoinListener(this),
+		new PlayerChatListener(this)
+	};
+
+	registerEvents(array);
+    }
+
+    private void registerEvents(Listener[] array)
+    {
+	for (Listener l : array)
+	    this.getServer().getPluginManager().registerEvents(l, this);
     }
 
     public void registerConfig()
@@ -112,11 +124,11 @@ public class LootCrate extends JavaPlugin
 
     public void displayIntro()
     {
-	Bukkit.getLogger().info("");
-	Bukkit.getLogger().info("");
+	Bukkit.getConsoleSender().sendMessage("");
+	Bukkit.getConsoleSender().sendMessage("");
 	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "[  " + ChatColor.YELLOW + "LootCrate"
 		+ ChatColor.GREEN + " v" + this.getDescription().getVersion() + ChatColor.DARK_GRAY + "  ]");
-	Bukkit.getLogger().info("");
+	Bukkit.getConsoleSender().sendMessage("");
 	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Running " + ChatColor.YELLOW
 		+ this.getServer().getName() + " v" + this.getServer().getBukkitVersion() + ChatColor.DARK_GRAY + ".");
 	if (updateManager.checkForUpdates())
@@ -130,7 +142,7 @@ public class LootCrate extends JavaPlugin
 	if (metricsHook())
 	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
 		    + "bStats Metrics" + ChatColor.DARK_GRAY + ".");
-	Bukkit.getLogger().info("");
+	Bukkit.getConsoleSender().sendMessage("");
     }
 
     public boolean holoHook()
