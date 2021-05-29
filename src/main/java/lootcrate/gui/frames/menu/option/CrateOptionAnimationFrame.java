@@ -21,10 +21,12 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener
 
     private LootCrate plugin;
     private Crate crate;
-    private GUIItem csgoItem = new GUIItem(21, Material.CHEST, ChatColor.RED + "CSGO Style",
+    private GUIItem csgoItem = new GUIItem(20, Material.CHEST, ChatColor.RED + "CSGO Style",
 	    ChatColor.GRAY + "A scrolling type animation right from CSGO");
-    private GUIItem glassItem = new GUIItem(23, Material.ENDER_CHEST, ChatColor.RED + "Glass Background",
+    private GUIItem glassItem = new GUIItem(22, Material.ENDER_CHEST, ChatColor.RED + "Glass Background",
 	    ChatColor.GRAY + "Glass background randomizes with one random reward in the middle");
+    private GUIItem removingItem = new GUIItem(24, Material.TNT, ChatColor.RED + "Removing Item",
+	    ChatColor.GRAY + "Continuously removes items until one is left");
 
     public CrateOptionAnimationFrame(LootCrate plugin, Player p, Crate crate)
     {
@@ -75,13 +77,16 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener
 	case RANDOM_GLASS:
 	    glassItem.setName(ChatColor.GREEN + "Glass Background");
 	    break;
+	case REMOVING_ITEM:
+	    removingItem.setName(ChatColor.GREEN + "Removing Item");
 	default:
 	    break;
 
 	}
 
-	this.setItem(21, csgoItem);
-	this.setItem(23, glassItem);
+	this.setItem(20, csgoItem);
+	this.setItem(22, glassItem);
+	this.setItem(24, removingItem);
     }
 
     // events
@@ -100,12 +105,20 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener
 	case CHEST:
 	    csgoItem.setName(ChatColor.GREEN + "CSGO Style");
 	    glassItem.setName(ChatColor.RED + "Glass Background");
+	    removingItem.setName(ChatColor.RED + "Removing Item");
 	    style = AnimationStyle.CSGO;
 	    break;
 	case ENDER_CHEST:
 	    glassItem.setName(ChatColor.GREEN + "Glass Background");
 	    csgoItem.setName(ChatColor.RED + "CSGO Style");
+	    removingItem.setName(ChatColor.RED + "Removing Item");
 	    style = AnimationStyle.RANDOM_GLASS;
+	    break;
+	case TNT:
+	    removingItem.setName(ChatColor.GREEN + "Removing Item");
+	    glassItem.setName(ChatColor.RED + "Glass Background");
+	    csgoItem.setName(ChatColor.RED + "CSGO Style");
+	    style = AnimationStyle.REMOVING_ITEM;
 	    break;
 	default:
 	    return;
@@ -113,8 +126,9 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener
 
 	crate.addOption(CrateOptionType.ANIMATION_STYLE, style.toString());
 	plugin.getCacheManager().update(crate);
-	this.setItem(21, csgoItem);
-	this.setItem(23, glassItem);
+	this.setItem(20, csgoItem);
+	this.setItem(22, glassItem);
+	this.setItem(24, removingItem);
     }
 
 }
