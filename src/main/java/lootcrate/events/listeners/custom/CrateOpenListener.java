@@ -15,6 +15,7 @@ import lootcrate.enums.Placeholder;
 import lootcrate.events.custom.CrateOpenEvent;
 import lootcrate.gui.frames.animations.CrateCSGOAnimationFrame;
 import lootcrate.gui.frames.animations.CrateRandomGlassAnimationFrame;
+import lootcrate.gui.frames.animations.CrateRemovingItemAnimationFrame;
 import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
@@ -92,12 +93,14 @@ public class CrateOpenListener implements Listener
 	case RANDOM_GLASS:
 	    frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
 	    break;
+	case REMOVING_ITEM:
+	    frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);
 	default:
 	    frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
 	    break;
 
 	}
-	;
+	
 	frame.open();
 
 	frame.showAnimation();

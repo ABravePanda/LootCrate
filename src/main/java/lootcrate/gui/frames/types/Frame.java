@@ -9,6 +9,8 @@ import lootcrate.gui.items.GUIItem;
 public interface Frame
 {
     int getId();
+    
+    int getSize();
 
     Player getViewer();
 

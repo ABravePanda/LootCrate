@@ -106,6 +106,12 @@ public abstract class BasicFrame implements Frame, Listener
     {
 	return this.inventory;
     }
+    
+    @Override
+    public int getSize()
+    {
+	return this.size;
+    }
 
     @Override
     public void open()

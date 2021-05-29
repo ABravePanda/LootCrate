@@ -72,8 +72,9 @@ public class LootCrate extends JavaPlugin
 	    holoManager = new HologramManager(this);
 	    holoManager.reload();
 	}
-
+	
 	initEvents();
+
     }
 
     @Override
@@ -103,7 +104,7 @@ public class LootCrate extends JavaPlugin
 	    this.getServer().getPluginManager().registerEvents(l, this);
     }
 
-    public void registerConfig()
+    private void registerConfig()
     {
 	this.saveDefaultConfig();
     }
@@ -118,7 +119,7 @@ public class LootCrate extends JavaPlugin
 
     }
 
-    public void displayIntro()
+    private void displayIntro()
     {
 	Bukkit.getConsoleSender().sendMessage("");
 	Bukkit.getConsoleSender().sendMessage("");
@@ -146,18 +147,18 @@ public class LootCrate extends JavaPlugin
 	return Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays");
     }
 
-    public void initMetrics()
+    private void initMetrics()
     {
 	int pluginId = 9767;
 	metrics = new Metrics(this, pluginId);
     }
 
-    public boolean metricsHook()
+    private boolean metricsHook()
     {
 	return metrics.isEnabled();
     }
 
-    public void initSerial()
+    private void initSerial()
     {
 	ConfigurationSerialization.registerClass(Crate.class);
 	ConfigurationSerialization.registerClass(CrateKey.class);

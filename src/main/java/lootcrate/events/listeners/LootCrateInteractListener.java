@@ -1,6 +1,7 @@
 package lootcrate.events.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,35 +35,38 @@ public class LootCrateInteractListener implements Listener
     {
 	Player p = e.getPlayer();
 
-	if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_BLOCK)
-	{
-	    if (e.getHand() != EquipmentSlot.HAND)
-		return;
+	if (e.getAction() != Action.RIGHT_CLICK_BLOCK && e.getAction() != Action.LEFT_CLICK_BLOCK)
+	    return;
+	if (e.getHand() != EquipmentSlot.HAND)
+	    return;
+	if (p.getInventory().getItemInMainHand() == null)
+	    return;
+	
+	Location clickedBlockLocation = e.getClickedBlock().getLocation();
 
-	    if (plugin.getLocationManager().getLocationList().containsKey(e.getClickedBlock().getLocation()))
-	    {
-		e.setCancelled(true);
+	if (!isCrate(clickedBlockLocation))
+        	if (ObjUtils.isKey(plugin, p.getInventory().getItemInMainHand()))
+        	{
+        	    e.setCancelled(true);
+        	    messageManager.sendMessage(p, Message.CANNOT_PLACE_LOOTKEY, null);
+        	    return;
+        	}
 
-		Crate crate = cacheManager.getCrateById(
-			plugin.getLocationManager().getLocationList().get(e.getClickedBlock().getLocation()).getId());
+	e.setCancelled(true);
 
-		CrateAccessEvent event = new CrateAccessEvent(crate, p, e.getAction());
-		Bukkit.getPluginManager().callEvent(event);
-		if (event.isCancelled())
-		    e.setCancelled(true);
+	Crate crate = cacheManager.getCrateById(
+		plugin.getLocationManager().getLocationList().get(e.getClickedBlock().getLocation()).getId());
 
-	    } else
-	    {
+	CrateAccessEvent event = new CrateAccessEvent(crate, p, e.getAction());
+	Bukkit.getPluginManager().callEvent(event);
 
-		if (p.getInventory().getItemInMainHand() == null)
-		    return;
+	if (event.isCancelled())
+	    e.setCancelled(true);
 
-		if (ObjUtils.isKey(plugin, p.getInventory().getItemInMainHand()))
-		{
-		    e.setCancelled(true);
-		    messageManager.sendMessage(p, Message.CANNOT_PLACE_LOOTKEY, null);
-		}
-	    }
-	}
+    }
+    
+    private boolean isCrate(Location l)
+    {
+	return plugin.getLocationManager().getLocationList().containsKey(l);
     }
 }
