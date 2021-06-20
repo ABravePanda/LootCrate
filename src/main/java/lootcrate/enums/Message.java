@@ -1,7 +1,6 @@
 package lootcrate.enums;
 
-public enum Message
-{
+public enum Message {
     PREFIX("prefix"),
     NO_PERMISSION_COMMAND("command-no-permission"),
     NO_PERMISSION_LOOTCRATE_INTERACT("lootcrate-interact-no-permission"),
@@ -52,13 +51,11 @@ public enum Message
 
     String key;
 
-    Message(String key)
-    {
-	this.key = key;
+    Message(String key) {
+        this.key = key;
     }
 
-    public String getKey()
-    {
-	return this.key;
+    public String getKey() {
+        return this.key;
     }
 }

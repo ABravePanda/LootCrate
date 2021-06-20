@@ -1,82 +1,72 @@
 package lootcrate.managers;
 
-import java.util.HashMap;
-
-import org.bukkit.entity.Player;
-
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.entity.Player;
 
-public class ChatManager implements Manager
-{
+import java.util.HashMap;
+
+public class ChatManager implements Manager {
     private final LootCrate plugin;
     private final HashMap<Player, ChatState> map;
 
     /**
      * Constructor of ChatManager
-     * 
-     * @param plugin
-     *            Instance of plugin
+     *
+     * @param plugin Instance of plugin
      */
-    public ChatManager(LootCrate plugin)
-    {
-	this.plugin = plugin;
-	map = new HashMap<Player, ChatState>();
+    public ChatManager(LootCrate plugin) {
+        this.plugin = plugin;
+        map = new HashMap<Player, ChatState>();
     }
 
-    public void addPlayer(Player p, ChatState state)
-    {
-	map.put(p, state);
+    public void addPlayer(Player p, ChatState state) {
+        map.put(p, state);
     }
 
-    public void removePlayer(Player p)
-    {
-		map.remove(p);
+    public void removePlayer(Player p) {
+        map.remove(p);
     }
 
-    public ChatState getState(Player p)
-    {
-	if (map.containsKey(p))
-	    return map.get(p);
-	return null;
+    public ChatState getState(Player p) {
+        if (map.containsKey(p))
+            return map.get(p);
+        return null;
     }
 
-    public boolean hasState(Player p)
-    {
-	return map.containsKey(p);
+    public boolean hasState(Player p) {
+        return map.containsKey(p);
     }
 
-    public void sendNotification(Player p)
-    {
-	if (!hasState(p))
-	    return;
+    public void sendNotification(Player p) {
+        if (!hasState(p))
+            return;
 
-	switch (getState(p))
-	{
-	case CHANGE_CRATE_NAME:
-	    p.sendMessage(ChatColor.GOLD + "Enter the new name for your crate.");
-	    break;
-	case CHANGE_CRATE_MESSAGE:
-	    p.sendMessage(ChatColor.GOLD + "Enter the new open message for your crate.");
-	    break;
-	case CHANGE_CRATE_SOUND:
-	    p.sendMessage(ChatColor.GOLD + "Enter the new open sound for your crate. " + ChatColor.RED
-		    + "Options: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html");
-	    break;
-	default:
-	    break;
+        switch (getState(p)) {
+            case CHANGE_CRATE_NAME:
+                p.sendMessage(ChatColor.GOLD + "Enter the new name for your crate.");
+                break;
+            case CHANGE_CRATE_MESSAGE:
+                p.sendMessage(ChatColor.GOLD + "Enter the new open message for your crate.");
+                break;
+            case CHANGE_CRATE_SOUND:
+                p.sendMessage(ChatColor.GOLD + "Enter the new open sound for your crate. " + ChatColor.RED
+                        + "Options: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html");
+                break;
+            default:
+                break;
 
-	}
+        }
     }
 
-	@Override
-	public void enable() {
+    @Override
+    public void enable() {
 
-	}
+    }
 
-	@Override
-	public void disable() {
+    @Override
+    public void disable() {
 
-	}
+    }
 }

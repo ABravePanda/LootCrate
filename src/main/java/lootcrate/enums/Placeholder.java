@@ -1,7 +1,6 @@
 package lootcrate.enums;
 
-public enum Placeholder
-{
+public enum Placeholder {
     MESSAGE("message"),
     PLAYER("player"),
     PLAYER_NAME("player_name"),
@@ -26,13 +25,11 @@ public enum Placeholder
 
     String key;
 
-    Placeholder(String key)
-    {
-	this.key = key;
+    Placeholder(String key) {
+        this.key = key;
     }
 
-    public String getKey()
-    {
-	return this.key;
+    public String getKey() {
+        return this.key;
     }
 }

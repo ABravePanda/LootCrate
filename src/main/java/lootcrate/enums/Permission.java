@@ -1,7 +1,6 @@
 package lootcrate.enums;
 
-public enum Permission
-{
+public enum Permission {
     COMMAND_META("lootcrate.command.meta"),
     COMMAND_LOOTCRATE_CREATE("lootcrate.command.lootcrate.create"),
     COMMAND_LOOTCRATE_DELETE("lootcrate.command.lootcrate.delete"),
@@ -24,13 +23,11 @@ public enum Permission
 
     String key;
 
-    Permission(String key)
-    {
-	this.key = key;
+    Permission(String key) {
+        this.key = key;
     }
 
-    public String getKey()
-    {
-	return this.key;
+    public String getKey() {
+        return this.key;
     }
 }

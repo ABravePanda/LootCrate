@@ -1,18 +1,16 @@
 package lootcrate.objects;
 
+import lootcrate.utils.ObjUtils;
+import org.bukkit.configuration.MemorySection;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.inventory.ItemStack;
-
-import lootcrate.utils.ObjUtils;
-
-public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializable
-{
+public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializable {
     private int id;
     private ItemStack item;
     private double chance;
@@ -22,137 +20,118 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
     private boolean isDisplay;
 
     public CrateItem(ItemStack item, int minAmount, int maxAmount, double chance, boolean isDisplay,
-	    List<String> commands)
-    {
-	this.setId(ObjUtils.randomID(5));
-	this.setItem(item);
-	this.setChance(chance);
-	this.setMinAmount(minAmount);
-	this.setMaxAmount(maxAmount);
-	this.setDisplay(isDisplay);
-	if (commands != null)
-	    this.setCommands(commands);
-	else
-	    this.setCommands(new ArrayList<String>());
+                     List<String> commands) {
+        this.setId(ObjUtils.randomID(5));
+        this.setItem(item);
+        this.setChance(chance);
+        this.setMinAmount(minAmount);
+        this.setMaxAmount(maxAmount);
+        this.setDisplay(isDisplay);
+        if (commands != null)
+            this.setCommands(commands);
+        else
+            this.setCommands(new ArrayList<String>());
     }
 
-    public CrateItem(Map<String, Object> data)
-    {
-	if (data == null)
-	    return;
+    public CrateItem(Map<String, Object> data) {
+        if (data == null)
+            return;
 
-	this.id = (int) data.get("ID");
+        this.id = (int) data.get("ID");
 
-	// TODO remove
-	// Old Version Support - will be removed in update after
-	if (data.get("Item") instanceof MemorySection)
-	{
-	    Map<String, Object> map = ObjUtils.MemoryToMap((MemorySection) data.get("Item"));
-	    this.item = ItemStack.deserialize(map);
-	} else
-	    this.item = ItemStack.deserialize((Map<String, Object>) data.get("Item"));
+        // TODO remove
+        // Old Version Support - will be removed in update after
+        if (data.get("Item") instanceof MemorySection) {
+            Map<String, Object> map = ObjUtils.MemoryToMap((MemorySection) data.get("Item"));
+            this.item = ItemStack.deserialize(map);
+        } else
+            this.item = ItemStack.deserialize((Map<String, Object>) data.get("Item"));
 
-	this.chance = (double) data.get("Chance");
-	this.minAmount = (int) data.get("MinAmount");
-	this.maxAmount = (int) data.get("MaxAmount");
-	this.commands = (List<String>) data.get("Commands");
-	this.isDisplay = (boolean) data.get("isDisplay");
+        this.chance = (double) data.get("Chance");
+        this.minAmount = (int) data.get("MinAmount");
+        this.maxAmount = (int) data.get("MaxAmount");
+        this.commands = (List<String>) data.get("Commands");
+        this.isDisplay = (boolean) data.get("isDisplay");
 
     }
 
-    public int getId()
-    {
-	return id;
+    public int getId() {
+        return id;
     }
 
-    public void setId(int id)
-    {
-	this.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public ItemStack getItem()
-    {
+    public ItemStack getItem() {
 
-	return item;
+        return item;
     }
 
-    public void setItem(ItemStack item)
-    {
-	this.item = item;
+    public void setItem(ItemStack item) {
+        this.item = item;
     }
 
-    public double getChance()
-    {
-	return chance;
+    public double getChance() {
+        return chance;
     }
 
-    public void setChance(double chance)
-    {
-	this.chance = chance;
+    public void setChance(double chance) {
+        this.chance = chance;
     }
 
-    public int getMinAmount()
-    {
-	return minAmount;
+    public int getMinAmount() {
+        return minAmount;
     }
 
-    public void setMinAmount(int minAmount)
-    {
-	this.minAmount = minAmount;
+    public void setMinAmount(int minAmount) {
+        this.minAmount = minAmount;
     }
 
-    public int getMaxAmount()
-    {
-	return maxAmount;
+    public int getMaxAmount() {
+        return maxAmount;
     }
 
-    public void setMaxAmount(int maxAmount)
-    {
-	this.maxAmount = maxAmount;
+    public void setMaxAmount(int maxAmount) {
+        this.maxAmount = maxAmount;
     }
 
-    public List<String> getCommands()
-    {
-	return commands;
+    public List<String> getCommands() {
+        return commands;
     }
 
-    public void setCommands(List<String> commands)
-    {
-	this.commands = commands;
+    public void setCommands(List<String> commands) {
+        this.commands = commands;
     }
 
-    public Map<String, Object> serialize()
-    {
-	Map<String, Object> map = new LinkedHashMap<String, Object>();
+    public Map<String, Object> serialize() {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-	if (getItem() == null)
-	    return map;
+        if (getItem() == null)
+            return map;
 
-	map.put("ID", getId());
-	map.put("Item", getItem().serialize());
-	map.put("Chance", getChance());
-	map.put("MinAmount", getMinAmount());
-	map.put("MaxAmount", getMaxAmount());
-	map.put("isDisplay", isDisplay());
-	map.put("Commands", getCommands());
+        map.put("ID", getId());
+        map.put("Item", getItem().serialize());
+        map.put("Chance", getChance());
+        map.put("MinAmount", getMinAmount());
+        map.put("MaxAmount", getMaxAmount());
+        map.put("isDisplay", isDisplay());
+        map.put("Commands", getCommands());
 
-	return map;
+        return map;
     }
 
-    public boolean isDisplay()
-    {
-	return isDisplay;
+    public boolean isDisplay() {
+        return isDisplay;
     }
 
-    public void setDisplay(boolean isDisplay)
-    {
-	this.isDisplay = isDisplay;
+    public void setDisplay(boolean isDisplay) {
+        this.isDisplay = isDisplay;
     }
 
     @Override
-    public int compareTo(CrateItem o)
-    {
-	return Double.valueOf(this.getChance()).compareTo(Double.valueOf(o.getChance()));
+    public int compareTo(CrateItem o) {
+        return Double.valueOf(this.getChance()).compareTo(Double.valueOf(o.getChance()));
     }
 
 }

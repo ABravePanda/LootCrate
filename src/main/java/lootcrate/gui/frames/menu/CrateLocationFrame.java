@@ -1,75 +1,66 @@
 package lootcrate.gui.frames.menu;
 
-import java.util.concurrent.Callable;
-
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
-public class CrateLocationFrame extends BasicFrame
-{
-    private Player p;
-    private LootCrate plugin;
-    private Crate crate;
+import java.util.concurrent.Callable;
 
-    public CrateLocationFrame(LootCrate plugin, Player p, Crate crate)
-    {
-	super(plugin, p, crate.getName());
+public class CrateLocationFrame extends BasicFrame {
+    private final Player p;
+    private final LootCrate plugin;
+    private final Crate crate;
 
-	this.plugin = plugin;
-	this.crate = crate;
-	this.p = p;
+    public CrateLocationFrame(LootCrate plugin, Player p, Crate crate) {
+        super(plugin, p, crate.getName());
 
-	registerFrame();
-	generateFrame();
-	registerItems();
+        this.plugin = plugin;
+        this.crate = crate;
+        this.p = p;
+
+        registerFrame();
+        generateFrame();
+        registerItems();
     }
 
     @Override
-    public void generateFrame()
-    {
-	fillBackground(Material.WHITE_STAINED_GLASS_PANE);
-	fillLocations();
+    public void generateFrame() {
+        fillBackground(Material.WHITE_STAINED_GLASS_PANE);
+        fillLocations();
     }
 
     @Override
-    public void unregisterFrame()
-    {
-	GUIItemClickEvent.getHandlerList().unregister(this);
+    public void unregisterFrame() {
+        GUIItemClickEvent.getHandlerList().unregister(this);
     }
 
     // methods
 
 
-    public void fillLocations()
-    {
-	int index = 0;
-	for (final Location l : plugin.getLocationManager().getCrateLocations(crate))
-	{
-	    final GUIItem item = new GUIItem(index, l.getBlock().getType(),
-		    ChatColor.GOLD + "" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ(),
-		    ChatColor.AQUA + "" + l.getWorld().getName());
+    public void fillLocations() {
+        int index = 0;
+        for (final Location l : plugin.getLocationManager().getCrateLocations(crate)) {
+            final GUIItem item = new GUIItem(index, l.getBlock().getType(),
+                    ChatColor.GOLD + "" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ(),
+                    ChatColor.AQUA + "" + l.getWorld().getName());
 
-	    item.setClickHandler(new Callable<Integer>()
-	    {
-		public Integer call()
-		{
-		    item.setClickHandler(null);
-		    close();
-		    p.teleport(l);
-		    return 1;
-		}
-	    });
+            item.setClickHandler(new Callable<Integer>() {
+                public Integer call() {
+                    item.setClickHandler(null);
+                    close();
+                    p.teleport(l);
+                    return 1;
+                }
+            });
 
-	    this.setItem(index, item);
-	}
+            this.setItem(index, item);
+        }
     }
 
 }
