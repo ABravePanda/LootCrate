@@ -8,9 +8,9 @@ import lootcrate.LootCrate;
 import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.Option;
 
-public class OptionManager
+public class OptionManager implements Manager
 {
-    private LootCrate plugin;
+    private final LootCrate plugin;
     private final String PREFIX = "options.";
 
     /**
@@ -35,17 +35,26 @@ public class OptionManager
 	case DOUBLE:
 	    return (T) (Double) plugin.getConfig().getDouble(PREFIX + option.getKey());
 	case LIST:
-	    return (T) (List) plugin.getConfig().getList(PREFIX + option.getKey());
+	    return (T) plugin.getConfig().getList(PREFIX + option.getKey());
 	case STRING:
-	    return (T) (String) plugin.getConfig().getString(PREFIX + option.getKey());
+	    return (T) plugin.getConfig().getString(PREFIX + option.getKey());
 	case MINECRAFT_SOUND:
-	    return (T) Sound.valueOf((String) plugin.getConfig().getString(PREFIX + option.getKey()));
+	    return (T) Sound.valueOf(plugin.getConfig().getString(PREFIX + option.getKey()));
 	case ANIMATION_STYLE:
-	    return (T) AnimationStyle.valueOf((String) plugin.getConfig().getString(PREFIX + option.getKey()));
+	    return (T) AnimationStyle.valueOf(plugin.getConfig().getString(PREFIX + option.getKey()));
 	default:
 	    return null;
 
 	}
     }
 
+	@Override
+	public void enable() {
+
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

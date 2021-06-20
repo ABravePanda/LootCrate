@@ -14,10 +14,10 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import net.md_5.bungee.api.ChatColor;
 
-public class InventoryManager
+public class InventoryManager implements Manager
 {
 
-    private LootCrate plugin;
+    private final LootCrate plugin;
 
     /**
      * Constructor for InventoryManager
@@ -58,4 +58,13 @@ public class InventoryManager
 	return newList;
     }
 
+	@Override
+	public void enable() {
+
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

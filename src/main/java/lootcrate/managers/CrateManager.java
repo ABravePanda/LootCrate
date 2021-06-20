@@ -16,9 +16,9 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.RandomCollection;
 
-public class CrateManager
+public class CrateManager implements Manager
 {
-    private LootCrate plugin;
+    private final LootCrate plugin;
 
     /**
      * Constructor for CrateManager
@@ -144,4 +144,14 @@ public class CrateManager
 	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Y, 1.8D);
 	crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Z, 0.5D);
     }
+
+	@Override
+	public void enable() {
+
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

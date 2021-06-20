@@ -13,9 +13,9 @@ import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.objects.Crate;
 
-public class CacheManager
+public class CacheManager implements Manager
 {
-    private LootCrate plugin;
+    private final LootCrate plugin;
     private List<Crate> cache;
 
     public CacheManager(LootCrate plugin)
@@ -34,16 +34,14 @@ public class CacheManager
     {
 	plugin.getFileManager().saveCrate(Crate);
 
-	if (cache.contains(Crate))
-	    cache.remove(Crate);
+		cache.remove(Crate);
 	cache.add(Crate);
     }
 
     public void rename(String oldCrate, Crate Crate)
     {
 	plugin.getFileManager().overrideSave(oldCrate, Crate);
-	if (cache.contains(oldCrate))
-	    cache.remove(oldCrate);
+		cache.remove(oldCrate);
 	cache.add(Crate);
     }
 
@@ -167,4 +165,14 @@ public class CacheManager
     {
 	load();
     }
+
+	@Override
+	public void enable() {
+		load();
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

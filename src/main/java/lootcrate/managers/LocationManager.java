@@ -17,14 +17,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 
-public class LocationManager
+public class LocationManager implements Manager
 {
 
-    private Map<Location, Crate> locationList = new LinkedHashMap<Location, Crate>();
+    private final Map<Location, Crate> locationList = new LinkedHashMap<Location, Crate>();
 
-    private LootCrate plugin;
-    private CrateManager crateManager;
-    private String locationPrefix = "locations.";
+    private final LootCrate plugin;
+    private final CrateManager crateManager;
+    private final String locationPrefix = "locations.";
     File f;
     FileConfiguration config;
 
@@ -38,8 +38,7 @@ public class LocationManager
     {
 	this.plugin = plugin;
 	this.crateManager = plugin.getCrateManager();
-	f = new File(plugin.getDataFolder(), File.separator + "locations.yml");
-	config = YamlConfiguration.loadConfiguration(f);
+
     }
 
     /**
@@ -92,8 +91,7 @@ public class LocationManager
 	if (uuid == null)
 	    return;
 	config.set(uuid, null);
-	if (locationList.containsKey(l))
-	    locationList.remove(l);
+		locationList.remove(l);
 	try
 	{
 	    config.save(f);
@@ -226,4 +224,16 @@ public class LocationManager
 
 	return locations;
     }
+
+	@Override
+	public void enable() {
+		f = new File(plugin.getDataFolder(), File.separator + "locations.yml");
+		config = YamlConfiguration.loadConfiguration(f);
+		populateLocations();
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

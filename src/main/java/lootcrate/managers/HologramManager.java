@@ -13,11 +13,11 @@ import lootcrate.enums.CrateOptionType;
 import lootcrate.objects.Crate;
 import net.md_5.bungee.api.ChatColor;
 
-public class HologramManager
+public class HologramManager implements Manager
 {
-    private LootCrate plugin;
-    private OptionManager optionManager;
-    private LocationManager locationManager;
+    private final LootCrate plugin;
+    private final OptionManager optionManager;
+    private final LocationManager locationManager;
 
     /**
      * Constructor for HologramManager
@@ -70,4 +70,14 @@ public class HologramManager
 	}
 
     }
+
+	@Override
+	public void enable() {
+		reload();
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

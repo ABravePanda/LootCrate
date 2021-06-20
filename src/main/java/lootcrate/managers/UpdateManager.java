@@ -15,13 +15,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import lootcrate.LootCrate;
 import net.md_5.bungee.api.ChatColor;
 
-public class UpdateManager
+public class UpdateManager implements Manager
 {
-    private OptionManager optionManager;
+    private final OptionManager optionManager;
     private int project = 0;
     private URL checkURL;
     private String newVersion = "";
-    private LootCrate plugin;
+    private final LootCrate plugin;
 
     /**
      * Constructor for CrateManager
@@ -125,4 +125,14 @@ public class UpdateManager
 	    p.sendMessage(ChatColor.RED + "Download @ " + getResourceURL());
 	}
     }
+
+	@Override
+	public void enable() {
+
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

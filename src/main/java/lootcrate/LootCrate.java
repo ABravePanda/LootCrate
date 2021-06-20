@@ -1,5 +1,6 @@
 package lootcrate;
 
+import lootcrate.managers.*;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -13,17 +14,6 @@ import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
 import lootcrate.gui.events.listeners.GUICloseListener;
-import lootcrate.managers.CacheManager;
-import lootcrate.managers.ChatManager;
-import lootcrate.managers.CommandManager;
-import lootcrate.managers.CrateManager;
-import lootcrate.managers.FileManager;
-import lootcrate.managers.HologramManager;
-import lootcrate.managers.InventoryManager;
-import lootcrate.managers.LocationManager;
-import lootcrate.managers.MessageManager;
-import lootcrate.managers.OptionManager;
-import lootcrate.managers.UpdateManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateKey;
@@ -57,37 +47,46 @@ public class LootCrate extends JavaPlugin
 	messageManager = new MessageManager(this);
 	fileManager = new FileManager(this);
 	cacheManager = new CacheManager(this);
-	cacheManager.load();
 	crateManager = new CrateManager(this);
 	locationManager = new LocationManager(this);
-	locationManager.populateLocations();
 	invManager = new InventoryManager(this);
 	commandManager = new CommandManager(this);
 	chatManager = new ChatManager(this);
 
-	displayIntro();
-
 	if (holoHook())
 	{
 	    holoManager = new HologramManager(this);
-	    holoManager.reload();
+	    holoManager.enable();
 	}
 
 	registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
 		new CrateViewListener(this), new GUICloseListener(), new PlayerJoinListener(this),
 		new PlayerChatListener(this));
 
+        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager);
+
+	displayIntro();
     }
 
     @Override
     public void onDisable()
     {
+        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager);
     }
 
     private void registerEvents(Listener... array)
     {
 	for (Listener l : array)
 	    this.getServer().getPluginManager().registerEvents(l, this);
+    }
+
+    private void toggleManagers(boolean enable, Manager... array)
+    {
+        for(Manager m : array)
+            if(enable)
+                m.enable();
+            else
+                m.disable();
     }
 
     private void registerConfig()

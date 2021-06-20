@@ -12,12 +12,12 @@ import lootcrate.commands.LootCrateCommand;
 import lootcrate.commands.MessageCommand;
 import lootcrate.commands.MetaCommand;
 
-public class CommandManager implements CommandExecutor, TabCompleter
+public class CommandManager implements Manager, CommandExecutor, TabCompleter
 {
-    private LootCrate plugin;
-    private MessageManager messageManager;
-    private CrateManager crateManager;
-    private LocationManager locationManager;
+    private final LootCrate plugin;
+    private final MessageManager messageManager;
+    private final CrateManager crateManager;
+    private final LocationManager locationManager;
 
     public CommandManager(LootCrate plugin)
     {
@@ -25,13 +25,6 @@ public class CommandManager implements CommandExecutor, TabCompleter
 	this.messageManager = plugin.getMessageManager();
 	this.crateManager = plugin.getCrateManager();
 	this.locationManager = plugin.getLocationManager();
-
-	plugin.getCommand("message").setExecutor(this);
-	plugin.getCommand("message").setTabCompleter(this);
-	plugin.getCommand("lootcrate").setExecutor(this);
-	plugin.getCommand("lootcrate").setTabCompleter(this);
-	plugin.getCommand("meta").setExecutor(this);
-	plugin.getCommand("meta").setTabCompleter(this);
     }
 
     @Override
@@ -58,4 +51,19 @@ public class CommandManager implements CommandExecutor, TabCompleter
 	    return new MetaCommand(plugin, args, sender).runTabComplete();
 	return null;
     }
+
+	@Override
+	public void enable() {
+		plugin.getCommand("message").setExecutor(this);
+		plugin.getCommand("message").setTabCompleter(this);
+		plugin.getCommand("lootcrate").setExecutor(this);
+		plugin.getCommand("lootcrate").setTabCompleter(this);
+		plugin.getCommand("meta").setExecutor(this);
+		plugin.getCommand("meta").setTabCompleter(this);
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

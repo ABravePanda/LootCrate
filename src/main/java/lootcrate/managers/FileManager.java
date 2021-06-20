@@ -14,16 +14,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import lootcrate.LootCrate;
 import lootcrate.objects.Crate;
 
-public class FileManager
+public class FileManager implements Manager
 {
-    private LootCrate plugin;
+    private final LootCrate plugin;
     public File crateFile;
     private final String CRATE_PREFIX = "crates.";
 
     public FileManager(LootCrate plugin)
     {
 	this.plugin = plugin;
-	loadFiles();
     }
 
     /**
@@ -141,4 +140,14 @@ public class FileManager
 	    e.printStackTrace();
 	}
     }
+
+	@Override
+	public void enable() {
+		loadFiles();
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

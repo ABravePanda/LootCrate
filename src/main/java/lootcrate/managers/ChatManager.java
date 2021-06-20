@@ -8,10 +8,10 @@ import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
 import net.md_5.bungee.api.ChatColor;
 
-public class ChatManager
+public class ChatManager implements Manager
 {
-    private LootCrate plugin;
-    private HashMap<Player, ChatState> map;
+    private final LootCrate plugin;
+    private final HashMap<Player, ChatState> map;
 
     /**
      * Constructor of ChatManager
@@ -32,8 +32,7 @@ public class ChatManager
 
     public void removePlayer(Player p)
     {
-	if (map.containsKey(p))
-	    map.remove(p);
+		map.remove(p);
     }
 
     public ChatState getState(Player p)
@@ -71,4 +70,13 @@ public class ChatManager
 	}
     }
 
+	@Override
+	public void enable() {
+
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }

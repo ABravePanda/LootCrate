@@ -13,9 +13,9 @@ import lootcrate.enums.Message;
 import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
 
-public class MessageManager
+public class MessageManager implements Manager
 {
-    private LootCrate plugin;
+    private final LootCrate plugin;
     private final String PREFIX = "messages.";
 
     /**
@@ -115,4 +115,14 @@ public class MessageManager
 			    Placeholder.TOTAL_CRATE_CHANCE, "" + crate.getChanceCount()));
 	}
     }
+
+	@Override
+	public void enable() {
+
+	}
+
+	@Override
+	public void disable() {
+
+	}
 }
