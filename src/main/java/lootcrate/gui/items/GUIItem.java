@@ -5,8 +5,10 @@ import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateKey;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -135,6 +137,18 @@ public class GUIItem implements Listener {
     public void setNameColor(ChatColor color)
     {
         setName(color + ChatColor.stripColor(item.getItemMeta().getDisplayName()));
+    }
+
+    public void setGlowing(boolean glowing)
+    {
+        if(glowing) {
+            item.addUnsafeEnchantment(Enchantment.MENDING, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            item.setItemMeta(meta);
+        } else
+            if(item.containsEnchantment(Enchantment.MENDING))
+            item.removeEnchantment(Enchantment.MENDING);
     }
 
     @EventHandler

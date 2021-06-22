@@ -89,6 +89,7 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
     private void setInactive()
     {
         for(GUIItem item : styles.values()) {
+            item.setGlowing(false);
             item.setNameColor(ChatColor.RED);
             resetItem(item);
         }
@@ -97,6 +98,7 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
     private void setActive(GUIItem item)
     {
         item.setNameColor(ChatColor.GREEN);
+        item.setGlowing(true);
         resetItem(item);
     }
 
