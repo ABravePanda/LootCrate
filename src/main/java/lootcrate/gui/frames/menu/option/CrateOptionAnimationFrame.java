@@ -8,29 +8,30 @@ import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;
-    private final GUIItem csgoItem = new GUIItem(20, Material.CHEST, ChatColor.RED + "CSGO Style",
-            ChatColor.GRAY + "A scrolling type animation right from CSGO");
-    private final GUIItem glassItem = new GUIItem(22, Material.ENDER_CHEST, ChatColor.RED + "Glass Background",
-            ChatColor.GRAY + "Glass background randomizes with one random reward in the middle");
-    private final GUIItem removingItem = new GUIItem(24, Material.TNT, ChatColor.RED + "Removing Item",
-            ChatColor.GRAY + "Continuously removes items until one is left");
+    private final Map<AnimationStyle, GUIItem> styles;
 
     public CrateOptionAnimationFrame(LootCrate plugin, Player p, Crate crate) {
         super(plugin, p, crate.getName());
 
         this.plugin = plugin;
         this.crate = crate;
+        this.styles = new HashMap<AnimationStyle, GUIItem>();
 
         registerFrame();
         generateFrame();
@@ -40,7 +41,9 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
     @Override
     public void generateFrame() {
         fillBackground(Material.WHITE_STAINED_GLASS_PANE);
+        createOptions();
         fillOptions();
+        setActiveStyle();
     }
 
     @Override
@@ -56,28 +59,56 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
         }
     }
 
-    public void fillOptions() {
-
-        CrateOption opt = crate.getOption(CrateOptionType.ANIMATION_STYLE);
-        AnimationStyle type = AnimationStyle.valueOf((String) opt.getValue());
-
-        switch (type) {
-            case CSGO:
-                csgoItem.setName(ChatColor.GREEN + "CSGO Style");
-                break;
-            case RANDOM_GLASS:
-                glassItem.setName(ChatColor.GREEN + "Glass Background");
-                break;
-            case REMOVING_ITEM:
-                removingItem.setName(ChatColor.GREEN + "Removing Item");
-            default:
-                break;
-
+    private void createOptions()
+    {
+        for(AnimationStyle style : AnimationStyle.values())
+        {
+            GUIItem item = new GUIItem(0, style.getItemStack(), style.getName(), style.getDescription());
+            item.setNameColor(ChatColor.RED);
+            item.setLoreColor(ChatColor.GRAY);
+            styles.put(style, item);
         }
+    }
 
-        this.setItem(20, csgoItem);
-        this.setItem(22, glassItem);
-        this.setItem(24, removingItem);
+    public void fillOptions() {
+        int index = 0;
+        for(int i = 0; i < this.size; i++)
+        {
+            if(index >= styles.size()) return;
+
+            if(i%2==0)
+            {
+                GUIItem item = (GUIItem) styles.values().toArray()[index];
+                item.setSlot(i);
+                this.setItem(i, item);
+                index++;
+            }
+        }
+    }
+
+    private void setInactive()
+    {
+        for(GUIItem item : styles.values()) {
+            item.setNameColor(ChatColor.RED);
+            resetItem(item);
+        }
+    }
+
+    private void setActive(GUIItem item)
+    {
+        item.setNameColor(ChatColor.GREEN);
+        resetItem(item);
+    }
+
+    private void resetItem(GUIItem item)
+    {
+        this.setItem(item.getSlot(), item);
+    }
+
+    private void setActiveStyle()
+    {
+        AnimationStyle style = AnimationStyle.valueOf((String) crate.getOption(CrateOptionType.ANIMATION_STYLE).getValue());
+        setActive(styles.get(style));
     }
 
     // events
@@ -87,37 +118,20 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
         if (!e.sameFrame(this))
             return;
 
-        ItemStack item = e.getItem().getItemStack();
-        AnimationStyle style = AnimationStyle.RANDOM_GLASS;
+        GUIItem guiItem = e.getItem();
+        ItemStack item = guiItem.getItemStack();
+        setInactive();
 
-        switch (item.getType()) {
-            case CHEST:
-                csgoItem.setName(ChatColor.GREEN + "CSGO Style");
-                glassItem.setName(ChatColor.RED + "Glass Background");
-                removingItem.setName(ChatColor.RED + "Removing Item");
-                style = AnimationStyle.CSGO;
-                break;
-            case ENDER_CHEST:
-                glassItem.setName(ChatColor.GREEN + "Glass Background");
-                csgoItem.setName(ChatColor.RED + "CSGO Style");
-                removingItem.setName(ChatColor.RED + "Removing Item");
-                style = AnimationStyle.RANDOM_GLASS;
-                break;
-            case TNT:
-                removingItem.setName(ChatColor.GREEN + "Removing Item");
-                glassItem.setName(ChatColor.RED + "Glass Background");
-                csgoItem.setName(ChatColor.RED + "CSGO Style");
-                style = AnimationStyle.REMOVING_ITEM;
-                break;
-            default:
-                return;
+        setActive(guiItem);
+
+        for(AnimationStyle style : AnimationStyle.values())
+        {
+            if(style.getItemStack().equals(guiItem.getItemStack().getType()))
+                crate.setOption(new CrateOption(CrateOptionType.ANIMATION_STYLE, style.toString()));
+            plugin.getCacheManager().update(crate);
         }
 
-        crate.addOption(CrateOptionType.ANIMATION_STYLE, style.toString());
-        plugin.getCacheManager().update(crate);
-        this.setItem(20, csgoItem);
-        this.setItem(22, glassItem);
-        this.setItem(24, removingItem);
+
     }
 
 }

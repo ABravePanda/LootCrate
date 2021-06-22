@@ -122,6 +122,21 @@ public class GUIItem implements Listener {
         item.setItemMeta(meta);
     }
 
+    public void setLoreColor(ChatColor color)
+    {
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
+        for(int i = 0; i < lore.size(); i++)
+            lore.set(i, color + lore.get(i));
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+    }
+
+    public void setNameColor(ChatColor color)
+    {
+        setName(color + ChatColor.stripColor(item.getItemMeta().getDisplayName()));
+    }
+
     @EventHandler
     public void onGUIClick(GUIItemClickEvent e) throws Exception {
         if (function != null)

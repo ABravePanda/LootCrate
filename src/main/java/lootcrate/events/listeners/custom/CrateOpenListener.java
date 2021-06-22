@@ -73,7 +73,6 @@ public class CrateOpenListener implements Listener {
         AnimatedFrame frame = null;
         CrateOption opt = crate.getOption(CrateOptionType.ANIMATION_STYLE);
         AnimationStyle type = AnimationStyle.valueOf((String) opt.getValue());
-        System.out.println(type);
         switch (type) {
             case CSGO:
                 frame = new CrateCSGOAnimationFrame(plugin, p, crate);
@@ -84,6 +83,9 @@ public class CrateOpenListener implements Listener {
             case REMOVING_ITEM:
                 frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);
                 break;
+            case NONE:
+                plugin.getCrateManager().giveReward(plugin.getCrateManager().getRandomItem(crate), p);
+                return;
             default:
                 frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
                 break;
