@@ -139,6 +139,7 @@ public class GUIItem implements Listener {
 
     @EventHandler
     public void onGUIClick(GUIItemClickEvent e) throws Exception {
+        if(this != e.getItem()) return;
         if (function != null)
             function.call();
         e.setCancelled(true);
