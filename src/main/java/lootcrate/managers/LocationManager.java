@@ -1,6 +1,7 @@
 package lootcrate.managers;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.FileType;
 import lootcrate.objects.Crate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -37,7 +38,7 @@ public class LocationManager implements Manager {
      * Reloads the config and repopulates location list
      */
     public void reload() {
-        config = YamlConfiguration.loadConfiguration(f);
+        config = plugin.getFileManager().getConfiguration(f);
         populateLocations();
     }
 
@@ -70,7 +71,7 @@ public class LocationManager implements Manager {
      */
     public void removeCrateLocation(Location l) {
         reload();
-        config = YamlConfiguration.loadConfiguration(f);
+        config = plugin.getFileManager().getConfiguration(f);
         String uuid = findUUIDByLocation(l);
         if (uuid == null)
             return;
@@ -91,7 +92,7 @@ public class LocationManager implements Manager {
      */
     public void removeCrateLocation(Crate crate) {
         reload();
-        config = YamlConfiguration.loadConfiguration(f);
+        config = plugin.getFileManager().getConfiguration(f);
         String uuid = findUUIDByCrate(crate);
         if (uuid == null)
             return;
@@ -193,8 +194,8 @@ public class LocationManager implements Manager {
 
     @Override
     public void enable() {
-        f = new File(plugin.getDataFolder(), File.separator + "locations.yml");
-        config = YamlConfiguration.loadConfiguration(f);
+        f = plugin.getFileManager().getFile(FileType.LOCATIONS);
+        config = plugin.getFileManager().getConfiguration(f);
         populateLocations();
     }
 

@@ -1,5 +1,6 @@
 package lootcrate.utils;
 
+import lootcrate.LootCrate;
 import lootcrate.managers.CacheManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;

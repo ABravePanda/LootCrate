@@ -1,7 +1,9 @@
 package lootcrate.managers;
 
+import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.enums.AnimationStyle;
+import lootcrate.enums.CrateAction;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.enums.Option;
 import lootcrate.objects.Crate;
@@ -13,6 +15,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CrateManager implements Manager {
@@ -70,6 +74,12 @@ public class CrateManager implements Manager {
         return ThreadLocalRandom.current().nextInt(item.getMinAmount(), item.getMaxAmount() + 1);
     }
 
+    /**
+     * Plays crate sound and sends message to player to open crate for
+     *
+     * @param crate Crate to open
+     * @param p Player to open crate for
+     */
     public void crateOpenEffects(Crate crate, Player p) {
         // play sound
         if (crate.getOption(CrateOptionType.OPEN_SOUND).getValue() != null) {
@@ -108,6 +118,7 @@ public class CrateManager implements Manager {
             for (int j = 0; j < i; j++)
                 Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), cmd.replace("{player}", p.getName()));
         }
+
     }
 
     public void addDefaultOptions(Crate crate) {
@@ -124,6 +135,15 @@ public class CrateManager implements Manager {
         crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_X, 0.5D);
         crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Y, 1.8D);
         crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Z, 0.5D);
+    }
+
+    public Crate getCrateFromItemID(int id)
+    {
+        List<Crate> crates = plugin.getCacheManager().getCache();
+        for(Crate crate : crates)
+            for(CrateItem item : crate.getItems())
+                if(item.getId() == id) return crate;
+        return null;
     }
 
     @Override

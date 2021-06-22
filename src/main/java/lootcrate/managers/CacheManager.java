@@ -27,14 +27,14 @@ public class CacheManager implements Manager {
      * @param Crate Crate to update
      */
     public void update(Crate Crate) {
-        plugin.getFileManager().saveCrate(Crate);
+        plugin.getCrateFileManager().saveCrate(Crate);
 
         cache.remove(Crate);
         cache.add(Crate);
     }
 
     public void rename(String oldCrate, Crate Crate) {
-        plugin.getFileManager().overrideSave(oldCrate, Crate);
+        plugin.getCrateFileManager().overrideSave(oldCrate, Crate);
         cache.remove(oldCrate);
         cache.add(Crate);
     }
@@ -45,7 +45,7 @@ public class CacheManager implements Manager {
      * @param Crate Crate to remove
      */
     public void remove(Crate Crate) {
-        plugin.getFileManager().removeCrate(Crate);
+        plugin.getCrateFileManager().removeCrate(Crate);
         List<Crate> copiedCache = new ArrayList<Crate>(cache);
 
         for (Crate cacheCrate : copiedCache) {
@@ -55,9 +55,9 @@ public class CacheManager implements Manager {
     }
 
     /**
-     * Gets Crate by given name in cache
+     * Gets Crate by given id in cache
      *
-     * @param name Name to look for
+     * @param id id to look for
      * @return Crate or null
      */
     public Crate getCrateById(int id) {
@@ -85,7 +85,7 @@ public class CacheManager implements Manager {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                cache = plugin.getFileManager().loadAllCrates();
+                cache = plugin.getCrateFileManager().loadAllCrates();
 
                 Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override
@@ -101,7 +101,7 @@ public class CacheManager implements Manager {
      * Loads the cache
      */
     public void load() {
-        cache = plugin.getFileManager().loadAllCrates();
+        cache = plugin.getCrateFileManager().loadAllCrates();
 
         for (Crate crate : new ArrayList<Crate>(this.getCache()))
             if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
@@ -128,7 +128,7 @@ public class CacheManager implements Manager {
         }
 
         for (Crate Crate : cache) {
-            plugin.getFileManager().saveCrate(Crate);
+            plugin.getCrateFileManager().saveCrate(Crate);
         }
     }
 

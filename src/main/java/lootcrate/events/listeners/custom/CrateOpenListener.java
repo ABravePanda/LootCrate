@@ -2,10 +2,7 @@ package lootcrate.events.listeners.custom;
 
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
-import lootcrate.enums.AnimationStyle;
-import lootcrate.enums.CrateOptionType;
-import lootcrate.enums.Message;
-import lootcrate.enums.Placeholder;
+import lootcrate.enums.*;
 import lootcrate.events.custom.CrateOpenEvent;
 import lootcrate.gui.frames.animations.CrateCSGOAnimationFrame;
 import lootcrate.gui.frames.animations.CrateRandomGlassAnimationFrame;
@@ -68,6 +65,7 @@ public class CrateOpenListener implements Listener {
         // play sound
         plugin.getCrateManager().crateOpenEffects(crate, p);
 
+        plugin.getLogManager().log(CrateAction.OPEN_CRATE, crate, p, null);
         openAnimation(crate, p);
     }
 

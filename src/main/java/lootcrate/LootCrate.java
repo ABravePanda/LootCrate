@@ -23,6 +23,7 @@ public class LootCrate extends JavaPlugin {
     private Metrics metrics;
     private MessageManager messageManager;
     private FileManager fileManager;
+    private CrateFileManager crateFileManager;
     private CacheManager cacheManager;
     private CrateManager crateManager;
     private LocationManager locationManager;
@@ -32,6 +33,7 @@ public class LootCrate extends JavaPlugin {
     private UpdateManager updateManager;
     private HologramManager holoManager;
     private ChatManager chatManager;
+    private LogManager logManager;
 
     @Override
     public void onEnable() {
@@ -43,12 +45,14 @@ public class LootCrate extends JavaPlugin {
         updateManager = new UpdateManager(this);
         messageManager = new MessageManager(this);
         fileManager = new FileManager(this);
+        crateFileManager = new CrateFileManager(this);
         cacheManager = new CacheManager(this);
         crateManager = new CrateManager(this);
         locationManager = new LocationManager(this);
         invManager = new InventoryManager(this);
         commandManager = new CommandManager(this);
         chatManager = new ChatManager(this);
+        logManager = new LogManager(this);
 
         if (holoHook())
             holoManager = new HologramManager(this);
@@ -57,7 +61,7 @@ public class LootCrate extends JavaPlugin {
                 new CrateViewListener(this), new GUICloseListener(), new PlayerJoinListener(this),
                 new PlayerChatListener(this));
 
-        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager);
+        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, logManager);
 
         if (holoManager != null) holoManager.enable();
         displayIntro();
@@ -153,8 +157,8 @@ public class LootCrate extends JavaPlugin {
     /**
      * @return the fileManager
      */
-    public FileManager getFileManager() {
-        return fileManager;
+    public CrateFileManager getCrateFileManager() {
+        return crateFileManager;
     }
 
     /**
@@ -213,4 +217,11 @@ public class LootCrate extends JavaPlugin {
         return chatManager;
     }
 
+    public FileManager getFileManager() {
+        return fileManager;
+    }
+
+    public LogManager getLogManager() {
+        return logManager;
+    }
 }
