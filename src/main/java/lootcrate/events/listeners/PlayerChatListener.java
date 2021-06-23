@@ -5,7 +5,7 @@ import lootcrate.enums.ChatState;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

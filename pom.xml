@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.tompkins-development.spigot</groupId>
    <artifactId>LootCrate</artifactId>
-   <version>0.4.0</version>
+   <version>0.4.1</version>
    <name>LootCrate</name>
    <description>A plugin to add lootcrates</description>
    <repositories>
@@ -25,8 +25,8 @@
       <!--This adds the Spigot API artifact to the build -->
       <dependency>
          <groupId>org.spigotmc</groupId>
-         <artifactId>spigot</artifactId>
-         <version>1.16.4-R0.1-SNAPSHOT</version>
+         <artifactId>spigot-api</artifactId>
+         <version>1.17-R0.1-SNAPSHOT</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
@@ -45,7 +45,7 @@
       <dependency>
          <groupId>com.gmail.filoghost.holographicdisplays</groupId>
          <artifactId>holographicdisplays-api</artifactId>
-         <version>2.4.5</version>
+         <version>2.4.0</version>
          <scope>provided</scope>
       </dependency>
    </dependencies>
@@ -84,8 +84,6 @@
             <artifactId>maven-jar-plugin</artifactId>
             <version>2.3.1</version>
             <configuration>
-               <source>1.7</source>
-               <target>1.7</target>
                <outputDirectory>Z:\Spigot Test Server\plugins</outputDirectory>
             </configuration>
          </plugin>
