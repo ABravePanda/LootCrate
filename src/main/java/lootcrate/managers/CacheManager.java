@@ -12,13 +12,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CacheManager implements Manager {
-    private final LootCrate plugin;
+public class CacheManager extends BasicManager implements Manager {
     private List<Crate> cache;
 
     public CacheManager(LootCrate plugin) {
+        super(plugin);
         cache = new ArrayList<Crate>();
-        this.plugin = plugin;
     }
 
     /**
@@ -27,14 +26,14 @@ public class CacheManager implements Manager {
      * @param Crate Crate to update
      */
     public void update(Crate Crate) {
-        plugin.getCrateFileManager().saveCrate(Crate);
+        this.getPlugin().getCrateFileManager().saveCrate(Crate);
 
         cache.remove(Crate);
         cache.add(Crate);
     }
 
     public void rename(String oldCrate, Crate Crate) {
-        plugin.getCrateFileManager().overrideSave(oldCrate, Crate);
+        this.getPlugin().getCrateFileManager().overrideSave(oldCrate, Crate);
         cache.remove(oldCrate);
         cache.add(Crate);
     }
@@ -45,7 +44,7 @@ public class CacheManager implements Manager {
      * @param Crate Crate to remove
      */
     public void remove(Crate Crate) {
-        plugin.getCrateFileManager().removeCrate(Crate);
+        this.getPlugin().getCrateFileManager().removeCrate(Crate);
         List<Crate> copiedCache = new ArrayList<Crate>(cache);
 
         for (Crate cacheCrate : copiedCache) {
@@ -82,7 +81,8 @@ public class CacheManager implements Manager {
      */
     public void loadAsync(final LootCrate callback) {
         final long startTime = System.nanoTime();
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+        final LootCrate plugin = this.getPlugin();
+        Bukkit.getScheduler().runTaskAsynchronously(this.getPlugin(), new Runnable() {
             @Override
             public void run() {
                 cache = plugin.getCrateFileManager().loadAllCrates();
@@ -101,7 +101,7 @@ public class CacheManager implements Manager {
      * Loads the cache
      */
     public void load() {
-        cache = plugin.getCrateFileManager().loadAllCrates();
+        cache = this.getPlugin().getCrateFileManager().loadAllCrates();
 
         for (Crate crate : new ArrayList<Crate>(this.getCache()))
             if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
@@ -114,7 +114,7 @@ public class CacheManager implements Manager {
      * Wipes the Crates file, then saves the full cache into Crates file
      */
     public void save() {
-        File f = new File(plugin.getDataFolder(), File.separator + "crates.yml");
+        File f = new File(this.getPlugin().getDataFolder(), File.separator + "crates.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
 
         for (String key : config.getKeys(false)) {
@@ -128,7 +128,7 @@ public class CacheManager implements Manager {
         }
 
         for (Crate Crate : cache) {
-            plugin.getCrateFileManager().saveCrate(Crate);
+            this.getPlugin().getCrateFileManager().saveCrate(Crate);
         }
     }
 

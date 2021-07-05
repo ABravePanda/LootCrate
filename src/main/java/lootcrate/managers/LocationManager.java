@@ -13,11 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class LocationManager implements Manager {
+public class LocationManager extends BasicManager implements Manager {
 
     private final Map<Location, Crate> locationList = new LinkedHashMap<Location, Crate>();
 
-    private final LootCrate plugin;
     private final CrateManager crateManager;
     private final String locationPrefix = "locations.";
     File f;
@@ -29,7 +28,7 @@ public class LocationManager implements Manager {
      * @param plugin Instance of plugin
      */
     public LocationManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
         this.crateManager = plugin.getCrateManager();
 
     }
@@ -38,7 +37,7 @@ public class LocationManager implements Manager {
      * Reloads the config and repopulates location list
      */
     public void reload() {
-        config = plugin.getFileManager().getConfiguration(f);
+        config = this.getPlugin().getFileManager().getConfiguration(f);
         populateLocations();
     }
 
@@ -71,7 +70,7 @@ public class LocationManager implements Manager {
      */
     public void removeCrateLocation(Location l) {
         reload();
-        config = plugin.getFileManager().getConfiguration(f);
+        config = this.getPlugin().getFileManager().getConfiguration(f);
         String uuid = findUUIDByLocation(l);
         if (uuid == null)
             return;
@@ -92,7 +91,7 @@ public class LocationManager implements Manager {
      */
     public void removeCrateLocation(Crate crate) {
         reload();
-        config = plugin.getFileManager().getConfiguration(f);
+        config = this.getPlugin().getFileManager().getConfiguration(f);
         String uuid = findUUIDByCrate(crate);
         if (uuid == null)
             return;
@@ -141,7 +140,7 @@ public class LocationManager implements Manager {
             MemorySection section = (MemorySection) config.get(s);
             if (section.get("Crate") == null)
                 continue;
-            Crate crate2 = plugin.getCacheManager().getCrateById(section.getInt("Crate"));
+            Crate crate2 = this.getPlugin().getCacheManager().getCrateById(section.getInt("Crate"));
             if (crate2 == null)
                 continue;
             if (crate.getId() == crate2.getId())
@@ -160,7 +159,7 @@ public class LocationManager implements Manager {
             Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")),
                     (double) section.get("Location.x"), (double) section.get("Location.y"),
                     (double) section.get("Location.z"));
-            Crate crate = plugin.getCacheManager().getCrateById(section.getInt("Crate"));
+            Crate crate = this.getPlugin().getCacheManager().getCrateById(section.getInt("Crate"));
             if (crate == null || loc == null)
                 continue;
             locationList.put(loc, crate);
@@ -194,8 +193,8 @@ public class LocationManager implements Manager {
 
     @Override
     public void enable() {
-        f = plugin.getFileManager().getFile(FileType.LOCATIONS);
-        config = plugin.getFileManager().getConfiguration(f);
+        f = this.getPlugin().getFileManager().getFile(FileType.LOCATIONS);
+        config = this.getPlugin().getFileManager().getConfiguration(f);
         populateLocations();
     }
 

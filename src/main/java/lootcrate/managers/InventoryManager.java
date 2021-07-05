@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class InventoryManager implements Manager {
-
-    private final LootCrate plugin;
+public class InventoryManager extends BasicManager implements Manager {
 
     /**
      * Constructor for InventoryManager
@@ -23,7 +21,7 @@ public class InventoryManager implements Manager {
      * @param plugin An instance of the plugin
      */
     public InventoryManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     /**

@@ -8,13 +8,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class FileManager implements Manager {
-
-    private final LootCrate plugin;
+public class FileManager extends BasicManager implements Manager {
 
     public FileManager(LootCrate plugin)
     {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     @Override
@@ -29,7 +27,7 @@ public class FileManager implements Manager {
 
     public File createFile(FileType type)
     {
-        File file = new File(plugin.getDataFolder(), File.separator + type.getName());
+        File file = new File(this.getPlugin().getDataFolder(), File.separator + type.getName());
         return file;
     }
 

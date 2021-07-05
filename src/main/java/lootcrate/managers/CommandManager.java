@@ -11,14 +11,13 @@ import org.bukkit.command.TabCompleter;
 
 import java.util.List;
 
-public class CommandManager implements Manager, CommandExecutor, TabCompleter {
-    private final LootCrate plugin;
+public class CommandManager extends BasicManager implements Manager, CommandExecutor, TabCompleter {
     private final MessageManager messageManager;
     private final CrateManager crateManager;
     private final LocationManager locationManager;
 
     public CommandManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
         this.messageManager = plugin.getMessageManager();
         this.crateManager = plugin.getCrateManager();
         this.locationManager = plugin.getLocationManager();
@@ -28,33 +27,33 @@ public class CommandManager implements Manager, CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (cmd.getName().equalsIgnoreCase("message"))
-            new MessageCommand(plugin, args, sender).executeCommand();
+            new MessageCommand(this.getPlugin(), args, sender).executeCommand();
         if (cmd.getName().equalsIgnoreCase("lootcrate"))
-            new LootCrateCommand(plugin, args, sender).executeCommand();
+            new LootCrateCommand(this.getPlugin(), args, sender).executeCommand();
         if (cmd.getName().equalsIgnoreCase("meta"))
-            new MetaCommand(plugin, args, sender).executeCommand();
+            new MetaCommand(this.getPlugin(), args, sender).executeCommand();
         return false;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
         if (cmd.getName().equalsIgnoreCase("message"))
-            return new MessageCommand(plugin, args, sender).runTabComplete();
+            return new MessageCommand(this.getPlugin(), args, sender).runTabComplete();
         if (cmd.getName().equalsIgnoreCase("lootcrate"))
-            return new LootCrateCommand(plugin, args, sender).runTabComplete();
+            return new LootCrateCommand(this.getPlugin(), args, sender).runTabComplete();
         if (cmd.getName().equalsIgnoreCase("meta"))
-            return new MetaCommand(plugin, args, sender).runTabComplete();
+            return new MetaCommand(this.getPlugin(), args, sender).runTabComplete();
         return null;
     }
 
     @Override
     public void enable() {
-        plugin.getCommand("message").setExecutor(this);
-        plugin.getCommand("message").setTabCompleter(this);
-        plugin.getCommand("lootcrate").setExecutor(this);
-        plugin.getCommand("lootcrate").setTabCompleter(this);
-        plugin.getCommand("meta").setExecutor(this);
-        plugin.getCommand("meta").setTabCompleter(this);
+        this.getPlugin().getCommand("message").setExecutor(this);
+        this.getPlugin().getCommand("message").setTabCompleter(this);
+        this.getPlugin().getCommand("lootcrate").setExecutor(this);
+        this.getPlugin().getCommand("lootcrate").setTabCompleter(this);
+        this.getPlugin().getCommand("meta").setExecutor(this);
+        this.getPlugin().getCommand("meta").setTabCompleter(this);
     }
 
     @Override

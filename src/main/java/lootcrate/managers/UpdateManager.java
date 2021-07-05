@@ -14,9 +14,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class UpdateManager implements Manager {
+public class UpdateManager extends BasicManager implements Manager {
     private final OptionManager optionManager;
-    private final LootCrate plugin;
     private int project = 0;
     private URL checkURL;
     private String newVersion = "";
@@ -27,7 +26,7 @@ public class UpdateManager implements Manager {
      * @param plugin An instance of the plugin
      */
     public UpdateManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
         this.optionManager = plugin.getOptionManager();
         this.newVersion = plugin.getDescription().getVersion();
         this.project = 87046;
@@ -41,8 +40,8 @@ public class UpdateManager implements Manager {
         return project;
     }
 
-    public JavaPlugin getPlugin() {
-        return plugin;
+    public JavaPlugin getMainPlugin() {
+        return this.getPlugin();
     }
 
     public String getResourceURL() {
@@ -50,7 +49,7 @@ public class UpdateManager implements Manager {
     }
 
     public String getNewVersion() {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+        Bukkit.getScheduler().runTaskAsynchronously(this.getPlugin(), new Runnable() {
             @Override
             public void run() {
                 URLConnection con;
@@ -82,13 +81,13 @@ public class UpdateManager implements Manager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return Integer.valueOf(plugin.getDescription().getVersion().replace(".", "")) < Integer
+        return Integer.valueOf(this.getPlugin().getDescription().getVersion().replace(".", "")) < Integer
                 .valueOf(newVersion.replace(".", ""));
-        // return !plugin.getDescription().getVersion().equals(newVersion);
+        // return !this.getPlugin().getDescription().getVersion().equals(newVersion);
     }
 
     public void sendNotificationCommandSender(CommandSender p) {
-        p.sendMessage(ChatColor.YELLOW + "Running " + plugin.getName() + " v" + plugin.getDescription().getVersion());
+        p.sendMessage(ChatColor.YELLOW + "Running " + this.getPlugin().getName() + " v" + this.getPlugin().getDescription().getVersion());
         if (checkForUpdates()) {
             p.sendMessage(ChatColor.RED + "New update found! (v" + getNewVersion() + ").");
             p.sendMessage(ChatColor.RED + "Download @ " + getResourceURL());
@@ -96,7 +95,7 @@ public class UpdateManager implements Manager {
     }
 
     public void sendNotificationPlayer(Player p) {
-        p.sendMessage(ChatColor.YELLOW + "Running " + plugin.getName() + " v" + plugin.getDescription().getVersion());
+        p.sendMessage(ChatColor.YELLOW + "Running " + this.getPlugin().getName() + " v" + this.getPlugin().getDescription().getVersion());
         if (checkForUpdates()) {
             p.sendMessage(ChatColor.RED + "New update found! (v" + getNewVersion() + ").");
             p.sendMessage(ChatColor.RED + "Download @ " + getResourceURL());

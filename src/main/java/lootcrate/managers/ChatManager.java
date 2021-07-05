@@ -7,8 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-public class ChatManager implements Manager {
-    private final LootCrate plugin;
+public class ChatManager extends BasicManager implements Manager {
     private final HashMap<Player, ChatState> map;
 
     /**
@@ -17,7 +16,7 @@ public class ChatManager implements Manager {
      * @param plugin Instance of plugin
      */
     public ChatManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
         map = new HashMap<Player, ChatState>();
     }
 

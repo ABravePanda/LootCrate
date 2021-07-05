@@ -5,7 +5,6 @@ import lootcrate.enums.FileType;
 import lootcrate.objects.Crate;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CrateFileManager implements Manager {
-    private final LootCrate plugin;
+public class CrateFileManager extends BasicManager implements Manager {
     private final String CRATE_PREFIX = "crates.";
     public File crateFile;
 
     public CrateFileManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     /**
@@ -30,7 +28,7 @@ public class CrateFileManager implements Manager {
      * @return The Crate object of the given name or null
      */
     public Crate getCrateFromFile(String name) {
-        FileConfiguration config = plugin.getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
         if (config.get(CRATE_PREFIX + name) == null)
             return null;
         if (config.get(CRATE_PREFIX + name) instanceof MemorySection) {
@@ -41,9 +39,9 @@ public class CrateFileManager implements Manager {
             map.put("Options", m.get("Options"));
             map.put("Key", m.get("Key"));
             map.put("Items", m.get("Items"));
-            return new Crate(plugin, map);
+            return new Crate(this.getPlugin(), map);
         } else
-            return new Crate(plugin, (Map<String, Object>) config.get(CRATE_PREFIX + name));
+            return new Crate(this.getPlugin(), (Map<String, Object>) config.get(CRATE_PREFIX + name));
     }
 
     /**
@@ -52,7 +50,7 @@ public class CrateFileManager implements Manager {
      * @return A list of crates
      */
     public List<Crate> loadAllCrates() {
-        FileConfiguration config = plugin.getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
         List<Crate> crates = new ArrayList<Crate>();
         HashMap<String, Object> map = new HashMap<String, Object>();
         if (config.getConfigurationSection(CRATE_PREFIX) == null)
@@ -72,7 +70,7 @@ public class CrateFileManager implements Manager {
      * @param Crate The Crate to be saved
      */
     public void saveCrate(Crate crate) {
-        FileConfiguration config = plugin.getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
         config.set(CRATE_PREFIX + crate.getId(), crate.serialize());
         saveFile(config);
     }
@@ -85,7 +83,7 @@ public class CrateFileManager implements Manager {
      * @param Crate   Crate to save
      */
     public void overrideSave(String oldName, Crate crate) {
-        FileConfiguration config = plugin.getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
         config.set(CRATE_PREFIX + oldName, null);
         config.set(CRATE_PREFIX + crate.getId(), crate.serialize());
         saveFile(config);
@@ -97,7 +95,7 @@ public class CrateFileManager implements Manager {
      * @param Crate The Crate to be remove
      */
     public void removeCrate(Crate crate) {
-        FileConfiguration config = plugin.getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
         config.set(CRATE_PREFIX + crate.getId(), null);
         saveFile(config);
     }
@@ -106,7 +104,7 @@ public class CrateFileManager implements Manager {
      * Loads the files into the variables
      */
     private void loadFiles() {
-        crateFile = plugin.getFileManager().getFile(FileType.CRATES);
+        crateFile = this.getPlugin().getFileManager().getFile(FileType.CRATES);
     }
 
     /**

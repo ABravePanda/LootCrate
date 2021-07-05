@@ -15,22 +15,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class LogManager implements Manager {
-
-    private final LootCrate plugin;
+public class LogManager extends BasicManager implements Manager {
 
     private File file;
     private YamlConfiguration config;
 
     public LogManager(LootCrate plugin)
     {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     @Override
     public void enable() {
-        file = plugin.getFileManager().createFile(FileType.LOG);
-        config = plugin.getFileManager().getConfiguration(file);
+        file = this.getPlugin().getFileManager().createFile(FileType.LOG);
+        config = this.getPlugin().getFileManager().getConfiguration(file);
     }
 
     @Override
@@ -72,7 +70,7 @@ public class LogManager implements Manager {
 
     private void saveLog()
     {
-        plugin.getFileManager().saveFile(file, config);
+        this.getPlugin().getFileManager().saveFile(file, config);
     }
 
     private String getDate()

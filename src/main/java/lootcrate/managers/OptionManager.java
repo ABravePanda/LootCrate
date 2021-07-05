@@ -5,8 +5,7 @@ import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.Option;
 import org.bukkit.Sound;
 
-public class OptionManager implements Manager {
-    private final LootCrate plugin;
+public class OptionManager extends BasicManager implements Manager {
     private final String PREFIX = "options.";
 
     /**
@@ -15,10 +14,11 @@ public class OptionManager implements Manager {
      * @param plugin Instance of plugin
      */
     public OptionManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     public <T> T valueOf(Option option) {
+        LootCrate plugin = this.getPlugin();
         switch (option.getType()) {
             case INTEGER:
                 return (T) (Integer) plugin.getConfig().getInt(PREFIX + option.getKey());

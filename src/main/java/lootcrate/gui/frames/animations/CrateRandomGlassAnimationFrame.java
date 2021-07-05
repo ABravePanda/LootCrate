@@ -9,12 +9,14 @@ import lootcrate.objects.CrateItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CrateRandomGlassAnimationFrame extends AnimatedFrame {
+public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;
@@ -130,6 +132,13 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame {
             this.setItem(13, new GUIItem(13, Material.REDSTONE_TORCH, "&cReward"));
             this.setItem(31, new GUIItem(31, Material.REDSTONE_TORCH, "&cReward"));
         }
+    }
+
+    @EventHandler
+    public void onGUIItemClick(GUIItemClickEvent e) {
+        if (!e.sameFrame(this))
+            return;
+        e.setCancelled(true);
     }
 
 }

@@ -37,7 +37,7 @@ public class CrateAccessListener implements Listener {
 
         // if left click, call open event
         if (action == Action.LEFT_CLICK_BLOCK) {
-            CrateViewEvent event = new CrateViewEvent(crate, p);
+            CrateViewEvent event = new CrateViewEvent(crate, p, e.getLocation());
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled())
                 e.setCancelled(true);
@@ -45,7 +45,7 @@ public class CrateAccessListener implements Listener {
 
         // if it was right click, check if key
         if (action == Action.RIGHT_CLICK_BLOCK) {
-            CrateOpenEvent event = new CrateOpenEvent(crate, p);
+            CrateOpenEvent event = new CrateOpenEvent(crate, p, e.getLocation());
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled())
                 e.setCancelled(true);

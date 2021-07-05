@@ -11,8 +11,7 @@ import org.bukkit.block.Block;
 
 import java.util.List;
 
-public class HologramManager implements Manager {
-    private final LootCrate plugin;
+public class HologramManager extends BasicManager implements Manager {
     private final OptionManager optionManager;
     private final LocationManager locationManager;
 
@@ -22,7 +21,7 @@ public class HologramManager implements Manager {
      * @param plugin An instance of the plugin
      */
     public HologramManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
         this.optionManager = plugin.getOptionManager();
         this.locationManager = plugin.getLocationManager();
     }
@@ -31,7 +30,7 @@ public class HologramManager implements Manager {
         double xOffset = (double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_X).getValue();
         double yOffset = (double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Y).getValue();
         double zOffset = (double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Z).getValue();
-        Hologram hologram = HologramsAPI.createHologram(plugin,
+        Hologram hologram = HologramsAPI.createHologram(this.getPlugin(),
                 block.getLocation().clone().add(xOffset, yOffset, zOffset));
 
         List<String> list = (List<String>) crate.getOption(CrateOptionType.HOLOGRAM_LINES).getValue();
@@ -42,7 +41,7 @@ public class HologramManager implements Manager {
     }
 
     public void reload() {
-        for (Hologram holo : HologramsAPI.getHolograms(plugin))
+        for (Hologram holo : HologramsAPI.getHolograms(this.getPlugin()))
             holo.delete();
         for (Location l : locationManager.getLocationList().keySet()) {
             if (l == null)

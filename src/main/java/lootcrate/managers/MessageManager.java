@@ -11,8 +11,7 @@ import org.bukkit.command.CommandSender;
 import java.util.Map;
 import java.util.regex.Matcher;
 
-public class MessageManager implements Manager {
-    private final LootCrate plugin;
+public class MessageManager extends BasicManager implements Manager {
     private final String PREFIX = "messages.";
 
     /**
@@ -21,7 +20,7 @@ public class MessageManager implements Manager {
      * @param plugin Instance of plugin
      */
     public MessageManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     /**
@@ -58,7 +57,7 @@ public class MessageManager implements Manager {
      * @return Message with placeholders replaced
      */
     public String parseMessage(Message message, ImmutableMap<Placeholder, String> placeholders) {
-        String msg = plugin.getConfig().getString(PREFIX + message.getKey());
+        String msg = this.getPlugin().getConfig().getString(PREFIX + message.getKey());
 
         if (msg == null || msg.isEmpty())
             return null;

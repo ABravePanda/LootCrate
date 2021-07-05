@@ -19,8 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CrateManager implements Manager {
-    private final LootCrate plugin;
+public class CrateManager extends BasicManager implements Manager {
 
     /**
      * Constructor for CrateManager
@@ -28,7 +27,7 @@ public class CrateManager implements Manager {
      * @param plugin An instance of the plugin
      */
     public CrateManager(LootCrate plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     /**
@@ -95,7 +94,7 @@ public class CrateManager implements Manager {
         if (crate.getOption(CrateOptionType.OPEN_MESSAGE).getValue() != null) {
             if (crate.getOption(CrateOptionType.OPEN_MESSAGE).getValue().toString().equalsIgnoreCase("none"))
                 return;
-            p.sendMessage(plugin.getMessageManager().getPrefix()
+            p.sendMessage(this.getPlugin().getMessageManager().getPrefix()
                     + ChatColor.translateAlternateColorCodes('&', crate.getOption(CrateOptionType.OPEN_MESSAGE)
                     .getValue().toString().replace("{crate_name}", crate.getName())));
         }
@@ -103,7 +102,7 @@ public class CrateManager implements Manager {
     }
 
     public void giveReward(CrateItem crateItem, Player p) {
-        int rnd = plugin.getCrateManager().getRandomAmount(crateItem);
+        int rnd = this.getPlugin().getCrateManager().getRandomAmount(crateItem);
 
         if (!crateItem.isDisplay()) {
             for (int i = 0; i < rnd; i++)
@@ -113,10 +112,10 @@ public class CrateManager implements Manager {
         int i = 1;
 
         for (String cmd : crateItem.getCommands()) {
-            if (plugin.getOptionManager().valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
+            if (this.getPlugin().getOptionManager().valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
                 i = rnd;
             for (int j = 0; j < i; j++)
-                Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), cmd.replace("{player}", p.getName()));
+                Bukkit.dispatchCommand(this.getPlugin().getServer().getConsoleSender(), cmd.replace("{player}", p.getName()));
         }
 
     }
@@ -139,7 +138,7 @@ public class CrateManager implements Manager {
 
     public Crate getCrateFromItemID(int id)
     {
-        List<Crate> crates = plugin.getCacheManager().getCache();
+        List<Crate> crates = this.getPlugin().getCacheManager().getCache();
         for(Crate crate : crates)
             for(CrateItem item : crate.getItems())
                 if(item.getId() == id) return crate;

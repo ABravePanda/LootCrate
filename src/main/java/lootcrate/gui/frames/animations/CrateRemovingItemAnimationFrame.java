@@ -9,12 +9,14 @@ import lootcrate.objects.CrateItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CrateRemovingItemAnimationFrame extends AnimatedFrame {
+public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Listener {
 
     private final Material fillMaterial = Material.RED_STAINED_GLASS_PANE;
     private final LootCrate plugin;
@@ -130,6 +132,13 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame {
         this.setItem(22, item);
         giveRewards(item.getCrateItem());
         countdown();
+    }
+
+    @EventHandler
+    public void onGUIItemClick(GUIItemClickEvent e) {
+        if (!e.sameFrame(this))
+            return;
+        e.setCancelled(true);
     }
 
 }
