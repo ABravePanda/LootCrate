@@ -16,4 +16,6 @@ public abstract class AnimatedFrame extends BasicFrame implements Listener {
 
     public abstract void showAnimation();
 
+
+
 }

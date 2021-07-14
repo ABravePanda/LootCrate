@@ -70,6 +70,8 @@ public class CrateManager extends BasicManager implements Manager {
     public int getRandomAmount(CrateItem item) {
         if (item.getMaxAmount() < item.getMinAmount())
             return 1;
+        if(item.getMaxAmount() == item.getMinAmount())
+            return item.getMinAmount();
         return ThreadLocalRandom.current().nextInt(item.getMinAmount(), item.getMaxAmount() + 1);
     }
 
