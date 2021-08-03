@@ -84,8 +84,8 @@ public class CrateFrame extends BasicFrame implements Listener {
                 return;
         }
 
-        this.close();
-        frameToOpen.open();
+        this.closeFrame(p, this);
+        this.openFrame(p, frameToOpen);
     }
 
 }

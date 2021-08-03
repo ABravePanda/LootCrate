@@ -67,8 +67,9 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
         Crate crate = plugin.getCacheManager().getCrateById(Integer.parseInt(idFromLore));
 
         CrateFrame crateFrame = new CrateFrame(plugin, p, crate);
-        this.close();
-        crateFrame.open();
+
+        this.closeFrame(p, this);
+        this.openFrame(p, crateFrame);
     }
 
 }

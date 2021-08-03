@@ -2,19 +2,21 @@ package lootcrate.managers;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
+import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
+import lootcrate.objects.PlayerFrameMatch;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class InventoryManager extends BasicManager implements Manager {
 
+    private final List<PlayerFrameMatch> matches;
     /**
      * Constructor for InventoryManager
      *
@@ -22,6 +24,7 @@ public class InventoryManager extends BasicManager implements Manager {
      */
     public InventoryManager(LootCrate plugin) {
         super(plugin);
+        this.matches = new ArrayList<PlayerFrameMatch>();
     }
 
     /**
@@ -46,6 +49,43 @@ public class InventoryManager extends BasicManager implements Manager {
             }
         }
         return newList;
+    }
+
+    public void openFrame(Player p, Frame frame) {
+        System.out.println("Open frame -> " + p.getName() + " ----> " + frame.getId());
+        PlayerFrameMatch match = new PlayerFrameMatch(p.getUniqueId(), frame.getId());
+        removeSimilar(match);
+        p.openInventory(frame.getInventory());
+        matches.add(match);
+    }
+
+    public boolean contains(PlayerFrameMatch match) {
+        for(PlayerFrameMatch m : matches)
+            if(m.getUuid().equals(match.getUuid()) && m.getFrameid() == match.getFrameid()) return true;
+
+        return false;
+    }
+
+    public boolean exists(PlayerFrameMatch match)
+    {
+        for(PlayerFrameMatch m : matches)
+            if(m.getUuid().equals(match.getUuid())) return true;
+
+        return false;
+    }
+
+    public void removeSimilar(PlayerFrameMatch match)
+    {
+        if(!exists(match)) return;
+        for(PlayerFrameMatch m : new ArrayList<PlayerFrameMatch>(matches))
+            if(m.getUuid().equals(match.getUuid())) matches.remove(m);
+    }
+
+    public void closeFrame(Player p, Frame frame) {
+        System.out.println("Close frame -> " + p.getName() + " ----> " + frame.getId());
+        PlayerFrameMatch match = new PlayerFrameMatch(p.getUniqueId(), frame.getId());
+        if(contains(match)) p.closeInventory();
+        removeSimilar(match);
     }
 
     @Override

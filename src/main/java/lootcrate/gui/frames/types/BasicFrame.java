@@ -103,14 +103,12 @@ public abstract class BasicFrame implements Frame, Listener {
 
     @Override
     public void open() {
-        player.closeInventory();
-        player.openInventory(getInventory());
+        plugin.getInvManager().openFrame(player, this);
     }
 
     @Override
     public void close() {
-        if (player.getOpenInventory().getTitle().equalsIgnoreCase(getTitle()))
-            player.closeInventory();
+        plugin.getInvManager().closeFrame(player, this);
     }
 
     @Override
@@ -140,6 +138,16 @@ public abstract class BasicFrame implements Frame, Listener {
 
         contents[slot] = item;
         getInventory().setItem(slot, item.getItemStack());
+    }
+
+    public void openFrame(Player p, Frame frame) {
+        plugin.getInvManager().openFrame(p, frame);
+    }
+
+    public void closeFrame(Player p, Frame frame) {
+        plugin.getInvManager().closeFrame(p, frame);
+        GUICloseEvent event = new GUICloseEvent(p, frame);
+        Bukkit.getPluginManager().callEvent(event);
     }
 
     public Inventory createInventory() {

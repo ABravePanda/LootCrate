@@ -92,7 +92,7 @@ public class CrateOpenListener implements Listener {
 
         }
 
-        frame.open();
+        plugin.getInvManager().openFrame(p, frame);
 
         frame.showAnimation();
     }

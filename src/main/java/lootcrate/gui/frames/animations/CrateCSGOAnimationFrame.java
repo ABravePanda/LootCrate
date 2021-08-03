@@ -59,7 +59,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
                     giveRewards(getContents()[22].getCrateItem());
                 }
                 if (timeLeft == -3) {
-                    close();
+                    closeFrame(player, getAnimatedFrame());
                     Bukkit.getScheduler().cancelTask(taskID);
                 }
                 timeLeft--;
@@ -113,5 +113,4 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
             return;
         e.setCancelled(true);
     }
-
 }

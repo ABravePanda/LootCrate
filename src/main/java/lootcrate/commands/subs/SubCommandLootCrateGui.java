@@ -51,7 +51,7 @@ public class SubCommandLootCrateGui extends SubCommand {
             frame = new CrateFrame(plugin, p, crate);
         }
 
-        frame.open();
+        plugin.getInvManager().openFrame(p, frame);
 
     }
 

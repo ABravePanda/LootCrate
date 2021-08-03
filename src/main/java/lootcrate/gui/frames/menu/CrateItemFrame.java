@@ -46,6 +46,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
     public void fillItems() {
         int index = 0;
         for (CrateItem item : crate.getItems()) {
+            if(item == null) continue;
             this.setItem(index, createGUIItem(index, item));
             index++;
         }
@@ -61,8 +62,9 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         guiItem.addLoreLine(ChatColor.GRAY + "Max: " + ChatColor.GOLD + item.getMaxAmount());
         guiItem.addLoreLine(ChatColor.GRAY + "Display: " + ChatColor.GOLD + item.isDisplay());
         guiItem.addLoreLine(ChatColor.GRAY + "Commands: ");
-        for (String command : item.getCommands())
-            guiItem.addLoreLine(ChatColor.GRAY + "  - /" + ChatColor.GOLD + command);
+        if(item.getCommands() != null)
+            for (String command : item.getCommands())
+                guiItem.addLoreLine(ChatColor.GRAY + "  - /" + ChatColor.GOLD + command);
         guiItem.addLoreLine(" ");
         guiItem.addLoreLine(ChatColor.RED + "Shift-Click to Remove");
         guiItem.setCrateItem(item);
@@ -89,7 +91,8 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         CrateItem item = crate.getItem(this.getContents()[e.getItem().getSlot()].getCrateItem().getId());
         crate.removeItem(item);
         plugin.getCacheManager().update(crate);
-        this.close();
-        new CrateItemFrame(plugin, p, crate).open();
+
+        this.closeFrame(p, this);
+        this.openFrame(p, new CrateItemFrame(plugin, p, crate));
     }
 }

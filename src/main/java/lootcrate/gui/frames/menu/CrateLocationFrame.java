@@ -53,7 +53,6 @@ public class CrateLocationFrame extends BasicFrame {
             item.setClickHandler(new Callable<Integer>() {
                 public Integer call() {
                     item.setClickHandler(null);
-                    close();
                     p.teleport(l);
                     return 1;
                 }

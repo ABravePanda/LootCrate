@@ -62,7 +62,7 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
             @Override
             public void run() {
                 if (finalCount == 0) {
-                    close();
+                    closeFrame(player, getAnimatedFrame());
                     Bukkit.getScheduler().cancelTask(taskID);
                 }
                 finalCount--;

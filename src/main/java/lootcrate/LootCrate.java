@@ -58,7 +58,7 @@ public class LootCrate extends JavaPlugin {
             holoManager = new HologramManager(this);
 
         registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
-                new CrateViewListener(this), new GUICloseListener(), new PlayerJoinListener(this),
+                new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
                 new PlayerChatListener(this));
 
         toggleManagers(true, optionManager, updateManager, messageManager, fileManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, logManager);

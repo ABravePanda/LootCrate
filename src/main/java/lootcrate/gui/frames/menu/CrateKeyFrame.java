@@ -75,8 +75,8 @@ public class CrateKeyFrame extends BasicFrame implements Listener {
                     return;
                 crate.setKey(new CrateKey(this.getInventory().getItem(31), false));
                 plugin.getCacheManager().update(crate);
-                this.close();
-                new CrateKeyFrame(plugin, p, crate).open();
+                this.closeFrame(p, this);
+                this.openFrame(p, new CrateKeyFrame(plugin, p, crate));
                 break;
             case RED_DYE:
                 if (p.getOpenInventory().getTopInventory().getItem(31) == null)

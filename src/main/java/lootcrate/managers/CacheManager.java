@@ -4,7 +4,9 @@ import lootcrate.LootCrate;
 import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.objects.Crate;
+import lootcrate.objects.CrateItem;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -25,6 +27,7 @@ public class CacheManager extends BasicManager implements Manager {
      *
      * @param Crate Crate to update
      */
+    //TODO run async
     public void update(Crate Crate) {
         this.getPlugin().getCrateFileManager().saveCrate(Crate);
 
@@ -86,7 +89,7 @@ public class CacheManager extends BasicManager implements Manager {
             @Override
             public void run() {
                 cache = plugin.getCrateFileManager().loadAllCrates();
-
+                cache = verify(cache);
                 Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -102,12 +105,24 @@ public class CacheManager extends BasicManager implements Manager {
      */
     public void load() {
         cache = this.getPlugin().getCrateFileManager().loadAllCrates();
-
+        List<Crate> crates = verify(new ArrayList<Crate>(this.getCache()));
         for (Crate crate : new ArrayList<Crate>(this.getCache()))
             if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
                 crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
                 this.update(crate);
             }
+    }
+
+    public List<Crate> verify(List<Crate> crates) {
+        for (Crate crate : crates) {
+            for (CrateItem item : new ArrayList<CrateItem>(crate.getItems())) {
+                if (item.getItem() == null || item.getItem().getType() == null || item.getItem().getType() == Material.AIR || item.getItem().getItemMeta() == null) {
+                    crate.removeItem(item);
+                }
+            }
+        }
+
+        return crates;
     }
 
     /**
