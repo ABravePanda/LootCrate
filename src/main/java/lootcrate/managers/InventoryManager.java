@@ -45,8 +45,9 @@ public class InventoryManager extends BasicManager implements Manager {
                 lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Chance: " + ChatColor.RED + item.getChance() + "%");
                 meta.setLore(lore);
                 itemStack.setItemMeta(meta);
-                newList.add(itemStack);
+
             }
+            newList.add(itemStack);
         }
         return newList;
     }
