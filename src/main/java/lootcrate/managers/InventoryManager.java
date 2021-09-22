@@ -52,7 +52,6 @@ public class InventoryManager extends BasicManager implements Manager {
     }
 
     public void openFrame(Player p, Frame frame) {
-        System.out.println("Open frame -> " + p.getName() + " ----> " + frame.getId());
         PlayerFrameMatch match = new PlayerFrameMatch(p.getUniqueId(), frame.getId());
         removeSimilar(match);
         p.openInventory(frame.getInventory());
@@ -82,9 +81,8 @@ public class InventoryManager extends BasicManager implements Manager {
     }
 
     public void closeFrame(Player p, Frame frame) {
-        System.out.println("Close frame -> " + p.getName() + " ----> " + frame.getId());
         PlayerFrameMatch match = new PlayerFrameMatch(p.getUniqueId(), frame.getId());
-        if(contains(match)) p.closeInventory();
+       // if(contains(match)) p.closeInventory();
         removeSimilar(match);
     }
 

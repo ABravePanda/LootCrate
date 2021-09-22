@@ -40,13 +40,15 @@ public class SubCommandLootCrateGive extends SubCommand {
             plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GET_USAGE, null);
             return;
         }
+        Player player = null;
         if (Bukkit.getPlayer(args[1]) == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.PLAYER_NOT_FOUND,
-                    ImmutableMap.of(Placeholder.PLAYER_NAME, args[1]));
-            return;
-        }
-
-        Player player = Bukkit.getPlayer(args[1]);
+            if(!args[1].equalsIgnoreCase("all")) {
+                plugin.getMessageManager().sendMessage(sender, Message.PLAYER_NOT_FOUND,
+                        ImmutableMap.of(Placeholder.PLAYER_NAME, args[1]));
+                return;
+            }
+        } else
+            player = Bukkit.getPlayer(args[1]);
 
         if (CommandUtils.tryParse(args[2]) == null) {
             plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GET_USAGE, null);
@@ -72,14 +74,14 @@ public class SubCommandLootCrateGive extends SubCommand {
                 return;
             }
             for (int i = 0; i < CommandUtils.tryParse(args[3]); i++) {
-                player.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
+                addItem(player, plugin, crate);
             }
 
         } else
-            player.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
+            addItem(player, plugin, crate);
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_SENDER,
                 ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
-                        Placeholder.PLAYER_NAME, player.getName()));
+                        Placeholder.PLAYER_NAME, player == null ? "everyone" : player.getName()));
         plugin.getMessageManager().sendMessage(player, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER,
                 ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
                         Placeholder.SENDER_NAME, sender.getName()));
@@ -97,6 +99,7 @@ public class SubCommandLootCrateGive extends SubCommand {
         if (args.length == 2) {
             for (Player pl : Bukkit.getOnlinePlayers())
                 list.add(pl.getName());
+            list.add("all");
         }
         if (args.length == 3) {
             list.add("[CrateID]");
@@ -105,6 +108,16 @@ public class SubCommandLootCrateGive extends SubCommand {
         if (args.length == 4)
             list.add("(Amount)");
         return list;
+    }
+
+    private void addItem(Player p, LootCrate plugin, Crate crate) {
+        if(p == null) {
+            for(Player pl : Bukkit.getOnlinePlayers()) {
+                pl.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
+            }
+        }
+        else
+            p.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
     }
 
 }

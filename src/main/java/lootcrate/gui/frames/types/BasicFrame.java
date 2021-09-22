@@ -145,9 +145,9 @@ public abstract class BasicFrame implements Frame, Listener {
     }
 
     public void closeFrame(Player p, Frame frame) {
-        plugin.getInvManager().closeFrame(p, frame);
-        GUICloseEvent event = new GUICloseEvent(p, frame);
-        Bukkit.getPluginManager().callEvent(event);
+        p.closeInventory();
+        //GUICloseEvent event = new GUICloseEvent(p, frame);
+        //Bukkit.getPluginManager().callEvent(event);
     }
 
     public Inventory createInventory() {
@@ -176,7 +176,6 @@ public abstract class BasicFrame implements Frame, Listener {
             return;
         if (e.getInventory() != this.getInventory())
             return;
-
         GUICloseEvent event = new GUICloseEvent(Bukkit.getPlayer(e.getPlayer().getUniqueId()), this);
         Bukkit.getPluginManager().callEvent(event);
     }

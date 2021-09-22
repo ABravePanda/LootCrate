@@ -15,7 +15,6 @@ public class GUICloseListener implements Listener {
 
     @EventHandler
     public void onClose(GUICloseEvent e) {
-        System.out.println("GUI CLOSE EVENT FIRE" + e.getFrame().getId());
         plugin.getInvManager().closeFrame(e.getPlayer(), e.getFrame());
     }
 

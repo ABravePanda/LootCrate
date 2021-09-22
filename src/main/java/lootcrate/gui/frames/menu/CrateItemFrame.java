@@ -89,6 +89,10 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
             return;
 
         CrateItem item = crate.getItem(this.getContents()[e.getItem().getSlot()].getCrateItem().getId());
+
+        if(item.getItem().getType() == Material.AIR)
+            return;
+
         crate.removeItem(item);
         plugin.getCacheManager().update(crate);
 

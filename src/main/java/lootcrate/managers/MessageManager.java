@@ -32,7 +32,7 @@ public class MessageManager extends BasicManager implements Manager {
      */
     public void sendMessage(CommandSender p, Message message, ImmutableMap<Placeholder, String> placeholders) {
         String msg = this.parseMessage(message, placeholders);
-        if (msg != null)
+        if (msg != null && p != null)
             p.sendMessage(this.parseMessage(Message.PREFIX, null) + msg);
     }
 
