@@ -117,7 +117,7 @@ public class CacheManager extends BasicManager implements Manager {
     public List<Crate> verify(List<Crate> crates) {
         for (Crate crate : crates) {
             for (CrateItem item : new ArrayList<CrateItem>(crate.getItems())) {
-                if (item.getItem() == null || item.getItem().getType() == null || item.getItem().getType() == Material.AIR || item.getItem().getItemMeta() == null) {
+                if (item.getItem() == null || item.getItem().getType() == null || item.getItem().getType() == Material.AIR) {
                     crate.removeItem(item);
                 }
             }
