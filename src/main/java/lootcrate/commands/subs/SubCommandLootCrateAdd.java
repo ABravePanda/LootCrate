@@ -69,6 +69,9 @@ public class SubCommandLootCrateAdd extends SubCommand {
             plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_MINMAX, null);
             return;
         }
+
+        if(mainHandItem.getType() == Material.AIR) return;
+
         CrateItem item = new CrateItem(mainHandItem, min, max, chance,
                 Boolean.parseBoolean(args[5]), null);
         crate.addItem(item);
