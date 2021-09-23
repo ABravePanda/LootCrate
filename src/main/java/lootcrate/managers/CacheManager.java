@@ -111,6 +111,7 @@ public class CacheManager extends BasicManager implements Manager {
                 crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
                 this.update(crate);
             }
+        cache = verify(cache);
     }
 
     public List<Crate> verify(List<Crate> crates) {
