@@ -47,6 +47,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         int index = 0;
         for (CrateItem item : crate.getItems()) {
             if(item == null) continue;
+            if(item.getItem().getType() == Material.AIR) continue;
             this.setItem(index, createGUIItem(index, item));
             index++;
         }

@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.tompkins-development.spigot</groupId>
    <artifactId>LootCrate</artifactId>
-   <version>0.4.3</version>
+   <version>0.4.4</version>
    <name>LootCrate</name>
    <description>A plugin to add lootcrates</description>
    <repositories>
