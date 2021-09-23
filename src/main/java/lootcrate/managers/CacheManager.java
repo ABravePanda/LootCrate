@@ -28,11 +28,12 @@ public class CacheManager extends BasicManager implements Manager {
      * @param Crate Crate to update
      */
     //TODO run async
-    public void update(Crate Crate) {
-        this.getPlugin().getCrateFileManager().saveCrate(Crate);
+    public void update(Crate crate) {
+        crate = verify(crate);
+        this.getPlugin().getCrateFileManager().saveCrate(crate);
 
-        cache.remove(Crate);
-        cache.add(Crate);
+        cache.remove(crate);
+        cache.add(crate);
     }
 
     public void rename(String oldCrate, Crate Crate) {
@@ -115,15 +116,20 @@ public class CacheManager extends BasicManager implements Manager {
     }
 
     public List<Crate> verify(List<Crate> crates) {
-        for (Crate crate : crates) {
-            for (CrateItem item : new ArrayList<CrateItem>(crate.getItems())) {
-                if (item.getItem() == null || item.getItem().getType() == null || item.getItem().getType() == Material.AIR) {
-                    crate.removeItem(item);
-                }
-            }
+        for (Crate crate : new ArrayList<Crate>(crates)) {
+            crate = verify(crate);
         }
 
         return crates;
+    }
+
+    public Crate verify(Crate crate) {
+        for (CrateItem item : new ArrayList<CrateItem>(crate.getItems())) {
+            if (item.getItem() == null || item.getItem().getType() == null || item.getItem().getType() == Material.AIR) {
+                crate.removeItem(item);
+            }
+        }
+        return crate;
     }
 
     /**
