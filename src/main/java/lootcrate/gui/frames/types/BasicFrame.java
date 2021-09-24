@@ -145,9 +145,8 @@ public abstract class BasicFrame implements Frame, Listener {
     }
 
     public void closeFrame(Player p, Frame frame) {
-        p.closeInventory();
-        //GUICloseEvent event = new GUICloseEvent(p, frame);
-        //Bukkit.getPluginManager().callEvent(event);
+        GUICloseEvent event = new GUICloseEvent(p, frame);
+        Bukkit.getPluginManager().callEvent(event);
     }
 
     public Inventory createInventory() {
@@ -169,6 +168,9 @@ public abstract class BasicFrame implements Frame, Listener {
         Bukkit.getPluginManager().callEvent(event);
         e.setCancelled(event.isCancelled());
     }
+    /*
+
+    Maybe doesnt work, will see
 
     @EventHandler
     public void onInventoryCloseEvent(InventoryCloseEvent e) {
@@ -179,5 +181,6 @@ public abstract class BasicFrame implements Frame, Listener {
         GUICloseEvent event = new GUICloseEvent(Bukkit.getPlayer(e.getPlayer().getUniqueId()), this);
         Bukkit.getPluginManager().callEvent(event);
     }
+     */
 
 }

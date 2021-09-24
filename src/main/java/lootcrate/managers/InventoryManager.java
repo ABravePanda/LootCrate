@@ -83,7 +83,7 @@ public class InventoryManager extends BasicManager implements Manager {
 
     public void closeFrame(Player p, Frame frame) {
         PlayerFrameMatch match = new PlayerFrameMatch(p.getUniqueId(), frame.getId());
-       // if(contains(match)) p.closeInventory();
+        if(contains(match)) p.closeInventory();
         removeSimilar(match);
     }
 
