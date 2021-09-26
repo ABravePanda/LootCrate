@@ -6,6 +6,7 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.utils.ObjUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -129,6 +130,7 @@ public abstract class BasicFrame implements Frame, Listener {
             this.setItem(i, new GUIItem(i, m, " "));
         }
     }
+
 
     public abstract void generateFrame();
 

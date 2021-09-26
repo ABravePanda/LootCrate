@@ -36,4 +36,6 @@ public interface Frame {
 
     void generateFrame();
 
+    void generateNav();
+
 }
