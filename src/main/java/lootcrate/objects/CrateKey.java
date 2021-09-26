@@ -22,6 +22,7 @@ public class CrateKey implements ConfigurationSerializable {
         this.setGlowing(glowing);
     }
 
+
     public CrateKey(Map<String, Object> data) {
         if (data == null)
             return;
