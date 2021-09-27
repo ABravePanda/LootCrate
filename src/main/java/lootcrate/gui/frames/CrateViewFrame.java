@@ -4,11 +4,14 @@ import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.gui.items.NavItems;
 import lootcrate.objects.Crate;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-public class CrateViewFrame extends ExtendedFrame {
+public class CrateViewFrame extends ExtendedFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;
@@ -20,6 +23,7 @@ public class CrateViewFrame extends ExtendedFrame {
         this.crate = plugin.getCacheManager().getCrateById(crate.getId());
 
         generateFrame();
+        generateNav();
         registerItems();
         registerFrame();
     }
@@ -38,5 +42,17 @@ public class CrateViewFrame extends ExtendedFrame {
     public void unregisterFrame() {
         GUIItemClickEvent.getHandlerList().unregister(this);
     }
+
+    @EventHandler
+    public void onGUIItemClick(GUIItemClickEvent e) {
+        Player p = e.getPlayer();
+
+        if(navCheck(e, crate)) return;
+
+        if (!e.sameFrame(this))
+            return;
+    }
+
+
 
 }

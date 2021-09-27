@@ -1,6 +1,7 @@
 package lootcrate.gui.frames.types;
 
 import lootcrate.gui.items.GUIItem;
+import lootcrate.objects.Crate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -35,5 +36,13 @@ public interface Frame {
     void fillBackground(Material m);
 
     void generateFrame();
+
+    void generateNav();
+
+    void nextPage(Crate crate);
+
+    void previousPage(Crate crate);
+
+    void clearUsableItems();
 
 }

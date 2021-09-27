@@ -4,8 +4,11 @@ import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUICloseEvent;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.gui.items.NavItems;
+import lootcrate.objects.Crate;
 import lootcrate.utils.ObjUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class BasicFrame implements Frame, Listener {
     protected LootCrate plugin;
@@ -22,6 +26,8 @@ public abstract class BasicFrame implements Frame, Listener {
     protected GUIItem[] contents;
     protected Inventory inventory;
     protected int size = 45;
+    protected int usableSize = size-9;
+    protected int page = 1;
 
     public BasicFrame(LootCrate plugin, Player p, String title, GUIItem[] contents, int size) {
         this.id = ObjUtils.randomID(5);
@@ -36,6 +42,7 @@ public abstract class BasicFrame implements Frame, Listener {
             this.contents = contents;
 
         this.inventory = createInventory();
+        this.usableSize = usableSize = size-9;
     }
 
     public BasicFrame(LootCrate plugin, Player p, String title, GUIItem[] contents) {
@@ -60,6 +67,7 @@ public abstract class BasicFrame implements Frame, Listener {
         this.contents = new GUIItem[size];
         this.size = size;
         this.inventory = createInventory();
+        this.usableSize = usableSize = size-9;
     }
 
     public BasicFrame(LootCrate plugin, Player p, String title) {
@@ -130,6 +138,67 @@ public abstract class BasicFrame implements Frame, Listener {
         }
     }
 
+    @Override
+    public void generateNav() {
+        for(int i = size-9; i < getInventory().getSize(); i++) {
+            this.setItem(i, new GUIItem(i, Material.RED_STAINED_GLASS_PANE, ""));
+        }
+        this.setItem(size-5, new GUIItem(size-5, NavItems.NAV_CLOSE));
+        this.setItem(size-7, new GUIItem(size-7, NavItems.NAV_PREV));
+        this.setItem(size-3, new GUIItem(size-3, NavItems.NAV_NEXT));
+    }
+
+    @Override
+    public void nextPage(Crate crate) {
+        if((page*usableSize) >= crate.getItems().size()) return;
+        clearUsableItems();
+        for(int i = 0; i < usableSize; i++) {
+            if(usableSize+i >= crate.getItems().size()) break;
+            this.setItem(i, new GUIItem(i, crate.getItems().get(usableSize+i)));
+        }
+        page++;
+    }
+
+    @Override
+    public void previousPage(Crate crate) {
+        if(page == 1) return;
+        clearUsableItems();
+        for(int i = 0; i < usableSize; i++) {
+            if(usableSize-i >= crate.getItems().size()) break;
+            if(crate.getItems().get(usableSize-i) == null) continue;
+            this.setItem(i, new GUIItem(i, crate.getItems().get(usableSize-i)));
+        }
+
+        page--;
+
+    }
+
+    @Override
+    public void clearUsableItems() {
+        for(int i = 0; i < usableSize; i++) {
+            //if(crate.getItems().get(usableSize+i) == null) continue;
+            this.setItem(i, new GUIItem(i, Material.AIR));
+        }
+    }
+
+    public boolean navCheck(GUIItemClickEvent e, Crate crate) {
+        ItemStack item = this.getContents()[e.getItem().getSlot()].getItemStack();
+
+        if(item.isSimilar(NavItems.NAV_NEXT)) {
+            this.nextPage(crate);
+            return true;
+        }
+        if(item.isSimilar(NavItems.NAV_PREV)) {
+            this.previousPage(crate);
+            return true;
+        }
+        if(item.isSimilar(NavItems.NAV_CLOSE)) {
+            this.closeFrame(player, this);
+            return true;
+        }
+        return false;
+    }
+
     public abstract void generateFrame();
 
     public void setItem(int slot, GUIItem item) {
@@ -168,19 +237,8 @@ public abstract class BasicFrame implements Frame, Listener {
         Bukkit.getPluginManager().callEvent(event);
         e.setCancelled(event.isCancelled());
     }
-    /*
 
-    Maybe doesnt work, will see
 
-    @EventHandler
-    public void onInventoryCloseEvent(InventoryCloseEvent e) {
-        if (!e.getPlayer().equals(this.getViewer()))
-            return;
-        if (e.getInventory() != this.getInventory())
-            return;
-        GUICloseEvent event = new GUICloseEvent(Bukkit.getPlayer(e.getPlayer().getUniqueId()), this);
-        Bukkit.getPluginManager().callEvent(event);
-    }
-     */
+
 
 }
