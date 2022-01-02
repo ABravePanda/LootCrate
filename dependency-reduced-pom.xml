@@ -4,7 +4,7 @@
   <groupId>com.tompkins-development.spigot</groupId>
   <artifactId>LootCrate</artifactId>
   <name>LootCrate</name>
-  <version>0.4.5</version>
+  <version>0.5.0</version>
   <description>A plugin to add lootcrates</description>
   <build>
     <resources>
@@ -80,7 +80,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.17-R0.1-SNAPSHOT</version>
+      <version>1.18-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>

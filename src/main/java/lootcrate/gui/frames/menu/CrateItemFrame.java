@@ -15,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class CrateItemFrame extends ExtendedFrame implements Listener {
 
     private static final Material BACKGROUND = Material.WHITE_STAINED_GLASS_PANE;
@@ -28,6 +30,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         this.crate = plugin.getCacheManager().getCrateById(crate.getId());
 
         generateFrame();
+        generateNavigation();
         registerItems();
         registerFrame();
     }
@@ -36,7 +39,6 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
     public void generateFrame() {
         fillBackground(BACKGROUND);
         fillItems();
-        generateNav();
     }
 
     @Override
@@ -75,31 +77,6 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         return guiItem;
     }
 
-    @Override
-    public void nextPage(Crate crate) {
-        if((page*usableSize) >= crate.getItems().size()) return;
-        clearUsableItems();
-        for(int i = 0; i < usableSize; i++) {
-            if(usableSize+i >= crate.getItems().size()) break;
-            this.setItem(i, createGUIItem(i, crate.getItems().get(usableSize+i)));
-        }
-        page++;
-    }
-
-    @Override
-    public void previousPage(Crate crate) {
-        if(page == 1) return;
-        clearUsableItems();
-        for(int i = 0; i < usableSize; i++) {
-            if(usableSize-i >= crate.getItems().size()) break;
-            if(crate.getItems().get(usableSize-i) == null) continue;
-            this.setItem(i, createGUIItem(i, crate.getItems().get(usableSize-i)));
-        }
-
-        page--;
-
-    }
-
     // events
 
     @EventHandler
@@ -114,7 +91,6 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         if (itemClicked.getItemStack().getType() == BACKGROUND)
             return;
 
-        if(navCheck(e, crate)) return;
 
         CrateItem item = crate.getItem(this.getContents()[e.getItem().getSlot()].getCrateItem().getId());
 
@@ -129,4 +105,42 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         this.openFrame(p, new CrateItemFrame(plugin, p, crate));
     }
 
+    @Override
+    public void nextPage() {
+        if(usableSize - getUsableItems().size() > 0) return;
+        clearUsableItems();
+        page++;
+
+        int itemIndex = (page*usableSize)-usableSize;
+        int index = 0;
+        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate);
+        for (int i = 0; i < getUsableSize(); i++) {
+            if (index < getUsableSize() && items.size() > itemIndex)
+                this.setItem(index, new GUIItem(index, items.get(itemIndex)));
+            index++;
+            itemIndex++;
+        }
+    }
+
+    @Override
+    public void previousPage() {
+        if(page-1 == 0) {
+            this.closeFrame(player, this);
+            this.openFrame(player, new CrateFrame(plugin, player, crate));
+            return;
+        }
+        clearUsableItems();
+        page--;
+
+        int itemIndex = (page*usableSize)-usableSize;
+        int index = 0;
+        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate);
+        for (int i = 0; i < getUsableSize(); i++) {
+            if (index < getUsableSize() && items.size() > itemIndex)
+                this.setItem(index, new GUIItem(index, items.get(itemIndex)));
+            index++;
+            itemIndex++;
+        }
+
+    }
 }

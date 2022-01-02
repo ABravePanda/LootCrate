@@ -113,4 +113,14 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
             return;
         e.setCancelled(true);
     }
+
+    @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
 }

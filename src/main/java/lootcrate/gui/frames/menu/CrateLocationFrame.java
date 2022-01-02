@@ -36,6 +36,16 @@ public class CrateLocationFrame extends BasicFrame {
     }
 
     @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
+
+    @Override
     public void unregisterFrame() {
         GUIItemClickEvent.getHandlerList().unregister(this);
     }

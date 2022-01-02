@@ -136,4 +136,13 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
 
     }
 
+    @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
 }

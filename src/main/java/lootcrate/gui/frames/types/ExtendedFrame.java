@@ -17,14 +17,4 @@ public abstract class ExtendedFrame extends BasicFrame implements Listener {
         super(plugin, p, title, 54);
     }
 
-
-    @Override
-    public void generateNav() {
-        for(int i = size-9; i < getInventory().getSize(); i++) {
-            this.setItem(i, new GUIItem(i, Material.RED_STAINED_GLASS_PANE, ""));
-        }
-        this.setItem(size-5, new GUIItem(size-5, Material.BARRIER, ChatColor.RED + "Close"));
-        this.setItem(size-7, new GUIItem(size-7, Material.ARROW, ChatColor.GOLD + "Back"));
-        this.setItem(size-3, new GUIItem(size-3, Material.SPECTRAL_ARROW, ChatColor.GOLD + "Next"));
-    }
 }

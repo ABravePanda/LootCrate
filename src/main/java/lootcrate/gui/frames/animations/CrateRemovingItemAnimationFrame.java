@@ -141,4 +141,13 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
         e.setCancelled(true);
     }
 
+    @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
 }

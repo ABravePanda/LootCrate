@@ -18,7 +18,10 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public abstract class BasicFrame implements Frame, Listener {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class BasicFrame implements Frame, Listener, Pageable {
     protected LootCrate plugin;
     protected int id;
     protected Player player;
@@ -110,6 +113,11 @@ public abstract class BasicFrame implements Frame, Listener {
     }
 
     @Override
+    public int getUsableSize() {
+        return this.usableSize;
+    }
+
+    @Override
     public void open() {
         plugin.getInvManager().openFrame(player, this);
     }
@@ -138,40 +146,6 @@ public abstract class BasicFrame implements Frame, Listener {
         }
     }
 
-    @Override
-    public void generateNav() {
-        for(int i = size-9; i < getInventory().getSize(); i++) {
-            this.setItem(i, new GUIItem(i, Material.RED_STAINED_GLASS_PANE, ""));
-        }
-        this.setItem(size-5, new GUIItem(size-5, NavItems.NAV_CLOSE));
-        this.setItem(size-7, new GUIItem(size-7, NavItems.NAV_PREV));
-        this.setItem(size-3, new GUIItem(size-3, NavItems.NAV_NEXT));
-    }
-
-    @Override
-    public void nextPage(Crate crate) {
-        if((page*usableSize) >= crate.getItems().size()) return;
-        clearUsableItems();
-        for(int i = 0; i < usableSize; i++) {
-            if(usableSize+i >= crate.getItems().size()) break;
-            this.setItem(i, new GUIItem(i, crate.getItems().get(usableSize+i)));
-        }
-        page++;
-    }
-
-    @Override
-    public void previousPage(Crate crate) {
-        if(page == 1) return;
-        clearUsableItems();
-        for(int i = 0; i < usableSize; i++) {
-            if(usableSize-i >= crate.getItems().size()) break;
-            if(crate.getItems().get(usableSize-i) == null) continue;
-            this.setItem(i, new GUIItem(i, crate.getItems().get(usableSize-i)));
-        }
-
-        page--;
-
-    }
 
     @Override
     public void clearUsableItems() {
@@ -181,22 +155,15 @@ public abstract class BasicFrame implements Frame, Listener {
         }
     }
 
-    public boolean navCheck(GUIItemClickEvent e, Crate crate) {
-        ItemStack item = this.getContents()[e.getItem().getSlot()].getItemStack();
+    @Override
+    public List<GUIItem> getUsableItems() {
+        List<GUIItem> items = new ArrayList<GUIItem>();
+        for(int i = 0; i < usableSize; i++) {
+            if(getInventory().getItem(i) == null || getInventory().getItem(i).getType() == Material.AIR) continue;
+            items.add(new GUIItem(i, getInventory().getItem(i)));
+        }
 
-        if(item.isSimilar(NavItems.NAV_NEXT)) {
-            this.nextPage(crate);
-            return true;
-        }
-        if(item.isSimilar(NavItems.NAV_PREV)) {
-            this.previousPage(crate);
-            return true;
-        }
-        if(item.isSimilar(NavItems.NAV_CLOSE)) {
-            this.closeFrame(player, this);
-            return true;
-        }
-        return false;
+        return items;
     }
 
     public abstract void generateFrame();
@@ -222,6 +189,19 @@ public abstract class BasicFrame implements Frame, Listener {
         return Bukkit.createInventory(null, size, getTitle());
     }
 
+    @Override
+    public void generateNavigation() {
+        this.setItem(getSize()-1, new GUIItem(getSize()-1, NavItems.NAV_BLOCKER));
+        this.setItem(getSize()-2, new GUIItem(getSize()-2, NavItems.NAV_BLOCKER));
+        this.setItem(getSize()-3, new GUIItem(getSize()-3, NavItems.NAV_NEXT));
+        this.setItem(getSize()-4, new GUIItem(getSize()-4, NavItems.NAV_BLOCKER));
+        this.setItem(getSize()-5, new GUIItem(getSize()-5, NavItems.NAV_CLOSE));
+        this.setItem(getSize()-6, new GUIItem(getSize()-6, NavItems.NAV_BLOCKER));
+        this.setItem(getSize()-7, new GUIItem(getSize()-7, NavItems.NAV_PREV));
+        this.setItem(getSize()-8, new GUIItem(getSize()-8, NavItems.NAV_BLOCKER));
+        this.setItem(getSize()-9, new GUIItem(getSize()-9, NavItems.NAV_BLOCKER));
+    }
+
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent e) {
         if (!e.getWhoClicked().equals(this.getViewer()))
@@ -232,6 +212,34 @@ public abstract class BasicFrame implements Frame, Listener {
             return;
         if (e.getCurrentItem() == null)
             return;
+
+        //override the guiclick
+        if(e.getCurrentItem().equals(NavItems.NAV_BLOCKER))
+        {
+            e.setCancelled(true);
+            return;
+        }
+
+        if(e.getCurrentItem().equals(NavItems.NAV_CLOSE))
+        {
+            player.closeInventory();
+            e.setCancelled(true);
+            return;
+        }
+
+        if(e.getCurrentItem().equals(NavItems.NAV_NEXT))
+        {
+            nextPage();
+            e.setCancelled(true);
+            return;
+        }
+
+        if(e.getCurrentItem().equals(NavItems.NAV_PREV))
+        {
+            previousPage();
+            e.setCancelled(true);
+            return;
+        }
 
         GUIItemClickEvent event = new GUIItemClickEvent(e, this);
         Bukkit.getPluginManager().callEvent(event);

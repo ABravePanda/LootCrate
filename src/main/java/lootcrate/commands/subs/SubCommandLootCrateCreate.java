@@ -8,6 +8,7 @@ import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
+import lootcrate.utils.DebugUtils;
 import org.bukkit.command.CommandSender;
 
 import java.util.LinkedList;
@@ -40,6 +41,7 @@ public class SubCommandLootCrateCreate extends SubCommand {
 
         Crate crate = new Crate(CommandUtils.builder(args, 1));
         plugin.getCrateManager().addDefaultOptions(crate);
+        DebugUtils.addItems(crate, 50);
         plugin.getCacheManager().update(crate);
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,

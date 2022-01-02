@@ -110,4 +110,13 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
         frameToOpen.open();
     }
 
+    @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
 }

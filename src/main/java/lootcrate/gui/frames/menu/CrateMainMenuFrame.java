@@ -72,4 +72,13 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
         this.openFrame(p, crateFrame);
     }
 
+    @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
 }

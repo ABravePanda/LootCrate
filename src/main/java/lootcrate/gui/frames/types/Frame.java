@@ -6,10 +6,14 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.util.List;
+
 public interface Frame {
     int getId();
 
     int getSize();
+
+    int getUsableSize();
 
     Player getViewer();
 
@@ -37,12 +41,10 @@ public interface Frame {
 
     void generateFrame();
 
-    void generateNav();
-
-    void nextPage(Crate crate);
-
-    void previousPage(Crate crate);
+    void generateNavigation();
 
     void clearUsableItems();
+
+    List<GUIItem> getUsableItems();
 
 }

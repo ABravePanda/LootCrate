@@ -141,4 +141,13 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
         e.setCancelled(true);
     }
 
+    @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
 }

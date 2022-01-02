@@ -3,6 +3,7 @@ package lootcrate.gui.frames;
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
+import lootcrate.gui.frames.types.Pageable;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.gui.items.NavItems;
 import lootcrate.objects.Crate;
@@ -10,6 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+
+import java.awt.*;
+import java.util.List;
 
 public class CrateViewFrame extends ExtendedFrame implements Listener {
 
@@ -23,7 +27,7 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
         this.crate = plugin.getCacheManager().getCrateById(crate.getId());
 
         generateFrame();
-        generateNav();
+        generateNavigation();
         registerItems();
         registerFrame();
     }
@@ -32,7 +36,7 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
     public void generateFrame() {
         int index = 0;
         for (ItemStack item : plugin.getInvManager().addCrateEffects(crate)) {
-            if (index < getInventory().getSize())
+            if (index < getUsableSize())
                 this.setItem(index, new GUIItem(index, item));
             index++;
         }
@@ -43,15 +47,52 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
         GUIItemClickEvent.getHandlerList().unregister(this);
     }
 
+    @Override
+    public void nextPage() {
+        if(usableSize - getUsableItems().size() > 0) return;
+        clearUsableItems();
+        page++;
+
+        int itemIndex = (page*usableSize)-usableSize;
+        int index = 0;
+        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate);
+        for (int i = 0; i < getUsableSize(); i++) {
+            if (index < getUsableSize() && items.size() > itemIndex)
+                this.setItem(index, new GUIItem(index, items.get(itemIndex)));
+            index++;
+            itemIndex++;
+        }
+    }
+
+    @Override
+    public void previousPage() {
+        if(page-1 == 0) return;
+        clearUsableItems();
+        page--;
+
+        int itemIndex = (page*usableSize)-usableSize;
+        int index = 0;
+        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate);
+        for (int i = 0; i < getUsableSize(); i++) {
+            if (index < getUsableSize() && items.size() > itemIndex)
+                this.setItem(index, new GUIItem(index, items.get(itemIndex)));
+            index++;
+            itemIndex++;
+        }
+
+    }
+
+
     @EventHandler
     public void onGUIItemClick(GUIItemClickEvent e) {
         Player p = e.getPlayer();
-
-        if(navCheck(e, crate)) return;
-
+        e.setCancelled(true);
         if (!e.sameFrame(this))
             return;
     }
+
+
+
 
 
 

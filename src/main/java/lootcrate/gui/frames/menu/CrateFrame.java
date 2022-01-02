@@ -88,4 +88,13 @@ public class CrateFrame extends BasicFrame implements Listener {
         this.openFrame(p, frameToOpen);
     }
 
+    @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
 }

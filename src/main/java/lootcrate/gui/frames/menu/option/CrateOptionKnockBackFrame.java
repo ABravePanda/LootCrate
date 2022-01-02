@@ -90,4 +90,13 @@ public class CrateOptionKnockBackFrame extends BasicFrame implements Listener {
 
     }
 
+    @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
 }
