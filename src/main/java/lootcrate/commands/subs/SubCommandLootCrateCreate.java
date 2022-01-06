@@ -41,7 +41,6 @@ public class SubCommandLootCrateCreate extends SubCommand {
 
         Crate crate = new Crate(CommandUtils.builder(args, 1));
         plugin.getCrateManager().addDefaultOptions(crate);
-        DebugUtils.addItems(crate, 50);
         plugin.getCacheManager().update(crate);
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,
