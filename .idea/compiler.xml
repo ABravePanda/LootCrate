@@ -11,8 +11,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="LootCrate" target="1.7" />
-      <module name="LootCrate (1)" target="1.7" />
+      <module name="LootCrate" target="1.5" />
+      <module name="LootCrate (1)" target="1.5" />
       <module name="LootCrate (2)" target="1.5" />
     </bytecodeTargetLevel>
   </component>
