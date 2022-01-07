@@ -35,6 +35,7 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
 
         registerFrame();
         generateFrame();
+        generateNavigation();
         registerItems();
     }
 
@@ -138,11 +139,13 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
 
     @Override
     public void nextPage() {
-
+        return;
     }
 
     @Override
     public void previousPage() {
-
+        this.closeFrame(player, this);
+        this.openFrame(player, new CrateOptionMainMenuFrame(plugin, player, crate));
+        return;
     }
 }

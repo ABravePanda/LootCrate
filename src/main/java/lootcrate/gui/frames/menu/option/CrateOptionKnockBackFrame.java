@@ -3,6 +3,7 @@ package lootcrate.gui.frames.menu.option;
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
+import lootcrate.gui.frames.menu.*;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
@@ -29,6 +30,7 @@ public class CrateOptionKnockBackFrame extends BasicFrame implements Listener {
 
         registerFrame();
         generateFrame();
+        generateNavigation();
         registerItems();
     }
 
@@ -92,11 +94,13 @@ public class CrateOptionKnockBackFrame extends BasicFrame implements Listener {
 
     @Override
     public void nextPage() {
-
+        return;
     }
 
     @Override
     public void previousPage() {
-
+        this.closeFrame(player, this);
+        this.openFrame(player, new CrateOptionMainMenuFrame(plugin, player, crate));
+        return;
     }
 }

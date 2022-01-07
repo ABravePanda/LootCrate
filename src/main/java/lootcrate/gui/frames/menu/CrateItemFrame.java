@@ -107,7 +107,11 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void nextPage() {
-        if(usableSize - getUsableItems().size() > 0) return;
+        if(usableSize - getUsableItems().size() > 0) {
+            this.closeFrame(player, this);
+            this.openFrame(player, new CrateKeyFrame(plugin, player, crate));
+            return;
+        }
         clearUsableItems();
         page++;
 

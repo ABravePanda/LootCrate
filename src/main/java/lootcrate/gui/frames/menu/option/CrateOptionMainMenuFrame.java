@@ -3,6 +3,7 @@ package lootcrate.gui.frames.menu.option;
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
+import lootcrate.gui.frames.menu.*;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
@@ -27,6 +28,7 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
 
         registerFrame();
         generateFrame();
+        generateNavigation();
         registerItems();
     }
 
@@ -112,11 +114,13 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
 
     @Override
     public void nextPage() {
-
+        return;
     }
 
     @Override
     public void previousPage() {
-
+        this.closeFrame(player, this);
+        this.openFrame(player, new CrateLocationFrame(plugin, player, crate));
+        return;
     }
 }
