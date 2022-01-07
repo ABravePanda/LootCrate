@@ -7,7 +7,7 @@ import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +27,7 @@ public class CrateFrame extends BasicFrame implements Listener {
 
         registerFrame();
         generateFrame();
+        generateNavigation();
         registerItems();
     }
 
@@ -90,11 +91,13 @@ public class CrateFrame extends BasicFrame implements Listener {
 
     @Override
     public void nextPage() {
-
+        this.closeFrame(player, this);
+        this.openFrame(player, new CrateItemFrame(plugin, player, crate));
     }
 
     @Override
     public void previousPage() {
-
+        this.closeFrame(player, this);
+        this.openFrame(player, new CrateMainMenuFrame(plugin, player));
     }
 }

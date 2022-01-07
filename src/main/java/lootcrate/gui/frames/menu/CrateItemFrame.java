@@ -4,10 +4,10 @@ import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
-import lootcrate.gui.items.NavItems;
+
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,7 +37,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void generateFrame() {
-        fillBackground(BACKGROUND);
+        //fillBackground(BACKGROUND);
         fillItems();
     }
 

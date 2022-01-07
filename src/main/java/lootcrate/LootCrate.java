@@ -12,7 +12,7 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateKey;
 import lootcrate.objects.CrateOption;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;

@@ -117,7 +117,7 @@ public class CrateManager extends BasicManager implements Manager {
             if (this.getPlugin().getOptionManager().valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
                 i = rnd;
             for (int j = 0; j < i; j++)
-                Bukkit.dispatchCommand(this.getPlugin().getServer().getConsoleSender(), cmd.replace("{player}", p.getName()));
+                Bukkit.dispatchCommand(this.getPlugin().getServer().getConsoleSender(), cmd.replace("{player}", p.getName()).replace("{amount}", rnd + ""));
         }
 
     }

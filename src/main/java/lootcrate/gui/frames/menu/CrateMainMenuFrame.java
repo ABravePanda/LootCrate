@@ -5,14 +5,14 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.ChatColor;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
+import java.util.*;
 
 public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
 
@@ -26,13 +26,14 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
         crates = plugin.getCacheManager().getCache();
 
         generateFrame();
+        generateNavigation();
         registerItems();
         registerFrame();
     }
 
     @Override
     public void generateFrame() {
-        fillBackground(Material.WHITE_STAINED_GLASS_PANE);
+        //fillBackground(Material.WHITE_STAINED_GLASS_PANE);
         fillCrates();
     }
 
@@ -43,12 +44,13 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
 
     // methods
 
-    public void fillCrates() {
+    private void fillCrates() {
         for (int i = 0; i < crates.size(); i++) {
             this.setItem(i, new GUIItem(i, Material.CHEST, crates.get(i).getName(),
                     ChatColor.GRAY + "" + crates.get(i).getId()));
         }
     }
+
 
     // events
 
@@ -74,11 +76,39 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void nextPage() {
+        if (usableSize - getUsableItems().size() > 0) return;
+        clearUsableItems();
+        page++;
 
+        int itemIndex = (page * usableSize) - usableSize;
+        int index = 0;
+        List<Crate> items = new ArrayList<>(crates);
+        for (int i = 0; i < getUsableSize(); i++) {
+            if (index < getUsableSize() && items.size() > itemIndex)
+                this.setItem(index, new GUIItem(index, Material.CHEST, crates.get(itemIndex).getName(),
+                        ChatColor.GRAY + "" + crates.get(itemIndex).getId()));
+            index++;
+            itemIndex++;
+        }
     }
 
     @Override
     public void previousPage() {
+
+        if(page-1 == 0) return;
+        clearUsableItems();
+        page--;
+
+        int itemIndex = (page * usableSize) - usableSize;
+        int index = 0;
+        List<Crate> items = new ArrayList<>(crates);
+        for (int i = 0; i < getUsableSize(); i++) {
+            if (index < getUsableSize() && items.size() > itemIndex)
+                this.setItem(index, new GUIItem(index, Material.CHEST, crates.get(itemIndex).getName(),
+                        ChatColor.GRAY + "" + crates.get(itemIndex).getId()));
+            index++;
+            itemIndex++;
+        }
 
     }
 }

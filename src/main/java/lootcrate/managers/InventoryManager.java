@@ -6,7 +6,7 @@ import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.PlayerFrameMatch;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

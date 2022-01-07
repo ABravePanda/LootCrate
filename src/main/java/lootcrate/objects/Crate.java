@@ -3,7 +3,7 @@ package lootcrate.objects;
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.utils.ObjUtils;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;

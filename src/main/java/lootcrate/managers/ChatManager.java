@@ -2,7 +2,7 @@ package lootcrate.managers;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
