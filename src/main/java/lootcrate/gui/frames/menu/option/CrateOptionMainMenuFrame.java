@@ -98,12 +98,16 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
                 this.close();
                 return;
             case JUKEBOX:
+                frameToOpen = new CrateOptionSoundFrame(plugin, p, crate);
+                /**
                 ChatState state2 = ChatState.CHANGE_CRATE_SOUND;
                 state2.setCrate(crate);
                 plugin.getChatManager().addPlayer(p, state2);
                 plugin.getChatManager().sendNotification(p);
                 this.close();
-                return;
+                 return;
+                 **/
+                break;
             default:
                 return;
         }
