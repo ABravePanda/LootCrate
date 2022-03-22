@@ -7,6 +7,7 @@ import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
 import lootcrate.gui.events.listeners.GUICloseListener;
+import lootcrate.holograms.events.HologramDeathEvent;
 import lootcrate.managers.*;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
@@ -53,23 +54,20 @@ public class LootCrate extends JavaPlugin {
         commandManager = new CommandManager(this);
         chatManager = new ChatManager(this);
         logManager = new LogManager(this);
-
-        if (holoHook())
-            holoManager = new HologramManager(this);
+        holoManager = new HologramManager(this);
 
         registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
                 new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
-                new PlayerChatListener(this));
+                new PlayerChatListener(this), new HologramDeathEvent(this));
 
-        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, logManager);
+        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, logManager, holoManager);
 
-        if (holoManager != null) holoManager.enable();
         displayIntro();
     }
 
     @Override
     public void onDisable() {
-        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager);
+        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, holoManager);
     }
 
     private void registerEvents(Listener... array) {

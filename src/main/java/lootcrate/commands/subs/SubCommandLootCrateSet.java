@@ -52,8 +52,7 @@ public class SubCommandLootCrateSet extends SubCommand {
                 l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
         if (args[1].equalsIgnoreCase("none")) {
             plugin.getLocationManager().removeCrateLocation(l);
-            if (plugin.holoHook())
-                plugin.getHoloManager().reload();
+            plugin.getHoloManager().reload();
             plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
             return;
         }
@@ -76,8 +75,7 @@ public class SubCommandLootCrateSet extends SubCommand {
         plugin.getLocationManager().addCrateLocation(l, crate);
 
         // create hologram
-        if (plugin.holoHook())
-            holoManager.createHologram(l.getBlock(), crate);
+        holoManager.createHologram(l.getBlock(), crate, true);
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
     }
