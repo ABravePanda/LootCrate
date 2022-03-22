@@ -44,6 +44,10 @@ options:
 messages:
     #Prefix of every message
     prefix: "&e&lLOOTCRATE &r"
+
+    #Chance, as displayed when you view a crate
+    chance: "&6&lChance: &e{item_chance}%"
+    # {item_chance} - Chance of winning of the item being displayed
     
     #When the command sender doesn't have the required permission
     command-no-permission: "&cYou have no permission to do this."

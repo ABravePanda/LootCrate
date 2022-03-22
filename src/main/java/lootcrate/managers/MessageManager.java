@@ -60,7 +60,7 @@ public class MessageManager extends BasicManager implements Manager {
         String msg = this.getPlugin().getConfig().getString(PREFIX + message.getKey());
 
         if (msg == null || msg.isEmpty())
-            return null;
+            return ChatColor.RED + "Cannot find string {" + message.getKey() + "}";
 
         String colorMsg = ChatColor.translateAlternateColorCodes('&', msg);
 

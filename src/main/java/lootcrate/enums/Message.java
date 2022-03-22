@@ -2,6 +2,7 @@ package lootcrate.enums;
 
 public enum Message {
     PREFIX("prefix"),
+    CHANCE("chance"),
     NO_PERMISSION_COMMAND("command-no-permission"),
     NO_PERMISSION_LOOTCRATE_INTERACT("lootcrate-interact-no-permission"),
     CANNOT_PLACE_LOOTKEY("cannot-place-lootkey"),

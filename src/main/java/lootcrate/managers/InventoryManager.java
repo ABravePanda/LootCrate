@@ -1,7 +1,10 @@
 package lootcrate.managers;
 
+import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
+import lootcrate.enums.Message;
+import lootcrate.enums.Placeholder;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
@@ -42,7 +45,8 @@ public class InventoryManager extends BasicManager implements Manager {
                 if (itemStack.getType() == Material.AIR) continue;
                 ItemMeta meta = itemStack.getItemMeta();
                 List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
-                lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Chance: " + ChatColor.RED + item.getChance() + "%");
+                lore.add(this.getPlugin().getMessageManager().parseMessage(Message.CHANCE,
+                        ImmutableMap.of(Placeholder.ITEM_CHANCE, item.getChance() + "")));
                 meta.setLore(lore);
                 itemStack.setItemMeta(meta);
 
