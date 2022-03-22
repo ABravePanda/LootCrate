@@ -38,6 +38,7 @@ public class SubCommandLootCrateAdd extends SubCommand {
         Player p = (Player) sender;
         ItemStack mainHandItem = p.getInventory().getItemInMainHand();
 
+
         if (!this.testPermissions())
             return;
 

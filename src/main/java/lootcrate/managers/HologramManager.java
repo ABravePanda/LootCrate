@@ -30,6 +30,7 @@ public class HologramManager extends BasicManager implements Manager {
         double xOffset = (double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_X).getValue();
         double yOffset = (double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Y).getValue();
         double zOffset = (double) crate.getOption(CrateOptionType.HOLOGRAM_OFFSET_Z).getValue();
+
         Hologram hologram = HologramsAPI.createHologram(this.getPlugin(),
                 block.getLocation().clone().add(xOffset, yOffset, zOffset));
 
