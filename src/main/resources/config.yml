@@ -185,6 +185,14 @@ messages:
     # {X} - X cord of position
     # {Y} - Y cord of position
     # {Z} - Z cord of position
+
+    #Sent when a crate already exists at this location
+    lootcrate-command-set-failure: "&cA crate already exists at this location!"
+    # {crate_id} - Id of crate
+    # {crate_name} - Name of crate
+    # {X} - X cord of position
+    # {Y} - Y cord of position
+    # {Z} - Z cord of position
     
     #Sent on completion of command
     lootcrate-command-set-remove-success: "&fRemoved &e{X}, {Y}, {Z} &fas a LootCrate location."

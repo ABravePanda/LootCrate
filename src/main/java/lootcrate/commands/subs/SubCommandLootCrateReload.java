@@ -27,6 +27,7 @@ public class SubCommandLootCrateReload extends SubCommand {
 
         plugin.reloadConfig();
         plugin.reload();
+        plugin.getHoloManager().reload();
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_RELOAD_SUCCESS, null);
     }

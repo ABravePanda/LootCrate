@@ -33,6 +33,7 @@ public enum Message {
     LOOTCRATE_COMMAND_LIST_FORMAT("lootcrate-command-list-format"),
     LOOTCRATE_COMMAND_SET_USAGE("lootcrate-command-set-usage"),
     LOOTCRATE_COMMAND_SET_SUCCESS("lootcrate-command-set-success"),
+    LOOTCRATE_COMMAND_SET_FAILURE("lootcrate-command-set-failure"),
     LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS("lootcrate-command-set-remove-success"),
     LOOTCRATE_COMMAND_GET_USAGE("lootcrate-command-get-usage"),
     LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER("lootcrate-command-give-success-to-receiver"),

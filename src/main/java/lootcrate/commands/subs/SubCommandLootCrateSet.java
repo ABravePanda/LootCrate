@@ -72,6 +72,11 @@ public class SubCommandLootCrateSet extends SubCommand {
                 Placeholder.CRATE_NAME, crate.getName(), Placeholder.X, l.getBlockX() + "", Placeholder.Y,
                 l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 
+        if(plugin.getLocationManager().getLocationList().containsKey(l))
+        {
+            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, map);
+            return;
+        }
         plugin.getLocationManager().addCrateLocation(l, crate);
 
         // create hologram
