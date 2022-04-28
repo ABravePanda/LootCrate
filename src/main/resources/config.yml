@@ -252,8 +252,21 @@ messages:
     #Sebt when player is opening a loot crate
     lootcrate-open: "&aOpening LootCrate &e{crate_name}"
     # {crate_name} - Name of crate
-    
+
+    #Used when icorrect key is used to open a crate
     lootcrate-wrong-key: "&cThis is the wrong key to open the LootCrate &e{crate_name}"
     # {crate_name} - Name of crate
     # {crate_id} - Id of crate
-   
+
+
+    #Used when player is viewing crate
+    lootcrate-view-close-item: "&cClose"
+
+    #Used when player is viewing crate
+    lootcrate-view-blocker-item: "&k-"
+
+    #Used when player is viewing crate
+    lootcrate-view-next-item: "&6Next"
+
+    #Used when player is viewing crate
+    lootcrate-view-prev-item: "&6Prev"

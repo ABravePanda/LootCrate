@@ -49,7 +49,11 @@ public enum Message {
     MESSAGE_COMMAND_FORMAT("message-command-format"),
     MESSAGE_COMMAND_USAGE("message-command-usage"),
     LOOTCRATE_OPEN("lootcrate-open"),
-    LOOTCRATE_INCORRECT_KEY("lootcrate-wrong-key");
+    LOOTCRATE_INCORRECT_KEY("lootcrate-wrong-key"),
+    LOOTCRATE_VIEW_CLOSE_ITEM("lootcrate-view-close-item"),
+    LOOTCRATE_VIEW_BLOCKER_ITEM("lootcrate-view-blocker-item"),
+    LOOTCRATE_VIEW_NEXT_ITEM("lootcrate-view-next-item"),
+    LOOTCRATE_VIEW_PREV_ITEM("lootcrate-view-prev-item");
 
     String key;
 

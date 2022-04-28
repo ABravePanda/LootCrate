@@ -31,6 +31,7 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
     protected int size = 45;
     protected int usableSize = size-9;
     protected int page = 1;
+    protected NavItems navItems;
 
     public BasicFrame(LootCrate plugin, Player p, String title, GUIItem[] contents, int size) {
         this.id = ObjUtils.randomID(5);
@@ -46,6 +47,7 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
 
         this.inventory = createInventory();
         this.usableSize = usableSize = size-9;
+        navItems = new NavItems(plugin);
     }
 
     public BasicFrame(LootCrate plugin, Player p, String title, GUIItem[] contents) {
@@ -60,6 +62,7 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
             this.contents = contents;
 
         this.inventory = createInventory();
+        navItems = new NavItems(plugin);
     }
 
     public BasicFrame(LootCrate plugin, Player p, String title, int size) {
@@ -71,6 +74,7 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
         this.size = size;
         this.inventory = createInventory();
         this.usableSize = usableSize = size-9;
+        navItems = new NavItems(plugin);
     }
 
     public BasicFrame(LootCrate plugin, Player p, String title) {
@@ -80,6 +84,7 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
         this.title = title;
         this.contents = new GUIItem[size];
         this.inventory = createInventory();
+        navItems = new NavItems(plugin);
     }
 
     @Override
@@ -191,15 +196,16 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
 
     @Override
     public void generateNavigation() {
-        this.setItem(getSize()-1, new GUIItem(getSize()-1, NavItems.NAV_BLOCKER));
-        this.setItem(getSize()-2, new GUIItem(getSize()-2, NavItems.NAV_BLOCKER));
-        this.setItem(getSize()-3, new GUIItem(getSize()-3, NavItems.NAV_NEXT));
-        this.setItem(getSize()-4, new GUIItem(getSize()-4, NavItems.NAV_BLOCKER));
-        this.setItem(getSize()-5, new GUIItem(getSize()-5, NavItems.NAV_CLOSE));
-        this.setItem(getSize()-6, new GUIItem(getSize()-6, NavItems.NAV_BLOCKER));
-        this.setItem(getSize()-7, new GUIItem(getSize()-7, NavItems.NAV_PREV));
-        this.setItem(getSize()-8, new GUIItem(getSize()-8, NavItems.NAV_BLOCKER));
-        this.setItem(getSize()-9, new GUIItem(getSize()-9, NavItems.NAV_BLOCKER));
+
+        this.setItem(getSize()-1, new GUIItem(getSize()-1, navItems.getNavBlocker()));
+        this.setItem(getSize()-2, new GUIItem(getSize()-2, navItems.getNavBlocker()));
+        this.setItem(getSize()-3, new GUIItem(getSize()-3, navItems.getNavNext()));
+        this.setItem(getSize()-4, new GUIItem(getSize()-4, navItems.getNavBlocker()));
+        this.setItem(getSize()-5, new GUIItem(getSize()-5, navItems.getNavClose()));
+        this.setItem(getSize()-6, new GUIItem(getSize()-6, navItems.getNavBlocker()));
+        this.setItem(getSize()-7, new GUIItem(getSize()-7, navItems.getNavPrev()));
+        this.setItem(getSize()-8, new GUIItem(getSize()-8, navItems.getNavBlocker()));
+        this.setItem(getSize()-9, new GUIItem(getSize()-9, navItems.getNavBlocker()));
     }
 
     @EventHandler
@@ -214,27 +220,27 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
             return;
 
         //override the guiclick
-        if(e.getCurrentItem().equals(NavItems.NAV_BLOCKER))
+        if(e.getCurrentItem().equals(navItems.getNavBlocker()))
         {
             e.setCancelled(true);
             return;
         }
 
-        if(e.getCurrentItem().equals(NavItems.NAV_CLOSE))
+        if(e.getCurrentItem().equals(navItems.getNavClose()))
         {
             player.closeInventory();
             e.setCancelled(true);
             return;
         }
 
-        if(e.getCurrentItem().equals(NavItems.NAV_NEXT))
+        if(e.getCurrentItem().equals(navItems.getNavNext()))
         {
             nextPage();
             e.setCancelled(true);
             return;
         }
 
-        if(e.getCurrentItem().equals(NavItems.NAV_PREV))
+        if(e.getCurrentItem().equals(navItems.getNavPrev()))
         {
             previousPage();
             e.setCancelled(true);
