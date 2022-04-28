@@ -20,6 +20,7 @@ public enum Message {
     INVENTORY_FULL("inventory-full"),
     LOOTCRATE_COMMAND_CREATE_USAGE("lootcrate-command-create-usage"),
     LOOTCRATE_COMMAND_CREATE_SUCCESS("lootcrate-command-create-success"),
+    LOOTCRATE_COMMAND_CREATE_PERMISSIONS("loocrate-command-create-permissions"),
     LOOTCRATE_COMMAND_KEY_USAGE("lootcrate-command-key-usage"),
     LOOTCRATE_COMMAND_KEY_SUCCESS("lootcrate-command-key-success"),
     LOOTCRATE_COMMAND_ADD_USAGE("lootcrate-command-add-usage"),

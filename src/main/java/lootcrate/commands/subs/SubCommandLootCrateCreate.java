@@ -45,6 +45,8 @@ public class SubCommandLootCrateCreate extends SubCommand {
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
+        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_PERMISSIONS,
+                ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
     }
 
     @Override
