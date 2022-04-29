@@ -35,6 +35,14 @@ public class CommandUtils {
         }
     }
 
+    public static Long tryParseLong(String text) {
+        try {
+            return Long.parseLong(text);
+        } catch (NumberFormatException e) {
+            return 0l;
+        }
+    }
+
     public static double tryParseDouble(String text) {
         try {
             return Double.parseDouble(text);

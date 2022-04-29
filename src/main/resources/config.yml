@@ -275,3 +275,62 @@ messages:
 
     #Used when player is viewing crate
     lootcrate-view-prev-item: "&6Prev"
+
+
+#+---------------------------------------+
+#|                                       |
+#|          GUI Customization            |
+#|                                       |
+#+---------------------------------------+
+
+#All timing options are in seconds
+
+custom-gui:
+
+    #Naivation Menu Options
+    navigation-blocker-material: "RED_STAINED_GLASS_PANE"
+    navigation-blocker-name: "&k&l-"
+
+    navigation-close-material: "BARRIER"
+    navigation-close-name: "&cClose"
+
+    navigation-next-material: "SPECTRAL_ARROW"
+    navigation-next-name: "&6Next"
+
+    navigation-previous-material: "ARROW"
+    navigation-previous-name: "&6Previous"
+
+    #CSGO Animation Options
+    csgo-animation-pointer-material: "REDSTONE_TORCH"
+    csgo-animation-pointer-name: "&c&lReward"
+
+    csgo-animation-background-material: "WHITE_STAINED_GLASS_PANE"
+    csgo-animation-background-name: "&k-"
+
+    csgo-animation-winner-background-material: "LIME_STAINED_GLASS_PANE"
+    csgo-animation-winner-background-name: "&k-"
+
+    csgo-animation-scroll-speed: "1"
+    csgo-animation-duration: "6"
+
+    #Random Glass Animation Options
+    rnd-animation-pointer-material: "REDSTONE_TORCH"
+    rnd-animation-pointer-name: "&c&lReward"
+
+    rnd-animation-glass-name: "&k-"
+
+    rnd-animation-winner-background-material: "LIME_STAINED_GLASS_PANE"
+    rnd-animation-winner-background-name: "&k-"
+
+    rnd-animation-scroll-speed: "3"
+    rnd-animation-glass-speed: "1"
+    rnd-animation-duration: "6"
+
+    #Removing Item Animation Options
+    removing-animation-filler-material: "RED_STAINED_GLASS_PANE"
+    removing-animation-filler-name: "&k-"
+
+    removing-animation-winner-background-material: "LIME_STAINED_GLASS_PANE"
+    removing-animation-winner-background-name: "&k-"
+
+    removing-animation-duration: "6"

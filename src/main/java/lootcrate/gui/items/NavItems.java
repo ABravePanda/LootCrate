@@ -1,7 +1,9 @@
 package lootcrate.gui.items;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.CustomizationOption;
 import lootcrate.enums.Message;
+import lootcrate.managers.CustomizationManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -10,26 +12,28 @@ public class NavItems
 {
 
     private LootCrate plugin;
+    private CustomizationManager customizationManager;
 
     public NavItems(LootCrate plugin)
     {
         this.plugin = plugin;
+        this.customizationManager = plugin.getCustomizationManager();
     }
 
     public ItemStack getNavClose()
     {
-        return new GUIItem(0, Material.BARRIER, plugin.getMessageManager().parseMessage(Message.LOOTCRATE_VIEW_CLOSE_ITEM, null)).getItemStack();
+        return new GUIItem(0, customizationManager.parseMaterial(CustomizationOption.NAVIGATION_CLOSE_MATERIAL), customizationManager.parseName(CustomizationOption.NAVIGATION_CLOSE_NAME)).getItemStack();
     }
     public ItemStack getNavNext()
     {
-        return new GUIItem(0, Material.SPECTRAL_ARROW, plugin.getMessageManager().parseMessage(Message.LOOTCRATE_VIEW_NEXT_ITEM, null)).getItemStack();
+        return new GUIItem(0, customizationManager.parseMaterial(CustomizationOption.NAVIGATION_NEXT_MATERIAL), customizationManager.parseName(CustomizationOption.NAVIGATION_NEXT_NAME)).getItemStack();
     }
     public ItemStack getNavPrev()
     {
-        return new GUIItem(0, Material.ARROW, plugin.getMessageManager().parseMessage(Message.LOOTCRATE_VIEW_PREV_ITEM, null)).getItemStack();
+        return new GUIItem(0, customizationManager.parseMaterial(CustomizationOption.NAVIGATION_PREVIOUS_MATERIAL), customizationManager.parseName(CustomizationOption.NAVIGATION_PREVIOUS_NAME)).getItemStack();
     }
     public ItemStack getNavBlocker()
     {
-        return new GUIItem(0, Material.RED_STAINED_GLASS_PANE, plugin.getMessageManager().parseMessage(Message.LOOTCRATE_VIEW_BLOCKER_ITEM, null)).getItemStack();
+        return new GUIItem(0, customizationManager.parseMaterial(CustomizationOption.NAVIGATION_BLOCKER_MATERIAL), customizationManager.parseName(CustomizationOption.NAVIGATION_BLOCKER_NAME)).getItemStack();
     }
 }

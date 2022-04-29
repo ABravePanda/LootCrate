@@ -1,9 +1,11 @@
 package lootcrate.gui.frames.animations;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.Bukkit;
@@ -18,19 +20,23 @@ import java.util.Random;
 
 public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Listener {
 
-    private final Material fillMaterial = Material.RED_STAINED_GLASS_PANE;
+    private Material fillMaterial = Material.RED_STAINED_GLASS_PANE;
     private final LootCrate plugin;
     private final Crate crate;
-    private final long rewardSpeed = 3;
+    private long rewardSpeed = 3;
     private int taskID;
     private List<Integer> numList;
     private int rewardID;
+    private CustomizationManager customizationManager;
 
     public CrateRemovingItemAnimationFrame(LootCrate plugin, Player p, Crate crate) {
         super(plugin, p, crate.getName());
 
         this.plugin = plugin;
         this.crate = crate;
+        this.customizationManager = plugin.getCustomizationManager();
+        this.rewardSpeed = customizationManager.parseLong(CustomizationOption.REMOVING_ANIMATION_DURATION);
+        this.fillMaterial = customizationManager.parseMaterial(CustomizationOption.REMOVING_ANIMATION_FILLER_MATERIAL);
 
         generateFrame();
         registerItems();
@@ -76,7 +82,7 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
             @Override
             public void run() {
                 int randomNumber = getRandomNumber();
-                setItem(randomNumber, new GUIItem(randomNumber, fillMaterial, " "));
+                setItem(randomNumber, new GUIItem(randomNumber, fillMaterial, customizationManager.parseName(CustomizationOption.REMOVING_ANIMATION_FILLER_NAME)));
                 if (numList.size() == 1) giveReward();
             }
         }, 0L, this.rewardSpeed);
@@ -128,10 +134,20 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
         Bukkit.getScheduler().cancelTask(rewardID);
         int index = getRemainingIndex();
         GUIItem item = getContents()[index];
-        fillBackground(Material.LIME_STAINED_GLASS_PANE);
+        fillBackground(customizationManager.parseMaterial(CustomizationOption.REMOVING_ANIMATION_FILLER_MATERIAL), customizationManager.parseName(CustomizationOption.REMOVING_ANIMATION_FILLER_NAME));
         this.setItem(22, item);
         giveRewards(item.getCrateItem());
         countdown();
+    }
+
+    private void fillBackground(Material m, String name)
+    {
+        int index = 0;
+        while (index < getInventory().getSize()) {
+            if (index != 22)
+                this.setItem(index, new GUIItem(index, m, name));
+            index++;
+        }
     }
 
     @EventHandler

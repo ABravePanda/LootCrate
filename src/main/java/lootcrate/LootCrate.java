@@ -35,6 +35,7 @@ public class LootCrate extends JavaPlugin {
     private HologramManager holoManager;
     private ChatManager chatManager;
     private LogManager logManager;
+    private CustomizationManager customizationManager;
 
     @Override
     public void onEnable() {
@@ -46,6 +47,7 @@ public class LootCrate extends JavaPlugin {
         updateManager = new UpdateManager(this);
         messageManager = new MessageManager(this);
         fileManager = new FileManager(this);
+        customizationManager = new CustomizationManager(this);
         crateFileManager = new CrateFileManager(this);
         cacheManager = new CacheManager(this);
         crateManager = new CrateManager(this);
@@ -60,14 +62,14 @@ public class LootCrate extends JavaPlugin {
                 new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
                 new PlayerChatListener(this), new HologramDeathEvent(this));
 
-        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, logManager, holoManager);
+        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, logManager, holoManager);
 
         displayIntro();
     }
 
     @Override
     public void onDisable() {
-        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, holoManager);
+        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, customizationManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, holoManager);
     }
 
     private void registerEvents(Listener... array) {
@@ -222,4 +224,6 @@ public class LootCrate extends JavaPlugin {
     public LogManager getLogManager() {
         return logManager;
     }
+
+    public CustomizationManager getCustomizationManager() { return customizationManager; }
 }
