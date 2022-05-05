@@ -75,6 +75,7 @@ public class CrateLocationFrame extends BasicFrame {
             });
 
             this.setItem(index, item);
+            index++;
         }
     }
 
