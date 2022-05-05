@@ -35,9 +35,15 @@ public class CustomizationManager extends BasicManager implements Manager {
     public Material parseMaterial(CustomizationOption option)
     {
         String text = getStringOption(option);
-        if(Material.valueOf(text) != null)
-            return Material.valueOf(text);
-        else return Material.BARRIER;
+        try
+        {
+            Material.valueOf(text);
+        }
+        catch (IllegalArgumentException e)
+        {
+            return Material.BARRIER;
+        }
+        return Material.valueOf(text);
     }
 
     public long parseLong(CustomizationOption option)

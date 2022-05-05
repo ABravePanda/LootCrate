@@ -10,6 +10,7 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,11 +19,22 @@ import org.bukkit.inventory.ItemStack;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ *
+ */
 public class SubCommandLootCrateAdd extends SubCommand {
     private final String[] args;
     private final CommandSender sender;
     private final LootCrate plugin;
 
+    /**
+     * Default constructor for any {@link lootcrate.commands.SubCommand}
+     *
+     * @param plugin an instance of {@link lootcrate.LootCrate}
+     * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
+     * @param args the following arguments in the command string
+     *
+     */
     public SubCommandLootCrateAdd(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_ADD, Permission.COMMAND_LOOTCRATE_ADMIN);
         this.plugin = plugin;
@@ -30,6 +42,14 @@ public class SubCommandLootCrateAdd extends SubCommand {
         this.args = args;
     }
 
+    /**
+     * Is called when the {@link lootcrate.commands.SubCommand} class calls upon it.
+     * This SubCommand is used for the creation of a LootCrate. It guarantees all arguments
+     * must be valid. It generates a {@link lootcrate.objects.Crate}
+     *
+     * @param playerRequired if a player is required to run this command can any {@link org.bukkit.command.CommandSender}
+     *
+     */
     @Override
     public void runSubCommand(boolean playerRequired) {
         if (this.testPlayer(playerRequired))
@@ -84,6 +104,11 @@ public class SubCommandLootCrateAdd extends SubCommand {
 
     }
 
+    /**
+     * Compiles a list of what Strings the player chose during the TabEvent for further processing
+     *
+     * @return a list of all the players tabbed results
+     */
     @Override
     public List<String> runTabComplete() {
         List<String> list = new LinkedList<String>();
@@ -104,6 +129,7 @@ public class SubCommandLootCrateAdd extends SubCommand {
             list.add("[Chance]");
         if (args.length == 6) {
             list.add("[Is Display]");
+            list.add(ChatColor.stripColor(plugin.getMessageManager().parseMessage(Message.LOOTCRATE_COMMAND_ADD_HINT, null)));
             list.add("true");
             list.add("false");
         }

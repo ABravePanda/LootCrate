@@ -70,7 +70,10 @@ public class LootCrateCommand extends Command {
                 new SubCommandLootCrateList(plugin, sender, args).runSubCommand(false);
                 break;
             case "gui":
-                new SubCommandLootCrateGui(plugin, sender, args).runSubCommand(false);
+                new SubCommandLootCrateGui(plugin, sender, args).runSubCommand(true);
+                break;
+            case "preview":
+                new SubCommandLootCratePreview(plugin, sender, args).runSubCommand(true);
                 break;
             default:
                 plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
@@ -110,6 +113,8 @@ public class LootCrateCommand extends Command {
                 list.add("version");
             if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_GUI))
                 list.add("gui");
+            if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_PREVIEW))
+                list.add("preview");
             return list;
         }
 
@@ -144,6 +149,8 @@ public class LootCrateCommand extends Command {
                 return new SubCommandLootCrateList(plugin, sender, args).runTabComplete();
             case "gui":
                 return new SubCommandLootCrateGui(plugin, sender, args).runTabComplete();
+            case "preview":
+                return new SubCommandLootCratePreview(plugin, sender, args).runTabComplete();
             default:
                 return list;
         }

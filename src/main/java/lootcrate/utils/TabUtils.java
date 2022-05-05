@@ -4,6 +4,7 @@ import lootcrate.LootCrate;
 import lootcrate.managers.CacheManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
+import org.bukkit.ChatColor;
 
 import java.util.List;
 
@@ -12,6 +13,12 @@ public class TabUtils {
     public static void addCratesToList(List<String> list, CacheManager manager) {
         for (Crate crate : manager.getCache()) {
             list.add(crate.getId() + "");
+        }
+    }
+
+    public static void addCratesNamesToList(List<String> list, CacheManager manager) {
+        for (Crate crate : manager.getCache()) {
+            list.add(crate.getId() + " [" + ChatColor.stripColor(crate.getName()) + "]");
         }
     }
 

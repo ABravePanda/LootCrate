@@ -17,6 +17,7 @@ public enum Permission {
     COMMAND_LOOTCRATE_VERSION("lootcrate.command.lootcrate.version"),
     COMMAND_LOOTCRATE_GUI("lootcrate.command.lootcrate.gui"),
     COMMAND_LOOTCRATE_ADMIN("lootcrate.command.*"),
+    COMMAND_LOOTCRATE_PREVIEW("lootcate.command.preview"),
     LOOTCRATE_INTERACT("lootcrate.interact."),
     LOOTCRATE_INTERACT_ADMIN("lootcrate.interact.*"),
     LOOTCRATE_UPDATE_NOTIFICATION("lootcrate.notification");

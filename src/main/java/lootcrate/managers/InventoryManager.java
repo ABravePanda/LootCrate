@@ -45,6 +45,7 @@ public class InventoryManager extends BasicManager implements Manager {
                 if (itemStack.getType() == Material.AIR) continue;
                 ItemMeta meta = itemStack.getItemMeta();
                 List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
+                lore.add(" ");
                 lore.add(this.getPlugin().getMessageManager().parseMessage(Message.CHANCE,
                         ImmutableMap.of(Placeholder.ITEM_CHANCE, item.getChance() + "")));
                 meta.setLore(lore);

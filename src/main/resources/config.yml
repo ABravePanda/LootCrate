@@ -147,6 +147,9 @@ messages:
     # {item_id} - Id of item
     # {item_type} - Type of item
     # {item_name} - Name of item
+
+    #Sent to whoever added an item to the crate
+    loocrate-command-add-hint: "&6If you want this item to only execute commands, &aisDisplay = true&6."
     
     #Usage for command
     lootcrate-command-remove-usage: "&cUsage: /lootcrate remove [crate id] [item id]"
@@ -239,13 +242,21 @@ messages:
     # {value} - Value entered (true/false)
     
     #Usage for command
-    lootcrate-command-command-usage: "&cUsage: /lootcrate displaychances [crate id] [display chances]"
+    lootcrate-command-displaychances-usage: "&cUsage: /lootcrate displaychances [crate id] [display chances]"
     
     #Usage for command
     lootcrate-command-version-usage: "&cUsage: /lootcrate version"
     
     #Sent on completion of command
     lootcrate-command-reload-success: "&aPlugin has been reloaded."
+
+    #Usage for command
+    lootcrate-command-preview-usage: "&cUsage: /lootcrate preview [crate_id]"
+
+    #Sent on completion of command
+    lootcrate-command-preview-success: "&aYou are now viewing &e{crate_name}"
+    # {crate_name} - Name of crate
+    # {crate_id} - Id of crate
     
     #Format of message from message command
     message-command-format: "&f{message}"

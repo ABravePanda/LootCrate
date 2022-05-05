@@ -24,6 +24,14 @@ public class SubCommandLootCrateSet extends SubCommand {
     private final LootCrate plugin;
     private final HologramManager holoManager;
 
+    /**
+     * Default constructor for any {@link lootcrate.commands.SubCommand}
+     *
+     * @param plugin an instance of {@link lootcrate.LootCrate}
+     * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
+     * @param args the following arguments in the command string
+     *
+     */
     public SubCommandLootCrateSet(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_SET, Permission.COMMAND_LOOTCRATE_ADMIN);
         this.plugin = plugin;
