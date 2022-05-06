@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class LogManager extends BasicManager implements Manager {
+public class LogManager extends BasicManager {
 
     private File file;
     private YamlConfiguration config;

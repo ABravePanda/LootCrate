@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CrateFileManager extends BasicManager implements Manager {
+public class CrateFileManager extends BasicManager {
     private final String CRATE_PREFIX = "crates.";
     public File crateFile;
 

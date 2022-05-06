@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class LocationManager extends BasicManager implements Manager {
+public class LocationManager extends BasicManager {
 
     private final Map<Location, Crate> locationList = new LinkedHashMap<Location, Crate>();
 

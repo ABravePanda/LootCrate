@@ -14,7 +14,7 @@ import org.bukkit.entity.ArmorStand;
 import java.util.LinkedList;
 import java.util.List;
 
-public class HologramManager extends BasicManager implements Manager {
+public class HologramManager extends BasicManager {
     private final OptionManager optionManager;
     private final LocationManager locationManager;
     private List<Hologram> holoList;

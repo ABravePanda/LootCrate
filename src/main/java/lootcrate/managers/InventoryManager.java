@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
-public class InventoryManager extends BasicManager implements Manager {
+public class InventoryManager extends BasicManager {
 
     private final List<PlayerFrameMatch> matches;
     /**

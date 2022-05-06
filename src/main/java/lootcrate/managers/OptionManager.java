@@ -5,7 +5,7 @@ import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.Option;
 import org.bukkit.Sound;
 
-public class OptionManager extends BasicManager implements Manager {
+public class OptionManager extends BasicManager {
     private final String PREFIX = "options.";
 
     /**

@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CrateManager extends BasicManager implements Manager {
+public class CrateManager extends BasicManager {
 
     /**
      * Constructor for CrateManager

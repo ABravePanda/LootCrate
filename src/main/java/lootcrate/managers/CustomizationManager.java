@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Map;
 import java.util.regex.Matcher;
 
-public class CustomizationManager extends BasicManager implements Manager {
+public class CustomizationManager extends BasicManager {
     private final String PREFIX = "custom-gui.";
 
     public CustomizationManager(LootCrate plugin) {

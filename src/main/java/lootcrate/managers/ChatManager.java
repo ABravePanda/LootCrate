@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-public class ChatManager extends BasicManager implements Manager {
+public class ChatManager extends BasicManager {
     private final HashMap<Player, ChatState> map;
 
     /**

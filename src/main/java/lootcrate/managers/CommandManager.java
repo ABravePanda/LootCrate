@@ -11,7 +11,7 @@ import org.bukkit.command.TabCompleter;
 
 import java.util.List;
 
-public class CommandManager extends BasicManager implements Manager, CommandExecutor, TabCompleter {
+public class CommandManager extends BasicManager implements CommandExecutor, TabCompleter {
     private final MessageManager messageManager;
     private final CrateManager crateManager;
     private final LocationManager locationManager;

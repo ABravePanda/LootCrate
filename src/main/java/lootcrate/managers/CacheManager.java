@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CacheManager extends BasicManager implements Manager {
+public class CacheManager extends BasicManager {
     private List<Crate> cache;
 
     public CacheManager(LootCrate plugin) {

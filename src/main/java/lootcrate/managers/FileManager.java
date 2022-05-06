@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class FileManager extends BasicManager implements Manager {
+public class FileManager extends BasicManager {
 
     public FileManager(LootCrate plugin)
     {

@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import java.util.Map;
 import java.util.regex.Matcher;
 
-public class MessageManager extends BasicManager implements Manager {
+public class MessageManager extends BasicManager {
     private final String PREFIX = "messages.";
 
     /**

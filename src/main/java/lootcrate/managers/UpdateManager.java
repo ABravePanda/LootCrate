@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class UpdateManager extends BasicManager implements Manager {
+public class UpdateManager extends BasicManager {
     private final OptionManager optionManager;
     private int project = 0;
     private URL checkURL;
