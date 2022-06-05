@@ -4,7 +4,7 @@
   <groupId>com.tompkins-development.spigot</groupId>
   <artifactId>LootCrate</artifactId>
   <name>LootCrate</name>
-  <version>0.7.1</version>
+  <version>0.8.0</version>
   <description>A plugin to add lootcrates</description>
   <build>
     <resources>
@@ -68,12 +68,8 @@
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
-      <id>CodeMC</id>
-      <url>https://repo.codemc.org/repository/maven-public</url>
-    </repository>
-    <repository>
-      <id>codemc-repo</id>
-      <url>https://repo.codemc.io/repository/maven-public/</url>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -102,9 +98,9 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>com.gmail.filoghost.holographicdisplays</groupId>
-      <artifactId>holographicdisplays-api</artifactId>
-      <version>2.4.9</version>
+      <groupId>com.github.decentsoftware-eu</groupId>
+      <artifactId>decentholograms</artifactId>
+      <version>2.3.1</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

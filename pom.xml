@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.tompkins-development.spigot</groupId>
    <artifactId>LootCrate</artifactId>
-   <version>0.7.2</version>
+   <version>0.8.0</version>
    <name>LootCrate</name>
    <description>A plugin to add lootcrates</description>
    <pluginRepositories>
@@ -19,14 +19,9 @@
          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
       </repository>
       <repository>
-         <id>CodeMC</id>
-         <url>https://repo.codemc.org/repository/maven-public</url>
+         <id>jitpack.io</id>
+         <url>https://jitpack.io</url>
       </repository>
-      <repository>
-         <id>codemc-repo</id>
-         <url>https://repo.codemc.io/repository/maven-public/</url>
-      </repository>
-
    </repositories>
    <dependencies>
       <!--This adds the Spigot API artifact to the build -->
@@ -46,13 +41,13 @@
       <dependency>
          <groupId>org.bstats</groupId>
          <artifactId>bstats-bukkit</artifactId>
-         <version>1.8</version>
+         <version>3.0.0</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
-         <groupId>com.gmail.filoghost.holographicdisplays</groupId>
-         <artifactId>holographicdisplays-api</artifactId>
-         <version>2.4.9</version>
+         <groupId>com.github.decentsoftware-eu</groupId>
+         <artifactId>decentholograms</artifactId>
+         <version>2.3.1</version>
          <scope>provided</scope>
       </dependency>
    </dependencies>

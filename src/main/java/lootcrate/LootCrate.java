@@ -7,7 +7,6 @@ import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
 import lootcrate.gui.events.listeners.GUICloseListener;
-import lootcrate.holograms.events.HologramDeathEvent;
 import lootcrate.managers.*;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
@@ -56,13 +55,18 @@ public class LootCrate extends JavaPlugin {
         commandManager = new CommandManager(this);
         chatManager = new ChatManager(this);
         logManager = new LogManager(this);
-        holoManager = new HologramManager(this);
 
         registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
                 new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
-                new PlayerChatListener(this), new HologramDeathEvent(this));
+                new PlayerChatListener(this));
 
-        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, logManager, holoManager);
+        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, logManager);
+
+        if(holoHook())
+        {
+            holoManager = new HologramManager(this);
+            toggleManagers(true, holoManager);
+        }
 
         displayIntro();
     }
@@ -113,24 +117,20 @@ public class LootCrate extends JavaPlugin {
                 + cacheManager.getCache().size() + ChatColor.DARK_GRAY + " crate(s).");
         if (holoHook())
             Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
-                    + "Holographic Displays" + ChatColor.DARK_GRAY + ".");
-        if (metricsHook())
+                    + "DecentHolograms" + ChatColor.DARK_GRAY + ".");
+        if (metrics != null)
             Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
                     + "bStats Metrics" + ChatColor.DARK_GRAY + ".");
         Bukkit.getConsoleSender().sendMessage("");
     }
 
     public boolean holoHook() {
-        return Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays");
+        return Bukkit.getPluginManager().isPluginEnabled("DecentHolograms");
     }
 
     private void initMetrics() {
         int pluginId = 9767;
         metrics = new Metrics(this, pluginId);
-    }
-
-    private boolean metricsHook() {
-        return metrics.isEnabled();
     }
 
     private void initSerial() {

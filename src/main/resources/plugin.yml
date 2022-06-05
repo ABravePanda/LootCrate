@@ -2,7 +2,7 @@ name: ${project.name}
 main: lootcrate.LootCrate
 version: ${project.version}
 description: ${project.description}
-softdepend: [Multiworld, Multiverse-Core]
+softdepend: [DecentHolograms]
 author: A_Brave_Panda
 api-version: 1.13
 commands:

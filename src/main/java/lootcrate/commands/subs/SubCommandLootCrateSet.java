@@ -3,7 +3,6 @@ package lootcrate.commands.subs;
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
-import lootcrate.enums.CrateAction;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
@@ -60,7 +59,9 @@ public class SubCommandLootCrateSet extends SubCommand {
                 l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
         if (args[1].equalsIgnoreCase("none")) {
             plugin.getLocationManager().removeCrateLocation(l);
-            plugin.getHoloManager().reload();
+
+            if(plugin.holoHook())
+                plugin.getHoloManager().reload();
             plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
             return;
         }
@@ -88,7 +89,8 @@ public class SubCommandLootCrateSet extends SubCommand {
         plugin.getLocationManager().addCrateLocation(l, crate);
 
         // create hologram
-        holoManager.createHologram(l.getBlock(), crate, true);
+        if(plugin.holoHook())
+            holoManager.createHologram(l.getBlock(), crate);
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
     }

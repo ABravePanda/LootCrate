@@ -19,6 +19,7 @@ public class UpdateManager extends BasicManager {
     private int project = 0;
     private URL checkURL;
     private String newVersion = "";
+    private String upToDateVersion = "";
 
     /**
      * Constructor for CrateManager
@@ -81,9 +82,17 @@ public class UpdateManager extends BasicManager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return Integer.valueOf(this.getPlugin().getDescription().getVersion().replace(".", "")) < Integer
-                .valueOf(newVersion.replace(".", ""));
-        // return !this.getPlugin().getDescription().getVersion().equals(newVersion);
+
+        if(Integer.valueOf(this.getPlugin().getDescription().getVersion().replace(".", "")) < Integer
+                .valueOf(newVersion.replace(".", "")))
+        {
+            this.upToDateVersion = newVersion;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void sendNotificationCommandSender(CommandSender p) {
