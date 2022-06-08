@@ -64,8 +64,6 @@ public class CrateOpenListener implements Listener {
 
         // play sound
         plugin.getCrateManager().crateOpenEffects(crate, p);
-
-        plugin.getLogManager().log(CrateAction.OPEN_CRATE, crate, p, null);
         openAnimation(crate, p);
     }
 

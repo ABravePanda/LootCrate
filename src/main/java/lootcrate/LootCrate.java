@@ -33,7 +33,6 @@ public class LootCrate extends JavaPlugin {
     private UpdateManager updateManager;
     private HologramManager holoManager;
     private ChatManager chatManager;
-    private LogManager logManager;
     private CustomizationManager customizationManager;
 
     @Override
@@ -54,13 +53,12 @@ public class LootCrate extends JavaPlugin {
         invManager = new InventoryManager(this);
         commandManager = new CommandManager(this);
         chatManager = new ChatManager(this);
-        logManager = new LogManager(this);
 
         registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
                 new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
                 new PlayerChatListener(this));
 
-        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, logManager);
+        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager);
 
         if(holoHook())
         {
@@ -219,10 +217,6 @@ public class LootCrate extends JavaPlugin {
 
     public FileManager getFileManager() {
         return fileManager;
-    }
-
-    public LogManager getLogManager() {
-        return logManager;
     }
 
     public CustomizationManager getCustomizationManager() { return customizationManager; }
