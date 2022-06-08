@@ -4,7 +4,7 @@ public enum FileType {
 
     CRATES("crates.yml"),
     LOCATIONS("locations.yml"),
-    LOG("log.yml");
+    LOG("log.txt");
 
     private final String name;
 
