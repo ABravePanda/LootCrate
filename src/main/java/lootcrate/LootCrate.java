@@ -116,6 +116,8 @@ public class LootCrate extends JavaPlugin {
         if (holoHook())
             Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
                     + "DecentHolograms" + ChatColor.DARK_GRAY + ".");
+        else
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "No Hologram Plugin Found. Disabling Hologram Feature.");
         if (metrics != null)
             Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
                     + "bStats Metrics" + ChatColor.DARK_GRAY + ".");

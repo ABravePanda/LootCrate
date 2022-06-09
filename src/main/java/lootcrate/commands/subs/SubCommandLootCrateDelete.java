@@ -57,7 +57,8 @@ public class SubCommandLootCrateDelete extends SubCommand {
             return;
         }
         plugin.getLocationManager().removeCrateLocation(crate);
-        plugin.getHoloManager().reload();
+        if(plugin.getHoloManager() != null)
+            plugin.getHoloManager().reload();
         plugin.getCacheManager().remove(crate);
         plugin.getCacheManager().save();
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_DELETE_SUCCESS,
