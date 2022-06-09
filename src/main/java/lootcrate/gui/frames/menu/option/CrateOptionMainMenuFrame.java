@@ -54,14 +54,16 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
     public void fillOptions() {
         this.setItem(10,
                 new GUIItem(10, Material.NAME_TAG, ChatColor.RED + "Name", ChatColor.GRAY + "Change the crate name."));
-        this.setItem(13, new GUIItem(13, Material.STICK, ChatColor.RED + "Knockback Level",
+        this.setItem(12, new GUIItem(12, Material.STICK, ChatColor.RED + "Knockback Level",
                 ChatColor.GRAY + "Change how far the crate knocks you back."));
-        this.setItem(16, new GUIItem(16, Material.JUKEBOX, ChatColor.RED + "Open Sound",
+        this.setItem(14, new GUIItem(14, Material.JUKEBOX, ChatColor.RED + "Open Sound",
                 ChatColor.GRAY + "Change the sound that plays when a crate is opened."));
-        this.setItem(30, new GUIItem(30, Material.BLAZE_POWDER, ChatColor.RED + "Animation Style",
+        this.setItem(16, new GUIItem(16, Material.BLAZE_POWDER, ChatColor.RED + "Animation Style",
                 ChatColor.GRAY + "Change the open animation."));
-        this.setItem(32, new GUIItem(32, Material.COMMAND_BLOCK, ChatColor.RED + "Open Message",
+        this.setItem(20, new GUIItem(20, Material.COMMAND_BLOCK, ChatColor.RED + "Open Message",
                 ChatColor.GRAY + "Change the message player recieves upon crate opening."));
+        this.setItem(24, new GUIItem(24, Material.ARMOR_STAND, ChatColor.RED + "Hologram",
+                ChatColor.GRAY + "Enable/Disable the hologram above the crate."));
     }
 
     // events
@@ -107,6 +109,9 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
                 this.close();
                  return;
                  **/
+                break;
+            case ARMOR_STAND:
+                frameToOpen = new CrateOptionHologramEnabledFrame(plugin, p, crate);
                 break;
             default:
                 return;

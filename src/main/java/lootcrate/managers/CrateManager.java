@@ -132,6 +132,7 @@ public class CrateManager extends BasicManager {
         crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);
         crate.addOption(CrateOptionType.OPEN_SOUND, Sound.UI_TOAST_CHALLENGE_COMPLETE.toString());
         crate.addOption(CrateOptionType.OPEN_MESSAGE, "&fYou have opened &e{crate_name}&f.");
+        crate.addOption(CrateOptionType.HOLOGRAM_ENABLED, true);
         crate.addOption(CrateOptionType.HOLOGRAM_LINES, Arrays.asList(lines));
         crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_X, 0.5D);
         crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Y, 1.8D);

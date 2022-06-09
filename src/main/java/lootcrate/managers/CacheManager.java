@@ -25,7 +25,7 @@ public class CacheManager extends BasicManager {
     /**
      * Updates Crate into cache
      *
-     * @param Crate Crate to update
+     * @param crate Crate to update
      */
     //TODO run async
     public void update(Crate crate) {
@@ -127,6 +127,10 @@ public class CacheManager extends BasicManager {
         for (CrateItem item : new ArrayList<CrateItem>(crate.getItems())) {
             if (item.getItem() == null || item.getItem().getType() == null || item.getItem().getType() == Material.AIR) {
                 crate.removeItem(item);
+            }
+            if(crate.getOption(CrateOptionType.HOLOGRAM_ENABLED) == null) {
+                crate.addOption(CrateOptionType.HOLOGRAM_ENABLED, true);
+                this.getPlugin().getCrateFileManager().saveCrate(crate);
             }
         }
         return crate;

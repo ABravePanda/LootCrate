@@ -139,6 +139,8 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
 
     @Override
     public void nextPage() {
+        this.closeFrame(player, this);
+        this.openFrame(player, new CrateOptionHologramEnabledFrame(plugin, player, crate));
         return;
     }
 

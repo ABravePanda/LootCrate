@@ -61,8 +61,8 @@ public class HologramManager extends BasicManager implements Manager {
             Crate crate = locationManager.getLocationList().get(l);
             if (crate == null)
                 continue;
-
-            createHologram(l.getBlock(), crate);
+            if ((boolean) crate.getOption(CrateOptionType.HOLOGRAM_ENABLED).getValue())
+                createHologram(l.getBlock(), crate);
         }
 
     }
