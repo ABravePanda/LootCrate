@@ -117,10 +117,10 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
 
         int itemIndex = (page*usableSize)-usableSize;
         int index = 0;
-        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate);
+        List<CrateItem> items = crate.getItems();
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && items.size() > itemIndex)
-                this.setItem(index, new GUIItem(index, items.get(itemIndex)));
+                this.setItem(index, createGUIItem(index, items.get(itemIndex)));
             index++;
             itemIndex++;
         }
@@ -138,10 +138,10 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
 
         int itemIndex = (page*usableSize)-usableSize;
         int index = 0;
-        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate);
+        List<CrateItem> items = crate.getItems();
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && items.size() > itemIndex)
-                this.setItem(index, new GUIItem(index, items.get(itemIndex)));
+                this.setItem(index, createGUIItem(index, items.get(itemIndex)));
             index++;
             itemIndex++;
         }
