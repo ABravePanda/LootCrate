@@ -40,6 +40,8 @@ public enum Message {
     LOOTCRATE_COMMAND_GET_USAGE("lootcrate-command-get-usage"),
     LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER("lootcrate-command-give-success-to-receiver"),
     LOOTCRATE_COMMAND_GIVE_SUCCESS_SENDER("lootcrate-command-give-success-to-sender"),
+    LOOTCRATE_COMMAND_GIVE_FULL_INVENTORY_RECEIVER("lootcrate-command-full-inventory-to-receiver"),
+    LOOTCRATE_COMMAND_GIVE_FULL_INVENTORY_SENDER("lootcrate-command-full-inventory-to-sender"),
     LOOTCRATE_COMMAND_COMMAND_USAGE("lootcrate-command-command-usage"),
     LOOTCRATE_COMMAND_COMMAND_SUCCESS("lootcrate-command-command-success"),
     LOOTCRATE_COMMAND_RELOAD_SUCCESS("lootcrate-command-reload-success"),

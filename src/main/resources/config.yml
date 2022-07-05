@@ -222,8 +222,20 @@ messages:
     # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     # {player_name} - Name of whoever received the key
-    
-    
+
+    #Sent to command sender when receiving player has a full inventory
+    lootcrate-command-full-inventory-to-receiver: "&c{sender_name} has tried to send you a key to &f{crate_name} &chowever, your inventory is full and you have not received the key."
+    # {crate_name} - Name of crate
+    # {crate_id} - Id of crate
+    # {player_name} - Name of whoever was to receive the key
+    # {sender_name} - Name of whoever sent the key
+
+    #Sent to command sender when receiving player has a full inventory
+    lootcrate-command-full-inventory-to-sender: "&c{player_name} has a full inventory and has not received a key."
+    # {crate_name} - Name of crate
+    # {crate_id} - Id of crate
+    # {player_name} - Name of whoever was to receive the key
+
     #Usage for command
     lootcrate-command-command-usage: "&cUsage: /lootcrate command [crate id] [item id] [command]"
     

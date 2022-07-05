@@ -82,17 +82,11 @@ public class SubCommandLootCrateGive extends SubCommand {
                 return;
             }
             for (int i = 0; i < CommandUtils.tryParse(args[3]); i++) {
-                addItem(player, plugin, crate);
+                addItem(player, crate);
             }
 
         } else
-            addItem(player, plugin, crate);
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_SENDER,
-                ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
-                        Placeholder.PLAYER_NAME, player == null ? "everyone" : player.getName()));
-        plugin.getMessageManager().sendMessage(player, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER,
-                ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
-                        Placeholder.SENDER_NAME, sender.getName()));
+            addItem(player, crate);
 
     }
 
@@ -118,14 +112,41 @@ public class SubCommandLootCrateGive extends SubCommand {
         return list;
     }
 
-    private void addItem(Player p, LootCrate plugin, Crate crate) {
-        if(p == null) {
-            for(Player pl : Bukkit.getOnlinePlayers()) {
-                pl.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
-            }
-        }
+    private void addItem(Player p, Crate crate) {
+        if(p == null)
+            for(Player pl : Bukkit.getOnlinePlayers())
+                doChecks(pl, crate);
         else
+            doChecks(p, crate);
+    }
+
+    private void doChecks(Player p, Crate crate)
+    {
+        if(!fullInventory(p))
+        {
             p.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
+            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_SENDER,
+                    ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+                            Placeholder.PLAYER_NAME, p == null ? "everyone" : p.getName()));
+            plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER,
+                    ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+                            Placeholder.SENDER_NAME, sender.getName()));
+        }
+        else {
+            plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_COMMAND_GIVE_FULL_INVENTORY_RECEIVER,
+                    ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+                    Placeholder.SENDER_NAME, sender.getName(), Placeholder.PLAYER_NAME, p.getName()));
+            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_FULL_INVENTORY_SENDER,
+                    ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+                    Placeholder.PLAYER_NAME, p.getName()));
+        }
+    }
+
+    private boolean fullInventory(Player p)
+    {
+        System.out.println(p.getInventory().getSize());
+        System.out.println(p.getInventory().getContents().length);
+        return p.getInventory().firstEmpty() == -1;
     }
 
 }
