@@ -54,6 +54,10 @@ messages:
     
     #When a player tries to interact with a lootcrate they dont have the permission to
     lootcrate-interact-no-permission: "&cYou do not have permission to interact with &e{crate_name}&c."
+
+    #Sent to player when they join the server and they still have keys to claim
+    join-key-notification: "&fYou still have &6{key_amount}&f keys to claim. Use &6/lootcrate claim&f to claim them now"
+    # {key_amount} - The amount of keys to claim
     
     #When player attempts to open crate, but have a full inventory
     inventory-full: "&cYour inventory is full!"
@@ -212,7 +216,7 @@ messages:
     lootcrate-command-give-usage: "&cUsage: /lootcrate give [player name] [crate id] (amount)"
     
     #Sent on completion of command to receiver of key
-    lootcrate-command-give-success-to-receiver: "&fYou have received the key for the LootCrate &e{crate_name}&f."
+    lootcrate-command-give-success-to-receiver: "&fYou have received a key for the LootCrate &e{crate_name}&f. Use &6/lootcrate claim&f to claim it now."
     # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     # {sender_name} - Name of whoever sent the key
@@ -224,17 +228,15 @@ messages:
     # {player_name} - Name of whoever received the key
 
     #Sent to command sender when receiving player has a full inventory
-    lootcrate-command-full-inventory-to-receiver: "&c{sender_name} has tried to send you a key to &f{crate_name} &chowever, your inventory is full and you have not received the key."
+    lootcrate-command-claim-full-inventory: "&cYou cannot claim this key as your inventory is full."
     # {crate_name} - Name of crate
     # {crate_id} - Id of crate
     # {player_name} - Name of whoever was to receive the key
-    # {sender_name} - Name of whoever sent the key
 
-    #Sent to command sender when receiving player has a full inventory
-    lootcrate-command-full-inventory-to-sender: "&c{player_name} has a full inventory and has not received a key."
+    #Sent to player when they successfully claim a key
+    lootcrate-command-claim-success: "&fYou have claimed a key for &6{crate_name}&f."
     # {crate_name} - Name of crate
     # {crate_id} - Id of crate
-    # {player_name} - Name of whoever was to receive the key
 
     #Usage for command
     lootcrate-command-command-usage: "&cUsage: /lootcrate command [crate id] [item id] [command]"

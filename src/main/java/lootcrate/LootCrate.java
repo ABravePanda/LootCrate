@@ -26,6 +26,8 @@ public class LootCrate extends JavaPlugin {
     private CrateFileManager crateFileManager;
     private CacheManager cacheManager;
     private CrateManager crateManager;
+    private KeyFileManager keyFileManager;
+    private KeyCacheManager keyCacheManager;
     private LocationManager locationManager;
     private InventoryManager invManager;
     private CommandManager commandManager;
@@ -49,6 +51,8 @@ public class LootCrate extends JavaPlugin {
         crateFileManager = new CrateFileManager(this);
         cacheManager = new CacheManager(this);
         crateManager = new CrateManager(this);
+        keyFileManager = new KeyFileManager(this);
+        keyCacheManager = new KeyCacheManager(this);
         locationManager = new LocationManager(this);
         invManager = new InventoryManager(this);
         commandManager = new CommandManager(this);
@@ -58,7 +62,7 @@ public class LootCrate extends JavaPlugin {
                 new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
                 new PlayerChatListener(this));
 
-        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager);
+        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager);
 
         if(holoHook())
         {
@@ -71,7 +75,7 @@ public class LootCrate extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, customizationManager, cacheManager, crateManager, locationManager, invManager, commandManager, chatManager, holoManager);
+        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, customizationManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager, holoManager);
     }
 
     private void registerEvents(Listener... array) {
@@ -173,6 +177,20 @@ public class LootCrate extends JavaPlugin {
      */
     public CrateManager getCrateManager() {
         return crateManager;
+    }
+
+    /**
+     * @return the keyCacheManager
+     */
+    public KeyCacheManager getKeyCacheManager() {
+        return keyCacheManager;
+    }
+
+    /**
+     * @return the keyFileManager
+     */
+    public KeyFileManager getKeyFileManager() {
+        return keyFileManager;
     }
 
     /**

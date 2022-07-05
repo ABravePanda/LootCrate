@@ -1,8 +1,13 @@
 package lootcrate.utils;
 
+import lootcrate.LootCrate;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
 
@@ -26,5 +31,23 @@ public class ItemUtils {
             meta.setLore(Arrays.asList(lore));
         item.setItemMeta(meta);
         return item;
+    }
+
+    public static ItemStack addCrateID(LootCrate plugin, ItemStack item, int id)
+    {
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(plugin, "lootcrate-crate-id");
+        container.set(key, PersistentDataType.INTEGER, id);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static int getIDFromItem(LootCrate plugin, ItemStack item)
+    {
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(plugin, "lootcrate-crate-id");
+        return container.get(key, PersistentDataType.INTEGER);
     }
 }

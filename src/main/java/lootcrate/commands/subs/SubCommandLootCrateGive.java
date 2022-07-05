@@ -6,6 +6,7 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
+import lootcrate.managers.KeyCacheManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.ObjUtils;
@@ -21,6 +22,7 @@ public class SubCommandLootCrateGive extends SubCommand {
     private final String[] args;
     private final CommandSender sender;
     private final LootCrate plugin;
+    private final KeyCacheManager keyCacheManager;
 
     /**
      * Default constructor for any {@link lootcrate.commands.SubCommand}
@@ -35,6 +37,7 @@ public class SubCommandLootCrateGive extends SubCommand {
         this.plugin = plugin;
         this.sender = sender;
         this.args = args;
+        this.keyCacheManager = plugin.getKeyCacheManager();
     }
 
     @Override
@@ -114,17 +117,17 @@ public class SubCommandLootCrateGive extends SubCommand {
 
     private void addItem(Player p, Crate crate) {
         if(p == null)
-            for(Player pl : Bukkit.getOnlinePlayers())
-                doChecks(pl, crate);
-        else
-            doChecks(p, crate);
-    }
-
-    private void doChecks(Player p, Crate crate)
-    {
-        if(!fullInventory(p))
-        {
-            p.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
+            for(Player pl : Bukkit.getOnlinePlayers()) {
+                keyCacheManager.update(pl.getUniqueId(), crate);
+                plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_SENDER,
+                        ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+                                Placeholder.PLAYER_NAME, p == null ? "everyone" : p.getName()));
+                plugin.getMessageManager().sendMessage(pl, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER,
+                        ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+                                Placeholder.SENDER_NAME, sender.getName()));
+            }
+        else {
+            keyCacheManager.update(p.getUniqueId(), crate);
             plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_SENDER,
                     ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
                             Placeholder.PLAYER_NAME, p == null ? "everyone" : p.getName()));
@@ -132,21 +135,6 @@ public class SubCommandLootCrateGive extends SubCommand {
                     ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
                             Placeholder.SENDER_NAME, sender.getName()));
         }
-        else {
-            plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_COMMAND_GIVE_FULL_INVENTORY_RECEIVER,
-                    ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
-                    Placeholder.SENDER_NAME, sender.getName(), Placeholder.PLAYER_NAME, p.getName()));
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_FULL_INVENTORY_SENDER,
-                    ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
-                    Placeholder.PLAYER_NAME, p.getName()));
-        }
-    }
-
-    private boolean fullInventory(Player p)
-    {
-        System.out.println(p.getInventory().getSize());
-        System.out.println(p.getInventory().getContents().length);
-        return p.getInventory().firstEmpty() == -1;
     }
 
 }
