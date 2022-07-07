@@ -2,6 +2,7 @@ package lootcrate.gui.frames;
 
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
+import lootcrate.enums.CustomizationOption;
 import lootcrate.enums.Message;
 import lootcrate.enums.Placeholder;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
@@ -29,7 +30,7 @@ public class KeyViewFrame extends ExtendedFrame implements Listener {
 
         this.plugin = plugin;
         this.usableSize = getUsableSize()-1;
-        this.claimAll = new GUIItem(usableSize, Material.CHEST, ChatColor.GOLD + "Claim All", ChatColor.GRAY + "Click to claim all keys");
+        this.claimAll = new GUIItem(usableSize, plugin.getCustomizationManager().parseMaterial(CustomizationOption.CLAIM_MENU_CLAIMALL_MATERIAL), plugin.getCustomizationManager().parseName(CustomizationOption.CLAIM_MENU_CLAIMALL_NAME));
 
         generateFrame();
         generateNavigation();

@@ -29,7 +29,9 @@ public enum CustomizationOption {
     REMOVING_ANIMATION_FILLER_NAME("removing-animation-filler-name"),
     REMOVING_ANIMATION_WINNER_BACKGROUND_MATERIAL("removing-animation-winner-background-material"),
     REMOVING_ANIMATION_WINNER_BACKGROUND_NAME("removing-animation-winner-background-name"),
-    REMOVING_ANIMATION_DURATION("removing-animation-duration");
+    REMOVING_ANIMATION_DURATION("removing-animation-duration"),
+    CLAIM_MENU_CLAIMALL_MATERIAL("claim-all-material"),
+    CLAIM_MENU_CLAIMALL_NAME("claim-all-name");
 
 
 

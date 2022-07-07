@@ -325,6 +325,10 @@ custom-gui:
     navigation-previous-material: "ARROW"
     navigation-previous-name: "&6Previous"
 
+    #Claim Menu Options
+    claim-all-material: "CHEST"
+    claim-all-name: "&6Claim All Keys"
+
     #CSGO Animation Options
     csgo-animation-pointer-material: "REDSTONE_TORCH"
     csgo-animation-pointer-name: "&c&lReward"
