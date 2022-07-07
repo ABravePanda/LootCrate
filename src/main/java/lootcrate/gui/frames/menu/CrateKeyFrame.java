@@ -101,7 +101,7 @@ public class CrateKeyFrame extends BasicFrame implements Listener {
     @Override
     public void previousPage() {
         this.closeFrame(player, this);
-        this.openFrame(player, new CrateItemFrame(plugin, player, crate));
+        this.openFrame(player, new CrateFrame(plugin, player, crate));
         return;
     }
 }

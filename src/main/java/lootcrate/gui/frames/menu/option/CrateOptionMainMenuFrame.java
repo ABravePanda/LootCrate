@@ -90,6 +90,7 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
                 state.setCrate(crate);
                 plugin.getChatManager().addPlayer(p, state);
                 plugin.getChatManager().sendNotification(p);
+                e.setCancelled(true);
                 this.close();
                 return;
             case COMMAND_BLOCK:
@@ -97,6 +98,7 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
                 state1.setCrate(crate);
                 plugin.getChatManager().addPlayer(p, state1);
                 plugin.getChatManager().sendNotification(p);
+                e.setCancelled(true);
                 this.close();
                 return;
             case JUKEBOX:
@@ -116,7 +118,7 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
             default:
                 return;
         }
-
+        e.setCancelled(true);
         this.close();
         frameToOpen.open();
     }
@@ -129,7 +131,7 @@ public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
     @Override
     public void previousPage() {
         this.closeFrame(player, this);
-        this.openFrame(player, new CrateLocationFrame(plugin, player, crate));
+        this.openFrame(player, new CrateFrame(plugin, player, crate));
         return;
     }
 }

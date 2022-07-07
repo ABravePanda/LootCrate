@@ -5,18 +5,15 @@ import lootcrate.gui.events.custom.GUICloseEvent;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.gui.items.NavItems;
-import lootcrate.objects.Crate;
 import lootcrate.utils.ObjUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -219,6 +216,11 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
         if (e.getCurrentItem() == null)
             return;
 
+        if(e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY && !(this instanceof ShiftClickAllowed)) {
+            e.setCancelled(true);
+            return;
+        }
+
         //override the guiclick
         if(e.getCurrentItem().equals(navItems.getNavBlocker()))
         {
@@ -228,22 +230,22 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
 
         if(e.getCurrentItem().equals(navItems.getNavClose()))
         {
-            player.closeInventory();
             e.setCancelled(true);
+            player.closeInventory();
             return;
         }
 
         if(e.getCurrentItem().equals(navItems.getNavNext()))
         {
-            nextPage();
             e.setCancelled(true);
+            nextPage();
             return;
         }
 
         if(e.getCurrentItem().equals(navItems.getNavPrev()))
         {
-            previousPage();
             e.setCancelled(true);
+            previousPage();
             return;
         }
 

@@ -87,6 +87,7 @@ public class CrateOptionKnockBackFrame extends BasicFrame implements Listener {
                 return;
         }
 
+        e.setCancelled(true);
         this.close();
         new CrateOptionKnockBackFrame(plugin, p, crate).open();
 

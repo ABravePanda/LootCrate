@@ -1,12 +1,10 @@
 package lootcrate.gui.frames.menu.option;
 
 import lootcrate.LootCrate;
-import lootcrate.enums.ChatState;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.CrateLocationFrame;
+import lootcrate.gui.frames.types.ShiftClickAllowed;
 import lootcrate.gui.frames.types.BasicFrame;
-import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CrateOptionSoundFrame extends BasicFrame implements Listener {
+public class CrateOptionSoundFrame extends BasicFrame implements Listener, ShiftClickAllowed {
 
     private final LootCrate plugin;
     private final Crate crate;
@@ -94,6 +92,7 @@ public class CrateOptionSoundFrame extends BasicFrame implements Listener {
         if(action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY))
         {
             crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.name()));
+            e.setCancelled(true);
             plugin.getCacheManager().update(crate);
             this.close();
         }
