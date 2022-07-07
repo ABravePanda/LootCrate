@@ -3,6 +3,7 @@ package lootcrate.gui.frames.menu;
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
+import lootcrate.gui.frames.types.ShiftClickAllowed;
 import lootcrate.gui.items.GUIItem;
 
 import lootcrate.objects.Crate;
@@ -17,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class CrateItemFrame extends ExtendedFrame implements Listener {
+public class CrateItemFrame extends ExtendedFrame implements Listener, ShiftClickAllowed {
 
     private static final Material BACKGROUND = Material.WHITE_STAINED_GLASS_PANE;
     private final LootCrate plugin;
