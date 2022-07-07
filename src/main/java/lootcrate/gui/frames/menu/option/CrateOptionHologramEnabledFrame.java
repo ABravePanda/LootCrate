@@ -3,6 +3,7 @@ package lootcrate.gui.frames.menu.option;
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
+import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.managers.HologramManager;
@@ -118,7 +119,7 @@ public class CrateOptionHologramEnabledFrame extends BasicFrame implements Liste
     @Override
     public void previousPage() {
         this.closeFrame(player, this);
-        this.openFrame(player, new CrateOptionAnimationFrame(plugin, player, crate));
+        this.openFrame(player, new CrateOptionMainMenuFrame(plugin, player, crate));
         return;
     }
 
