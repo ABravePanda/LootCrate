@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class KeyFileManager extends BasicManager {
+public class KeyFileManager extends FileManager {
     private final String KEY_PREFIX = "keys.";
     public File keyFile;
 

@@ -118,8 +118,8 @@ public class LootCrateCommand extends Command {
                 list.add("gui");
             if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_PREVIEW))
                 list.add("preview");
-
-            list.add("claim");
+            if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_CLAIM))
+                list.add("claim");
             return list;
         }
 

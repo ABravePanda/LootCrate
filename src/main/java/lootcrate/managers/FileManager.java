@@ -25,6 +25,7 @@ public class FileManager extends BasicManager {
 
     }
 
+
     public File createFile(FileType type)
     {
         File file = new File(this.getPlugin().getDataFolder(), File.separator + type.getName());

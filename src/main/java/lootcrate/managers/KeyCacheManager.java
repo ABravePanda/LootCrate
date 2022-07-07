@@ -51,6 +51,17 @@ public class KeyCacheManager extends BasicManager {
         return cache.get(uuid) == null ? new ArrayList<>() : cache.get(uuid);
     }
 
+    public List<Crate> getCratesByUUID(UUID uuid)
+    {
+        List<Crate> crateList = new ArrayList<>();
+        for(int i : getCrateIDSByUUID(uuid))
+        {
+            if(getPlugin().getCacheManager().getCrateById(i) != null)
+                crateList.add(getPlugin().getCacheManager().getCrateById(i));
+        }
+        return crateList;
+    }
+
 
     /**
      * Gets the cache list

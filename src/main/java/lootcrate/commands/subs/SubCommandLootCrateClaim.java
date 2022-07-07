@@ -34,7 +34,7 @@ public class SubCommandLootCrateClaim extends SubCommand {
      *
      */
     public SubCommandLootCrateClaim(LootCrate plugin, CommandSender sender, String[] args) {
-        super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_GIVE, Permission.COMMAND_LOOTCRATE_ADMIN);
+        super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_CLAIM, Permission.COMMAND_LOOTCRATE_ADMIN);
         this.plugin = plugin;
         this.sender = sender;
         this.args = args;

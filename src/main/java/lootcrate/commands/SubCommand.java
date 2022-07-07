@@ -25,11 +25,11 @@ public abstract class SubCommand {
     /**
      * Checks if sender has the given permissions
      *
-     * @param sender Sender to check
      * @param perm   Permissions to check
      * @return True if even just one permission is passed. False if none pass
      */
     public boolean hasPermission(Permission... perm) {
+        if(perm == null) return true;
         for (Permission p : perm)
             if (sender.hasPermission(p.getKey()))
                 return true;
@@ -39,7 +39,6 @@ public abstract class SubCommand {
     /**
      * Tests if sender has the given permissions for command
      *
-     * @param sender Sender to check if they have permissions
      * @return
      */
     public boolean testPermissions() {

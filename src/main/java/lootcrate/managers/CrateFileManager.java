@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CrateFileManager extends BasicManager {
+public class CrateFileManager extends FileManager {
     private final String CRATE_PREFIX = "crates.";
     public File crateFile;
 
@@ -50,7 +50,7 @@ public class CrateFileManager extends BasicManager {
      * @return A list of crates
      */
     public List<Crate> loadAllCrates() {
-        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getConfiguration(crateFile);
         List<Crate> crates = new ArrayList<Crate>();
         HashMap<String, Object> map = new HashMap<String, Object>();
         if (config.getConfigurationSection(CRATE_PREFIX) == null)
@@ -67,7 +67,7 @@ public class CrateFileManager extends BasicManager {
     /**
      * Saves the given Crate to the "crates.yml" file
      *
-     * @param Crate The Crate to be saved
+     * @param crate The Crate to be saved
      */
     public void saveCrate(Crate crate) {
         FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
@@ -80,7 +80,7 @@ public class CrateFileManager extends BasicManager {
      * for Crate renaming
      *
      * @param oldName Name to override
-     * @param Crate   Crate to save
+     * @param crate   Crate to save
      */
     public void overrideSave(String oldName, Crate crate) {
         FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
@@ -92,7 +92,7 @@ public class CrateFileManager extends BasicManager {
     /**
      * Removes the given Crate from the "crates.yml" file
      *
-     * @param Crate The Crate to be remove
+     * @param crate The Crate to be remove
      */
     public void removeCrate(Crate crate) {
         FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
