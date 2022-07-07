@@ -86,13 +86,13 @@
             <artifactId>maven-jar-plugin</artifactId>
             <version>2.3.1</version>
             <configuration>
-               <outputDirectory>Z:\Spigot Test Server\plugins</outputDirectory>
+               <outputDirectory>C:\Users\cm312\IdeaProjects\Builds</outputDirectory>
             </configuration>
          </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
-            <version>3.3.0-SNAPSHOT</version>
+            <version>3.3.0</version>
             <!-- Do not include the <configuration>...</configuration> part if you are using Sponge! -->
             <configuration>
                <relocations>

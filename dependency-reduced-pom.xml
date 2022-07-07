@@ -4,7 +4,7 @@
   <groupId>com.tompkins-development.spigot</groupId>
   <artifactId>LootCrate</artifactId>
   <name>LootCrate</name>
-  <version>0.9.1</version>
+  <version>0.9.2</version>
   <description>A plugin to add lootcrates</description>
   <build>
     <resources>
@@ -37,12 +37,12 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.3.1</version>
         <configuration>
-          <outputDirectory>Z:\Spigot Test Server\plugins</outputDirectory>
+          <outputDirectory>C:\Users\cm312\IdeaProjects\Builds</outputDirectory>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.3.0-SNAPSHOT</version>
+        <version>3.3.0</version>
         <executions>
           <execution>
             <phase>package</phase>
