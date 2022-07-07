@@ -4,6 +4,8 @@ import lootcrate.LootCrate;
 import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
+import lootcrate.gui.frames.menu.CrateFrame;
+import lootcrate.gui.frames.menu.CrateMainMenuFrame;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
@@ -133,6 +135,7 @@ public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
                 crate.setOption(new CrateOption(CrateOptionType.ANIMATION_STYLE, style.toString()));
             plugin.getCacheManager().update(crate);
         }
+        e.setCancelled(true);
 
 
     }
