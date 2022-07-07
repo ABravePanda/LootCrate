@@ -75,7 +75,11 @@ public class LootCrate extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, customizationManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager, holoManager);
+        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, customizationManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager);
+        if(holoHook())
+        {
+            toggleManagers(false, holoManager);
+        }
     }
 
     private void registerEvents(Listener... array) {
