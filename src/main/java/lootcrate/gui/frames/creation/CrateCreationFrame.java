@@ -2,8 +2,7 @@ package lootcrate.gui.frames.creation;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.CrateFrame;
-import lootcrate.gui.frames.menu.CrateMainMenuFrame;
+import lootcrate.gui.frames.menu.CrateListFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
@@ -14,15 +13,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CrateCreateFrame extends ExtendedFrame implements Listener {
+public class CrateCreationFrame extends ExtendedFrame implements Listener {
 
     private final LootCrate plugin;
     private final List<Crate> crates;
 
-    public CrateCreateFrame(LootCrate plugin, Player p) {
+    public CrateCreationFrame(LootCrate plugin, Player p) {
         super(plugin, p, ChatColor.GREEN + "Crate Main Menu");
 
         this.plugin = plugin;
@@ -67,7 +65,14 @@ public class CrateCreateFrame extends ExtendedFrame implements Listener {
         {
             e.setCancelled(true);
             this.closeFrame(p, this);
-            this.openFrame(p, new CrateMainMenuFrame(plugin, p));
+            this.openFrame(p, new CrateListFrame(plugin, p));
+        }
+
+        if(item.getType() == Material.CRAFTING_TABLE)
+        {
+            e.setCancelled(true);
+            this.closeFrame(p, this);
+            this.openFrame(p, new CrateListFrame(plugin, p));
         }
 
     }

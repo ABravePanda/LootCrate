@@ -2,6 +2,8 @@ package lootcrate.gui.frames.menu;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
+import lootcrate.gui.frames.creation.items.CrateItemFrame;
+import lootcrate.gui.frames.creation.items.CrateItemMainMenuFrame;
 import lootcrate.gui.frames.menu.option.CrateOptionMainMenuFrame;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
@@ -70,7 +72,7 @@ public class CrateFrame extends BasicFrame implements Listener {
 
         switch (item.getType()) {
             case BRICKS:
-                frameToOpen = new CrateItemFrame(plugin, p, crate);
+                frameToOpen = new CrateItemMainMenuFrame(plugin, p, crate);
                 break;
             case TRIPWIRE_HOOK:
                 frameToOpen = new CrateKeyFrame(plugin, p, crate);
@@ -98,6 +100,6 @@ public class CrateFrame extends BasicFrame implements Listener {
     @Override
     public void previousPage() {
         this.closeFrame(player, this);
-        this.openFrame(player, new CrateMainMenuFrame(plugin, player));
+        this.openFrame(player, new CrateListFrame(plugin, player));
     }
 }

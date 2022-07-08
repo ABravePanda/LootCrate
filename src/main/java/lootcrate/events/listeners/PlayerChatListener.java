@@ -3,8 +3,10 @@ package lootcrate.events.listeners;
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
 import lootcrate.enums.CrateOptionType;
+import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
+import lootcrate.utils.CommandUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -44,6 +46,12 @@ public class PlayerChatListener implements Listener {
                     return;
                 crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.toString()));
                 p.playSound(p.getLocation(), sound, 1, 1);
+                break;
+            case CREATE_CRATE_NAME:
+                crate = new Crate(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
+                plugin.getCrateManager().addDefaultOptions(crate);
+                plugin.getCacheManager().update(crate);
+                p.sendMessage("Crate has been created. Please use '/lootcrate gui " + crate.getId() + "' to edit it.");
                 break;
             default:
                 return;

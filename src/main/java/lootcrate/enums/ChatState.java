@@ -3,7 +3,7 @@ package lootcrate.enums;
 import lootcrate.objects.Crate;
 
 public enum ChatState {
-    CHANGE_CRATE_NAME(null), CHANGE_CRATE_MESSAGE(null), CHANGE_CRATE_SOUND(null);
+    CHANGE_CRATE_NAME(null), CHANGE_CRATE_MESSAGE(null), CHANGE_CRATE_SOUND(null), CREATE_CRATE_NAME(null);
 
     private Crate crate;
 

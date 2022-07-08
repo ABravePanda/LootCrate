@@ -53,6 +53,9 @@ public class ChatManager extends BasicManager {
                 p.sendMessage(ChatColor.GOLD + "Enter the new open sound for your crate. " + ChatColor.RED
                         + "Options: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html");
                 break;
+            case CREATE_CRATE_NAME:
+                p.sendMessage(ChatColor.GOLD + "Enter the name for your new crate.");
+                break;
             default:
                 break;
 
