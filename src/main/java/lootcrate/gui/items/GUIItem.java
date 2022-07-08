@@ -142,6 +142,19 @@ public class GUIItem implements Listener {
         setName(color + ChatColor.stripColor(item.getItemMeta().getDisplayName()));
     }
 
+    public String getDislayName()
+    {
+        ItemMeta meta = item.getItemMeta();
+        if(meta == null) return this.getItemStack().getType().name();
+
+        return meta.getDisplayName();
+    }
+
+    public String getStrippedName()
+    {
+        return ChatColor.stripColor(getDislayName());
+    }
+
     public void setGlowing(boolean glowing)
     {
         if(glowing) {

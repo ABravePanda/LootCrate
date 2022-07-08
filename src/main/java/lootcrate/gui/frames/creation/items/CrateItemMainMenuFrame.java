@@ -5,6 +5,7 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
+import lootcrate.objects.CrateItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -69,7 +70,7 @@ public class CrateItemMainMenuFrame extends ExtendedFrame implements Listener {
         {
             e.setCancelled(true);
             this.closeFrame(p, this);
-            this.openFrame(p, new CrateItemCreationFrame(plugin, p, crate));
+            this.openFrame(p, new CrateItemCreationFrame(plugin, p, crate, new CrateItem()));
         }
 
     }

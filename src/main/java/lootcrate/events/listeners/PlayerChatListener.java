@@ -3,10 +3,12 @@ package lootcrate.events.listeners;
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
 import lootcrate.enums.CrateOptionType;
+import lootcrate.gui.frames.creation.items.CrateItemCreationCommandsFrame;
 import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import lootcrate.utils.CommandUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -31,6 +33,7 @@ public class PlayerChatListener implements Listener {
 
         ChatState state = plugin.getChatManager().getState(p);
         Crate crate = state.getCrate();
+        Crate finalCrate;
 
         switch (state) {
             case CHANGE_CRATE_NAME:
@@ -51,7 +54,19 @@ public class PlayerChatListener implements Listener {
                 crate = new Crate(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
                 plugin.getCrateManager().addDefaultOptions(crate);
                 plugin.getCacheManager().update(crate);
-                p.sendMessage("Crate has been created. Please use '/lootcrate gui " + crate.getId() + "' to edit it.");
+                finalCrate = crate;
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    plugin.getInvManager().openFrame(p, new CrateFrame(plugin, e.getPlayer(), finalCrate));
+                });
+                break;
+            case ADD_ITEM_COMMAND:
+                state.getCrateItem().getCommands().add(e.getMessage());
+                crate.replaceItem(state.getCrateItem());
+                plugin.getCacheManager().update(crate);
+                finalCrate = crate;
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    plugin.getInvManager().openFrame(p, new CrateItemCreationCommandsFrame(plugin, e.getPlayer(), finalCrate, state.getCrateItem()));
+                });
                 break;
             default:
                 return;

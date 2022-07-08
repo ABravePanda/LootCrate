@@ -129,11 +129,14 @@ public class Crate implements ConfigurationSerializable {
         getItems().remove(item);
     }
 
-    public void replaceItem(CrateItem item) {
+    public boolean replaceItem(CrateItem item) {
         for (CrateItem item2 : getItems()) {
-            if (item2.getId() == item.getId())
+            if (item2.getId() == item.getId()) {
                 item2 = item;
+                return true;
+            }
         }
+        return false;
     }
 
     public int getChanceCount() {

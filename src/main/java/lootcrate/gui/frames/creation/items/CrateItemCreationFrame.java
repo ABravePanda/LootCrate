@@ -5,6 +5,7 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
+import lootcrate.objects.CrateItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,15 +17,16 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;
+    private CrateItem crateItem;
 
-    public CrateItemCreationFrame(LootCrate plugin, Player p, Crate crate) {
+    public CrateItemCreationFrame(LootCrate plugin, Player p, Crate crate, CrateItem item) {
         super(plugin, p, ChatColor.GREEN + "Crate Item Creation Menu");
 
         this.plugin = plugin;
         this.crate = crate;
+        this.crateItem = item;
 
         generateFrame();
-        generateNavigation();
         registerItems();
         registerFrame();
     }
@@ -33,7 +35,6 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
     public void generateFrame() {
         fillBackground(Material.WHITE_STAINED_GLASS_PANE);
         fillItems();
-        fillItemSpot();
     }
 
     @Override
@@ -45,24 +46,14 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
 
     private void fillItems()
     {
-        this.setItem(10, new GUIItem(10, Material.BEACON, ChatColor.GREEN + "Chance", ChatColor.GRAY + "50%"));
-        this.setItem(28, new GUIItem(28, Material.GLASS, ChatColor.GREEN + "Display Only", ChatColor.GRAY + "False"));
-        this.setItem(16, new GUIItem(16, Material.COMMAND_BLOCK, ChatColor.GREEN + "Commands", ChatColor.GRAY + "0 Commands"));
-        this.setItem(25, new GUIItem(25, Material.BUCKET, ChatColor.GREEN + "Minimum Amount", ChatColor.GRAY + "1"));
-        this.setItem(34, new GUIItem(34, Material.WATER_BUCKET, ChatColor.GREEN + "Maximum Amount", ChatColor.GRAY + "5"));
-    }
-
-    private void fillItemSpot()
-    {
-        this.setItem(12, new GUIItem(12, Material.GRAY_STAINED_GLASS_PANE, ChatColor.GOLD + "Place item here"));
-        this.setItem(13, new GUIItem(13, Material.GRAY_STAINED_GLASS_PANE, ChatColor.GOLD + "Place item here"));
-        this.setItem(14, new GUIItem(14, Material.GRAY_STAINED_GLASS_PANE, ChatColor.GOLD + "Place item here"));
-        this.setItem(21, new GUIItem(21, Material.GRAY_STAINED_GLASS_PANE, ChatColor.GOLD + "Place item here"));
-        this.setItem(22, new GUIItem(14, Material.AIR));
-        this.setItem(23, new GUIItem(23, Material.GRAY_STAINED_GLASS_PANE, ChatColor.GOLD + "Place item here"));
-        this.setItem(30, new GUIItem(30, Material.GRAY_STAINED_GLASS_PANE, ChatColor.GOLD + "Place item here"));
-        this.setItem(31, new GUIItem(31, Material.GRAY_STAINED_GLASS_PANE, ChatColor.GOLD + "Place item here"));
-        this.setItem(32, new GUIItem(32, Material.GRAY_STAINED_GLASS_PANE, ChatColor.GOLD + "Place item here"));
+        this.setItem(10, new GUIItem(10, Material.ITEM_FRAME, ChatColor.GREEN + "Set Icon", ChatColor.GRAY + "Set the icon of the reward"));
+        this.setItem(13, new GUIItem(13, Material.BUCKET, ChatColor.GREEN + "Set Minimum Amount", ChatColor.GRAY + "Set the minimum amount of the reward players will receive"));
+        this.setItem(16, new GUIItem(16, Material.WATER_BUCKET, ChatColor.GREEN + "Set Maximum Amount", ChatColor.GRAY + "Set the maximum amount of the reward players will receive"));
+        this.setItem(28, new GUIItem(28, Material.GLASS, ChatColor.GREEN + "Set Display", ChatColor.GRAY + "Set if item is an icon only or if players will receive the reward"));
+        this.setItem(31, new GUIItem(31, Material.COMMAND_BLOCK, ChatColor.GREEN + "Set Commands", ChatColor.GRAY + "Assign commands to run when reward is received"));
+        this.setItem(34, new GUIItem(34, Material.BEACON, ChatColor.GREEN + "Set Chance", ChatColor.GRAY + "Set the chance the player will receive this reward"));
+        this.setItem(52, new GUIItem(52, Material.FIRE_CHARGE, ChatColor.RED + "Delete Reward", ChatColor.GRAY + "Remove this reward"));
+        this.setItem(53, new GUIItem(53, Material.SLIME_BALL, ChatColor.GREEN + "Save Reward", ChatColor.GRAY + "Save this reward"));
     }
 
     // events
@@ -75,16 +66,51 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
         Player p = e.getPlayer();
         ItemStack item = e.getItem().getItemStack();
 
-        if(item.getType() == Material.CHEST)
+
+        if(item.getType() == Material.ITEM_FRAME)
         {
             e.setCancelled(true);
+            this.closeFrame(p, this);
+            this.openFrame(p, new CrateItemCreationMaterialFrame(plugin, p, crate, crateItem));
+        }
+
+        if(item.getType() == Material.BUCKET || item.getType() == Material.WATER_BUCKET)
+        {
+            e.setCancelled(true);
+            this.closeFrame(p, this);
+            this.openFrame(p, new CrateItemCreationMinAmount(plugin, p, crate, crateItem));
+        }
+
+        if(item.getType() == Material.GLASS)
+        {
+            e.setCancelled(true);
+            this.closeFrame(p, this);
+            this.openFrame(p, new CrateItemCreationDisplayFrame(plugin, p, crate, crateItem));
+        }
+
+        if(item.getType() == Material.COMMAND_BLOCK)
+        {
+            e.setCancelled(true);
+            this.closeFrame(p, this);
+            this.openFrame(p, new CrateItemCreationCommandsFrame(plugin, p, crate, crateItem));
+        }
+
+        if(item.getType() == Material.SLIME_BALL)
+        {
+            e.setCancelled(true);
+            if(!crate.replaceItem(crateItem)) crate.addItem(crateItem);
+            plugin.getCacheManager().update(crate);
             this.closeFrame(p, this);
             this.openFrame(p, new CrateItemFrame(plugin, p, crate));
         }
 
-        if(item.getType() == Material.CRAFTING_TABLE)
-        {
-
+        if(item.getType() == Material.FIRE_CHARGE) {
+            e.setCancelled(true);
+            if(crate.getItem(crateItem.getId()) == null) return;
+            crate.removeItem(crateItem);
+            plugin.getCacheManager().update(crate);
+            this.closeFrame(p, this);
+            this.openFrame(p, new CrateItemFrame(plugin, p, crate));
         }
 
     }

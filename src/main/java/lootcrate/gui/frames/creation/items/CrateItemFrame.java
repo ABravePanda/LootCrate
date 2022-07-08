@@ -19,7 +19,7 @@ import org.bukkit.event.inventory.InventoryAction;
 
 import java.util.List;
 
-public class CrateItemFrame extends ExtendedFrame implements Listener, ShiftClickAllowed {
+public class CrateItemFrame extends ExtendedFrame implements Listener {
 
     private static final Material BACKGROUND = Material.WHITE_STAINED_GLASS_PANE;
     private final LootCrate plugin;
@@ -74,7 +74,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener, ShiftClic
             for (String command : item.getCommands())
                 guiItem.addLoreLine(ChatColor.GRAY + "  - /" + ChatColor.GOLD + command);
         guiItem.addLoreLine(" ");
-        guiItem.addLoreLine(ChatColor.RED + "Shift-Click to Remove");
+        guiItem.addLoreLine(ChatColor.RED + "Left-Click to Edit");
         guiItem.setCrateItem(item);
         return guiItem;
     }
@@ -96,15 +96,8 @@ public class CrateItemFrame extends ExtendedFrame implements Listener, ShiftClic
 
         CrateItem item = crate.getItem(this.getContents()[e.getItem().getSlot()].getCrateItem().getId());
 
-        if (e.getClickEvent().getAction() != InventoryAction.MOVE_TO_OTHER_INVENTORY)
-            return;
-
-
-        crate.removeItem(item);
-        plugin.getCacheManager().update(crate);
-
         this.closeFrame(p, this);
-        this.openFrame(p, new CrateItemFrame(plugin, p, crate));
+        this.openFrame(p, new CrateItemCreationFrame(plugin, p, crate, item));
     }
 
     @Override

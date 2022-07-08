@@ -56,6 +56,9 @@ public class ChatManager extends BasicManager {
             case CREATE_CRATE_NAME:
                 p.sendMessage(ChatColor.GOLD + "Enter the name for your new crate.");
                 break;
+            case ADD_ITEM_COMMAND:
+                p.sendMessage(ChatColor.GOLD + "Enter the command you would like to add (without '/'). Use {player} as a placeholder.");
+                break;
             default:
                 break;
 
