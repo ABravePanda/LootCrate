@@ -6,6 +6,7 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
+import lootcrate.gui.frames.creation.CrateCreateFrame;
 import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.gui.frames.menu.CrateMainMenuFrame;
 import lootcrate.gui.frames.types.Frame;
@@ -48,7 +49,7 @@ public class SubCommandLootCrateGui extends SubCommand {
         if (!this.testPermissions())
             return;
 
-        Frame frame = new CrateMainMenuFrame(plugin, p);
+        Frame frame = new CrateCreateFrame(plugin, p);
         if (args.length == 2) {
             Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
             if (crate == null) {
