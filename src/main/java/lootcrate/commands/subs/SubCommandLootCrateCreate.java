@@ -8,7 +8,6 @@ import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
-import lootcrate.utils.DebugUtils;
 import org.bukkit.command.CommandSender;
 
 import java.util.LinkedList;
@@ -45,6 +44,7 @@ public class SubCommandLootCrateCreate extends SubCommand {
      */
     @Override
     public void runSubCommand(boolean playerRequired) {
+
         if (this.testPlayer(playerRequired))
             return;
 

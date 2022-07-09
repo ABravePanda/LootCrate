@@ -1,11 +1,13 @@
 package lootcrate.enums;
 
 import lootcrate.objects.Crate;
+import lootcrate.objects.CrateItem;
 
 public enum ChatState {
-    CHANGE_CRATE_NAME(null), CHANGE_CRATE_MESSAGE(null), CHANGE_CRATE_SOUND(null);
+    CHANGE_CRATE_NAME(null), CHANGE_CRATE_MESSAGE(null), CHANGE_CRATE_SOUND(null), CREATE_CRATE_NAME(null), ADD_ITEM_COMMAND(null);
 
     private Crate crate;
+    private CrateItem crateItem;
 
     ChatState(Crate crate) {
         this.crate = crate;
@@ -17,5 +19,13 @@ public enum ChatState {
 
     public void setCrate(Crate crate) {
         this.crate = crate;
+    }
+
+    public CrateItem getCrateItem() {
+        return crateItem;
+    }
+
+    public void setCrateItem(CrateItem crateItem) {
+        this.crateItem = crateItem;
     }
 }
