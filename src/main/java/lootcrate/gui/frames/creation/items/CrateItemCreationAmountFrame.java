@@ -2,7 +2,6 @@ package lootcrate.gui.frames.creation.items;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
@@ -14,18 +13,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-public class CrateItemCreationMinAmount extends ExtendedFrame implements Listener {
+public class CrateItemCreationAmountFrame extends ExtendedFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;
     private CrateItem crateItem;
-    public CrateItemCreationMinAmount(LootCrate plugin, Player p, Crate crate, CrateItem item) {
-        super(plugin, p, ChatColor.GREEN + "Crate Item Creation Menu");
+    public CrateItemCreationAmountFrame(LootCrate plugin, Player p, Crate crate, CrateItem item) {
+        super(plugin, p, "");
 
         this.plugin = plugin;
         this.crate = crate;
         this.crateItem = item;
-
+        this.title = ChatColor.GREEN + "" + crateItem.getId();
         generateFrame();
         generateNavigation();
         registerItems();

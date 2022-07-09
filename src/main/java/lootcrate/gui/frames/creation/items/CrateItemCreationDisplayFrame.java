@@ -22,11 +22,12 @@ public class CrateItemCreationDisplayFrame extends ExtendedFrame implements List
     private final Crate crate;
     private CrateItem crateItem;
     public CrateItemCreationDisplayFrame(LootCrate plugin, Player p, Crate crate, CrateItem item) {
-        super(plugin, p, ChatColor.GREEN + "Crate Item Creation Menu");
+        super(plugin, p, "");
 
         this.plugin = plugin;
         this.crate = crate;
         this.crateItem = item;
+        this.title = ChatColor.GREEN + "" + crateItem.getId();
 
         generateFrame();
         generateNavigation();

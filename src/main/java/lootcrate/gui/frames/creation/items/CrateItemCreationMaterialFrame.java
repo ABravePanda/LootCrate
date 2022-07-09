@@ -22,11 +22,12 @@ public class CrateItemCreationMaterialFrame extends BasicFrame implements Listen
     private final GUIItem resetItem;
 
     public CrateItemCreationMaterialFrame(LootCrate plugin, Player p, Crate crate, CrateItem item) {
-        super(plugin, p, ChatColor.GREEN + "Crate Item Creation Menu");
+        super(plugin, p, "");
 
         this.plugin = plugin;
         this.crate = crate;
         this.crateItem = item;
+        this.title = ChatColor.GREEN + "" + crateItem.getId();
         this.resetItem = new GUIItem(21, Material.FIRE_CHARGE, ChatColor.RED + "Reset Item");
         this.saveItem = new GUIItem(25, Material.SLIME_BALL, ChatColor.GREEN + "Save Item");
 

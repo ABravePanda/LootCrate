@@ -20,11 +20,12 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
     private CrateItem crateItem;
 
     public CrateItemCreationFrame(LootCrate plugin, Player p, Crate crate, CrateItem item) {
-        super(plugin, p, ChatColor.GREEN + "Crate Item Creation Menu");
+        super(plugin, p, "");
 
         this.plugin = plugin;
         this.crate = crate;
         this.crateItem = item;
+        this.title = ChatColor.GREEN + "" + crateItem.getId();
 
         generateFrame();
         registerItems();
@@ -52,8 +53,9 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
         this.setItem(28, new GUIItem(28, Material.GLASS, ChatColor.GREEN + "Set Display", ChatColor.GRAY + "Set if item is an icon only or if players will receive the reward"));
         this.setItem(31, new GUIItem(31, Material.COMMAND_BLOCK, ChatColor.GREEN + "Set Commands", ChatColor.GRAY + "Assign commands to run when reward is received"));
         this.setItem(34, new GUIItem(34, Material.BEACON, ChatColor.GREEN + "Set Chance", ChatColor.GRAY + "Set the chance the player will receive this reward"));
-        this.setItem(52, new GUIItem(52, Material.FIRE_CHARGE, ChatColor.RED + "Delete Reward", ChatColor.GRAY + "Remove this reward"));
-        this.setItem(53, new GUIItem(53, Material.SLIME_BALL, ChatColor.GREEN + "Save Reward", ChatColor.GRAY + "Save this reward"));
+        this.setItem(48, new GUIItem(48, Material.FIRE_CHARGE, ChatColor.RED + "Delete Reward", ChatColor.GRAY + "Remove this reward"));
+        this.setItem(49, new GUIItem(49, Material.PAPER, ChatColor.GOLD + "Reward ID", ChatColor.GRAY + "" + crateItem.getId()));
+        this.setItem(50, new GUIItem(50, Material.SLIME_BALL, ChatColor.GREEN + "Save Reward", ChatColor.GRAY + "Save this reward"));
     }
 
     // events
@@ -78,7 +80,7 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
         {
             e.setCancelled(true);
             this.closeFrame(p, this);
-            this.openFrame(p, new CrateItemCreationMinAmount(plugin, p, crate, crateItem));
+            this.openFrame(p, new CrateItemCreationAmountFrame(plugin, p, crate, crateItem));
         }
 
         if(item.getType() == Material.GLASS)
@@ -93,6 +95,13 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
             e.setCancelled(true);
             this.closeFrame(p, this);
             this.openFrame(p, new CrateItemCreationCommandsFrame(plugin, p, crate, crateItem));
+        }
+
+        if(item.getType() == Material.BEACON)
+        {
+            e.setCancelled(true);
+            this.closeFrame(p, this);
+            this.openFrame(p, new CrateItemCreationChanceFrame(plugin, p, crate, crateItem));
         }
 
         if(item.getType() == Material.SLIME_BALL)

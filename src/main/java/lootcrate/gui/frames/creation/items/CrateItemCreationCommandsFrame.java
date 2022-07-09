@@ -25,11 +25,12 @@ public class CrateItemCreationCommandsFrame extends ExtendedFrame implements Lis
     private CrateItem crateItem;
 
     public CrateItemCreationCommandsFrame(LootCrate plugin, Player p, Crate crate, CrateItem item) {
-        super(plugin, p, ChatColor.GREEN + "Crate Item Creation Menu");
+        super(plugin, p, "");
 
         this.plugin = plugin;
         this.crate = crate;
         this.crateItem = item;
+        this.title = ChatColor.GREEN + "" + crateItem.getId();
         this.usableSize = getUsableSize()-1;
 
         generateFrame();
