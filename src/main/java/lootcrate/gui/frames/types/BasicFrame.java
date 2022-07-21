@@ -213,44 +213,33 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
         e.setCancelled(true);
     }
 
-    @EventHandler
-    public void onInventoryInteractEvent(InventoryInteractEvent e) {
-        System.out.println("Called");
-        System.out.println(e.getResult().name());
-    }
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent e) {
 
-        System.out.println("1 - Event Called ");
         if (!e.getWhoClicked().equals(this.getViewer()))
             return;
 
-        System.out.println("2 - Clicked Player is Viewer");
         if (e.getInventory() != this.getInventory())
             return;
 
-        System.out.println("3 - The Event inventory is Frame");
         if (e.getClickedInventory() != this.getInventory()) {
             if (!(this instanceof InputAllowed))
                 e.setCancelled(true);
             return;
         }
 
-        System.out.println("4 - The Click Inventory is Frame");
         if (e.getCurrentItem() == null) {
             if (!(this instanceof InputAllowed))
                 e.setCancelled(true);
             return;
         }
 
-        System.out.println("5 - The Item is Not Null");
 
         if (e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY && !(this instanceof ShiftClickAllowed)) {
             e.setCancelled(true);
             return;
         }
-        System.out.println("6 - Shift Click Allowed");
 
         //override the guiclick
         if (e.getCurrentItem().equals(navItems.getNavBlocker())) {
