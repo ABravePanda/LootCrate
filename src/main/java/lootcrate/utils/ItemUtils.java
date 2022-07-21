@@ -40,6 +40,28 @@ public class ItemUtils {
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-crate-id");
         container.set(key, PersistentDataType.INTEGER, id);
         item.setItemMeta(meta);
+        addRandomizer(plugin, item);
+        return item;
+    }
+
+    public static ItemStack addRandomizer(LootCrate plugin, ItemStack item)
+    {
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(plugin, "lootcrate-crate-randomizer");
+        container.set(key, PersistentDataType.INTEGER, ObjUtils.randomID(5));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static ItemStack removeRandomizer(LootCrate plugin, ItemStack item)
+    {
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(plugin, "lootcrate-crate-randomizer");
+        if(container.has(key, PersistentDataType.INTEGER))
+            container.remove(key);
+        item.setItemMeta(meta);
         return item;
     }
 

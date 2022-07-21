@@ -11,8 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
     protected GUIItem[] contents;
     protected Inventory inventory;
     protected int size = 45;
-    protected int usableSize = size-9;
+    protected int usableSize = size - 9;
     protected int page = 1;
     protected NavItems navItems;
 
@@ -43,7 +42,7 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
             this.contents = contents;
 
         this.inventory = createInventory();
-        this.usableSize = usableSize = size-9;
+        this.usableSize = usableSize = size - 9;
         navItems = new NavItems(plugin);
     }
 
@@ -70,7 +69,7 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
         this.contents = new GUIItem[size];
         this.size = size;
         this.inventory = createInventory();
-        this.usableSize = usableSize = size-9;
+        this.usableSize = usableSize = size - 9;
         navItems = new NavItems(plugin);
     }
 
@@ -151,7 +150,7 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
 
     @Override
     public void clearUsableItems() {
-        for(int i = 0; i < usableSize; i++) {
+        for (int i = 0; i < usableSize; i++) {
             //if(crate.getItems().get(usableSize+i) == null) continue;
             this.setItem(i, new GUIItem(i, Material.AIR));
         }
@@ -160,8 +159,8 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
     @Override
     public List<GUIItem> getUsableItems() {
         List<GUIItem> items = new ArrayList<GUIItem>();
-        for(int i = 0; i < usableSize; i++) {
-            if(getInventory().getItem(i) == null || getInventory().getItem(i).getType() == Material.AIR) continue;
+        for (int i = 0; i < usableSize; i++) {
+            if (getInventory().getItem(i) == null || getInventory().getItem(i).getType() == Material.AIR) continue;
             items.add(new GUIItem(i, getInventory().getItem(i)));
         }
 
@@ -194,56 +193,84 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
     @Override
     public void generateNavigation() {
 
-        this.setItem(getSize()-1, new GUIItem(getSize()-1, navItems.getNavBlocker()));
-        this.setItem(getSize()-2, new GUIItem(getSize()-2, navItems.getNavBlocker()));
-        this.setItem(getSize()-3, new GUIItem(getSize()-3, navItems.getNavNext()));
-        this.setItem(getSize()-4, new GUIItem(getSize()-4, navItems.getNavBlocker()));
-        this.setItem(getSize()-5, new GUIItem(getSize()-5, navItems.getNavClose()));
-        this.setItem(getSize()-6, new GUIItem(getSize()-6, navItems.getNavBlocker()));
-        this.setItem(getSize()-7, new GUIItem(getSize()-7, navItems.getNavPrev()));
-        this.setItem(getSize()-8, new GUIItem(getSize()-8, navItems.getNavBlocker()));
-        this.setItem(getSize()-9, new GUIItem(getSize()-9, navItems.getNavBlocker()));
+        this.setItem(getSize() - 1, new GUIItem(getSize() - 1, navItems.getNavBlocker()));
+        this.setItem(getSize() - 2, new GUIItem(getSize() - 2, navItems.getNavBlocker()));
+        this.setItem(getSize() - 3, new GUIItem(getSize() - 3, navItems.getNavNext()));
+        this.setItem(getSize() - 4, new GUIItem(getSize() - 4, navItems.getNavBlocker()));
+        this.setItem(getSize() - 5, new GUIItem(getSize() - 5, navItems.getNavClose()));
+        this.setItem(getSize() - 6, new GUIItem(getSize() - 6, navItems.getNavBlocker()));
+        this.setItem(getSize() - 7, new GUIItem(getSize() - 7, navItems.getNavPrev()));
+        this.setItem(getSize() - 8, new GUIItem(getSize() - 8, navItems.getNavBlocker()));
+        this.setItem(getSize() - 9, new GUIItem(getSize() - 9, navItems.getNavBlocker()));
     }
 
     @EventHandler
-    public void onInventoryClickEvent(InventoryClickEvent e) {
+    public void onInventoryDragEvent(InventoryDragEvent e) {
         if (!e.getWhoClicked().equals(this.getViewer()))
             return;
         if (e.getInventory() != this.getInventory())
             return;
-        if (e.getClickedInventory() != this.getInventory())
-            return;
-        if (e.getCurrentItem() == null)
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onInventoryInteractEvent(InventoryInteractEvent e) {
+        System.out.println("Called");
+        System.out.println(e.getResult().name());
+    }
+
+    @EventHandler
+    public void onInventoryClickEvent(InventoryClickEvent e) {
+
+        System.out.println("1 - Event Called ");
+        if (!e.getWhoClicked().equals(this.getViewer()))
             return;
 
-        if(e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY && !(this instanceof ShiftClickAllowed)) {
+        System.out.println("2 - Clicked Player is Viewer");
+        if (e.getInventory() != this.getInventory())
+            return;
+
+        System.out.println("3 - The Event inventory is Frame");
+        if (e.getClickedInventory() != this.getInventory()) {
+            if (!(this instanceof InputAllowed))
+                e.setCancelled(true);
+            return;
+        }
+
+        System.out.println("4 - The Click Inventory is Frame");
+        if (e.getCurrentItem() == null) {
+            if (!(this instanceof InputAllowed))
+                e.setCancelled(true);
+            return;
+        }
+
+        System.out.println("5 - The Item is Not Null");
+
+        if (e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY && !(this instanceof ShiftClickAllowed)) {
             e.setCancelled(true);
             return;
         }
+        System.out.println("6 - Shift Click Allowed");
 
         //override the guiclick
-        if(e.getCurrentItem().equals(navItems.getNavBlocker()))
-        {
+        if (e.getCurrentItem().equals(navItems.getNavBlocker())) {
             e.setCancelled(true);
             return;
         }
 
-        if(e.getCurrentItem().equals(navItems.getNavClose()))
-        {
+        if (e.getCurrentItem().equals(navItems.getNavClose())) {
             e.setCancelled(true);
             player.closeInventory();
             return;
         }
 
-        if(e.getCurrentItem().equals(navItems.getNavNext()))
-        {
+        if (e.getCurrentItem().equals(navItems.getNavNext())) {
             e.setCancelled(true);
             nextPage();
             return;
         }
 
-        if(e.getCurrentItem().equals(navItems.getNavPrev()))
-        {
+        if (e.getCurrentItem().equals(navItems.getNavPrev())) {
             e.setCancelled(true);
             previousPage();
             return;
@@ -253,8 +280,6 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
         Bukkit.getPluginManager().callEvent(event);
         e.setCancelled(event.isCancelled());
     }
-
-
 
 
 }

@@ -9,8 +9,10 @@ import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.PlayerFrameMatch;
+import lootcrate.utils.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -39,8 +41,8 @@ public class InventoryManager extends BasicManager {
         List<ItemStack> newList = new ArrayList<ItemStack>();
         Collections.sort(items);
         for (CrateItem item : new ArrayList<CrateItem>(items)) {
-            // item = ObjUtils.assignRandomIDToItem(plugin, item);
             ItemStack itemStack = item.getItem().clone();
+            ItemUtils.addRandomizer(this.getPlugin(), itemStack);
             if ((boolean) crate.getOption(CrateOptionType.DISPLAY_CHANCES).getValue()) {
                 if (itemStack.getType() == Material.AIR) continue;
                 ItemMeta meta = itemStack.getItemMeta();

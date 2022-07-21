@@ -43,6 +43,7 @@ public class ObjUtils {
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, crate.getId());
         item.setItemMeta(itemMeta);
+        ItemUtils.removeRandomizer(plugin, item);
         return item;
     }
 
