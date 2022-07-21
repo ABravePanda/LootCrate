@@ -69,7 +69,7 @@ public class SubCommandLootCrateGui extends SubCommand {
 
         if (args.length == 2) {
             list.add("[CrateID]");
-            TabUtils.addCratesToList(list, plugin.getCacheManager());
+            TabUtils.addCratesNamesToList(list, plugin.getCacheManager());
         }
 
         return list;

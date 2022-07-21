@@ -27,6 +27,8 @@ public class CrateOptionHologramEnabledFrame extends BasicFrame implements Liste
     private final LootCrate plugin;
     private final HologramManager hologramManager;
     private final Crate crate;
+    private GUIItem enabled = new GUIItem(13, Material.NAME_TAG, ChatColor.RED + "Hologram Visible",ChatColor.GREEN + "Enabled");
+    private GUIItem disabled = new GUIItem(13, Material.NAME_TAG, ChatColor.RED + "Hologram Visible",ChatColor.DARK_RED + "Disabled");
     private List<Sound> soundList;
 
     public CrateOptionHologramEnabledFrame(LootCrate plugin, Player p, Crate crate) {
@@ -34,6 +36,7 @@ public class CrateOptionHologramEnabledFrame extends BasicFrame implements Liste
 
         this.plugin = plugin;
         this.crate = crate;
+        this.enabled.setGlowing(true);
         this.hologramManager = plugin.getHoloManager();
 
         registerFrame();
@@ -71,11 +74,9 @@ public class CrateOptionHologramEnabledFrame extends BasicFrame implements Liste
         }
 
         if(isHologramEnabled())
-            this.setItem(13, new GUIItem(13, Material.NAME_TAG, ChatColor.RED + "Hologram Visible",
-                ChatColor.GREEN + "Enabled"));
+            this.setItem(13, enabled);
         else
-            this.setItem(13, new GUIItem(13, Material.NAME_TAG, ChatColor.RED + "Hologram Visible",
-                    ChatColor.DARK_RED + "Disabled"));
+            this.setItem(13, disabled);
 
         this.setItem(20, new GUIItem(20, Material.SLIME_BALL, ChatColor.GREEN + "Enable"));
         this.setItem(24, new GUIItem(24, Material.FIRE_CHARGE, ChatColor.RED + "Disable"));

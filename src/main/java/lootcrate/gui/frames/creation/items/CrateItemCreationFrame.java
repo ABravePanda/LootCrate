@@ -47,15 +47,15 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
 
     private void fillItems()
     {
-        this.setItem(10, new GUIItem(10, Material.ITEM_FRAME, ChatColor.GREEN + "Set Icon", ChatColor.GRAY + "Set the icon of the reward"));
-        this.setItem(13, new GUIItem(13, Material.BUCKET, ChatColor.GREEN + "Set Minimum Amount", ChatColor.GRAY + "Set the minimum amount of the reward players will receive"));
-        this.setItem(16, new GUIItem(16, Material.WATER_BUCKET, ChatColor.GREEN + "Set Maximum Amount", ChatColor.GRAY + "Set the maximum amount of the reward players will receive"));
-        this.setItem(28, new GUIItem(28, Material.GLASS, ChatColor.GREEN + "Set Display", ChatColor.GRAY + "Set if item is an icon only or if players will receive the reward"));
-        this.setItem(31, new GUIItem(31, Material.COMMAND_BLOCK, ChatColor.GREEN + "Set Commands", ChatColor.GRAY + "Assign commands to run when reward is received"));
-        this.setItem(34, new GUIItem(34, Material.BEACON, ChatColor.GREEN + "Set Chance", ChatColor.GRAY + "Set the chance the player will receive this reward"));
-        this.setItem(48, new GUIItem(48, Material.FIRE_CHARGE, ChatColor.RED + "Delete Reward", ChatColor.GRAY + "Remove this reward"));
+        this.setItem(10, new GUIItem(10, Material.ITEM_FRAME, ChatColor.GREEN + "Icon", ChatColor.GRAY + "Set the icon of the reward"));
+        this.setItem(13, new GUIItem(13, Material.BUCKET, ChatColor.GREEN + "Minimum Amount", ChatColor.GRAY + "Set the minimum amount of the reward players will receive"));
+        this.setItem(16, new GUIItem(16, Material.WATER_BUCKET, ChatColor.GREEN + "Maximum Amount", ChatColor.GRAY + "Set the maximum amount of the reward players will receive"));
+        this.setItem(28, new GUIItem(28, Material.GLASS, ChatColor.GREEN + "Display", ChatColor.GRAY + "Set if item is an icon only or if players will receive the reward"));
+        this.setItem(31, new GUIItem(31, Material.COMMAND_BLOCK, ChatColor.GREEN + "Commands", ChatColor.GRAY + "Assign commands to run when reward is received"));
+        this.setItem(34, new GUIItem(34, Material.BEACON, ChatColor.GREEN + "Chance", ChatColor.GRAY + "Set the chance the player will receive this reward"));
+        this.setItem(48, new GUIItem(48, Material.FIRE_CHARGE, ChatColor.RED + "Remove", ChatColor.GRAY + "Remove this reward"));
         this.setItem(49, new GUIItem(49, Material.PAPER, ChatColor.GOLD + "Reward ID", ChatColor.GRAY + "" + crateItem.getId()));
-        this.setItem(50, new GUIItem(50, Material.SLIME_BALL, ChatColor.GREEN + "Save Reward", ChatColor.GRAY + "Save this reward"));
+        this.setItem(50, new GUIItem(50, Material.SLIME_BALL, ChatColor.GREEN + "Finish", ChatColor.GRAY + "Save this reward"));
     }
 
     // events

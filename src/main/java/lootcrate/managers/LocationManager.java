@@ -63,6 +63,7 @@ public class LocationManager extends BasicManager {
         reload();
     }
 
+
     /**
      * Removes crate from list/file
      *
@@ -82,6 +83,7 @@ public class LocationManager extends BasicManager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        reload();
     }
 
     /**
@@ -102,7 +104,7 @@ public class LocationManager extends BasicManager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        populateLocations();
+        reload();
     }
 
     /**
