@@ -1,4 +1,4 @@
-package lootcrate.gui.frames.creation;
+package lootcrate.gui.frames.menu;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;

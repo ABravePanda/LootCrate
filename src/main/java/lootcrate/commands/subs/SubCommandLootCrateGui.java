@@ -6,7 +6,7 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.creation.CrateMainMenuFrame;
+import lootcrate.gui.frames.menu.CrateMainMenuFrame;
 import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;

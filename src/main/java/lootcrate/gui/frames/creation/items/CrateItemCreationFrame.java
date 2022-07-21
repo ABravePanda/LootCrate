@@ -107,17 +107,20 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
         if(item.getType() == Material.SLIME_BALL)
         {
             e.setCancelled(true);
-            if(!crate.replaceItem(crateItem)) crate.addItem(crateItem);
-            plugin.getCacheManager().update(crate);
+            if(crateItem.getItem() != null) {
+                if (!crate.replaceItem(crateItem)) crate.addItem(crateItem);
+                plugin.getCacheManager().update(crate);
+            }
             this.closeFrame(p, this);
             this.openFrame(p, new CrateItemFrame(plugin, p, crate));
         }
 
         if(item.getType() == Material.FIRE_CHARGE) {
             e.setCancelled(true);
-            if(crate.getItem(crateItem.getId()) == null) return;
-            crate.removeItem(crateItem);
-            plugin.getCacheManager().update(crate);
+            if(crate.getItem(crateItem.getId()) != null) {
+                crate.removeItem(crateItem);
+                plugin.getCacheManager().update(crate);
+            }
             this.closeFrame(p, this);
             this.openFrame(p, new CrateItemFrame(plugin, p, crate));
         }
