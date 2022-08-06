@@ -25,6 +25,9 @@ options:
     admin-update-notification: true
     # boolean - true/false
 
+    #Should people be able to use their key crates even before claiming them?
+    allow-virtual-keys: false
+    # boolean - true/false
     
 #+------------------------------+
 #|                              |

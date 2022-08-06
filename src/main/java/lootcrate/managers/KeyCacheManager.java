@@ -40,10 +40,17 @@ public class KeyCacheManager extends BasicManager {
         if(!cache.containsKey(uuid)) return;
 
         List<Integer> integerList = new ArrayList<>(getCrateIDSByUUID(uuid));
-        integerList.remove(integerList.indexOf(crate.getId()));
+        integerList.remove((Integer) crate.getId());
 
         cache.put(uuid, integerList);
 
+    }
+
+    public boolean contains(UUID uuid, Crate crate) {
+        if (!cache.containsKey(uuid))
+            return false;
+
+        return cache.get(uuid).contains(crate.getId());
     }
 
     private List<Integer> getCrateIDSByUUID(UUID uuid)
