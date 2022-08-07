@@ -32,15 +32,14 @@ public class CrateOpenListener implements Listener {
         ItemStack item = p.getInventory().getItemInMainHand();
 
         // If config allows virtual keys, check if they have the key in the cache
-        if (plugin.getOptionManager().valueOf(Option.ALLOW_VIRTUAL_KEYS)) {
-            if (plugin.getKeyCacheManager().contains(p.getUniqueId(), crate)) {
-                // They have the key in cache, remove then run the code as if they have the physical key
-                plugin.getKeyCacheManager().remove(p.getUniqueId(), crate);
+        if ((boolean) plugin.getOptionManager().valueOf(Option.ALLOW_VIRTUAL_KEYS) &&
+            plugin.getKeyCacheManager().contains(p.getUniqueId(), crate)) {
+            // They have the key in cache, remove then run the code as if they have the physical key
+            plugin.getKeyCacheManager().remove(p.getUniqueId(), crate);
 
-                plugin.getCrateManager().crateOpenEffects(crate, p);
-                openAnimation(crate, p);
-                return;
-            }
+            plugin.getCrateManager().crateOpenEffects(crate, p);
+            openAnimation(crate, p);
+            return;
         }
 
         // if they clicked w/same item as key && they match
