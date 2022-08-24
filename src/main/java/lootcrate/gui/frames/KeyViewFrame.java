@@ -11,13 +11,9 @@ import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.utils.ItemUtils;
 import lootcrate.utils.ObjUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -124,7 +120,7 @@ public class KeyViewFrame extends ExtendedFrame implements Listener {
                     ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(), Placeholder.PLAYER_NAME, player.getName()));
             return;
         }
-        player.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
+        player.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
         plugin.getMessageManager().sendMessage(player, Message.LOOTCRATE_COMMAND_CLAIM_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName()));
         plugin.getKeyCacheManager().remove(player.getUniqueId(), crate);

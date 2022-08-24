@@ -37,7 +37,7 @@ public class ObjUtils {
 
     }
 
-    public static ItemStack assignCrateToItem(LootCrate plugin, Crate crate) {
+    public static ItemStack assignCrateToKey(LootCrate plugin, Crate crate) {
         ItemStack item = crate.getKey().getItem();
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
         ItemMeta itemMeta = item.getItemMeta();

@@ -72,7 +72,7 @@ public class SubCommandLootCrateKey extends SubCommand {
         plugin.getCacheManager().update(crate);
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_SUCCESS, ImmutableMap
                 .of(Placeholder.CRATE_NAME, "" + crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
-        p.getInventory().setItemInMainHand(ObjUtils.assignCrateToItem(plugin, crate));
+        p.getInventory().setItemInMainHand(ObjUtils.assignCrateToKey(plugin, crate));
     }
 
     @Override

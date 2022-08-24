@@ -2,7 +2,6 @@ package lootcrate.gui.frames.menu;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.option.*;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.InputAllowed;
 import lootcrate.gui.items.GUIItem;
@@ -69,7 +68,7 @@ public class CrateKeyFrame extends BasicFrame implements Listener, InputAllowed 
             return;
 
         if (e.getClickEvent().getSlot() == 13) {
-            p.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
+            p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
             return;
         }
 

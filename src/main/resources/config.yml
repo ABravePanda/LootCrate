@@ -25,6 +25,8 @@ options:
     admin-update-notification: true
     # boolean - true/false
 
+    #Should players instantly receive keys or should they use /lootcrate claim
+    lootcrate-claim-enabled: true
     
 #+------------------------------+
 #|                              |
@@ -216,16 +218,16 @@ messages:
     lootcrate-command-give-usage: "&cUsage: /lootcrate give [player name] [crate id] (amount)"
     
     #Sent on completion of command to receiver of key
-    lootcrate-command-give-success-to-receiver: "&fYou have received a key for the LootCrate &e{crate_name}&f. Use &6/lootcrate claim&f to claim it now."
+    lootcrate-command-give-success-to-receiver: "&fYou have received {key_amount} key(s) for the LootCrate &e{crate_name}&f. Use &6/lootcrate claim&f to claim it now."
     # {crate_name} - Name of crate
-    # {crate_id} - Id of crate
     # {sender_name} - Name of whoever sent the key
+    # {key_amount} - The amount of keys sent
     
     #Sent on completion of command to sender of key
-    lootcrate-command-give-success-to-sender: "&fYou have sent the key for the LootCrate &e{crate_name}&f to &e{player_name}&f."
+    lootcrate-command-give-success-to-sender: "&fYou have sent {key_amount} key(s) for the LootCrate &e{crate_name}&f to &e{player_name}&f."
     # {crate_name} - Name of crate
-    # {crate_id} - Id of crate
     # {player_name} - Name of whoever received the key
+    # {key_amount} - The amount of keys received
 
     #Sent to command sender when receiving player has a full inventory
     lootcrate-command-claim-full-inventory: "&cYou cannot claim this key as your inventory is full."
