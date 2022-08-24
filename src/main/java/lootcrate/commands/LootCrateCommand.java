@@ -51,6 +51,9 @@ public class LootCrateCommand extends Command {
             case "set":
                 new SubCommandLootCrateSet(plugin, sender, args).runSubCommand(true);
                 break;
+            case "unset":
+                new SubCommandLootCrateUnset(plugin, sender, args).runSubCommand(true);
+                break;
             case "command":
                 new SubCommandLootCrateCommand(plugin, sender, args).runSubCommand(false);
                 break;
@@ -98,6 +101,8 @@ public class LootCrateCommand extends Command {
                 list.add("remove");
             if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_SET))
                 list.add("set");
+            if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_SET))
+                list.add("unset");
             if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_GIVE))
                 list.add("give");
             if (hasPermission(sender, Permission.COMMAND_LOOTCRATE_KEY))
@@ -140,6 +145,8 @@ public class LootCrateCommand extends Command {
                 return new SubCommandLootCrateGive(plugin, sender, args).runTabComplete();
             case "set":
                 return new SubCommandLootCrateSet(plugin, sender, args).runTabComplete();
+            case "unset":
+                return new SubCommandLootCrateUnset(plugin, sender, args).runTabComplete();
             case "command":
                 return new SubCommandLootCrateCommand(plugin, sender, args).runTabComplete();
             case "reload":

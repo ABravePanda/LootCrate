@@ -95,7 +95,11 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
     @Override
     public void previousPage() {
 
-        if(page-1 == 0) return;
+        if(page-1 == 0) {
+            this.closeFrame(player, this);
+            this.openFrame(player, new CrateMainMenuFrame(plugin, player));
+            return;
+        }
         clearUsableItems();
         page--;
 

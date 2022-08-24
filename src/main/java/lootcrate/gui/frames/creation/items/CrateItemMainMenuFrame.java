@@ -2,6 +2,7 @@ package lootcrate.gui.frames.creation.items;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
+import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
@@ -82,6 +83,8 @@ public class CrateItemMainMenuFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void previousPage() {
-
+        this.closeFrame(player, this);
+        this.openFrame(player, new CrateFrame(plugin, player, crate));
+        return;
     }
 }

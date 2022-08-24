@@ -2,8 +2,8 @@ package lootcrate.gui.frames.menu;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.option.*;
 import lootcrate.gui.frames.types.BasicFrame;
+import lootcrate.gui.frames.types.InputAllowed;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateKey;
@@ -15,7 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-public class CrateKeyFrame extends BasicFrame implements Listener {
+public class CrateKeyFrame extends BasicFrame implements Listener, InputAllowed {
 
     private final LootCrate plugin;
     private final Crate crate;
@@ -46,7 +46,10 @@ public class CrateKeyFrame extends BasicFrame implements Listener {
     // methods
 
     public void fillOptions() {
-        this.setItem(13, new GUIItem(13, crate.getKey()));
+        if(crate.getKey() != null)
+            this.setItem(13, new GUIItem(13, crate.getKey()));
+        else
+            this.setItem(13, new GUIItem(13, Material.AIR));
         this.setItem(29, new GUIItem(29, Material.LIME_DYE, ChatColor.GREEN + "Set Key"));
         this.setItem(31, new GUIItem(31, Material.AIR));
         this.setItem(33, new GUIItem(33, Material.RED_DYE, ChatColor.RED + "Cancel"));
@@ -65,7 +68,7 @@ public class CrateKeyFrame extends BasicFrame implements Listener {
             return;
 
         if (e.getClickEvent().getSlot() == 13) {
-            p.getInventory().addItem(ObjUtils.assignCrateToItem(plugin, crate));
+            p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
             return;
         }
 

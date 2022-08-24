@@ -125,7 +125,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
     public void previousPage() {
         if(page-1 == 0) {
             this.closeFrame(player, this);
-            this.openFrame(player, new CrateFrame(plugin, player, crate));
+            this.openFrame(player, new CrateItemMainMenuFrame(plugin, player, crate));
             return;
         }
         clearUsableItems();

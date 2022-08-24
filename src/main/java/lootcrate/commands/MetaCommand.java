@@ -52,7 +52,7 @@ public class MetaCommand extends Command {
         ItemStack item = p.getInventory().getItemInMainHand();
 
         // need right amount of args
-        if (args.length > 1) {
+        if (args.length >= 1) {
             if (args[0].equalsIgnoreCase("name"))
                 p.getInventory().setItemInMainHand(ItemUtils.setDisplayName(item, CommandUtils.builder(args, 1)));
             else if (args[0].equalsIgnoreCase("lore"))
@@ -74,6 +74,10 @@ public class MetaCommand extends Command {
 
                 item.addUnsafeEnchantment(Enchantment.getByName(args[1]), Integer.parseInt(args[2]));
 
+            } else if (args[0].equalsIgnoreCase("view"))
+            {
+                p.sendMessage(item.getItemMeta().getAsString());
+                return;
             } else
                 plugin.getMessageManager().sendMessage(sender, Message.META_USAGE, null);
             return;
@@ -88,6 +92,7 @@ public class MetaCommand extends Command {
             list.add("name");
             list.add("lore");
             list.add("enchantment");
+            list.add("view");
             return list;
         }
         if (args.length == 2) {

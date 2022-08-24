@@ -1,4 +1,4 @@
-package lootcrate.gui.frames.creation;
+package lootcrate.gui.frames.menu;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
@@ -57,7 +57,10 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
     @EventHandler
     public void onGUIItemClick(GUIItemClickEvent e) {
         if (!e.sameFrame(this))
+        {
+            e.setCancelled(true);
             return;
+        }
 
         Player p = e.getPlayer();
         ItemStack item = e.getItem().getItemStack();
@@ -77,6 +80,7 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
             plugin.getChatManager().addPlayer(p, state);
             plugin.getChatManager().sendNotification(p);
         }
+        e.setCancelled(true);
 
     }
 

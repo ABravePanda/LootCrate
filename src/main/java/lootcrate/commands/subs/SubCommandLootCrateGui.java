@@ -6,7 +6,7 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.creation.CrateMainMenuFrame;
+import lootcrate.gui.frames.menu.CrateMainMenuFrame;
 import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;
@@ -69,7 +69,7 @@ public class SubCommandLootCrateGui extends SubCommand {
 
         if (args.length == 2) {
             list.add("[CrateID]");
-            TabUtils.addCratesToList(list, plugin.getCacheManager());
+            TabUtils.addCratesNamesToList(list, plugin.getCacheManager());
         }
 
         return list;
