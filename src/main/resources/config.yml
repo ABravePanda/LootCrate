@@ -25,8 +25,15 @@ options:
     admin-update-notification: true
     # boolean - true/false
 
+
     #Should players instantly receive keys or should they use /lootcrate claim
     lootcrate-claim-enabled: true
+    # boolean - true/false
+
+    #Should people be able to use their key crates even before claiming them?
+    allow-virtual-keys: false
+    # boolean - true/false
+
     
 #+------------------------------+
 #|                              |
