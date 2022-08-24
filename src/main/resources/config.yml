@@ -25,7 +25,6 @@ options:
     admin-update-notification: true
     # boolean - true/false
 
-
     #Should players instantly receive keys or should they use /lootcrate claim
     lootcrate-claim-enabled: true
     # boolean - true/false
@@ -138,6 +137,7 @@ messages:
     lootcrate-command-delete-success: "&fDeleted the LootCrate with the name &e{crate_name}&f."
     # {crate_name} - Name of crate
     # {crate_id} - Id of crate
+
     
     #Usage for command
     lootcrate-command-key-usage: "&cUsage: /lootcrate key [crate id] [glowing]"
