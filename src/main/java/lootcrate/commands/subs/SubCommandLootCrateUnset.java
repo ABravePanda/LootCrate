@@ -50,7 +50,7 @@ public class SubCommandLootCrateUnset extends SubCommand {
             return;
 
         if (args.length < 1) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
+            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_UNSET_USAGE, null);
             return;
         }
 
@@ -63,7 +63,7 @@ public class SubCommandLootCrateUnset extends SubCommand {
 
         if(!plugin.getLocationManager().getLocationList().containsKey(l))
         {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, map);
+            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_UNSET_FAILURE, map);
             return;
         }
         plugin.getLocationManager().removeCrateLocation(l);
@@ -72,7 +72,7 @@ public class SubCommandLootCrateUnset extends SubCommand {
         if(plugin.holoHook())
             holoManager.reload();
 
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
+        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_UNSET_SUCCESS, map);
     }
 
     @Override

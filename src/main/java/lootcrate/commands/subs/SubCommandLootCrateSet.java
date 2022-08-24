@@ -57,14 +57,6 @@ public class SubCommandLootCrateSet extends SubCommand {
         Location l = p.getTargetBlock(null, 10).getLocation();
         ImmutableMap<Placeholder, String> map1 = ImmutableMap.of(Placeholder.X, l.getBlockX() + "", Placeholder.Y,
                 l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
-        if (args[1].equalsIgnoreCase("none")) {
-            plugin.getLocationManager().removeCrateLocation(l);
-
-            if(plugin.holoHook())
-                plugin.getHoloManager().reload();
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
-            return;
-        }
 
         if (CommandUtils.tryParse(args[1]) == null) {
             plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);

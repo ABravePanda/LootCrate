@@ -214,9 +214,22 @@ messages:
     # {X} - X cord of position
     # {Y} - Y cord of position
     # {Z} - Z cord of position
-    
+
+    #Usage for command
+    lootcrate-command-unset-usage: "&cUsage: /lootcrate unset"
+
     #Sent on completion of command
-    lootcrate-command-set-remove-success: "&fRemoved &e{X}, {Y}, {Z} &fas a LootCrate location."
+    lootcrate-command-unset-success: "&fRemoved &e{X}, {Y}, {Z} &fas a location for the LootCrate &e{crate_name}&f."
+    # {crate_id} - Id of crate
+    # {crate_name} - Name of crate
+    # {X} - X cord of position
+    # {Y} - Y cord of position
+    # {Z} - Z cord of position
+
+    #Sent when a crate does not exist at this location
+    lootcrate-command-unset-failure: "&cThis location does not have a crate!"
+    # {crate_id} - Id of crate
+    # {crate_name} - Name of crate
     # {X} - X cord of position
     # {Y} - Y cord of position
     # {Z} - Z cord of position
