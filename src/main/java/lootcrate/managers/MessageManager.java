@@ -5,6 +5,7 @@ import lootcrate.LootCrate;
 import lootcrate.enums.Message;
 import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -73,6 +74,27 @@ public class MessageManager extends BasicManager {
         return colorMsg;
     }
 
+    private void validateMessages()
+    {
+        for(Message m : Message.values())
+        {
+            validateMessage(m);
+        }
+        this.getPlugin().saveConfig();
+    }
+
+    private void validateMessage(Message message)
+    {
+        if(!this.getPlugin().getConfig().contains(PREFIX + message.getKey()))
+        {
+            if(this.getPlugin().getConfig().get(PREFIX + message.getKey()) != null) return;
+            this.getPlugin().getConfig().addDefault(PREFIX + message.getKey(), message.getDefaultValue());
+            this.getPlugin().getConfig().set(PREFIX + message.getKey(), message.getDefaultValue());
+            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Added Config Option: " + ChatColor.YELLOW
+                    + message.getKey() + ChatColor.DARK_GRAY + ".");
+        }
+    }
+
     public String getPrefix() {
         return this.parseMessage(Message.PREFIX, null);
     }
@@ -94,7 +116,7 @@ public class MessageManager extends BasicManager {
 
     @Override
     public void enable() {
-
+        validateMessages();
     }
 
     @Override

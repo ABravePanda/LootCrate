@@ -1,6 +1,7 @@
 package lootcrate.managers;
 
 import lootcrate.LootCrate;
+import lootcrate.utils.CommandUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -82,9 +83,9 @@ public class UpdateManager extends BasicManager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        if(Integer.valueOf(this.getPlugin().getDescription().getVersion().replace(".", "")) < Integer
-                .valueOf(newVersion.replace(".", "")))
+        if(CommandUtils.tryParse(newVersion.replace(".", "")) == null || CommandUtils.tryParse(this.getPlugin().getDescription().getVersion().replace(".", "")) == null) return false;
+        if(CommandUtils.tryParse(this.getPlugin().getDescription().getVersion().replace(".", "")) < CommandUtils
+                .tryParse(newVersion.replace(".", "")))
         {
             this.upToDateVersion = newVersion;
             return true;
