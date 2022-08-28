@@ -30,7 +30,6 @@ public class LootCrateInteractListener implements Listener {
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK && e.getAction() != Action.LEFT_CLICK_BLOCK)
             return;
         if (e.getHand() != EquipmentSlot.HAND)

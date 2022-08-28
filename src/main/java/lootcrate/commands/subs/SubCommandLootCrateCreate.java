@@ -7,9 +7,14 @@ import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
+import lootcrate.objects.Display;
 import lootcrate.utils.CommandUtils;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,6 +62,7 @@ public class SubCommandLootCrateCreate extends SubCommand {
         }
 
         Crate crate = new Crate(CommandUtils.builder(args, 1));
+        crate.setDisplay(createDisplay());
         plugin.getCrateManager().addDefaultOptions(crate);
         plugin.getCacheManager().update(crate);
 
@@ -72,6 +78,27 @@ public class SubCommandLootCrateCreate extends SubCommand {
         if (args.length == 2)
             list.add("[CrateName]");
         return list;
+    }
+
+    //DEBUG
+
+    private Display createDisplay()
+    {
+        Display display = new Display();
+        List<Integer> line1 = Arrays.asList(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
+        List<Integer> line2 = Arrays.asList(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
+        List<Integer> line3 = Arrays.asList(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
+        List<Integer> line4 = Arrays.asList(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
+        List<Integer> line5 = Arrays.asList(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
+        List<List<Integer>> page = new ArrayList<>();
+        page.add(line1);
+        page.add(line2);
+        page.add(line3);
+        page.add(line4);
+        page.add(line5);
+        System.out.println(display.addPage(page));
+        display.addItem(0, new ItemStack(Material.AIR));
+        return display;
     }
 
 }

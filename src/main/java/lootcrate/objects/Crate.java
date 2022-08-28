@@ -19,6 +19,7 @@ public class Crate implements ConfigurationSerializable {
     private CrateKey key;
     private List<CrateItem> items;
     private Map<CrateOptionType, Object> options;
+    private Display display;
 
     public Crate(String name, CrateKey key, List<CrateItem> items, Map<CrateOptionType, Object> options) {
         this.setId(ObjUtils.randomID(3));
@@ -49,6 +50,11 @@ public class Crate implements ConfigurationSerializable {
         this.id = (int) data.get("Id");
         this.name = (String) data.get("Name");
         this.key = new CrateKey((MemorySection) data.get("Key"));
+
+        if(data.containsKey("Display"))
+        {
+            this.display = (Display) data.get("Display");
+        }
 
         // TODO remove
         // Old Version Support - will be removed in update after
@@ -166,6 +172,14 @@ public class Crate implements ConfigurationSerializable {
         getOptions().put(option.getKey(), option.getValue());
     }
 
+    public Display getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(Display display) {
+        this.display = display;
+    }
+
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
@@ -174,6 +188,8 @@ public class Crate implements ConfigurationSerializable {
         map.put("Options", getSeralizedOptions());
         map.put("Key", getKey() != null ? getKey().serialize() : null);
         map.put("Items", getItems());
+        if(getDisplay() != null)
+        map.put("Display", getDisplay());
         return map;
     }
 

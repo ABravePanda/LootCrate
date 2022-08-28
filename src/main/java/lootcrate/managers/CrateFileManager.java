@@ -39,6 +39,8 @@ public class CrateFileManager extends FileManager {
             map.put("Options", m.get("Options"));
             map.put("Key", m.get("Key"));
             map.put("Items", m.get("Items"));
+            if(m.get("Display") != null)
+                map.put("Display", m.get("Display"));
             return new Crate(this.getPlugin(), map);
         } else
             return new Crate(this.getPlugin(), (Map<String, Object>) config.get(CRATE_PREFIX + name));

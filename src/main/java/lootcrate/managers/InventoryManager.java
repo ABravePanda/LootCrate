@@ -59,6 +59,20 @@ public class InventoryManager extends BasicManager {
         return newList;
     }
 
+    public ItemStack addCrateEffect(Crate crate, CrateItem item)
+    {
+        ItemStack itemStack = item.getItem();
+        if (itemStack.getType() == Material.AIR) return itemStack;
+        ItemMeta meta = itemStack.getItemMeta();
+        List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
+        lore.add(" ");
+        lore.add(this.getPlugin().getMessageManager().parseMessage(Message.CHANCE,
+                ImmutableMap.of(Placeholder.ITEM_CHANCE, item.getChance() + "")));
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
+        return itemStack;
+    }
+
     public void openFrame(Player p, Frame frame) {
         PlayerFrameMatch match = new PlayerFrameMatch(p.getUniqueId(), frame.getId());
         removeSimilar(match);

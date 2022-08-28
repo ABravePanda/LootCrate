@@ -8,10 +8,7 @@ import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
 import lootcrate.gui.events.listeners.GUICloseListener;
 import lootcrate.managers.*;
-import lootcrate.objects.Crate;
-import lootcrate.objects.CrateItem;
-import lootcrate.objects.CrateKey;
-import lootcrate.objects.CrateOption;
+import lootcrate.objects.*;
 import org.bukkit.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -146,6 +143,7 @@ public class LootCrate extends JavaPlugin {
         ConfigurationSerialization.registerClass(CrateKey.class);
         ConfigurationSerialization.registerClass(CrateOption.class);
         ConfigurationSerialization.registerClass(CrateItem.class);
+        ConfigurationSerialization.registerClass(Display.class);
     }
 
     /**
