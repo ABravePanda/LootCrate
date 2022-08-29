@@ -186,6 +186,12 @@ public abstract class BasicFrame implements Frame, Listener, Pageable {
         Bukkit.getPluginManager().callEvent(event);
     }
 
+    public void setSize(int size) {
+        this.size = size;
+        this.contents = new GUIItem[size];
+        this.inventory = createInventory();
+    }
+
     public Inventory createInventory() {
         return Bukkit.createInventory(null, size, getTitle());
     }

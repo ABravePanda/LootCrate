@@ -118,6 +118,9 @@ public class LootCrate extends JavaPlugin {
                     + "). Download here: " + updateManager.getResourceURL() + ChatColor.DARK_GRAY + ".");
         Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Loaded " + ChatColor.YELLOW
                 + cacheManager.getCache().size() + ChatColor.DARK_GRAY + " crate(s).");
+        if(holoDetect())
+            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.RED
+                    + "HolographicDisplays" + ChatColor.DARK_GRAY + ". This plugin is no longer supported. Please consider using " + ChatColor.YELLOW + "DecentHolograms" + ChatColor.DARK_GRAY + ".");
         if (holoHook())
             Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
                     + "DecentHolograms" + ChatColor.DARK_GRAY + ".");
@@ -131,6 +134,11 @@ public class LootCrate extends JavaPlugin {
 
     public boolean holoHook() {
         return Bukkit.getPluginManager().isPluginEnabled("DecentHolograms");
+    }
+
+    public boolean holoDetect()
+    {
+        return Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays");
     }
 
     private void initMetrics() {

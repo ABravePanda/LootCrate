@@ -84,7 +84,7 @@ public class SubCommandLootCrateCreate extends SubCommand {
 
     private Display createDisplay()
     {
-        Display display = new Display();
+        Display display = new Display(45);
         List<Integer> line1 = Arrays.asList(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
         List<Integer> line2 = Arrays.asList(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
         List<Integer> line3 = Arrays.asList(new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0});

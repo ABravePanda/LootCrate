@@ -61,7 +61,7 @@ public class InventoryManager extends BasicManager {
 
     public ItemStack addCrateEffect(Crate crate, CrateItem item)
     {
-        ItemStack itemStack = item.getItem();
+        ItemStack itemStack = item.getItem().clone();
         if (itemStack.getType() == Material.AIR) return itemStack;
         ItemMeta meta = itemStack.getItemMeta();
         List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();

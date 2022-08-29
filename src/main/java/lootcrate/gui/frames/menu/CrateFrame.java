@@ -4,6 +4,7 @@ import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.creation.items.CrateItemFrame;
 import lootcrate.gui.frames.creation.items.CrateItemMainMenuFrame;
+import lootcrate.gui.frames.creation.view.CrateViewMainMenuFrame;
 import lootcrate.gui.frames.menu.option.CrateOptionMainMenuFrame;
 import lootcrate.gui.frames.types.BasicFrame;
 import lootcrate.gui.frames.types.Frame;
@@ -54,8 +55,9 @@ public class CrateFrame extends BasicFrame implements Listener {
                 ChatColor.GRAY + "Used to unlock the crate."));
         this.setItem(16, new GUIItem(16, Material.ENDER_PEARL, ChatColor.RED + "Locations",
                 ChatColor.GRAY + "All the places the crate is set."));
-        this.setItem(31, new GUIItem(31, Material.ANVIL, ChatColor.RED + "Options",
+        this.setItem(30, new GUIItem(30, Material.ANVIL, ChatColor.RED + "Options",
                 ChatColor.GRAY + "Edit crate name, hologram, knockback, etc..."));
+        //this.setItem(32, new GUIItem(32, Material.CHEST, ChatColor.RED + "View", ChatColor.GRAY + "Edit the preview of the crate."));
     }
 
     // events
@@ -82,6 +84,9 @@ public class CrateFrame extends BasicFrame implements Listener {
                 break;
             case ANVIL:
                 frameToOpen = new CrateOptionMainMenuFrame(plugin, p, crate);
+                break;
+            case CHEST:
+                frameToOpen = new CrateViewMainMenuFrame(plugin, p, crate);
                 break;
             default:
                 return;

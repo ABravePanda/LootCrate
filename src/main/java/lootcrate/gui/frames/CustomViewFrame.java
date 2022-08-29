@@ -2,6 +2,7 @@ package lootcrate.gui.frames;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
+import lootcrate.gui.frames.types.CustomSizeFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
@@ -15,16 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CustomViewFrame extends ExtendedFrame implements Listener {
+public class CustomViewFrame extends CustomSizeFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;
+    private final Display display;
 
     public CustomViewFrame(LootCrate plugin, Player p, Crate crate) {
-        super(plugin, p, crate.getName());
+        super(plugin, p, crate.getName(), 54);
 
         this.plugin = plugin;
         this.crate = plugin.getCacheManager().getCrateById(crate.getId());
+        this.display = crate.getDisplay();
+        this.setSize(display.getSize());
 
         generateFrame();
        // generateNavigation();
@@ -34,7 +38,6 @@ public class CustomViewFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void generateFrame() {
-        Display display = crate.getDisplay();
         Map<Integer, ItemStack> items = display.getItems();
         List<List<List<Integer>>> pages = display.getPages();
         int index = 0;

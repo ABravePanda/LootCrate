@@ -7,6 +7,7 @@ import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
 import lootcrate.events.custom.CrateAccessEvent;
+import lootcrate.events.custom.CrateViewEvent;
 import lootcrate.gui.frames.CrateViewFrame;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
@@ -64,7 +65,7 @@ public class SubCommandLootCratePreview extends SubCommand {
         }
 
         Player p = (Player) sender;
-        CrateAccessEvent event = new CrateAccessEvent(crate, p, p.getLocation(), Action.PHYSICAL);
+        CrateViewEvent event = new CrateViewEvent(crate, p, p.getLocation());
         Bukkit.getPluginManager().callEvent(event);
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_SUCCESS,

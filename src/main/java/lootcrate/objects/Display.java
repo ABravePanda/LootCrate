@@ -14,14 +14,16 @@ public class Display implements ConfigurationSerializable {
     private int nextPage;
     private int previousPage;
     private int close;
+    private int size;
 
-    public Display()
+    public Display(int size)
     {
         this.pages = new LinkedList<>();
         this.items = new HashMap<>();
         this.nextPage = -1;
         this.previousPage = -2;
         this.close = -3;
+        setSize(size);
     }
 
     public Display(Map<String, Object> data)
@@ -31,6 +33,7 @@ public class Display implements ConfigurationSerializable {
         this.close = (int) data.get("Close");
         this.pages = (List<List<List<Integer>>>) data.get("Pages");
         this.items = (Map<Integer, ItemStack>) data.get("Items");
+        this.size = (int) data.get("Size");
     }
 
     public List<List<List<Integer>>> getPages() {
@@ -82,6 +85,15 @@ public class Display implements ConfigurationSerializable {
         return items.get(index);
     }
 
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        if(size % 9 == 0 && size >= 9 && size <= 54)
+            this.size = size;
+    }
+
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
@@ -90,6 +102,7 @@ public class Display implements ConfigurationSerializable {
         map.put("NextPage", nextPage);
         map.put("PreviousPage", previousPage);
         map.put("Close", close);
+        map.put("Size", size);
         return map;
     }
 }
