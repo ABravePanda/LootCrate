@@ -4,7 +4,7 @@ import lootcrate.LootCrate;
 import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.types.BasicFrame;
+import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CrateOptionAnimationFrame extends BasicFrame implements Listener {
+public class CrateOptionAnimationFrame extends BaseFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;

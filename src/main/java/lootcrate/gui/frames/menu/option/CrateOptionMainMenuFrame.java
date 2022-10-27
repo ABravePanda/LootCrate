@@ -4,7 +4,7 @@ import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.menu.*;
-import lootcrate.gui.frames.types.BasicFrame;
+import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
@@ -15,7 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-public class CrateOptionMainMenuFrame extends BasicFrame implements Listener {
+public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;

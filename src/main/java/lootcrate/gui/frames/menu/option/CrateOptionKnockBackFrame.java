@@ -3,8 +3,7 @@ package lootcrate.gui.frames.menu.option;
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.*;
-import lootcrate.gui.frames.types.BasicFrame;
+import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
@@ -17,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.text.DecimalFormat;
 
-public class CrateOptionKnockBackFrame extends BasicFrame implements Listener {
+public class CrateOptionKnockBackFrame extends BaseFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;
