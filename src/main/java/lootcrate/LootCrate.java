@@ -71,6 +71,7 @@ public class LootCrate extends JavaPlugin {
         }
 
         displayIntro();
+        startReload();
     }
 
     @Override
@@ -146,6 +147,17 @@ public class LootCrate extends JavaPlugin {
         ConfigurationSerialization.registerClass(CrateKey.class);
         ConfigurationSerialization.registerClass(CrateOption.class);
         ConfigurationSerialization.registerClass(CrateItem.class);
+    }
+
+    private void startReload()
+    {
+        this.reloadConfig();
+        this.reload();
+
+        if(this.getHoloManager() != null)
+        {
+            this.getHoloManager().reload();
+        }
     }
 
     /**
