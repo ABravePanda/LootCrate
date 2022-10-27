@@ -56,6 +56,7 @@ public class InventoryManager extends BasicManager {
             }
             newList.add(itemStack);
         }
+        for(CrateItem item1 : crate.getItems())
         return newList;
     }
 

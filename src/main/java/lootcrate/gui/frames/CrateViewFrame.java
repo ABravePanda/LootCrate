@@ -7,6 +7,7 @@ import lootcrate.gui.frames.types.Pageable;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.gui.items.NavItems;
 import lootcrate.objects.Crate;
+import lootcrate.objects.CrateItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
