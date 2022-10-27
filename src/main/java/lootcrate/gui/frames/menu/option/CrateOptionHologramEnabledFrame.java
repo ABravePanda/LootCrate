@@ -3,8 +3,7 @@ package lootcrate.gui.frames.menu.option;
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.CrateFrame;
-import lootcrate.gui.frames.types.BasicFrame;
+import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.managers.HologramManager;
 import lootcrate.objects.Crate;
@@ -15,14 +14,11 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class CrateOptionHologramEnabledFrame extends BasicFrame implements Listener {
+public class CrateOptionHologramEnabledFrame extends BaseFrame implements Listener {
 
     private final LootCrate plugin;
     private final HologramManager hologramManager;

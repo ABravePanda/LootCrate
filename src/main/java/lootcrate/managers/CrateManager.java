@@ -14,6 +14,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,7 @@ public class CrateManager extends BasicManager {
     public CrateItem getRandomItem(Crate crate) {
         RandomCollection<String> items = new RandomCollection<String>();
 
-        for (CrateItem item : crate.getItems())
+        for (CrateItem item : new ArrayList<>(crate.getItems()))
             items.add(item.getChance(), item);
         return items.next();
     }

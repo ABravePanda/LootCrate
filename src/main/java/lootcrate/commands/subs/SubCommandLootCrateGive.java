@@ -80,7 +80,6 @@ public class SubCommandLootCrateGive extends SubCommand {
 
         //IF amount is specified
         if (args.length == 4) {
-            System.out.println("CALLED - ARGS4");
             if (CommandUtils.tryParse(args[3]) == null) {
                 plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_USAGE, null);
                 return;

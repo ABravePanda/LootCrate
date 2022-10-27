@@ -4,7 +4,7 @@ import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ShiftClickAllowed;
-import lootcrate.gui.frames.types.BasicFrame;
+import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CrateOptionSoundFrame extends BasicFrame implements Listener, ShiftClickAllowed {
+public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftClickAllowed {
 
     private final LootCrate plugin;
     private final Crate crate;

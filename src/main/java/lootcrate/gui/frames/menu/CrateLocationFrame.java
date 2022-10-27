@@ -3,7 +3,7 @@ package lootcrate.gui.frames.menu;
 import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.menu.option.*;
-import lootcrate.gui.frames.types.BasicFrame;
+import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
 import org.bukkit.ChatColor;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.util.concurrent.Callable;
 
-public class CrateLocationFrame extends BasicFrame {
+public class CrateLocationFrame extends BaseFrame {
     private final Player p;
     private final LootCrate plugin;
     private final Crate crate;
