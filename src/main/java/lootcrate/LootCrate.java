@@ -18,6 +18,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class LootCrate extends JavaPlugin {
     private Metrics metrics;
@@ -72,6 +73,25 @@ public class LootCrate extends JavaPlugin {
 
         displayIntro();
         startReload();
+
+
+        //Temporary fix to stop loot crates not working on startup.
+
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(this, new BukkitRunnable(){
+
+            @Override
+            public void run() {
+                reloadConfig();
+                reload();
+
+                if(getHoloManager() != null)
+                {
+                    getHoloManager().reload();
+                }
+            }
+
+        }, 80L);
+
     }
 
     @Override
