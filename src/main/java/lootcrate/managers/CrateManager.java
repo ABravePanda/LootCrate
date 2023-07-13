@@ -89,9 +89,9 @@ public class CrateManager extends BasicManager {
                 return;
             if (Sound.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue()) == null)
                 return;
-            int soundVolume = 1;
-            if (crate.getOption(CrateOptionType.SOUND_VOLUME).getValue() == null)
-                soundVolume = (int) crate.getOption(CrateOptionType.SOUND_VOLUME).getValue();
+            float soundVolume = 1;
+            if (crate.getOption(CrateOptionType.SOUND_VOLUME) != null)
+                soundVolume = (float) crate.getOption(CrateOptionType.SOUND_VOLUME).getValue();
             p.playSound(p.getLocation(), Sound.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue()),
                     soundVolume, 1);
         }

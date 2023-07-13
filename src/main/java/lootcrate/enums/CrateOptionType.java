@@ -4,7 +4,7 @@ public enum CrateOptionType {
     DISPLAY_CHANCES("Display-Chances", DataType.BOOLEAN),
     KNOCK_BACK("Knockback", DataType.DOUBLE),
     OPEN_SOUND("Open-Sound", DataType.STRING),
-    SOUND_VOLUME("Sound-Volume", DataType.STRING),
+    SOUND_VOLUME("Sound-Volume", DataType.FLOAT),
     OPEN_MESSAGE("Open-Message", DataType.STRING),
     HOLOGRAM_ENABLED("Hologram-Enabled", DataType.BOOLEAN),
     HOLOGRAM_LINES("Hologram-Lines", DataType.LIST),

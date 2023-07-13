@@ -107,11 +107,16 @@ public class CacheManager extends BasicManager {
     public void load() {
         cache = this.getPlugin().getCrateFileManager().loadAllCrates();
         List<Crate> crates = verify(new ArrayList<Crate>(this.getCache()));
-        for (Crate crate : new ArrayList<Crate>(this.getCache()))
+        for (Crate crate : new ArrayList<Crate>(this.getCache())) {
             if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
                 crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
                 this.update(crate);
             }
+            if (crate.getOption(CrateOptionType.SOUND_VOLUME) == null) {
+                crate.addOption(CrateOptionType.SOUND_VOLUME, 1);
+                this.update(crate);
+            }
+        }
         cache = verify(cache);
     }
 
