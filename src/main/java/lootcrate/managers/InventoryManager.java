@@ -5,10 +5,12 @@ import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.enums.Message;
 import lootcrate.enums.Placeholder;
+import lootcrate.enums.SortType;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.PlayerFrameMatch;
+import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,17 +38,17 @@ public class InventoryManager extends BasicManager {
      * @param crate
      * @return
      */
-    public List<ItemStack> addCrateEffects(Crate crate) {
+    public List<ItemStack> addCrateEffects(Crate crate, SortType sortType) {
         List<CrateItem> items = new ArrayList<CrateItem>(crate.getItems());
         List<ItemStack> newList = new ArrayList<ItemStack>();
-        Collections.sort(items);
-        for (CrateItem item : new ArrayList<CrateItem>(items)) {
+        InventoryUtils.sort(items, sortType);
+        for (CrateItem item : new ArrayList<>(items)) {
             ItemStack itemStack = item.getItem().clone();
             ItemUtils.addRandomizer(this.getPlugin(), itemStack);
             if ((boolean) crate.getOption(CrateOptionType.DISPLAY_CHANCES).getValue()) {
                 if (itemStack.getType() == Material.AIR) continue;
                 ItemMeta meta = itemStack.getItemMeta();
-                List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
+                List<String> lore = meta.getLore() == null ? new ArrayList<>() : meta.getLore();
                 lore.add(" ");
                 lore.add(this.getPlugin().getMessageManager().parseMessage(Message.CHANCE,
                         ImmutableMap.of(Placeholder.ITEM_CHANCE, item.getChance() + "")));
@@ -58,6 +60,7 @@ public class InventoryManager extends BasicManager {
         }
         return newList;
     }
+
 
     public void openFrame(Player p, Frame frame) {
         PlayerFrameMatch match = new PlayerFrameMatch(p.getUniqueId(), frame.getId());

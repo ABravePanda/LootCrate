@@ -2,10 +2,7 @@ package lootcrate.managers;
 
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
-import lootcrate.enums.AnimationStyle;
-import lootcrate.enums.CrateAction;
-import lootcrate.enums.CrateOptionType;
-import lootcrate.enums.Option;
+import lootcrate.enums.*;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.RandomCollection;
@@ -133,6 +130,7 @@ public class CrateManager extends BasicManager {
 
         crate.addOption(CrateOptionType.KNOCK_BACK, 1.0D);
         crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
+        crate.addOption(CrateOptionType.SORT_TYPE, SortType.CHANCE.toString());
         crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);
         crate.addOption(CrateOptionType.OPEN_SOUND, Sound.UI_TOAST_CHALLENGE_COMPLETE.toString());
         crate.addOption(CrateOptionType.OPEN_MESSAGE, "&fYou have opened &e{crate_name}&f.");

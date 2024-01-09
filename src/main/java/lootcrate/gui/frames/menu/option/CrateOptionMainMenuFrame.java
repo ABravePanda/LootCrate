@@ -62,6 +62,8 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
                 ChatColor.GRAY + "Change the open animation."));
         this.setItem(20, new GUIItem(20, Material.COMMAND_BLOCK, ChatColor.RED + "Open Message",
                 ChatColor.GRAY + "Change the message player recieves upon crate opening."));
+        this.setItem(22, new GUIItem(22, Material.PAPER, ChatColor.RED + "Sort",
+                ChatColor.GRAY + "Change the way the items are sorted in the view gui."));
         this.setItem(24, new GUIItem(24, Material.ARMOR_STAND, ChatColor.RED + "Hologram",
                 ChatColor.GRAY + "Enable/Disable the hologram above the crate."));
     }
@@ -114,6 +116,9 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
                 break;
             case ARMOR_STAND:
                 frameToOpen = new CrateOptionHologramEnabledFrame(plugin, p, crate);
+                break;
+            case PAPER:
+                frameToOpen = new CrateOptionSortFrame(plugin, p, crate);
                 break;
             default:
                 return;

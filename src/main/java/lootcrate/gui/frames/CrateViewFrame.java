@@ -1,6 +1,8 @@
 package lootcrate.gui.frames;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.CrateOptionType;
+import lootcrate.enums.SortType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.frames.types.Pageable;
@@ -20,12 +22,17 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;
+    private SortType sortType;
 
     public CrateViewFrame(LootCrate plugin, Player p, Crate crate) {
         super(plugin, p, crate.getName());
 
         this.plugin = plugin;
         this.crate = plugin.getCacheManager().getCrateById(crate.getId());
+        this.sortType = SortType.CHANCE;
+        if(crate.getOption(CrateOptionType.SORT_TYPE) != null) {
+            this.sortType = SortType.valueOf(crate.getOption(CrateOptionType.SORT_TYPE).getValue().toString());
+        }
 
         generateFrame();
         generateNavigation();
@@ -36,7 +43,7 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
     @Override
     public void generateFrame() {
         int index = 0;
-        for (ItemStack item : plugin.getInvManager().addCrateEffects(crate)) {
+        for (ItemStack item : plugin.getInvManager().addCrateEffects(crate, sortType)) {
             if (index < getUsableSize())
                 this.setItem(index, new GUIItem(index, item));
             index++;
@@ -56,7 +63,7 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
 
         int itemIndex = (page*usableSize)-usableSize;
         int index = 0;
-        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate);
+        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate, sortType);
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && items.size() > itemIndex)
                 this.setItem(index, new GUIItem(index, items.get(itemIndex)));
@@ -73,7 +80,7 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
 
         int itemIndex = (page*usableSize)-usableSize;
         int index = 0;
-        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate);
+        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate, sortType);
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && items.size() > itemIndex)
                 this.setItem(index, new GUIItem(index, items.get(itemIndex)));
