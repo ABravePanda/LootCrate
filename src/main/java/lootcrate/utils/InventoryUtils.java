@@ -14,7 +14,6 @@ public class InventoryUtils {
     }
 
     public static void sort(List<CrateItem> items, SortType sortType) {
-        System.out.println("Sorting by " + sortType);
         switch (sortType) {
             case NONE -> Collections.sort(items);
             case CHANCE -> items.sort((item1, item2) -> {
