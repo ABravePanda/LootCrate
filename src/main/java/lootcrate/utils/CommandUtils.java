@@ -56,4 +56,9 @@ public class CommandUtils {
                 || p.hasPermission(Permission.LOOTCRATE_INTERACT_ADMIN.getKey());
     }
 
+    public static boolean hasCooldownOverride(Crate crate, Player p) {
+        return p.hasPermission(Permission.LOOTCRATE_COOLDOWN.getKey() + crate.getId())
+                || p.hasPermission(Permission.LOOTCRATE_COOLDOWN_ADMIN.getKey());
+    }
+
 }

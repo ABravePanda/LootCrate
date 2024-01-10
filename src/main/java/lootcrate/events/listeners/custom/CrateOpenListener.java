@@ -11,6 +11,7 @@ import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.managers.CooldownManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
+import lootcrate.utils.CommandUtils;
 import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ObjUtils;
 import lootcrate.utils.PlayerUtils;
@@ -76,7 +77,6 @@ public class CrateOpenListener implements Listener {
         // remove item
         p.getInventory().getItemInMainHand().setAmount(item.getAmount() - 1);
         p.updateInventory();
-
         openCrate(crate, p);
     }
 
@@ -87,6 +87,7 @@ public class CrateOpenListener implements Listener {
     }
 
     private boolean isCooldownInEffect(Crate crate, Player p) {
+        if(CommandUtils.hasCooldownOverride(crate, p)) return false;
         if(!cooldownManager.canOpen(p.getUniqueId(), crate)) {
             plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_COOLDOWN_IN_EFFECT,
                     ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.TIME, cooldownManager.timeLeft(p.getUniqueId(), crate) + ""));
