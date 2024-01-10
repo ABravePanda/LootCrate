@@ -280,6 +280,9 @@ messages:
     lootcrate-command-preview-success: "&aYou are now viewing &e{crate_name}"
     # {crate_name} - Name of crate
     # {crate_id} - Id of crate
+
+    #Usage for command
+    lootcrate-command-option-usage: "&cUsage: /lootcrate option [crate_id]"
     
     #Format of message from message command
     message-command-format: "&f{message}"

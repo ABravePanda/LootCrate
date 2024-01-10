@@ -72,15 +72,28 @@ public class PlayerChatListener implements Listener {
                 });
                 break;
             case KNOCKBACK:
-                double amt = Double.parseDouble(e.getMessage());
+                double amt;
+                try {
+                    amt = Double.parseDouble(e.getMessage());
+                } catch (NumberFormatException exception) {
+                    sendConfirmation(p, ChatColor.RED + "Cannot set the cooldown to " + ChatColor.DARK_RED + e.getMessage());
+                    break;
+                }
+                if(amt > 20d) {
+                    sendConfirmation(p, ChatColor.RED + "Cannot set the cooldown that high due to possible lag issues. Max is 20.0");
+                }
                 crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK, amt));
-                plugin.getCacheManager().update(crate);
                 sendConfirmation(p, ChatColor.GOLD + "Crate knockback has been set to " + ChatColor.YELLOW + amt);
                 break;
             case COOLDOWN:
-                int amount = Integer.parseInt(e.getMessage());
-                crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK, amount));
-                plugin.getCacheManager().update(crate);
+                int amount;
+                try {
+                    amount = Integer.parseInt(e.getMessage());
+                } catch (NumberFormatException exception) {
+                    sendConfirmation(p, ChatColor.RED + "Cannot set the cooldown to " + ChatColor.DARK_RED + e.getMessage());
+                    break;
+                }
+                crate.setOption(new CrateOption(CrateOptionType.COOLDOWN, amount));
                 sendConfirmation(p, ChatColor.GOLD + "Crate cooldown has been set to " + ChatColor.YELLOW + amount);
                 break;
             default:
