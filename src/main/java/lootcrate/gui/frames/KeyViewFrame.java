@@ -40,7 +40,8 @@ public class KeyViewFrame extends ExtendedFrame implements Listener {
         int index = 0;
         for (Crate crate : plugin.getKeyCacheManager().convertIntToCrate(player.getUniqueId())) {
             if (index < getUsableSize())
-                this.setItem(index, new GUIItem(index, ItemUtils.addCrateID(plugin, crate.getKey().getItem(), crate.getId())));
+                if(crate != null)
+                    this.setItem(index, new GUIItem(index, ItemUtils.addCrateID(plugin, crate.getKey().getItem(), crate.getId())));
             index++;
         }
         this.setItem(usableSize, claimAll);
