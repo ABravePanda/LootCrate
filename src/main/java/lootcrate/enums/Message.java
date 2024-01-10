@@ -56,6 +56,7 @@ public enum Message {
     MESSAGE_COMMAND_FORMAT("message-command-format"),
     MESSAGE_COMMAND_USAGE("message-command-usage"),
     LOOTCRATE_OPEN("lootcrate-open"),
+    LOOTCRATE_COOLDOWN_IN_EFFECT("lootcrate-cooldown-in-effect"),
     LOOTCRATE_INCORRECT_KEY("lootcrate-wrong-key"),
     LOOTCRATE_VIEW_CLOSE_ITEM("lootcrate-view-close-item"),
     LOOTCRATE_VIEW_BLOCKER_ITEM("lootcrate-view-blocker-item"),

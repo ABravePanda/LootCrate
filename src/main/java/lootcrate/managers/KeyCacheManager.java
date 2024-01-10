@@ -145,7 +145,6 @@ public class KeyCacheManager extends BasicManager {
     {
         for(UUID uuid : cache.keySet())
         {
-            System.out.println(uuid);
             for(int i : cache.get(uuid))
             {
                 System.out.println(i);

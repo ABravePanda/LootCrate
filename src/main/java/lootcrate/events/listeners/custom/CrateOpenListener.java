@@ -8,6 +8,7 @@ import lootcrate.gui.frames.animations.CrateCSGOAnimationFrame;
 import lootcrate.gui.frames.animations.CrateRandomGlassAnimationFrame;
 import lootcrate.gui.frames.animations.CrateRemovingItemAnimationFrame;
 import lootcrate.gui.frames.types.AnimatedFrame;
+import lootcrate.managers.CooldownManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import lootcrate.utils.InventoryUtils;
@@ -20,9 +21,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class CrateOpenListener implements Listener {
     private final LootCrate plugin;
+    private final CooldownManager cooldownManager;
 
     public CrateOpenListener(LootCrate plugin) {
         this.plugin = plugin;
+        this.cooldownManager = plugin.getCooldownManager();
     }
 
     @EventHandler
@@ -32,13 +35,11 @@ public class CrateOpenListener implements Listener {
         ItemStack item = p.getInventory().getItemInMainHand();
 
         // If config allows virtual keys, check if they have the key in the cache
-        if ((boolean) plugin.getOptionManager().valueOf(Option.ALLOW_VIRTUAL_KEYS) &&
-            plugin.getKeyCacheManager().contains(p.getUniqueId(), crate)) {
+        if ((boolean) plugin.getOptionManager().valueOf(Option.ALLOW_VIRTUAL_KEYS) && plugin.getKeyCacheManager().contains(p.getUniqueId(), crate)) {
+            if(isCooldownInEffect(crate, p)) return;
             // They have the key in cache, remove then run the code as if they have the physical key
             plugin.getKeyCacheManager().remove(p.getUniqueId(), crate);
-
-            plugin.getCrateManager().crateOpenEffects(crate, p);
-            openAnimation(crate, p);
+            openCrate(crate, p);
             return;
         }
 
@@ -52,7 +53,7 @@ public class CrateOpenListener implements Listener {
         }
 
         // if no items
-        if (crate.getItems().size() == 0)
+        if (crate.getItems().isEmpty())
             return;
 
         // if the keys match
@@ -62,6 +63,9 @@ public class CrateOpenListener implements Listener {
             PlayerUtils.knockBackPlayer(crate, p);
             return;
         }
+
+        //if cooldown is in effect
+        if(isCooldownInEffect(crate, p)) return;
 
         // if inv is full
         if (InventoryUtils.isFull(p.getInventory())) {
@@ -73,9 +77,22 @@ public class CrateOpenListener implements Listener {
         p.getInventory().getItemInMainHand().setAmount(item.getAmount() - 1);
         p.updateInventory();
 
-        // play sound
+        openCrate(crate, p);
+    }
+
+    private void openCrate(Crate crate, Player p) {
         plugin.getCrateManager().crateOpenEffects(crate, p);
+        cooldownManager.addCooldown(p.getUniqueId(), crate);
         openAnimation(crate, p);
+    }
+
+    private boolean isCooldownInEffect(Crate crate, Player p) {
+        if(!cooldownManager.canOpen(p.getUniqueId(), crate)) {
+            plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_COOLDOWN_IN_EFFECT,
+                    ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.TIME, cooldownManager.timeLeft(p.getUniqueId(), crate) + ""));
+            return true;
+        }
+        return false;
     }
 
     private void openAnimation(Crate crate, Player p) {
@@ -85,9 +102,6 @@ public class CrateOpenListener implements Listener {
         switch (type) {
             case CSGO:
                 frame = new CrateCSGOAnimationFrame(plugin, p, crate);
-                break;
-            case RANDOM_GLASS:
-                frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
                 break;
             case REMOVING_ITEM:
                 frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);

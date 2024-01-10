@@ -3,6 +3,7 @@ package lootcrate.managers;
 import lootcrate.LootCrate;
 import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.CrateOptionType;
+import lootcrate.enums.SortType;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.Bukkit;
@@ -106,17 +107,6 @@ public class CacheManager extends BasicManager {
      */
     public void load() {
         cache = this.getPlugin().getCrateFileManager().loadAllCrates();
-        List<Crate> crates = verify(new ArrayList<Crate>(this.getCache()));
-        for (Crate crate : new ArrayList<Crate>(this.getCache())) {
-            if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
-                crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
-                this.update(crate);
-            }
-            if (crate.getOption(CrateOptionType.SOUND_VOLUME) == null) {
-                crate.addOption(CrateOptionType.SOUND_VOLUME, 1);
-                this.update(crate);
-            }
-        }
         cache = verify(cache);
     }
 
@@ -136,6 +126,22 @@ public class CacheManager extends BasicManager {
             if(crate.getOption(CrateOptionType.HOLOGRAM_ENABLED) == null) {
                 crate.addOption(CrateOptionType.HOLOGRAM_ENABLED, true);
                 this.getPlugin().getCrateFileManager().saveCrate(crate);
+            }
+            if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
+                crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
+                this.update(crate);
+            }
+            if (crate.getOption(CrateOptionType.SOUND_VOLUME) == null) {
+                crate.addOption(CrateOptionType.SOUND_VOLUME, 1);
+                this.update(crate);
+            }
+            if (crate.getOption(CrateOptionType.SORT_TYPE) == null) {
+                crate.addOption(CrateOptionType.SORT_TYPE, SortType.CHANCE.toString());
+                this.update(crate);
+            }
+            if (crate.getOption(CrateOptionType.COOLDOWN) == null) {
+                crate.addOption(CrateOptionType.COOLDOWN, 0);
+                this.update(crate);
             }
         }
         return crate;

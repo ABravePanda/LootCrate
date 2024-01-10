@@ -292,10 +292,15 @@ messages:
     lootcrate-open: "&aOpening LootCrate &e{crate_name}"
     # {crate_name} - Name of crate
 
-    #Used when icorrect key is used to open a crate
+    #Used when incorrect key is used to open a crate
     lootcrate-wrong-key: "&cThis is the wrong key to open the LootCrate &e{crate_name}"
     # {crate_name} - Name of crate
     # {crate_id} - Id of crate
+
+    #Used when cooldown is still in effect for the crate
+    lootcrate-cooldown-in-effect: "&cPlease wait &e{time} seconds&c before opening the LootCrate &e{crate_name}&c."
+    # {crate_name} - Name of crate
+    # {time} - Time left in seconds (e.g 1.3)
 
 
     #Used when player is viewing crate

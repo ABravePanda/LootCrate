@@ -129,6 +129,7 @@ public class CrateManager extends BasicManager {
                 {"{crate_name}", "&8Right-Click&7 to Unlock", "&8Left-Click&7 to View"};
 
         crate.addOption(CrateOptionType.KNOCK_BACK, 1.0D);
+        crate.addOption(CrateOptionType.COOLDOWN, 0);
         crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
         crate.addOption(CrateOptionType.SORT_TYPE, SortType.CHANCE.toString());
         crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);

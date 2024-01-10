@@ -22,7 +22,8 @@ public enum Placeholder {
     TOTAL_CRATE_CHANCE("crate_total_chance"),
     ENCHANTMENT_NAME("enchantment_name"),
     VALUE("value"),
-    KEY_AMOUNT("key_amount");
+    KEY_AMOUNT("key_amount"),
+    TIME("time");
 
     String key;
 
