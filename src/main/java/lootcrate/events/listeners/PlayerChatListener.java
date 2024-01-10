@@ -38,10 +38,12 @@ public class PlayerChatListener implements Listener {
         switch (state) {
             case CHANGE_CRATE_NAME:
                 crate.setName(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
+                sendConfirmation(p, ChatColor.GOLD + "Crate name has been set to " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', e.getMessage()));
                 break;
             case CHANGE_CRATE_MESSAGE:
                 crate.setOption(new CrateOption(CrateOptionType.OPEN_MESSAGE,
                         ChatColor.translateAlternateColorCodes('&', e.getMessage())));
+                sendConfirmation(p, ChatColor.GOLD + "Crate open message has been set to " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', e.getMessage()));
                 break;
             case CHANGE_CRATE_SOUND:
                 Sound sound = Sound.valueOf(e.getMessage());
@@ -49,6 +51,7 @@ public class PlayerChatListener implements Listener {
                     return;
                 crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.toString()));
                 p.playSound(p.getLocation(), sound, 1, 1);
+                sendConfirmation(p, ChatColor.GOLD + "Crate open sound has been set to " + ChatColor.YELLOW + sound.name());
                 break;
             case CREATE_CRATE_NAME:
                 crate = new Crate(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
@@ -68,6 +71,18 @@ public class PlayerChatListener implements Listener {
                     plugin.getInvManager().openFrame(p, new CrateItemCreationCommandsFrame(plugin, e.getPlayer(), finalCrate, state.getCrateItem()));
                 });
                 break;
+            case KNOCKBACK:
+                double amt = Double.parseDouble(e.getMessage());
+                crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK, amt));
+                plugin.getCacheManager().update(crate);
+                sendConfirmation(p, ChatColor.GOLD + "Crate knockback has been set to " + ChatColor.YELLOW + amt);
+                break;
+            case COOLDOWN:
+                int amount = Integer.parseInt(e.getMessage());
+                crate.setOption(new CrateOption(CrateOptionType.KNOCK_BACK, amount));
+                plugin.getCacheManager().update(crate);
+                sendConfirmation(p, ChatColor.GOLD + "Crate cooldown has been set to " + ChatColor.YELLOW + amount);
+                break;
             default:
                 return;
         }
@@ -76,6 +91,10 @@ public class PlayerChatListener implements Listener {
         plugin.getCacheManager().update(crate);
         plugin.getChatManager().removePlayer(p);
 
+    }
+
+    private void sendConfirmation(Player p, String message) {
+        p.sendMessage(message);
     }
 
 }

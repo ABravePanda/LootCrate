@@ -2,6 +2,7 @@ package lootcrate.managers;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
+import lootcrate.enums.CrateOptionType;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -58,6 +59,12 @@ public class ChatManager extends BasicManager {
                 break;
             case ADD_ITEM_COMMAND:
                 p.sendMessage(ChatColor.GOLD + "Enter the command you would like to add (without '/'). Use {player} as a placeholder.");
+                break;
+            case KNOCKBACK:
+                p.sendMessage(ChatColor.GOLD + "Enter the number you would like the knockback to be. Current knockback is " + ChatColor.YELLOW + getState(p).getCrate().getOption(CrateOptionType.KNOCK_BACK).getValue());
+                break;
+            case COOLDOWN:
+                p.sendMessage(ChatColor.GOLD + "Enter the number you would like the crate cooldown to be in seconds. Current cooldown is " + ChatColor.YELLOW + getState(p).getCrate().getOption(CrateOptionType.COOLDOWN).getValue());
                 break;
             default:
                 break;

@@ -52,9 +52,11 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
     }
 
     public void fillOptions() {
+        this.setItem(4,
+                new GUIItem(4, Material.SLIME_BALL, ChatColor.RED + "Cooldown", ChatColor.GRAY + "Change the crate open cooldown."));
         this.setItem(10,
                 new GUIItem(10, Material.NAME_TAG, ChatColor.RED + "Name", ChatColor.GRAY + "Change the crate name."));
-        this.setItem(12, new GUIItem(12, Material.STICK, ChatColor.RED + "Knockback Level",
+        this.setItem(12, new GUIItem(12, Material.NETHERITE_SWORD, ChatColor.RED + "Knockback Level",
                 ChatColor.GRAY + "Change how far the crate knocks you back."));
         this.setItem(14, new GUIItem(14, Material.JUKEBOX, ChatColor.RED + "Open Sound",
                 ChatColor.GRAY + "Change the sound that plays when a crate is opened."));
@@ -77,32 +79,30 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
 
         Player p = e.getPlayer();
         ItemStack item = e.getItem().getItemStack();
+        ChatState state = ChatState.NONE;
 
         Frame frameToOpen = null;
 
         switch (item.getType()) {
-            case STICK:
-                frameToOpen = new CrateOptionKnockBackFrame(plugin, p, crate);
+            case SLIME_BALL:
+                state = ChatState.COOLDOWN;
+                state.setCrate(crate);
+                break;
+            case NETHERITE_SWORD:
+                state = ChatState.KNOCKBACK;
+                state.setCrate(crate);
                 break;
             case BLAZE_POWDER:
                 frameToOpen = new CrateOptionAnimationFrame(plugin, p, crate);
                 break;
             case NAME_TAG:
-                ChatState state = ChatState.CHANGE_CRATE_NAME;
+                state = ChatState.CHANGE_CRATE_NAME;
                 state.setCrate(crate);
-                plugin.getChatManager().addPlayer(p, state);
-                plugin.getChatManager().sendNotification(p);
-                e.setCancelled(true);
-                this.close();
-                return;
+                break;
             case COMMAND_BLOCK:
-                ChatState state1 = ChatState.CHANGE_CRATE_MESSAGE;
-                state1.setCrate(crate);
-                plugin.getChatManager().addPlayer(p, state1);
-                plugin.getChatManager().sendNotification(p);
-                e.setCancelled(true);
-                this.close();
-                return;
+                state = ChatState.CHANGE_CRATE_MESSAGE;
+                state.setCrate(crate);
+                break;
             case JUKEBOX:
                 frameToOpen = new CrateOptionSoundFrame(plugin, p, crate);
                 /**
@@ -123,6 +123,15 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
             default:
                 return;
         }
+
+        if(state != ChatState.NONE) {
+            plugin.getChatManager().addPlayer(p, state);
+            plugin.getChatManager().sendNotification(p);
+            e.setCancelled(true);
+            this.close();
+            return;
+        }
+
         e.setCancelled(true);
         this.close();
         frameToOpen.open();

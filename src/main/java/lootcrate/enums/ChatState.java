@@ -4,7 +4,14 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 
 public enum ChatState {
-    CHANGE_CRATE_NAME(null), CHANGE_CRATE_MESSAGE(null), CHANGE_CRATE_SOUND(null), CREATE_CRATE_NAME(null), ADD_ITEM_COMMAND(null);
+    CHANGE_CRATE_NAME(null),
+    CHANGE_CRATE_MESSAGE(null),
+    CHANGE_CRATE_SOUND(null),
+    CREATE_CRATE_NAME(null),
+    ADD_ITEM_COMMAND(null),
+    KNOCKBACK(null),
+    COOLDOWN(null),
+    NONE(null);
 
     private Crate crate;
     private CrateItem crateItem;
