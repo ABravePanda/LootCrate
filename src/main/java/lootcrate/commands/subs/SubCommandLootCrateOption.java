@@ -6,10 +6,6 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.menu.CrateFrame;
-import lootcrate.gui.frames.menu.CrateMainMenuFrame;
-import lootcrate.gui.frames.menu.option.CrateOptionMainMenuFrame;
-import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
@@ -60,7 +56,6 @@ public class SubCommandLootCrateOption extends SubCommand {
                     ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
             return;
         }
-        plugin.getInvManager().openFrame(p, new CrateOptionMainMenuFrame(plugin, p, crate));
 
 
 

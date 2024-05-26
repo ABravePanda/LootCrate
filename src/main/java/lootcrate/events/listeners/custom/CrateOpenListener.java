@@ -4,10 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.enums.*;
 import lootcrate.events.custom.CrateOpenEvent;
-import lootcrate.gui.frames.animations.CrateCSGOAnimationFrame;
-import lootcrate.gui.frames.animations.CrateRandomGlassAnimationFrame;
-import lootcrate.gui.frames.animations.CrateRemovingItemAnimationFrame;
-import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.managers.CooldownManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
@@ -97,28 +93,6 @@ public class CrateOpenListener implements Listener {
     }
 
     private void openAnimation(Crate crate, Player p) {
-        AnimatedFrame frame = null;
-        CrateOption opt = crate.getOption(CrateOptionType.ANIMATION_STYLE);
-        AnimationStyle type = AnimationStyle.valueOf((String) opt.getValue());
-        switch (type) {
-            case CSGO:
-                frame = new CrateCSGOAnimationFrame(plugin, p, crate);
-                break;
-            case REMOVING_ITEM:
-                frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);
-                break;
-            case NONE:
-                plugin.getCrateManager().giveReward(plugin.getCrateManager().getRandomItem(crate), p);
-                return;
-            default:
-                frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
-                break;
-
-        }
-
-        plugin.getInvManager().openFrame(p, frame);
-
-        frame.showAnimation();
     }
 
 }

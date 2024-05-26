@@ -12,6 +12,17 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.Arrays;
 
 public class ItemUtils {
+
+    public static int getGadgetID(ItemStack itemStack) {
+        ItemMeta meta = itemStack.getItemMeta();
+        if(meta == null) return -1;
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        NamespacedKey namespacedKey = new NamespacedKey("lootcrate", "gadget-random");
+        if(container.has(namespacedKey, PersistentDataType.INTEGER))
+            return container.get(namespacedKey, PersistentDataType.INTEGER);
+        return -1;
+    }
+
     public static ItemStack setDisplayName(ItemStack item, String displayName) {
         ItemMeta meta = item.getItemMeta();
         if (displayName != null)

@@ -54,7 +54,7 @@ public class CrateKey implements ConfigurationSerializable {
 
     public ItemStack getItem() {
         if (isGlowing()) {
-            item.addUnsafeEnchantment(Enchantment.OXYGEN, 1);
+            item.addUnsafeEnchantment(Enchantment.BREACH, 1);
             ItemMeta meta = item.getItemMeta();
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             item.setItemMeta(meta);

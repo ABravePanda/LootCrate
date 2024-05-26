@@ -1,51 +1,23 @@
 package lootcrate.managers;
 
 import lootcrate.LootCrate;
-import lootcrate.gui.frames.types.Frame;
+import lootcrate.gui.Frame;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class FrameManager extends BasicManager {
 
-    public Map<UUID, Frame> frameMap;
+    private HashMap<UUID, Frame> frames;
+    private HashMap<UUID, UUID> playerFrames;
 
-    public FrameManager(LootCrate plugin)
-    {
+    public FrameManager(LootCrate plugin) {
         super(plugin);
-        this.frameMap = new HashMap<UUID, Frame>();
-    }
-
-    public boolean inFrame(Player player)
-    {
-        return frameMap.containsKey(player.getUniqueId());
-    }
-
-    public Frame getFrame(Player player)
-    {
-        if(!inFrame(player)) return null;
-        return frameMap.get(player.getUniqueId());
-    }
-
-    public void openFrame(Player player, Frame frame)
-    {
-        if(inFrame(player))
-            closeFrame(player);
-        addPlayerToFrame(player, frame);
-        player.openInventory(frame.getInventory());
-    }
-
-    public void closeFrame(Player player)
-    {
-        if(!inFrame(player)) return;
-        player.closeInventory();
-    }
-
-    private void addPlayerToFrame(Player player, Frame frame)
-    {
-        frameMap.put(player.getUniqueId(), frame);
+        this.frames = new HashMap<>();
+        this.playerFrames = new HashMap<>();
     }
 
     @Override
@@ -56,5 +28,44 @@ public class FrameManager extends BasicManager {
     @Override
     public void disable() {
 
+    }
+
+    public void openFrame(Frame frame, UUID uuid) {
+        frames.put(frame.getId(), frame);
+        playerFrames.put(uuid, frame.getId());
+
+        frame.init();
+
+        Player player = Bukkit.getPlayer(uuid);
+        if(player == null) {
+            //TODO error catch
+            return;
+        }
+
+        closeFrame(uuid);
+
+        player.openInventory(frame.getInventory());
+
+    }
+
+    public void closeFrame(UUID uuid) {
+        UUID frameUUID = playerFrames.get(uuid);
+        if(frameUUID == null)
+            return;
+
+        Frame frame = frames.get(uuid);
+        if(frame == null)
+            return;
+
+        frame.onClose();
+        playerFrames.remove(uuid);
+
+        Player player = Bukkit.getPlayer(uuid);
+        if(player == null) {
+            //TODO error catch
+            return;
+        }
+
+        player.closeInventory();
     }
 }

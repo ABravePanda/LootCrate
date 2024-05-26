@@ -6,20 +6,17 @@ import lootcrate.enums.CrateOptionType;
 import lootcrate.enums.Message;
 import lootcrate.enums.Placeholder;
 import lootcrate.enums.SortType;
-import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.PlayerFrameMatch;
 import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ItemUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryManager extends BasicManager {
 
@@ -62,12 +59,6 @@ public class InventoryManager extends BasicManager {
     }
 
 
-    public void openFrame(Player p, Frame frame) {
-        PlayerFrameMatch match = new PlayerFrameMatch(p.getUniqueId(), frame.getId());
-        removeSimilar(match);
-        p.openInventory(frame.getInventory());
-        matches.add(match);
-    }
 
     public boolean contains(PlayerFrameMatch match) {
         for(PlayerFrameMatch m : matches)
@@ -91,11 +82,6 @@ public class InventoryManager extends BasicManager {
             if(m.getUuid().equals(match.getUuid())) matches.remove(m);
     }
 
-    public void closeFrame(Player p, Frame frame) {
-        PlayerFrameMatch match = new PlayerFrameMatch(p.getUniqueId(), frame.getId());
-        if(contains(match)) p.closeInventory();
-        removeSimilar(match);
-    }
 
     @Override
     public void enable() {

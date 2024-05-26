@@ -6,12 +6,11 @@ import lootcrate.events.listeners.PlayerJoinListener;
 import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
-import lootcrate.gui.events.listeners.GUICloseListener;
 import lootcrate.managers.*;
 import lootcrate.objects.*;
-import org.bukkit.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,6 +34,7 @@ public class LootCrate extends JavaPlugin {
     private ChatManager chatManager;
     private CustomizationManager customizationManager;
     private CooldownManager cooldownManager;
+    private FrameManager frameManager;
 
     @Override
     public void onEnable() {
@@ -57,12 +57,35 @@ public class LootCrate extends JavaPlugin {
         commandManager = new CommandManager(this);
         chatManager = new ChatManager(this);
         cooldownManager = new CooldownManager(this);
+        frameManager = new FrameManager(this);
 
-        registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
-                new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
-                new PlayerChatListener(this));
+        registerEvents(
+                new LootCrateInteractListener(this),
+                new CrateAccessListener(this),
+                new CrateOpenListener(this),
+                new CrateViewListener(this),
+                new PlayerJoinListener(this),
+                new PlayerChatListener(this)
+        );
 
-        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager, cooldownManager);
+        toggleManagers(true,
+                optionManager,
+                updateManager,
+                messageManager,
+                fileManager,
+                customizationManager,
+                crateFileManager,
+                cacheManager,
+                crateManager,
+                keyFileManager,
+                keyCacheManager,
+                locationManager,
+                invManager,
+                commandManager,
+                chatManager,
+                cooldownManager,
+                frameManager
+        );
 
         if(holoHook())
         {
@@ -95,7 +118,23 @@ public class LootCrate extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, customizationManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager, cooldownManager);
+        toggleManagers(false,
+                optionManager,
+                updateManager,
+                messageManager,
+                fileManager,
+                customizationManager,
+                cacheManager,
+                crateManager,
+                keyFileManager,
+                keyCacheManager,
+                locationManager,
+                invManager,
+                commandManager,
+                chatManager,
+                cooldownManager,
+                frameManager
+        );
         if(holoHook())
         {
             toggleManagers(false, holoManager);
@@ -279,5 +318,9 @@ public class LootCrate extends JavaPlugin {
 
     public CooldownManager getCooldownManager() {
         return cooldownManager;
+    }
+
+    public FrameManager getFrameManager() {
+        return frameManager;
     }
 }

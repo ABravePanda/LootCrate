@@ -1,18 +1,9 @@
 package lootcrate.commands.subs;
 
-import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
-import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
-import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.KeyViewFrame;
 import lootcrate.managers.KeyCacheManager;
-import lootcrate.objects.Crate;
-import lootcrate.utils.CommandUtils;
-import lootcrate.utils.ObjUtils;
-import lootcrate.utils.TabUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -49,8 +40,6 @@ public class SubCommandLootCrateClaim extends SubCommand {
             return;
 
         Player p = (Player) sender;
-
-        plugin.getInvManager().openFrame(p, new KeyViewFrame(plugin, p));
 
     }
 

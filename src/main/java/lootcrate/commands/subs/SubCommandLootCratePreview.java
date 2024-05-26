@@ -6,7 +6,6 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.CrateViewFrame;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
@@ -60,8 +59,6 @@ public class SubCommandLootCratePreview extends SubCommand {
             return;
         }
 
-        CrateViewFrame frame = new CrateViewFrame(plugin, (Player) sender, crate);
-        frame.open();
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));

@@ -6,12 +6,15 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.menu.CrateMainMenuFrame;
-import lootcrate.gui.frames.menu.CrateFrame;
-import lootcrate.gui.frames.types.Frame;
+import lootcrate.gui.Frame;
+import lootcrate.gui.GUIItem;
+import lootcrate.gui.ItemBuilder;
+import lootcrate.gui.frames.TestFrame;
+import lootcrate.managers.FrameManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -48,18 +51,16 @@ public class SubCommandLootCrateGui extends SubCommand {
         if (!this.testPermissions())
             return;
 
-        Frame frame = new CrateMainMenuFrame(plugin, p);
-        if (args.length == 2) {
-            Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
-            if (crate == null) {
-                plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
-                        ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
-                return;
-            }
-            frame = new CrateFrame(plugin, p, crate);
-        }
 
-        plugin.getInvManager().openFrame(p, frame);
+        FrameManager frameManager = plugin.getFrameManager();
+        Frame frame = new TestFrame(plugin, 9, "Test", p.getUniqueId());
+
+        frameManager.openFrame(frame, p.getUniqueId());
+
+        GUIItem guiItem = new ItemBuilder(plugin, Material.STONE).setDurability(22).setName("Test").getClickableItem((itemStack, uuid) -> {
+            System.out.println("Test click");
+        });
+        frame.setItem(0, guiItem);
 
     }
 
