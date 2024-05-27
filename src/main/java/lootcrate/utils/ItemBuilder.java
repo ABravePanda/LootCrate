@@ -1,6 +1,7 @@
-package lootcrate.gui;
+package lootcrate.utils;
 
 import lootcrate.LootCrate;
+import lootcrate.gui.GUIItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;

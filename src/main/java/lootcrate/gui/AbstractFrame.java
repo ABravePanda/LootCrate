@@ -24,10 +24,11 @@ public abstract class AbstractFrame implements Frame {
         this.title = title;
         this.owner = owner;
         this.items = new GUIItem[size];
+        checkSize();
     }
 
     private void checkSize() {
-        if(this.size % 9 == 0) {
+        if(this.size % 9 != 0) {
             throw new IllegalStateException("Inventory size must be divisible by 9");
         }
     }
@@ -35,6 +36,13 @@ public abstract class AbstractFrame implements Frame {
     @Override
     public void init() {
         this.inventory = Bukkit.createInventory(null, size, title);
+        if(hasNavigation())
+            initNavigation();
+    }
+
+    @Override
+    public void initNavigation() {
+
     }
 
     @Override
@@ -55,6 +63,7 @@ public abstract class AbstractFrame implements Frame {
     public LootCrate getPlugin() {
         return plugin;
     }
+
 
     @Override
     public GUIItem[] getItems() {
@@ -86,4 +95,13 @@ public abstract class AbstractFrame implements Frame {
         return inventory;
     }
 
+    @Override
+    public boolean canBeManuallyClosed() {
+        return false;
+    }
+
+    @Override
+    public boolean readyToClose() {
+        return false;
+    }
 }
