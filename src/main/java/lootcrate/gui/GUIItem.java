@@ -35,7 +35,8 @@ public class GUIItem implements Listener {
         Action action = event.getAction();
         if(action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
             if (ItemUtils.getGadgetID(event.getItem()) == uuid) {
-                    onClick.accept(itemStack, event.getPlayer().getUniqueId());
+                if(onClick == null) return;
+                onClick.accept(itemStack, event.getPlayer().getUniqueId());
             }
         }
     }
@@ -45,8 +46,9 @@ public class GUIItem implements Listener {
     public void onItemClick(InventoryClickEvent event) {
         if(event.getCurrentItem() == null) return;
         if (ItemUtils.getGadgetID(event.getCurrentItem()) == uuid) {
-                event.setResult(Event.Result.DENY);
-                onClick.accept(itemStack, event.getWhoClicked().getUniqueId());
+            event.setResult(Event.Result.DENY);
+            if(onClick == null) return;
+            onClick.accept(itemStack, event.getWhoClicked().getUniqueId());
         }
     }
 }

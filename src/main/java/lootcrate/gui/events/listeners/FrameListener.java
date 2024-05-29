@@ -1,6 +1,7 @@
 package lootcrate.gui.events.listeners;
 
 import lootcrate.LootCrate;
+import lootcrate.gui.Animation;
 import lootcrate.gui.Frame;
 import lootcrate.gui.events.FrameCloseEvent;
 import lootcrate.gui.events.FrameOpenEvent;
@@ -48,8 +49,6 @@ public class FrameListener implements Listener {
         Frame frame = event.getFrame();
         Player player = getPlayer(uuid);
 
-        System.out.println("Manual Close " + event.isManual());
-
         if(event.isManual() && !frame.canBeManuallyClosed()) {
             //reopen frame
             player.openInventory(frame.getInventory());
@@ -57,7 +56,9 @@ public class FrameListener implements Listener {
             return;
         }
 
+        frame.onClose(event.isManual());
         frameManager.removeOpenFrame(uuid);
+        player.closeInventory();
 
     }
 

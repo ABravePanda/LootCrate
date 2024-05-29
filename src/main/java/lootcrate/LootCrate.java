@@ -7,7 +7,7 @@ import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
 import lootcrate.gui.events.listeners.FrameListener;
-import lootcrate.gui.events.listeners.InventoryCloseListener;
+import lootcrate.gui.events.listeners.InventoryEventListener;
 import lootcrate.managers.*;
 import lootcrate.objects.*;
 import org.bstats.bukkit.Metrics;
@@ -69,7 +69,7 @@ public class LootCrate extends JavaPlugin {
                 new PlayerJoinListener(this),
                 new PlayerChatListener(this),
                 new FrameListener(this),
-                new InventoryCloseListener(this)
+                new InventoryEventListener(this)
         );
 
         toggleManagers(true,

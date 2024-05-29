@@ -3,8 +3,8 @@ package lootcrate.commands.subs;
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
 import lootcrate.enums.Permission;
-import lootcrate.gui.Frame;
-import lootcrate.gui.frames.TestFrame;
+import lootcrate.gui.frames.animation.CrateCSGOAnimationFrame;
+import lootcrate.gui.frames.animation.CrateRemovingItemAnimationFrame;
 import lootcrate.managers.FrameManager;
 import lootcrate.utils.TabUtils;
 import org.bukkit.command.CommandSender;
@@ -45,10 +45,9 @@ public class SubCommandLootCrateGui extends SubCommand {
 
 
         FrameManager frameManager = plugin.getFrameManager();
-        TestFrame frame = new TestFrame(plugin, p.getUniqueId());
-
+        CrateRemovingItemAnimationFrame frame = new CrateRemovingItemAnimationFrame(plugin, plugin.getCacheManager().getCrateById(901), p.getUniqueId());
         frameManager.openFrame(p.getUniqueId(), frame);
-        frame.setReadyToClose(true);
+        frame.play();
     }
 
     @Override

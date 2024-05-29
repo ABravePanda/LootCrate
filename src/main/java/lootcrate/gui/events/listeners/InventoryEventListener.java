@@ -6,13 +6,14 @@ import lootcrate.managers.FrameManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 
-public class InventoryCloseListener implements Listener {
+public class InventoryEventListener implements Listener {
 
     private LootCrate plugin;
     private FrameManager frameManager;
 
-    public InventoryCloseListener(LootCrate plugin) {
+    public InventoryEventListener(LootCrate plugin) {
         this.plugin = plugin;
         this.frameManager = plugin.getFrameManager();
     }
@@ -25,5 +26,15 @@ public class InventoryCloseListener implements Listener {
 
         Frame frame = frameManager.getOpenFrame(event.getPlayer().getUniqueId());
         frameManager.closeFrame(event.getPlayer().getUniqueId(), !frame.readyToClose());
+    }
+
+    @EventHandler
+    public void onItemDrop(PlayerDropItemEvent event) {
+        if(!frameManager.isFrameOpen(event.getPlayer().getUniqueId())) {
+            return;
+        }
+
+        event.setCancelled(true);
+
     }
 }

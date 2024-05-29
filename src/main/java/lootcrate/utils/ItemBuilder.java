@@ -2,6 +2,7 @@ package lootcrate.utils;
 
 import lootcrate.LootCrate;
 import lootcrate.gui.GUIItem;
+import lootcrate.objects.CrateItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
@@ -22,6 +23,7 @@ public class ItemBuilder {
     private LootCrate plugin;
     private ItemStack item;
     private String name;
+    private CrateItem crateItem;
     private boolean hideAttributes;
     private boolean durabilitySet;
     private int durability;
@@ -50,6 +52,11 @@ public class ItemBuilder {
         this.plugin = plugin;
     }
 
+    public ItemBuilder(LootCrate plugin, ItemStack itemStack) {
+        this.item = itemStack.clone();
+        this.plugin = plugin;
+    }
+
     /**
      * Sets the amount of the item.
      *
@@ -58,6 +65,11 @@ public class ItemBuilder {
      */
     public ItemBuilder setAmount(int amount) {
         item.setAmount(amount);
+        return this;
+    }
+
+    public ItemBuilder setCrateItem(CrateItem crateItem) {
+        this.crateItem = crateItem;
         return this;
     }
 
@@ -180,9 +192,14 @@ public class ItemBuilder {
 
         meta.setUnbreakable(unbreakable);
 
-            PersistentDataContainer container = meta.getPersistentDataContainer();
-            NamespacedKey namespacedKey = new NamespacedKey("lootcrate", "gadget-random");
-            container.set(namespacedKey, PersistentDataType.INTEGER, new Random().nextInt(0, 500000));
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        NamespacedKey namespacedKey = new NamespacedKey("lootcrate", "gadget-random");
+        container.set(namespacedKey, PersistentDataType.INTEGER, new Random().nextInt(0, 500000));
+
+        if(getCrateItem() != null) {
+            NamespacedKey crateItemKey = new NamespacedKey("lootcrate", "crateitem-id");
+            container.set(crateItemKey, PersistentDataType.INTEGER, getCrateItem().getId());
+        }
 
         if(durabilitySet && meta instanceof Damageable) {
             ((Damageable) meta).setDamage(durability);
@@ -198,4 +215,7 @@ public class ItemBuilder {
         return new GUIItem(plugin, get(), onClick);
     }
 
+    public CrateItem getCrateItem() {
+        return crateItem;
+    }
 }

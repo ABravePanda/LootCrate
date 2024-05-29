@@ -105,7 +105,7 @@ public interface Frame {
      * Responsible for cleaning up the frame.
      * Is not responsible for closing the inventory itself.
      */
-    void onClose();
+    void onClose(boolean manual);
 
     boolean canBeManuallyClosed();
 

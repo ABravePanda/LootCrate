@@ -1,7 +1,10 @@
 package lootcrate.gui;
 
 import lootcrate.LootCrate;
+import lootcrate.utils.ItemBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.Arrays;
@@ -97,11 +100,32 @@ public abstract class AbstractFrame implements Frame {
 
     @Override
     public boolean canBeManuallyClosed() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean readyToClose() {
         return false;
+    }
+
+    @Override
+    public void nextPage() {
+
+    }
+
+    @Override
+    public void previousPage() {
+
+    }
+
+    protected void fillBackground(Material m) {
+        for(int i = 0; i < size; i++) {
+            GUIItem guiItem = new ItemBuilder(getPlugin(), m).setName(" ").getClickableItem(null);
+            setItem(i, guiItem);
+        }
+    }
+
+    protected Player getPlayer() {
+        return Bukkit.getPlayer(owner);
     }
 }

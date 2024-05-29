@@ -7,5 +7,6 @@ public interface Animation {
     void tick();
     int getDurationTicks();
     int getTicksRemaining();
+    int getTickRate();
 
 }
