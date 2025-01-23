@@ -72,7 +72,7 @@ public class SubCommandLootCrateGive extends SubCommand {
             return;
         }
 
-        if (crate.getKey().getItem() == null) {
+        if (crate.getKey() == null || crate.getKey().getItem() == null) {
             plugin.getMessageManager().sendMessage(sender, Message.KEY_NOT_FOUND, ImmutableMap.of(Placeholder.CRATE_ID,
                     "" + CommandUtils.tryParse(args[2]), Placeholder.CRATE_NAME, "" + crate.getName()));
             return;
