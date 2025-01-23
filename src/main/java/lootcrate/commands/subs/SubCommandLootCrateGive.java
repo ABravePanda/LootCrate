@@ -124,38 +124,32 @@ public class SubCommandLootCrateGive extends SubCommand {
 
     private void giveKey(Player p, Crate crate)
     {
-        if(plugin.getOptionManager().valueOf(Option.LOOTCRATE_CLAIM_ENABLED))
-            keyCacheManager.update(p.getUniqueId(), crate);
-        else
-        {
-            if(InventoryUtils.isFull(p.getInventory()))
-            {
-                //TODO error full inv
-                return;
-            }
-            else
-            {
-                p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
-            }
-        }
+        distributeCrateKey(crate, p);
     }
 
     private void giveAllKey(Crate crate)
     {
         for(Player p : Bukkit.getOnlinePlayers()) {
-            if (plugin.getOptionManager().valueOf(Option.LOOTCRATE_CLAIM_ENABLED))
+            distributeCrateKey(crate, p);
+        }
+    }
+
+    private void distributeCrateKey(Crate crate, Player p) {
+        if (plugin.getOptionManager().valueOf(Option.LOOTCRATE_CLAIM_ENABLED)){
+            if(plugin.getOptionManager().valueOf(Option.PRIORITIZE_INVENTORY_OVER_CLAIM))
+                p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
+            else
                 keyCacheManager.update(p.getUniqueId(), crate);
+        }
+        else
+        {
+            if(InventoryUtils.isFull(p.getInventory()))
+            {
+                //TODO error full inv
+            }
             else
             {
-                if(InventoryUtils.isFull(p.getInventory()))
-                {
-                    //TODO error full inv
-                    return;
-                }
-                else
-                {
-                    p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
-                }
+                p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
             }
         }
     }
