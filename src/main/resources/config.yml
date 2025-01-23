@@ -34,6 +34,11 @@ options:
     allow-virtual-keys: false
     # boolean - true/false
 
+    #Should prioritize giving keys in inventory first?
+    #If inventory is full and lootcrate-claim-enabled is true, fallback to /lootcrate claim.
+    prioritize-inventory-over-claim: false
+    # boolean - true/false
+
     
 #+------------------------------+
 #|                              |
