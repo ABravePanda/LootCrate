@@ -1,8 +1,12 @@
 package lootcrate.managers;
 
+import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
 import lootcrate.enums.CrateOptionType;
+import lootcrate.enums.Message;
+import lootcrate.enums.Placeholder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -45,26 +49,29 @@ public class ChatManager extends BasicManager {
 
         switch (getState(p)) {
             case CHANGE_CRATE_NAME:
-                p.sendMessage(ChatColor.GOLD + "Enter the new name for your crate.");
+                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_NAME, null);
                 break;
             case CHANGE_CRATE_MESSAGE:
-                p.sendMessage(ChatColor.GOLD + "Enter the new open message for your crate.");
+                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_MESSAGE, null);
                 break;
-            case CHANGE_CRATE_SOUND:
+            case CHANGE_CRATE_SOUND: // Not more used
+                /*
                 p.sendMessage(ChatColor.GOLD + "Enter the new open sound for your crate. " + ChatColor.RED
                         + "Options: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html");
+                p.sendMessage("§7Type '§ccancel§7' to cancel.");
+                 */
                 break;
             case CREATE_CRATE_NAME:
-                p.sendMessage(ChatColor.GOLD + "Enter the name for your new crate.");
+                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CREATE_CRATE_NAME, null);
                 break;
             case ADD_ITEM_COMMAND:
-                p.sendMessage(ChatColor.GOLD + "Enter the command you would like to add (without '/'). Use {player} as a placeholder.");
+                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_ADD_ITEM_COMMAND, null);
                 break;
-            case KNOCKBACK:
-                p.sendMessage(ChatColor.GOLD + "Enter the number you would like the knockback to be. Current knockback is " + ChatColor.YELLOW + getState(p).getCrate().getOption(CrateOptionType.KNOCK_BACK).getValue());
+            case CHANGE_CRATE_KNOCKBACK:
+                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_KNOCKBACK, ImmutableMap.of(Placeholder.KNOCKBACK, getState(p).getCrate().getOption(CrateOptionType.KNOCK_BACK).getValue().toString()));
                 break;
-            case COOLDOWN:
-                p.sendMessage(ChatColor.GOLD + "Enter the number you would like the crate cooldown to be in seconds. Current cooldown is " + ChatColor.YELLOW + getState(p).getCrate().getOption(CrateOptionType.COOLDOWN).getValue());
+            case CHANGE_CRATE_COOLDOWN:
+                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_COOLDOWN, ImmutableMap.of(Placeholder.COOLDOWN, getState(p).getCrate().getOption(CrateOptionType.COOLDOWN).getValue().toString()));
                 break;
             default:
                 break;

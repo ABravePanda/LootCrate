@@ -1,6 +1,7 @@
 package lootcrate.gui.frames.menu;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.creation.items.CrateItemFrame;
 import lootcrate.gui.frames.creation.items.CrateItemMainMenuFrame;
@@ -48,14 +49,18 @@ public class CrateFrame extends BaseFrame implements Listener {
     // methods
 
     public void fillOptions() {
-        this.setItem(10, new GUIItem(10, Material.BRICKS, ChatColor.RED + "Items",
-                ChatColor.GRAY + "All the items in the crate."));
-        this.setItem(13, new GUIItem(13, Material.TRIPWIRE_HOOK, ChatColor.RED + "Key",
-                ChatColor.GRAY + "Used to unlock the crate."));
-        this.setItem(16, new GUIItem(16, Material.ENDER_PEARL, ChatColor.RED + "Locations",
-                ChatColor.GRAY + "All the places the crate is set."));
-        this.setItem(31, new GUIItem(31, Material.ANVIL, ChatColor.RED + "Options",
-                ChatColor.GRAY + "Edit crate name, hologram, knockback, etc..."));
+        this.setItem(19, new GUIItem(19, Material.BRICKS,
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_VIEW_ITEMS_NAME),
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_VIEW_ITEMS_LORE)));
+        this.setItem(12, new GUIItem(12, Material.TRIPWIRE_HOOK,
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_VIEW_KEY_NAME),
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_VIEW_KEY_LORE)));
+        this.setItem(14, new GUIItem(14, Material.ENDER_PEARL,
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_VIEW_LOCATIONS_NAME),
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_VIEW_LOCATIONS_LORE)));
+        this.setItem(25, new GUIItem(25, Material.ANVIL,
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_VIEW_OPTIONS_NAME),
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_VIEW_OPTIONS_LORE)));
     }
 
     // events
@@ -72,7 +77,7 @@ public class CrateFrame extends BaseFrame implements Listener {
 
         switch (item.getType()) {
             case BRICKS:
-                frameToOpen = new CrateItemMainMenuFrame(plugin, p, crate);
+                frameToOpen = new CrateItemFrame(plugin, p, crate);
                 break;
             case TRIPWIRE_HOOK:
                 frameToOpen = new CrateKeyFrame(plugin, p, crate);
@@ -93,8 +98,7 @@ public class CrateFrame extends BaseFrame implements Listener {
 
     @Override
     public void nextPage() {
-        this.closeFrame(player, this);
-        this.openFrame(player, new CrateItemFrame(plugin, player, crate));
+
     }
 
     @Override

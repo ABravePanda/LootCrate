@@ -62,7 +62,7 @@ public class CrateOptionAnimationFrame extends BaseFrame implements Listener {
     {
         for(AnimationStyle style : AnimationStyle.values())
         {
-            GUIItem item = new GUIItem(0, style.getItemStack(), style.getName(), style.getDescription());
+            GUIItem item = new GUIItem(0, style.getItemStack(), plugin.getCustomizationManager().parseName(style.getName()), plugin.getCustomizationManager().parseName(style.getDescription()));
             item.setNameColor(ChatColor.RED);
             item.setLoreColor(ChatColor.GRAY);
             styles.put(style, item);
@@ -138,15 +138,12 @@ public class CrateOptionAnimationFrame extends BaseFrame implements Listener {
 
     @Override
     public void nextPage() {
-        this.closeFrame(player, this);
-        this.openFrame(player, new CrateOptionHologramEnabledFrame(plugin, player, crate));
-        return;
+
     }
 
     @Override
     public void previousPage() {
         this.closeFrame(player, this);
         this.openFrame(player, new CrateOptionMainMenuFrame(plugin, player, crate));
-        return;
     }
 }

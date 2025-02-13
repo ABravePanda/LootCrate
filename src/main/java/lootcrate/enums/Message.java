@@ -48,7 +48,7 @@ public enum Message {
     LOOTCRATE_COMMAND_RELOAD_SUCCESS("lootcrate-command-reload-success"),
     LOOTCRATE_COMMAND_DISPLAY_SUCCESS("lootcrate-command-displaychances-success"),
     LOOTCRATE_COMMAND_DISPLAY_USAGE("lootcrate-command-displaychances-usage"),
-    LOOTCRATE_COMMAND_PREVIEW_USAGE(" lootcrate-command-preview-usage"),
+    LOOTCRATE_COMMAND_PREVIEW_USAGE("lootcrate-command-preview-usage"),
     LOOTCRATE_COMMAND_PREVIEW_SUCCESS("lootcrate-command-preview-success"),
     LOOTCRATE_COMMAND_VERION_USAGE("lootcrate-command-version-usage"),
     LOOTCRATE_COMMAND_DELETE_USAGE("lootcrate-command-delete-usage"),
@@ -59,10 +59,22 @@ public enum Message {
     LOOTCRATE_OPEN("lootcrate-open"),
     LOOTCRATE_COOLDOWN_IN_EFFECT("lootcrate-cooldown-in-effect"),
     LOOTCRATE_INCORRECT_KEY("lootcrate-wrong-key"),
-    LOOTCRATE_VIEW_CLOSE_ITEM("lootcrate-view-close-item"),
-    LOOTCRATE_VIEW_BLOCKER_ITEM("lootcrate-view-blocker-item"),
-    LOOTCRATE_VIEW_NEXT_ITEM("lootcrate-view-next-item"),
-    LOOTCRATE_VIEW_PREV_ITEM("lootcrate-view-prev-item");
+
+    LOOTCRATE_CHANGE_CRATE_NAME("lootcrate-change-crate-name"),
+    LOOTCRATE_CHANGE_CRATE_MESSAGE("lootcrate-change-crate-message"),
+    LOOTCRATE_CREATE_CRATE_NAME("lootcrate-create-crate-name"),
+    LOOTCRATE_ADD_ITEM_COMMAND("lootcrate-add-item-command"),
+    LOOTCRATE_CHANGE_CRATE_KNOCKBACK("lootcrate-change-crate-knockback"),
+    LOOTCRATE_CHANGE_CRATE_COOLDOWN("lootcrate-change-crate-cooldown"),
+    LOOTCRATE_ACTION_CANCELED("lootcrate-action-canceled"),
+
+    LOOTCRATE_NAME_CHANGED("lootcrate-name-changed"),
+    LOOTCRATE_MESSAGE_CHANGED("lootcrate-message-changed"),
+    LOOTCRATE_KNOCKBACK_CHANGED("lootcrate-knockback-changed"),
+    LOOTCRATE_KNOCKBACK_NOT_CHANGED("lootcrate-knockback-not-changed"),
+    LOOTCRATE_COOLDOWN_CHANGED("lootcrate-cooldown-changed"),
+    LOOTCRATE_COOLDOWN_NOT_CHANGED("lootcrate-cooldown-not-changed"),
+    LOOTCRATE_SOUND_CHANGED("lootcrate-changed-sound-message");
 
     String key;
 

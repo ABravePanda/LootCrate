@@ -23,7 +23,10 @@ public enum Placeholder {
     ENCHANTMENT_NAME("enchantment_name"),
     VALUE("value"),
     KEY_AMOUNT("key_amount"),
-    TIME("time");
+    TIME("time"),
+    KNOCKBACK("knockback"),
+    COOLDOWN("cooldown"),
+    SOUND_NAME("sound_name");
 
     String key;
 

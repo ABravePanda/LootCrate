@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.tompkins-development.spigot</groupId>
    <artifactId>LootCrate</artifactId>
-   <version>0.11.4</version>
+   <version>0.11.5</version>
    <name>LootCrate</name>
    <description>A plugin to add lootcrates</description>
    <pluginRepositories>
@@ -32,7 +32,7 @@
       <dependency>
          <groupId>org.spigotmc</groupId>
          <artifactId>spigot-api</artifactId>
-         <version>1.21.1-R0.1-SNAPSHOT</version>
+         <version>1.21.3-R0.1-SNAPSHOT</version>
          <scope>provided</scope>
       </dependency>
       <dependency>

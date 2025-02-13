@@ -2,6 +2,7 @@ package lootcrate.gui.frames.menu.option;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
+import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
@@ -23,8 +24,8 @@ public class CrateOptionHologramEnabledFrame extends BaseFrame implements Listen
     private final LootCrate plugin;
     private final HologramManager hologramManager;
     private final Crate crate;
-    private GUIItem enabled = new GUIItem(13, Material.NAME_TAG, ChatColor.RED + "Hologram Visible",ChatColor.GREEN + "Enabled");
-    private GUIItem disabled = new GUIItem(13, Material.NAME_TAG, ChatColor.RED + "Hologram Visible",ChatColor.DARK_RED + "Disabled");
+    private final GUIItem enabled;
+    private final GUIItem disabled;
     private List<Sound> soundList;
 
     public CrateOptionHologramEnabledFrame(LootCrate plugin, Player p, Crate crate) {
@@ -32,6 +33,12 @@ public class CrateOptionHologramEnabledFrame extends BaseFrame implements Listen
 
         this.plugin = plugin;
         this.crate = crate;
+        enabled = new GUIItem(13, Material.NAME_TAG,
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_HOLOGRAM_VISIBLE_NAME),
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_HOLOGRAM_ENABLED));
+        disabled = new GUIItem(13, Material.NAME_TAG,
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_HOLOGRAM_VISIBLE_NAME),
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_HOLOGRAM_DISABLED));
         this.enabled.setGlowing(true);
         this.hologramManager = plugin.getHoloManager();
 
@@ -74,8 +81,8 @@ public class CrateOptionHologramEnabledFrame extends BaseFrame implements Listen
         else
             this.setItem(13, disabled);
 
-        this.setItem(20, new GUIItem(20, Material.SLIME_BALL, ChatColor.GREEN + "Enable"));
-        this.setItem(24, new GUIItem(24, Material.FIRE_CHARGE, ChatColor.RED + "Disable"));
+        this.setItem(20, new GUIItem(20, Material.SLIME_BALL, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_HOLOGRAM_ENABLE)));
+        this.setItem(24, new GUIItem(24, Material.FIRE_CHARGE, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_HOLOGRAM_DISABLE)));
     }
 
     // events

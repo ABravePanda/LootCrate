@@ -5,7 +5,8 @@ public enum Option {
     ADMIN_NOTIFICATIONS("admin-update-notification", DataType.BOOLEAN),
     LOOTCRATE_CLAIM_ENABLED("lootcrate-claim-enabled", DataType.BOOLEAN),
     ALLOW_VIRTUAL_KEYS("allow-virtual-keys", DataType.BOOLEAN),
-    PRIORITIZE_INVENTORY_OVER_CLAIM("prioritize-inventory-over-claim", DataType.BOOLEAN);
+    PRIORITIZE_INVENTORY_OVER_CLAIM("prioritize-inventory-over-claim", DataType.BOOLEAN),
+    JOIN_KEY_NOTIFICATION("join-key-notification", DataType.BOOLEAN);
 
     String key;
     DataType type;

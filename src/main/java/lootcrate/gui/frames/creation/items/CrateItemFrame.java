@@ -1,6 +1,7 @@
 package lootcrate.gui.frames.creation.items;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.gui.frames.menu.CrateKeyFrame;
@@ -64,17 +65,17 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         GUIItem guiItem = new GUIItem(index, item.getItem().clone());
         guiItem.addLoreLine(" ");
         guiItem.addLoreLine(ChatColor.DARK_GRAY + "---[Info]---");
-        guiItem.addLoreLine(ChatColor.GRAY + "ID: " + ChatColor.GOLD + item.getId());
-        guiItem.addLoreLine(ChatColor.GRAY + "Chance: " + ChatColor.GOLD + item.getChance() + "%");
-        guiItem.addLoreLine(ChatColor.GRAY + "Min: " + ChatColor.GOLD + item.getMinAmount());
-        guiItem.addLoreLine(ChatColor.GRAY + "Max: " + ChatColor.GOLD + item.getMaxAmount());
-        guiItem.addLoreLine(ChatColor.GRAY + "Display: " + ChatColor.GOLD + item.isDisplay());
-        guiItem.addLoreLine(ChatColor.GRAY + "Commands: ");
+        guiItem.addLoreLine(plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_ITEM_INFO_ID) + item.getId());
+        guiItem.addLoreLine(plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_ITEM_INFO_CHANCE) + item.getChance() + "%");
+        guiItem.addLoreLine(plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_ITEM_INFO_MIN) + item.getMinAmount());
+        guiItem.addLoreLine(plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_ITEM_INFO_MAX) + item.getMaxAmount());
+        guiItem.addLoreLine(plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_ITEM_INFO_DISPLAY) + item.isDisplay());
+        guiItem.addLoreLine(plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_ITEM_INFO_COMMANDS));
         if(item.getCommands() != null)
             for (String command : item.getCommands())
-                guiItem.addLoreLine(ChatColor.GRAY + "  - /" + ChatColor.GOLD + command);
+                guiItem.addLoreLine(plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_ITEM_COMMAND_FORMAT) + command);
         guiItem.addLoreLine(" ");
-        guiItem.addLoreLine(ChatColor.RED + "Left-Click to Edit");
+        guiItem.addLoreLine(plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_ITEM_LEFT_CLICK_EDIT));
         guiItem.setCrateItem(item);
         return guiItem;
     }
@@ -102,9 +103,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void nextPage() {
-        if(usableSize - getUsableItems().size() > 0) {
-            this.closeFrame(player, this);
-            this.openFrame(player, new CrateKeyFrame(plugin, player, crate));
+        if(usableSize - getUsableItems().size() >= 0) {
             return;
         }
         clearUsableItems();
@@ -123,9 +122,9 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void previousPage() {
-        if(page-1 == 0) {
+        if(page == 1) {
             this.closeFrame(player, this);
-            this.openFrame(player, new CrateItemMainMenuFrame(plugin, player, crate));
+            this.openFrame(player, new CrateFrame(plugin, player, crate));
             return;
         }
         clearUsableItems();

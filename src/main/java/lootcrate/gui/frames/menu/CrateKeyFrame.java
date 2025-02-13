@@ -46,10 +46,10 @@ public class CrateKeyFrame extends BaseFrame implements Listener, InputAllowed {
     // methods
 
     public void fillOptions() {
-        if(crate.getKey() != null)
+        if(crate.getKey().getItem() != null)
             this.setItem(13, new GUIItem(13, crate.getKey()));
         else
-            this.setItem(13, new GUIItem(13, Material.AIR));
+            this.setItem(13, new GUIItem(13, Material.BARRIER, "§4Key not set"));
         this.setItem(29, new GUIItem(29, Material.LIME_DYE, ChatColor.GREEN + "Set Key"));
         this.setItem(31, new GUIItem(31, Material.AIR));
         this.setItem(33, new GUIItem(33, Material.RED_DYE, ChatColor.RED + "Cancel"));
@@ -68,7 +68,10 @@ public class CrateKeyFrame extends BaseFrame implements Listener, InputAllowed {
             return;
 
         if (e.getClickEvent().getSlot() == 13) {
-            p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
+            ItemStack key = ObjUtils.assignCrateToKey(plugin, crate);
+            if(key != null){
+                p.getInventory().addItem(key);
+            }
             return;
         }
 
@@ -96,15 +99,12 @@ public class CrateKeyFrame extends BaseFrame implements Listener, InputAllowed {
 
     @Override
     public void nextPage() {
-        this.closeFrame(player, this);
-        this.openFrame(player, new CrateLocationFrame(plugin, player, crate));
-        return;
+
     }
 
     @Override
     public void previousPage() {
         this.closeFrame(player, this);
         this.openFrame(player, new CrateFrame(plugin, player, crate));
-        return;
     }
 }
