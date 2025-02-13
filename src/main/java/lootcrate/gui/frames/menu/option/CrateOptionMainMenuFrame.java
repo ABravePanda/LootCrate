@@ -2,6 +2,7 @@ package lootcrate.gui.frames.menu.option;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
+import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.menu.*;
 import lootcrate.gui.frames.types.BaseFrame;
@@ -53,21 +54,15 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
 
     public void fillOptions() {
         this.setItem(4,
-                new GUIItem(4, Material.SLIME_BALL, ChatColor.RED + "Cooldown", ChatColor.GRAY + "Change the crate open cooldown."));
+                new GUIItem(4, Material.SLIME_BALL, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_COOLDOWN_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_COOLDOWN_LORE)));
         this.setItem(10,
-                new GUIItem(10, Material.NAME_TAG, ChatColor.RED + "Name", ChatColor.GRAY + "Change the crate name."));
-        this.setItem(12, new GUIItem(12, Material.NETHERITE_SWORD, ChatColor.RED + "Knockback Level",
-                ChatColor.GRAY + "Change how far the crate knocks you back."));
-        this.setItem(14, new GUIItem(14, Material.JUKEBOX, ChatColor.RED + "Open Sound",
-                ChatColor.GRAY + "Change the sound that plays when a crate is opened."));
-        this.setItem(16, new GUIItem(16, Material.BLAZE_POWDER, ChatColor.RED + "Animation Style",
-                ChatColor.GRAY + "Change the open animation."));
-        this.setItem(20, new GUIItem(20, Material.COMMAND_BLOCK, ChatColor.RED + "Open Message",
-                ChatColor.GRAY + "Change the message player recieves upon crate opening."));
-        this.setItem(22, new GUIItem(22, Material.PAPER, ChatColor.RED + "Sort",
-                ChatColor.GRAY + "Change the way the items are sorted in the view gui."));
-        this.setItem(24, new GUIItem(24, Material.ARMOR_STAND, ChatColor.RED + "Hologram",
-                ChatColor.GRAY + "Enable/Disable the hologram above the crate."));
+                new GUIItem(10, Material.NAME_TAG, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_NAME_NAME),plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_NAME_LORE)));
+        this.setItem(12, new GUIItem(12, Material.NETHERITE_SWORD, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_KNOCKBACK_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_KNOCKBACK_LORE)));
+        this.setItem(14, new GUIItem(14, Material.JUKEBOX, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_OPENSOUND_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_OPENSOUND_LORE)));
+        this.setItem(16, new GUIItem(16, Material.BLAZE_POWDER, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_ANIMATION_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_ANIMATION_LORE)));
+        this.setItem(20, new GUIItem(20, Material.COMMAND_BLOCK, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_MESSAGE_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_MESSAGE_LORE)));
+        this.setItem(22, new GUIItem(22, Material.PAPER, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_SORT_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_SORT_LORE)));
+        this.setItem(24, new GUIItem(24, Material.ARMOR_STAND, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_HOLOGRAM_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_HOLOGRAM_LORE)));
     }
 
     // events
@@ -85,11 +80,11 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
 
         switch (item.getType()) {
             case SLIME_BALL:
-                state = ChatState.COOLDOWN;
+                state = ChatState.CHANGE_CRATE_COOLDOWN;
                 state.setCrate(crate);
                 break;
             case NETHERITE_SWORD:
-                state = ChatState.KNOCKBACK;
+                state = ChatState.CHANGE_CRATE_KNOCKBACK;
                 state.setCrate(crate);
                 break;
             case BLAZE_POWDER:
@@ -139,13 +134,12 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
 
     @Override
     public void nextPage() {
-        return;
+
     }
 
     @Override
     public void previousPage() {
         this.closeFrame(player, this);
         this.openFrame(player, new CrateFrame(plugin, player, crate));
-        return;
     }
 }

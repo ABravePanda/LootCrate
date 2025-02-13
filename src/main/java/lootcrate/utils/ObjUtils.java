@@ -39,6 +39,7 @@ public class ObjUtils {
 
     public static ItemStack assignCrateToKey(LootCrate plugin, Crate crate) {
         ItemStack item = crate.getKey().getItem();
+        if(item ==null) return null;
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, crate.getId());

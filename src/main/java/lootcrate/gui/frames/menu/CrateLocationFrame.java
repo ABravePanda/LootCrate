@@ -39,16 +39,13 @@ public class CrateLocationFrame extends BaseFrame {
 
     @Override
     public void nextPage() {
-        this.closeFrame(player, this);
-        this.openFrame(player, new CrateOptionMainMenuFrame(plugin, player, crate));
-        return;
+
     }
 
     @Override
     public void previousPage() {
         this.closeFrame(player, this);
         this.openFrame(player, new CrateFrame(plugin, player, crate));
-        return;
     }
 
     @Override

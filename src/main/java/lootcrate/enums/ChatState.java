@@ -9,8 +9,8 @@ public enum ChatState {
     CHANGE_CRATE_SOUND(null),
     CREATE_CRATE_NAME(null),
     ADD_ITEM_COMMAND(null),
-    KNOCKBACK(null),
-    COOLDOWN(null),
+    CHANGE_CRATE_KNOCKBACK(null),
+    CHANGE_CRATE_COOLDOWN(null),
     NONE(null);
 
     private Crate crate;

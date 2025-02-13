@@ -1,6 +1,7 @@
 package lootcrate.gui.frames.menu;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
@@ -20,7 +21,7 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
     private final List<Crate> crates;
 
     public CrateListFrame(LootCrate plugin, Player p) {
-        super(plugin, p, ChatColor.GOLD + "Main Menu");
+        super(plugin, p, plugin.getCustomizationManager().parseName(CustomizationOption.ALL_CRATES_MENU_TITLE));
 
         this.plugin = plugin;
         crates = plugin.getCacheManager().getCache();
@@ -46,7 +47,7 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
 
     private void fillCrates() {
         for (int i = 0; i < crates.size(); i++) {
-            this.setItem(i, new GUIItem(i, Material.CHEST, crates.get(i).getName(),
+            this.setItem(i, new GUIItem(i, Material.CHEST, "§f" + crates.get(i).getName(),
                     ChatColor.GRAY + "" + crates.get(i).getId()));
         }
     }
@@ -76,7 +77,7 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void nextPage() {
-        if (usableSize - getUsableItems().size() > 0) return;
+        if (usableSize - getUsableItems().size() >= 0) return;
         clearUsableItems();
         page++;
 
@@ -95,7 +96,7 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
     @Override
     public void previousPage() {
 
-        if(page-1 == 0) {
+        if(page == 1) {
             this.closeFrame(player, this);
             this.openFrame(player, new CrateMainMenuFrame(plugin, player));
             return;

@@ -3,16 +3,16 @@ package lootcrate.enums;
 import org.bukkit.Material;
 
 public enum SortType {
-    CHANCE(Material.DIAMOND, "Chance", "The percent value the player will get the item over other items."),
-    NAME(Material.NAME_TAG, "Name", "The display name or the items base name."),
-    ID(Material.COMMAND_BLOCK, "ID", "The random ID the item is assigned."),
-    NONE(Material.BARRIER, "None", "No real sorting method.");
+    CHANCE(Material.DIAMOND, CustomizationOption.CRATE_SORT_BY_CHANCE_NAME, CustomizationOption.CRATE_SORT_BY_CHANCE_LORE),
+    NAME(Material.NAME_TAG, CustomizationOption.CRATE_SORT_BY_NAME_NAME, CustomizationOption.CRATE_SORT_BY_NAME_LORE),
+    ID(Material.COMMAND_BLOCK, CustomizationOption.CRATE_SORT_BY_ID_NAME, CustomizationOption.CRATE_SORT_BY_ID_LORE),
+    NONE(Material.BARRIER, CustomizationOption.CRATE_SORT_BY_NONE_NAME, CustomizationOption.CRATE_SORT_BY_NONE_LORE);
 
     private final Material itemStack;
-    private final String name;
-    private final String[] description;
+    private final CustomizationOption name;
+    private final CustomizationOption description;
 
-    SortType(Material itemStack, String name, String... description)
+    SortType(Material itemStack, CustomizationOption name, CustomizationOption description)
     {
         this.itemStack = itemStack;
         this.name = name;
@@ -23,11 +23,11 @@ public enum SortType {
         return itemStack;
     }
 
-    public String getName() {
+    public CustomizationOption getName() {
         return name;
     }
 
-    public String[] getDescription() {
+    public CustomizationOption getDescription() {
         return description;
     }
 }

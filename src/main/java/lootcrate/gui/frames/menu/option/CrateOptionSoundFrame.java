@@ -1,11 +1,16 @@
 package lootcrate.gui.frames.menu.option;
 
+import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
+import lootcrate.enums.CustomizationOption;
+import lootcrate.enums.Message;
+import lootcrate.enums.Placeholder;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ShiftClickAllowed;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import org.bukkit.ChatColor;
@@ -94,7 +99,8 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
             crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.name()));
             e.setCancelled(true);
             plugin.getCacheManager().update(crate);
-            this.close();
+            new CrateOptionSoundFrame(plugin, p, crate).open();
+            plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_SOUND_CHANGED, ImmutableMap.of(Placeholder.SOUND_NAME, sound.name()));
         }
         e.setCancelled(true);
     }
@@ -150,8 +156,8 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
     private GUIItem createGUIItem(int index, int itemIndex)
     {
         GUIItem item = new GUIItem(index, Material.MUSIC_DISC_FAR, ChatColor.GOLD + soundList.get(itemIndex).name(), " ",
-                ChatColor.AQUA + "Left Click" + ChatColor.GRAY + " to play sound",
-                ChatColor.AQUA + "Shift Left Click" + ChatColor.GRAY + " to select sound");
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_SOUND_LEFT_CLICK_ACTION),
+                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_SOUND_SHIFT_LEFT_CLICK_ACTION));
         if(getCurrentSound().equals(soundList.get(itemIndex)))
             item.setGlowing(true);
         return item;

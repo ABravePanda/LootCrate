@@ -4,16 +4,16 @@ import org.bukkit.Material;
 
 public enum AnimationStyle {
 
-    NONE(Material.BARRIER, "None", "Instantly gives the item."),
-    CSGO(Material.BOW, "CSGO", "Scrolling type animation."),
-    RANDOM_GLASS(Material.ORANGE_STAINED_GLASS, "Random Glass", "Glass background randomly switches."),
-    REMOVING_ITEM(Material.TNT, "Removing Item", "Removes an item until one left.");
+    NONE(Material.BARRIER, CustomizationOption.CRATE_ANIMATION_NONE_NAME, CustomizationOption.CRATE_ANIMATION_NONE_LORE),
+    CSGO(Material.BOW, CustomizationOption.CRATE_ANIMATION_CSGO_NAME, CustomizationOption.CRATE_ANIMATION_CSGO_LORE),
+    RANDOM_GLASS(Material.ORANGE_STAINED_GLASS, CustomizationOption.CRATE_ANIMATION_RANDOM_GLASS_NAME, CustomizationOption.CRATE_ANIMATION_RANDOM_GLASS_LORE),
+    REMOVING_ITEM(Material.TNT, CustomizationOption.CRATE_ANIMATION_REMOVING_ITEM_NAME, CustomizationOption.CRATE_ANIMATION_REMOVING_ITEM_LORE);
 
     private final Material itemStack;
-    private final String name;
-    private final String[] description;
+    private final CustomizationOption name;
+    private final CustomizationOption description;
 
-    AnimationStyle(Material itemStack, String name, String... description)
+    AnimationStyle(Material itemStack, CustomizationOption name, CustomizationOption description)
     {
         this.itemStack = itemStack;
         this.name = name;
@@ -24,11 +24,11 @@ public enum AnimationStyle {
         return itemStack;
     }
 
-    public String getName() {
+    public CustomizationOption getName() {
         return name;
     }
 
-    public String[] getDescription() {
+    public CustomizationOption getDescription() {
         return description;
     }
 }
