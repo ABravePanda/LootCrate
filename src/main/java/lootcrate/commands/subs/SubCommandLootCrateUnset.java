@@ -3,13 +3,11 @@ package lootcrate.commands.subs;
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
+import lootcrate.enums.HologramPlugin;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
 import lootcrate.managers.HologramManager;
-import lootcrate.objects.Crate;
-import lootcrate.utils.CommandUtils;
-import lootcrate.utils.TabUtils;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -69,7 +67,7 @@ public class SubCommandLootCrateUnset extends SubCommand {
         plugin.getLocationManager().removeCrateLocation(l);
 
         // create hologram
-        if(plugin.holoHook())
+        if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
             holoManager.reload();
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);

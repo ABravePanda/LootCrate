@@ -3,6 +3,7 @@ package lootcrate.commands.subs;
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
+import lootcrate.enums.HologramPlugin;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
@@ -60,7 +61,7 @@ public class SubCommandLootCrateSet extends SubCommand {
         if (args[1].equalsIgnoreCase("none")) {
             plugin.getLocationManager().removeCrateLocation(l);
 
-            if(plugin.holoHook())
+            if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
                 plugin.getHoloManager().reload();
             plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
             return;
@@ -89,7 +90,7 @@ public class SubCommandLootCrateSet extends SubCommand {
         plugin.getLocationManager().addCrateLocation(l, crate);
 
         // create hologram
-        if(plugin.holoHook())
+        if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
             holoManager.createHologram(l.getBlock(), crate);
 
         plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);

@@ -76,7 +76,7 @@ public class LootCrate extends JavaPlugin {
 
         toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager, cooldownManager);
 
-        if(holoHook())
+        if(isHologramPluginDetected())
         {
             holoManager = new HologramManager(this);
             toggleManagers(true, holoManager);
@@ -108,7 +108,7 @@ public class LootCrate extends JavaPlugin {
     @Override
     public void onDisable() {
         toggleManagers(false, optionManager, updateManager, messageManager, fileManager, customizationManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager, cooldownManager);
-        if(holoHook())
+        if(isHologramPluginDetected())
         {
             toggleManagers(false, holoManager);
         }
@@ -174,7 +174,7 @@ public class LootCrate extends JavaPlugin {
         cacheManager.reload();
         locationManager.reload();
 
-        if (holoHook())
+        if (isHologramPluginDetected())
             holoManager.reload();
 
     }
@@ -192,7 +192,7 @@ public class LootCrate extends JavaPlugin {
                     + "). Download here: " + updateManager.getResourceURL() + ChatColor.DARK_GRAY + ".");
         Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Loaded " + ChatColor.YELLOW
                 + cacheManager.getCache().size() + ChatColor.DARK_GRAY + " crate(s).");
-        if (holoHook())
+        if (isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
             Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
                     + "DecentHolograms" + ChatColor.DARK_GRAY + ".");
         else
@@ -203,8 +203,8 @@ public class LootCrate extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("");
     }
 
-    public boolean holoHook() {
-        return Bukkit.getPluginManager().isPluginEnabled("DecentHolograms");
+    public boolean isHologramPluginDetected(HologramPlugin hologramPlugin) {
+        return Bukkit.getPluginManager().isPluginEnabled(hologramPlugin.getPluginName());
     }
 
     private void initMetrics() {
