@@ -44,10 +44,6 @@ public class LootCrate extends JavaPlugin {
         registerConfig();
         createManagersMap();
 
-        managersMap = new HashMap<>();
-
-
-
         registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
                 new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
                 new PlayerChatListener(this));
@@ -85,6 +81,8 @@ public class LootCrate extends JavaPlugin {
     }
 
     private void createManagersMap() {
+
+        managersMap = new HashMap<>();
 
         managersMap.put(1, new OptionManager(this));
         managersMap.put(2, new UpdateManager(this));
@@ -178,9 +176,11 @@ public class LootCrate extends JavaPlugin {
 
         CacheManager cacheManager = getManager(CacheManager.class);
         LocationManager locationManager = getManager(LocationManager.class);
+        KeyFileManager keyFileManager = getManager(KeyFileManager.class);
 
         cacheManager.reload();
         locationManager.reload();
+        keyFileManager.reload();
 
         if (isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
             holoManager.reload();
