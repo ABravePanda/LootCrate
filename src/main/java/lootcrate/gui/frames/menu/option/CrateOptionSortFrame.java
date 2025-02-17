@@ -1,9 +1,7 @@
 package lootcrate.gui.frames.menu.option;
 
 import lootcrate.LootCrate;
-import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.CrateOptionType;
-import lootcrate.enums.CustomizationOption;
 import lootcrate.enums.SortType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BaseFrame;
@@ -65,8 +63,8 @@ public class CrateOptionSortFrame extends BaseFrame implements Listener {
         for(SortType sort : SortType.values())
         {
             GUIItem item = new GUIItem(0, sort.getItemStack(),
-                    plugin.getCustomizationManager().parseName(sort.getName()),
-                    plugin.getCustomizationManager().parseName(sort.getDescription()));
+                    plugin.getCustomizationManager().parseString(sort.getName()),
+                    plugin.getCustomizationManager().parseString(sort.getDescription()));
             item.setNameColor(ChatColor.RED);
             item.setLoreColor(ChatColor.GRAY);
             sortTypes.put(sort, item);

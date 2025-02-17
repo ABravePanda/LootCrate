@@ -27,7 +27,7 @@ public class KeyViewFrame extends ExtendedFrame implements Listener {
 
         this.plugin = plugin;
         this.usableSize = getUsableSize()-1;
-        this.claimAll = new GUIItem(usableSize, plugin.getCustomizationManager().parseMaterial(CustomizationOption.CLAIM_MENU_CLAIMALL_MATERIAL), plugin.getCustomizationManager().parseName(CustomizationOption.CLAIM_MENU_CLAIMALL_NAME));
+        this.claimAll = new GUIItem(usableSize, plugin.getCustomizationManager().parseMaterial(CustomizationOption.CLAIM_MENU_CLAIMALL_MATERIAL), plugin.getCustomizationManager().parseString(CustomizationOption.CLAIM_MENU_CLAIMALL_NAME));
 
         generateFrame();
         generateNavigation();

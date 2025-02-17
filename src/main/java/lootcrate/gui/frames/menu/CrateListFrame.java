@@ -21,7 +21,7 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
     private final List<Crate> crates;
 
     public CrateListFrame(LootCrate plugin, Player p) {
-        super(plugin, p, plugin.getCustomizationManager().parseName(CustomizationOption.ALL_CRATES_MENU_TITLE));
+        super(plugin, p, plugin.getCustomizationManager().parseString(CustomizationOption.ALL_CRATES_MENU_TITLE));
 
         this.plugin = plugin;
         crates = plugin.getCacheManager().getCache();

@@ -39,7 +39,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
 
     @Override
     public void generateFrame() {
-        fillBackground(customizationManager.parseMaterial(CustomizationOption.CSGO_ANIMATION_BACKGROUND_MATERIAL), customizationManager.parseName(CustomizationOption.CSGO_ANIMATION_BACKGROUND_NAME), true);
+        fillBackground(customizationManager.parseMaterial(CustomizationOption.CSGO_ANIMATION_BACKGROUND_MATERIAL), customizationManager.parseString(CustomizationOption.CSGO_ANIMATION_BACKGROUND_NAME), true);
         initLineup();
     }
 
@@ -61,7 +61,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
             public void run() {
                 if (timeLeft == 0) {
                     Bukkit.getScheduler().cancelTask(rewardID);
-                    fillBackground(customizationManager.parseMaterial(CustomizationOption.CSGO_ANIMATION_WINNER_BACKGROUND_MATERIAL), customizationManager.parseName(CustomizationOption.CSGO_ANIMATION_WINNER_BACKGROUND_NAME), false);
+                    fillBackground(customizationManager.parseMaterial(CustomizationOption.CSGO_ANIMATION_WINNER_BACKGROUND_MATERIAL), customizationManager.parseString(CustomizationOption.CSGO_ANIMATION_WINNER_BACKGROUND_NAME), false);
                     giveRewards(getContents()[22].getCrateItem());
                 }
                 if (timeLeft == -3) {
@@ -108,8 +108,8 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
             index++;
         }
         if (showRewardsPointer) {
-            this.setItem(13, new GUIItem(13, customizationManager.parseMaterial(CustomizationOption.CSGO_ANIMATION_POINTER_MATERIAL), customizationManager.parseName(CustomizationOption.CSGO_ANIMATION_POINTER_NAME)));
-            this.setItem(31, new GUIItem(31, customizationManager.parseMaterial(CustomizationOption.CSGO_ANIMATION_POINTER_MATERIAL), customizationManager.parseName(CustomizationOption.CSGO_ANIMATION_POINTER_NAME)));
+            this.setItem(13, new GUIItem(13, customizationManager.parseMaterial(CustomizationOption.CSGO_ANIMATION_POINTER_MATERIAL), customizationManager.parseString(CustomizationOption.CSGO_ANIMATION_POINTER_NAME)));
+            this.setItem(31, new GUIItem(31, customizationManager.parseMaterial(CustomizationOption.CSGO_ANIMATION_POINTER_MATERIAL), customizationManager.parseString(CustomizationOption.CSGO_ANIMATION_POINTER_NAME)));
         }
     }
 

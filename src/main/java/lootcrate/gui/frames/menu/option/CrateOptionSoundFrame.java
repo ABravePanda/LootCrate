@@ -10,7 +10,6 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ShiftClickAllowed;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
-import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import org.bukkit.ChatColor;
@@ -156,8 +155,8 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
     private GUIItem createGUIItem(int index, int itemIndex)
     {
         GUIItem item = new GUIItem(index, Material.MUSIC_DISC_FAR, ChatColor.GOLD + soundList.get(itemIndex).name(), " ",
-                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_SOUND_LEFT_CLICK_ACTION),
-                plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_SOUND_SHIFT_LEFT_CLICK_ACTION));
+                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_SOUND_LEFT_CLICK_ACTION),
+                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_SOUND_SHIFT_LEFT_CLICK_ACTION));
         if(getCurrentSound().equals(soundList.get(itemIndex)))
             item.setGlowing(true);
         return item;

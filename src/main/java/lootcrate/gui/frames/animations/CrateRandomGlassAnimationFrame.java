@@ -68,7 +68,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
                 if (timeLeft == 0) {
                     Bukkit.getScheduler().cancelTask(backgroundID);
                     Bukkit.getScheduler().cancelTask(rewardID);
-                    fillBackground(customizationManager.parseMaterial(CustomizationOption.RND_ANIMATION_WINNER_BACKGROUND_MATERIAL), customizationManager.parseName(CustomizationOption.RND_ANIMATION_WINNER_BACKGROUND_NAME), false);
+                    fillBackground(customizationManager.parseMaterial(CustomizationOption.RND_ANIMATION_WINNER_BACKGROUND_MATERIAL), customizationManager.parseString(CustomizationOption.RND_ANIMATION_WINNER_BACKGROUND_NAME), false);
                     giveRewards(getContents()[22].getCrateItem());
                 }
                 if (timeLeft == -3) {
@@ -88,7 +88,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
                 for (int i = 0; i < getInventory().getSize(); i++) {
                     if (i == 22 || i == 13 || i == 31)
                         continue;
-                    setItem(i, new GUIItem(i, randomGlass(), customizationManager.parseName(CustomizationOption.RND_ANIMATION_GLASS_NAME)));
+                    setItem(i, new GUIItem(i, randomGlass(), customizationManager.parseString(CustomizationOption.RND_ANIMATION_GLASS_NAME)));
                 }
             }
         }, 0L, this.backgroundSpeed);
@@ -136,8 +136,8 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
             index++;
         }
         if (showRewardsPointer) {
-            this.setItem(13, new GUIItem(13, customizationManager.parseMaterial(CustomizationOption.RND_ANIMATION_POINTER_MATERIAL), customizationManager.parseName(CustomizationOption.RND_ANIMATION_POINTER_NAME)));
-            this.setItem(31, new GUIItem(31, customizationManager.parseMaterial(CustomizationOption.RND_ANIMATION_POINTER_MATERIAL), customizationManager.parseName(CustomizationOption.RND_ANIMATION_POINTER_NAME)));
+            this.setItem(13, new GUIItem(13, customizationManager.parseMaterial(CustomizationOption.RND_ANIMATION_POINTER_MATERIAL), customizationManager.parseString(CustomizationOption.RND_ANIMATION_POINTER_NAME)));
+            this.setItem(31, new GUIItem(31, customizationManager.parseMaterial(CustomizationOption.RND_ANIMATION_POINTER_MATERIAL), customizationManager.parseString(CustomizationOption.RND_ANIMATION_POINTER_NAME)));
         }
     }
 

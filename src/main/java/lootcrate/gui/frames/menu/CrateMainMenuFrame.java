@@ -4,11 +4,9 @@ import lootcrate.LootCrate;
 import lootcrate.enums.ChatState;
 import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
-import lootcrate.gui.frames.menu.CrateListFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,7 +21,7 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
     private final List<Crate> crates;
 
     public CrateMainMenuFrame(LootCrate plugin, Player p) {
-        super(plugin, p, plugin.getCustomizationManager().parseName(CustomizationOption.CRATES_MAIN_MENU_TITLE));
+        super(plugin, p, plugin.getCustomizationManager().parseString(CustomizationOption.CRATES_MAIN_MENU_TITLE));
 
         this.plugin = plugin;
         crates = plugin.getCacheManager().getCache();
@@ -49,8 +47,8 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
 
     private void fillItems()
     {
-        this.setItem(20, new GUIItem(20, Material.CRAFTING_TABLE, plugin.getCustomizationManager().parseName(CustomizationOption.MAIN_CREATE_NEW_CRATE)));
-        this.setItem(24, new GUIItem(24, Material.CHEST, plugin.getCustomizationManager().parseName(CustomizationOption.MAIN_VIEW_ALL_CRATES)));
+        this.setItem(20, new GUIItem(20, Material.CRAFTING_TABLE, plugin.getCustomizationManager().parseString(CustomizationOption.MAIN_CREATE_NEW_CRATE)));
+        this.setItem(24, new GUIItem(24, Material.CHEST, plugin.getCustomizationManager().parseString(CustomizationOption.MAIN_VIEW_ALL_CRATES)));
     }
 
     // events

@@ -9,7 +9,6 @@ import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.objects.Crate;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,15 +53,15 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
 
     public void fillOptions() {
         this.setItem(4,
-                new GUIItem(4, Material.SLIME_BALL, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_COOLDOWN_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_COOLDOWN_LORE)));
+                new GUIItem(4, Material.SLIME_BALL, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_COOLDOWN_NAME), plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_COOLDOWN_LORE)));
         this.setItem(10,
-                new GUIItem(10, Material.NAME_TAG, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_NAME_NAME),plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_NAME_LORE)));
-        this.setItem(12, new GUIItem(12, Material.NETHERITE_SWORD, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_KNOCKBACK_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_KNOCKBACK_LORE)));
-        this.setItem(14, new GUIItem(14, Material.JUKEBOX, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_OPENSOUND_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_OPENSOUND_LORE)));
-        this.setItem(16, new GUIItem(16, Material.BLAZE_POWDER, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_ANIMATION_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_ANIMATION_LORE)));
-        this.setItem(20, new GUIItem(20, Material.COMMAND_BLOCK, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_MESSAGE_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_MESSAGE_LORE)));
-        this.setItem(22, new GUIItem(22, Material.PAPER, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_SORT_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_SORT_LORE)));
-        this.setItem(24, new GUIItem(24, Material.ARMOR_STAND, plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_HOLOGRAM_NAME), plugin.getCustomizationManager().parseName(CustomizationOption.CRATE_OPTIONS_HOLOGRAM_LORE)));
+                new GUIItem(10, Material.NAME_TAG, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_NAME_NAME),plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_NAME_LORE)));
+        this.setItem(12, new GUIItem(12, Material.NETHERITE_SWORD, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_KNOCKBACK_NAME), plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_KNOCKBACK_LORE)));
+        this.setItem(14, new GUIItem(14, Material.JUKEBOX, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_OPENSOUND_NAME), plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_OPENSOUND_LORE)));
+        this.setItem(16, new GUIItem(16, Material.BLAZE_POWDER, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_ANIMATION_NAME), plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_ANIMATION_LORE)));
+        this.setItem(20, new GUIItem(20, Material.COMMAND_BLOCK, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_MESSAGE_NAME), plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_MESSAGE_LORE)));
+        this.setItem(22, new GUIItem(22, Material.PAPER, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_SORT_NAME), plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_SORT_LORE)));
+        this.setItem(24, new GUIItem(24, Material.ARMOR_STAND, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_HOLOGRAM_NAME), plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_OPTIONS_HOLOGRAM_LORE)));
     }
 
     // events

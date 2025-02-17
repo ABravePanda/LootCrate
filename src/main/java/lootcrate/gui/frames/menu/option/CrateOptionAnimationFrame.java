@@ -62,7 +62,7 @@ public class CrateOptionAnimationFrame extends BaseFrame implements Listener {
     {
         for(AnimationStyle style : AnimationStyle.values())
         {
-            GUIItem item = new GUIItem(0, style.getItemStack(), plugin.getCustomizationManager().parseName(style.getName()), plugin.getCustomizationManager().parseName(style.getDescription()));
+            GUIItem item = new GUIItem(0, style.getItemStack(), plugin.getCustomizationManager().parseString(style.getName()), plugin.getCustomizationManager().parseString(style.getDescription()));
             item.setNameColor(ChatColor.RED);
             item.setLoreColor(ChatColor.GRAY);
             styles.put(style, item);

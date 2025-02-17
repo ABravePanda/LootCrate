@@ -1,19 +1,10 @@
 package lootcrate.managers;
 
-import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.enums.CustomizationOption;
-import lootcrate.enums.Message;
-import lootcrate.enums.Placeholder;
-import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Map;
-import java.util.regex.Matcher;
 
 public class CustomizationManager extends BasicManager {
     private final String PREFIX = "custom-gui.";
@@ -22,7 +13,7 @@ public class CustomizationManager extends BasicManager {
         super(plugin);
     }
 
-    public String parseName(CustomizationOption option) {
+    public String parseString(CustomizationOption option) {
         String msg = getStringOption(option);
 
         if (msg == null || msg.isEmpty())
