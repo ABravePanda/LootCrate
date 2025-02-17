@@ -129,7 +129,10 @@ public class LootCrate extends JavaPlugin {
 
     private void registerConfig() {
         this.saveDefaultConfig();
+        this.getOrCreateConfigDefaults();
+    }
 
+    private void getOrCreateConfigDefaults() {
         File configFile = new File(getDataFolder(), "config.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 
