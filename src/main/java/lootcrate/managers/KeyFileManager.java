@@ -66,4 +66,8 @@ public class KeyFileManager extends FileManager {
     public void disable() {
 
     }
+
+    public void reload() {
+        loadFiles();
+    }
 }
