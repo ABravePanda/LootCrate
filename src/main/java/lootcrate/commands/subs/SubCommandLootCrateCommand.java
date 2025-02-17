@@ -51,34 +51,34 @@ public class SubCommandLootCrateCommand extends SubCommand {
             return;
 
         if (args.length <= 3) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_USAGE, null);
             return;
         }
 
         if (CommandUtils.tryParse(args[1]) == null || CommandUtils.tryParse(args[2]) == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_USAGE, null);
             return;
         }
 
-        Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
+        Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
         if (crate == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
                     ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
             return;
         }
-        CrateItem item = plugin.getCrateManager().getCrateItemById(crate, Integer.parseInt(args[2]));
+        CrateItem item = crateManager.getCrateItemById(crate, Integer.parseInt(args[2]));
         if (item == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_ITEM_NOT_FOUND,
+            messageManager.sendMessage(sender, Message.LOOTCRATE_ITEM_NOT_FOUND,
                     ImmutableMap.of(Placeholder.ITEM_ID, "" + CommandUtils.tryParse(args[2])));
             return;
         }
         String command = CommandUtils.builder(args, 3);
         item.getCommands().add(command);
         crate.replaceItem(item);
-        plugin.getCacheManager().update(crate);
+        cacheManager.update(crate);
 
-        plugin.getCacheManager().update(crate);
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_SUCCESS,
+        cacheManager.update(crate);
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_COMMAND_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
                         Placeholder.ITEM_ID, "" + item.getId(), Placeholder.ITEM_TYPE, "" + item.getItem().getType(),
                         Placeholder.ITEM_NAME, item.getItem().getItemMeta().getDisplayName()));
@@ -95,7 +95,7 @@ public class SubCommandLootCrateCommand extends SubCommand {
 
         if (args.length == 2) {
             list.add("[CrateID]");
-            TabUtils.addCratesToList(list, plugin.getCacheManager());
+            TabUtils.addCratesToList(list, cacheManager);
         }
         if (args.length == 3) {
             if (CommandUtils.tryParse(args[1]) == null) {
@@ -103,7 +103,7 @@ public class SubCommandLootCrateCommand extends SubCommand {
                 return list;
             }
             list.add("[ItemID]");
-            TabUtils.addCrateItemsToListFromID(list, plugin.getCacheManager(), Integer.parseInt(args[1]));
+            TabUtils.addCrateItemsToListFromID(list, cacheManager, Integer.parseInt(args[1]));
         }
         if (args.length == 4)
             list.add("[Command] - Use {player} as placeholder");

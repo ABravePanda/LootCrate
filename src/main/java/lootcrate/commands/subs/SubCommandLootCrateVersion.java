@@ -28,7 +28,7 @@ public class SubCommandLootCrateVersion extends SubCommand {
         this.plugin = plugin;
         this.sender = sender;
         this.args = args;
-        this.updateManager = plugin.getUpdateManager();
+        this.updateManager = plugin.getManager(UpdateManager.class);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SubCommandLootCrateVersion extends SubCommand {
             return;
 
         if (args.length != 1) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_VERION_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_VERION_USAGE, null);
             return;
         }
 

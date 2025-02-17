@@ -38,7 +38,7 @@ public class SubCommandLootCrateClaim extends SubCommand {
         this.plugin = plugin;
         this.sender = sender;
         this.args = args;
-        this.keyCacheManager = plugin.getKeyCacheManager();
+        this.keyCacheManager = plugin.getManager(KeyCacheManager.class);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SubCommandLootCrateClaim extends SubCommand {
 
         Player p = (Player) sender;
 
-        plugin.getInvManager().openFrame(p, new KeyViewFrame(plugin, p));
+        this.inventoryManager.openFrame(p, new KeyViewFrame(plugin, p));
 
     }
 

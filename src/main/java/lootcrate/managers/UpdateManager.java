@@ -28,7 +28,7 @@ public class UpdateManager extends BasicManager {
      */
     public UpdateManager(LootCrate plugin) {
         super(plugin);
-        this.optionManager = plugin.getOptionManager();
+        this.optionManager = plugin.getManager(OptionManager.class);
         this.newVersion = plugin.getDescription().getVersion();
         this.project = 87046;
         try {

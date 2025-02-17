@@ -7,6 +7,8 @@ import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.gui.frames.menu.CrateKeyFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.ChatManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.ChatColor;
@@ -87,7 +89,7 @@ public class CrateItemCreationCommandsFrame extends ExtendedFrame implements Lis
 
             crateItem.getCommands().remove(e.getItem().getSlot());
             crate.replaceItem(crateItem);
-            plugin.getCacheManager().update(crate);
+            plugin.getManager(CacheManager.class).update(crate);
 
             this.closeFrame(p, this);
             this.openFrame(p, new CrateItemCreationCommandsFrame(plugin, p, crate, crateItem));
@@ -99,8 +101,8 @@ public class CrateItemCreationCommandsFrame extends ExtendedFrame implements Lis
             ChatState state = ChatState.ADD_ITEM_COMMAND;
             state.setCrate(crate);
             state.setCrateItem(crateItem);
-            plugin.getChatManager().addPlayer(p, state);
-            plugin.getChatManager().sendNotification(p);
+            plugin.getManager(ChatManager.class).addPlayer(p, state);
+            plugin.getManager(ChatManager.class).sendNotification(p);
             e.setCancelled(true);
             this.close();
         }

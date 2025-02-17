@@ -6,6 +6,8 @@ import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.CustomizationManager;
 import lootcrate.managers.HologramManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
@@ -34,11 +36,11 @@ public class CrateOptionHologramEnabledFrame extends BaseFrame implements Listen
         this.plugin = plugin;
         this.crate = crate;
         enabled = new GUIItem(13, Material.NAME_TAG,
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_HOLOGRAM_VISIBLE_NAME),
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_HOLOGRAM_ENABLED));
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_HOLOGRAM_VISIBLE_NAME),
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_HOLOGRAM_ENABLED));
         disabled = new GUIItem(13, Material.NAME_TAG,
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_HOLOGRAM_VISIBLE_NAME),
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_HOLOGRAM_DISABLED));
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_HOLOGRAM_VISIBLE_NAME),
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_HOLOGRAM_DISABLED));
         this.enabled.setGlowing(true);
         this.hologramManager = plugin.getHoloManager();
 
@@ -81,8 +83,8 @@ public class CrateOptionHologramEnabledFrame extends BaseFrame implements Listen
         else
             this.setItem(13, disabled);
 
-        this.setItem(20, new GUIItem(20, Material.SLIME_BALL, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_HOLOGRAM_ENABLE)));
-        this.setItem(24, new GUIItem(24, Material.FIRE_CHARGE, plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_HOLOGRAM_DISABLE)));
+        this.setItem(20, new GUIItem(20, Material.SLIME_BALL, plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_HOLOGRAM_ENABLE)));
+        this.setItem(24, new GUIItem(24, Material.FIRE_CHARGE, plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_HOLOGRAM_DISABLE)));
     }
 
     // events
@@ -98,13 +100,13 @@ public class CrateOptionHologramEnabledFrame extends BaseFrame implements Listen
         switch (item.getType()) {
             case SLIME_BALL:
                 crate.setOption(new CrateOption(CrateOptionType.HOLOGRAM_ENABLED, true));
-                plugin.getCacheManager().update(crate);
+                plugin.getManager(CacheManager.class).update(crate);
                 plugin.getHoloManager().reload();
                 fillOptions();
                 break;
             case FIRE_CHARGE:
                 crate.setOption(new CrateOption(CrateOptionType.HOLOGRAM_ENABLED, false));
-                plugin.getCacheManager().update(crate);
+                plugin.getManager(CacheManager.class).update(crate);
                 plugin.getHoloManager().reload();
                 fillOptions();
                 break;

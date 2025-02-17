@@ -5,6 +5,7 @@ import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CrateManager;
 import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
@@ -28,7 +29,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
 
         this.plugin = plugin;
         this.crate = crate;
-        this.customizationManager = plugin.getCustomizationManager();
+        this.customizationManager = plugin.getManager(CustomizationManager.class);
         this.duration = (int) customizationManager.parseLong(CustomizationOption.CSGO_ANIMATION_DURATION);
         this.rewardSpeed = customizationManager.parseLong(CustomizationOption.CSGO_ANIMATION_SCROLL_SPEED);
 
@@ -82,22 +83,22 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
                 setItem(21, getContents()[22]);
                 setItem(22, getContents()[23]);
                 setItem(23, getContents()[24]);
-                setItem(24, new GUIItem(24, plugin.getCrateManager().getRandomItem(crate)));
+                setItem(24, new GUIItem(24, plugin.getManager(CrateManager.class).getRandomItem(crate)));
                 // getContents()[]
             }
         }, 0L, this.rewardSpeed);
     }
 
     private void initLineup() {
-        setItem(20, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
-        setItem(21, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
-        setItem(22, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
-        setItem(23, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
-        setItem(24, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
+        setItem(20, new GUIItem(22, plugin.getManager(CrateManager.class).getRandomItem(crate)));
+        setItem(21, new GUIItem(22, plugin.getManager(CrateManager.class).getRandomItem(crate)));
+        setItem(22, new GUIItem(22, plugin.getManager(CrateManager.class).getRandomItem(crate)));
+        setItem(23, new GUIItem(22, plugin.getManager(CrateManager.class).getRandomItem(crate)));
+        setItem(24, new GUIItem(22, plugin.getManager(CrateManager.class).getRandomItem(crate)));
     }
 
     private void giveRewards(CrateItem crateItem) {
-        plugin.getCrateManager().giveReward(crateItem, getViewer());
+        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer());
     }
 
     public void fillBackground(Material m, String name, boolean showRewardsPointer) {

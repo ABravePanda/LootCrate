@@ -10,6 +10,9 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ShiftClickAllowed;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.CustomizationManager;
+import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import org.bukkit.ChatColor;
@@ -97,9 +100,9 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
         {
             crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.name()));
             e.setCancelled(true);
-            plugin.getCacheManager().update(crate);
+            plugin.getManager(CacheManager.class).update(crate);
             new CrateOptionSoundFrame(plugin, p, crate).open();
-            plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_SOUND_CHANGED, ImmutableMap.of(Placeholder.SOUND_NAME, sound.name()));
+            plugin.getManager(MessageManager.class).sendMessage(p, Message.LOOTCRATE_SOUND_CHANGED, ImmutableMap.of(Placeholder.SOUND_NAME, sound.name()));
         }
         e.setCancelled(true);
     }
@@ -155,8 +158,8 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
     private GUIItem createGUIItem(int index, int itemIndex)
     {
         GUIItem item = new GUIItem(index, Material.MUSIC_DISC_FAR, ChatColor.GOLD + soundList.get(itemIndex).name(), " ",
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_SOUND_LEFT_CLICK_ACTION),
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_SOUND_SHIFT_LEFT_CLICK_ACTION));
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_SOUND_LEFT_CLICK_ACTION),
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_SOUND_SHIFT_LEFT_CLICK_ACTION));
         if(getCurrentSound().equals(soundList.get(itemIndex)))
             item.setGlowing(true);
         return item;

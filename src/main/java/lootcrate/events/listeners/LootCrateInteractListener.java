@@ -4,6 +4,7 @@ import lootcrate.LootCrate;
 import lootcrate.enums.Message;
 import lootcrate.events.custom.CrateAccessEvent;
 import lootcrate.managers.CacheManager;
+import lootcrate.managers.LocationManager;
 import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.ObjUtils;
@@ -23,8 +24,8 @@ public class LootCrateInteractListener implements Listener {
 
     public LootCrateInteractListener(LootCrate plugin) {
         this.plugin = plugin;
-        this.messageManager = plugin.getMessageManager();
-        this.cacheManager = plugin.getCacheManager();
+        this.messageManager = plugin.getManager(MessageManager.class);
+        this.cacheManager = plugin.getManager(CacheManager.class);
     }
 
     @EventHandler
@@ -52,7 +53,7 @@ public class LootCrateInteractListener implements Listener {
         e.setCancelled(true);
 
         Crate crate = cacheManager.getCrateById(
-                plugin.getLocationManager().getLocationList().get(e.getClickedBlock().getLocation()).getId());
+                plugin.getManager(LocationManager.class).getLocationList().get(e.getClickedBlock().getLocation()).getId());
 
         CrateAccessEvent event = new CrateAccessEvent(crate, p, e.getClickedBlock().getLocation(), e.getAction());
         Bukkit.getPluginManager().callEvent(event);
@@ -63,6 +64,6 @@ public class LootCrateInteractListener implements Listener {
     }
 
     private boolean isCrate(Location l) {
-        return plugin.getLocationManager().getLocationList().containsKey(l);
+        return     plugin.getManager(LocationManager.class).getLocationList().containsKey(l);
     }
 }

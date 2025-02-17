@@ -63,8 +63,8 @@ public class KeyCacheManager extends BasicManager {
         List<Crate> crateList = new ArrayList<>();
         for(int i : getCrateIDSByUUID(uuid))
         {
-            if(getPlugin().getCacheManager().getCrateById(i) != null)
-                crateList.add(getPlugin().getCacheManager().getCrateById(i));
+            if(this.getPlugin().getManager(CacheManager.class).getCrateById(i) != null)
+                crateList.add(this.getPlugin().getManager(CacheManager.class).getCrateById(i));
         }
         return crateList;
     }
@@ -88,7 +88,7 @@ public class KeyCacheManager extends BasicManager {
      * Loads the cache
      */
     public void load() {
-        cache = getPlugin().getKeyFileManager().loadCache();
+        cache = this.getPlugin().getManager(KeyFileManager.class).loadCache();
     }
 
     /**
@@ -97,8 +97,8 @@ public class KeyCacheManager extends BasicManager {
     public void save() {
 
 
-        File f = getPlugin().getFileManager().getFile(FileType.KEYS);
-        YamlConfiguration config = getPlugin().getFileManager().getConfiguration(f);
+        File f = this.getPlugin().getManager(FileManager.class).getFile(FileType.KEYS);
+        YamlConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
 
         for (String key : config.getKeys(false)) {
             config.set(key, null);
@@ -110,7 +110,7 @@ public class KeyCacheManager extends BasicManager {
             e.printStackTrace();
         }
 
-        getPlugin().getKeyFileManager().saveCache(cache);
+        this.getPlugin().getManager(KeyFileManager.class).saveCache(cache);
     }
 
     public List<Crate> convertIntToCrate(UUID uuid)
@@ -119,7 +119,7 @@ public class KeyCacheManager extends BasicManager {
         List<Crate> crateList = new ArrayList<>();
         for(int i : integerList)
         {
-            crateList.add(getPlugin().getCacheManager().getCrateById(i));
+            crateList.add(this.getPlugin().getManager(CacheManager.class).getCrateById(i));
         }
         return crateList;
     }

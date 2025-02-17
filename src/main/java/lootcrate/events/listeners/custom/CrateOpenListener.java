@@ -8,7 +8,7 @@ import lootcrate.gui.frames.animations.CrateCSGOAnimationFrame;
 import lootcrate.gui.frames.animations.CrateRandomGlassAnimationFrame;
 import lootcrate.gui.frames.animations.CrateRemovingItemAnimationFrame;
 import lootcrate.gui.frames.types.AnimatedFrame;
-import lootcrate.managers.CooldownManager;
+import lootcrate.managers.*;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import lootcrate.utils.CommandUtils;
@@ -26,7 +26,7 @@ public class CrateOpenListener implements Listener {
 
     public CrateOpenListener(LootCrate plugin) {
         this.plugin = plugin;
-        this.cooldownManager = plugin.getCooldownManager();
+        this.cooldownManager = plugin.getManager(CooldownManager.class);
     }
 
     @EventHandler
@@ -36,10 +36,10 @@ public class CrateOpenListener implements Listener {
         ItemStack item = p.getInventory().getItemInMainHand();
 
         // If config allows virtual keys, check if they have the key in the cache
-        if ((boolean) plugin.getOptionManager().valueOf(Option.ALLOW_VIRTUAL_KEYS) && plugin.getKeyCacheManager().contains(p.getUniqueId(), crate)) {
+        if ((boolean) plugin.getManager(OptionManager.class).valueOf(Option.ALLOW_VIRTUAL_KEYS) && plugin.getManager(KeyCacheManager.class).contains(p.getUniqueId(), crate)) {
             if(isCooldownInEffect(crate, p)) return;
             // They have the key in cache, remove then run the code as if they have the physical key
-            plugin.getKeyCacheManager().remove(p.getUniqueId(), crate);
+            plugin.getManager(KeyCacheManager.class).remove(p.getUniqueId(), crate);
             openCrate(crate, p);
             return;
         }
@@ -47,7 +47,7 @@ public class CrateOpenListener implements Listener {
         // if they clicked w/same item as key && they match
 
         if (crate.getKey() == null || crate.getKey().getItem() == null || item == null) {
-            plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
+            plugin.getManager(MessageManager.class).sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
                     ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, crate.getId() + ""));
             PlayerUtils.knockBackPlayer(crate, p);
             return;
@@ -59,7 +59,7 @@ public class CrateOpenListener implements Listener {
 
         // if the keys match
         if (!item.getType().equals(crate.getKey().getItem().getType()) || !ObjUtils.doKeysMatch(plugin, item, crate)) {
-            plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
+            plugin.getManager(MessageManager.class).sendMessage(p, Message.LOOTCRATE_INCORRECT_KEY,
                     ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
             PlayerUtils.knockBackPlayer(crate, p);
             return;
@@ -70,7 +70,7 @@ public class CrateOpenListener implements Listener {
 
         // if inv is full
         if (InventoryUtils.isFull(p.getInventory())) {
-            plugin.getMessageManager().sendMessage(p, Message.INVENTORY_FULL, null);
+            plugin.getManager(MessageManager.class).sendMessage(p, Message.INVENTORY_FULL, null);
             return;
         }
 
@@ -81,7 +81,7 @@ public class CrateOpenListener implements Listener {
     }
 
     private void openCrate(Crate crate, Player p) {
-        plugin.getCrateManager().crateOpenEffects(crate, p);
+        plugin.getManager(CrateManager.class).crateOpenEffects(crate, p);
         cooldownManager.addCooldown(p.getUniqueId(), crate);
         openAnimation(crate, p);
     }
@@ -89,7 +89,7 @@ public class CrateOpenListener implements Listener {
     private boolean isCooldownInEffect(Crate crate, Player p) {
         if(CommandUtils.hasCooldownOverride(crate, p)) return false;
         if(!cooldownManager.canOpen(p.getUniqueId(), crate)) {
-            plugin.getMessageManager().sendMessage(p, Message.LOOTCRATE_COOLDOWN_IN_EFFECT,
+            plugin.getManager(MessageManager.class).sendMessage(p, Message.LOOTCRATE_COOLDOWN_IN_EFFECT,
                     ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.TIME, cooldownManager.timeLeft(p.getUniqueId(), crate) + ""));
             return true;
         }
@@ -108,7 +108,7 @@ public class CrateOpenListener implements Listener {
                 frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);
                 break;
             case NONE:
-                plugin.getCrateManager().giveReward(plugin.getCrateManager().getRandomItem(crate), p);
+                plugin.getManager(CrateManager.class).giveReward(plugin.getManager(CrateManager.class).getRandomItem(crate), p);
                 return;
             default:
                 frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
@@ -116,7 +116,7 @@ public class CrateOpenListener implements Listener {
 
         }
 
-        plugin.getInvManager().openFrame(p, frame);
+        plugin.getManager(InventoryManager.class).openFrame(p, frame);
 
         frame.showAnimation();
     }

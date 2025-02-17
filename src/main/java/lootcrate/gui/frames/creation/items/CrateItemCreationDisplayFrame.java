@@ -6,6 +6,7 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.menu.option.CrateOptionMainMenuFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateOption;
@@ -80,12 +81,12 @@ public class CrateItemCreationDisplayFrame extends ExtendedFrame implements List
         switch (item.getType()) {
             case SLIME_BALL:
                 crateItem.setDisplay(true);
-                plugin.getCacheManager().update(crate);
+                plugin.getManager(CacheManager.class).update(crate);
                 fillOptions();
                 break;
             case FIRE_CHARGE:
                 crateItem.setDisplay(false);
-                plugin.getCacheManager().update(crate);
+                plugin.getManager(CacheManager.class).update(crate);
                 fillOptions();
                 break;
             default:

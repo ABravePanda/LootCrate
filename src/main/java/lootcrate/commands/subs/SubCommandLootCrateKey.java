@@ -49,28 +49,28 @@ public class SubCommandLootCrateKey extends SubCommand {
             return;
 
         if (args.length <= 2) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_USAGE, null);
             return;
         }
         if (p.getInventory().getItemInMainHand().getType() == Material.AIR) {
-            plugin.getMessageManager().sendMessage(sender, Message.MUST_HOLD_ITEM, null);
+            messageManager.sendMessage(sender, Message.MUST_HOLD_ITEM, null);
             return;
         }
         if (CommandUtils.tryParse(args[1]) == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_USAGE, null);
             return;
         }
-        Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
+        Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
         if (crate == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
                     ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
             return;
         }
 
         CrateKey key = new CrateKey(p.getInventory().getItemInMainHand(), Boolean.parseBoolean(args[2]));
         crate.setKey(key);
-        plugin.getCacheManager().update(crate);
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_SUCCESS, ImmutableMap
+        cacheManager.update(crate);
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_KEY_SUCCESS, ImmutableMap
                 .of(Placeholder.CRATE_NAME, "" + crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
         p.getInventory().setItemInMainHand(ObjUtils.assignCrateToKey(plugin, crate));
     }
@@ -85,7 +85,7 @@ public class SubCommandLootCrateKey extends SubCommand {
 
         if (args.length == 2) {
             list.add("[CrateID]");
-            TabUtils.addCratesToList(list, plugin.getCacheManager());
+            TabUtils.addCratesToList(list, cacheManager);
         }
         if (args.length == 3) {
             list.add("[Is Glowing]");

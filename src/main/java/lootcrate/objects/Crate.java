@@ -2,6 +2,7 @@ package lootcrate.objects;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
+import lootcrate.managers.CacheManager;
 import lootcrate.utils.ObjUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
@@ -66,8 +67,8 @@ public class Crate implements ConfigurationSerializable {
         // TODO remove
         // Old Version Support - will be removed in update after
         if (convert) {
-            plugin.getCacheManager().remove(this);
-            plugin.getCacheManager().update(this);
+            plugin.getManager(CacheManager.class).remove(this);
+            plugin.getManager(CacheManager.class).update(this);
             Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "LOOTCRATE " + ChatColor.WHITE
                     + "Crates.yml file has been converted to fit to new version. You must remake each Crate's keys");
         }

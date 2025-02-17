@@ -5,6 +5,7 @@ import lootcrate.LootCrate;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
+import lootcrate.managers.MessageManager;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.ItemUtils;
 import org.bukkit.Material;
@@ -31,7 +32,7 @@ public class MetaCommand extends Command {
     public void executeCommand() {
         // sender must be player
         if (!(sender instanceof Player)) {
-            plugin.getMessageManager().sendMessage(sender, Message.MUST_BE_PLAYER, null);
+            plugin.getManager(MessageManager.class).sendMessage(sender, Message.MUST_BE_PLAYER, null);
             return;
         }
 
@@ -39,13 +40,13 @@ public class MetaCommand extends Command {
 
         // player needs to have permission
         if (!p.hasPermission(Permission.COMMAND_META.getKey())) {
-            plugin.getMessageManager().sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
+            plugin.getManager(MessageManager.class).sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
             return;
         }
 
         if (p.getInventory().getItemInMainHand() == null
                 || p.getInventory().getItemInMainHand().getType() == Material.AIR) {
-            plugin.getMessageManager().sendMessage(sender, Message.MUST_HOLD_ITEM, null);
+            plugin.getManager(MessageManager.class).sendMessage(sender, Message.MUST_HOLD_ITEM, null);
             return;
         }
 
@@ -59,16 +60,16 @@ public class MetaCommand extends Command {
                 p.getInventory().setItemInMainHand(ItemUtils.setLore(item, CommandUtils.builder(args, 1).split("\\|")));
             else if (args[0].equalsIgnoreCase("enchantment")) {
                 if (args.length != 3) {
-                    plugin.getMessageManager().sendMessage(sender, Message.META_USAGE, null);
+                    plugin.getManager(MessageManager.class).sendMessage(sender, Message.META_USAGE, null);
                     return;
                 }
                 if (Enchantment.getByName(args[1]) == null) {
-                    plugin.getMessageManager().sendMessage(sender, Message.ENCHANTMENT_NOT_FOUND,
+                    plugin.getManager(MessageManager.class).sendMessage(sender, Message.ENCHANTMENT_NOT_FOUND,
                             ImmutableMap.of(Placeholder.ENCHANTMENT_NAME, args[1]));
                     return;
                 }
                 if (CommandUtils.tryParse(args[2]) == null) {
-                    plugin.getMessageManager().sendMessage(sender, Message.META_USAGE, null);
+                    plugin.getManager(MessageManager.class).sendMessage(sender, Message.META_USAGE, null);
                     return;
                 }
 
@@ -79,10 +80,10 @@ public class MetaCommand extends Command {
                 p.sendMessage(item.getItemMeta().getAsString());
                 return;
             } else
-                plugin.getMessageManager().sendMessage(sender, Message.META_USAGE, null);
+                plugin.getManager(MessageManager.class).sendMessage(sender, Message.META_USAGE, null);
             return;
         } else
-            plugin.getMessageManager().sendMessage(sender, Message.META_USAGE, null);
+            plugin.getManager(MessageManager.class).sendMessage(sender, Message.META_USAGE, null);
     }
 
     @Override

@@ -6,6 +6,8 @@ import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import org.bukkit.ChatColor;
@@ -62,7 +64,7 @@ public class CrateOptionAnimationFrame extends BaseFrame implements Listener {
     {
         for(AnimationStyle style : AnimationStyle.values())
         {
-            GUIItem item = new GUIItem(0, style.getItemStack(), plugin.getCustomizationManager().parseString(style.getName()), plugin.getCustomizationManager().parseString(style.getDescription()));
+            GUIItem item = new GUIItem(0, style.getItemStack(), plugin.getManager(CustomizationManager.class).parseString(style.getName()), plugin.getManager(CustomizationManager.class).parseString(style.getDescription()));
             item.setNameColor(ChatColor.RED);
             item.setLoreColor(ChatColor.GRAY);
             styles.put(style, item);
@@ -129,7 +131,7 @@ public class CrateOptionAnimationFrame extends BaseFrame implements Listener {
         {
             if(style.getItemStack().equals(guiItem.getItemStack().getType()))
                 crate.setOption(new CrateOption(CrateOptionType.ANIMATION_STYLE, style.toString()));
-            plugin.getCacheManager().update(crate);
+            plugin.getManager(CacheManager.class).update(crate);
         }
         e.setCancelled(true);
 

@@ -5,6 +5,9 @@ import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.CrateManager;
+import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import org.bukkit.ChatColor;
 import org.bukkit.*;
@@ -21,10 +24,10 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
     private final List<Crate> crates;
 
     public CrateListFrame(LootCrate plugin, Player p) {
-        super(plugin, p, plugin.getCustomizationManager().parseString(CustomizationOption.ALL_CRATES_MENU_TITLE));
+        super(plugin, p, plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.ALL_CRATES_MENU_TITLE));
 
         this.plugin = plugin;
-        crates = plugin.getCacheManager().getCache();
+        crates = plugin.getManager(CacheManager.class).getCache();
 
         generateFrame();
         generateNavigation();
@@ -67,7 +70,7 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
             return;
 
         String idFromLore = ChatColor.stripColor(item.getItemMeta().getLore().get(0));
-        Crate crate = plugin.getCacheManager().getCrateById(Integer.parseInt(idFromLore));
+        Crate crate = plugin.getManager(CacheManager.class).getCrateById(Integer.parseInt(idFromLore));
 
         CrateFrame crateFrame = new CrateFrame(plugin, p, crate);
 

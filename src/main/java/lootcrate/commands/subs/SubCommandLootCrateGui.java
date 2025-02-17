@@ -50,16 +50,16 @@ public class SubCommandLootCrateGui extends SubCommand {
 
         Frame frame = new CrateMainMenuFrame(plugin, p);
         if (args.length == 2) {
-            Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
+            Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
             if (crate == null) {
-                plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+                messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
                         ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
                 return;
             }
             frame = new CrateFrame(plugin, p, crate);
         }
 
-        plugin.getInvManager().openFrame(p, frame);
+        inventoryManager.openFrame(p, frame);
 
     }
 
@@ -69,7 +69,7 @@ public class SubCommandLootCrateGui extends SubCommand {
 
         if (args.length == 2) {
             list.add("[CrateID]");
-            TabUtils.addCratesNamesToList(list, plugin.getCacheManager());
+            TabUtils.addCratesNamesToList(list, cacheManager);
         }
 
         return list;

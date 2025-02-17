@@ -27,25 +27,14 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LootCrate extends JavaPlugin {
     private Metrics metrics;
-    private MessageManager messageManager;
-    private FileManager fileManager;
-    private CrateFileManager crateFileManager;
-    private CacheManager cacheManager;
-    private CrateManager crateManager;
-    private KeyFileManager keyFileManager;
-    private KeyCacheManager keyCacheManager;
-    private LocationManager locationManager;
-    private InventoryManager invManager;
-    private CommandManager commandManager;
-    private OptionManager optionManager;
-    private UpdateManager updateManager;
     private HologramManager holoManager;
-    private ChatManager chatManager;
-    private CustomizationManager customizationManager;
-    private CooldownManager cooldownManager;
+
+    private Map<Integer, Manager> managersMap;
 
     @Override
     public void onEnable() {
@@ -53,33 +42,23 @@ public class LootCrate extends JavaPlugin {
         initMetrics();
 
         registerConfig();
+        createManagersMap();
 
-        optionManager = new OptionManager(this);
-        updateManager = new UpdateManager(this);
-        messageManager = new MessageManager(this);
-        fileManager = new FileManager(this);
-        customizationManager = new CustomizationManager(this);
-        crateFileManager = new CrateFileManager(this);
-        cacheManager = new CacheManager(this);
-        crateManager = new CrateManager(this);
-        keyFileManager = new KeyFileManager(this);
-        keyCacheManager = new KeyCacheManager(this);
-        locationManager = new LocationManager(this);
-        invManager = new InventoryManager(this);
-        commandManager = new CommandManager(this);
-        chatManager = new ChatManager(this);
-        cooldownManager = new CooldownManager(this);
+        managersMap = new HashMap<>();
+
+
 
         registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
                 new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
                 new PlayerChatListener(this));
 
-        toggleManagers(true, optionManager, updateManager, messageManager, fileManager, customizationManager, crateFileManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager, cooldownManager);
 
-        if(isHologramPluginDetected())
+        toggleManagers(true);
+
+        if(isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
         {
             holoManager = new HologramManager(this);
-            toggleManagers(true, holoManager);
+            toggleManager(true, holoManager);
         }
 
         displayIntro();
@@ -105,12 +84,32 @@ public class LootCrate extends JavaPlugin {
 
     }
 
+    private void createManagersMap() {
+
+        managersMap.put(1, new OptionManager(this));
+        managersMap.put(2, new UpdateManager(this));
+        managersMap.put(3, new MessageManager(this));
+        managersMap.put(4, new FileManager(this));
+        managersMap.put(5, new CustomizationManager(this));
+        managersMap.put(6, new CrateFileManager(this));
+        managersMap.put(7, new CacheManager(this));
+        managersMap.put(8, new CrateManager(this));
+        managersMap.put(9, new KeyFileManager(this));
+        managersMap.put(10, new KeyCacheManager(this));
+        managersMap.put(11, new LocationManager(this));
+        managersMap.put(12, new InventoryManager(this));
+        managersMap.put(13, new CommandManager(this));
+        managersMap.put(14, new ChatManager(this));
+        managersMap.put(15, new CooldownManager(this));
+
+    }
+
     @Override
     public void onDisable() {
-        toggleManagers(false, optionManager, updateManager, messageManager, fileManager, customizationManager, cacheManager, crateManager, keyFileManager, keyCacheManager, locationManager, invManager, commandManager, chatManager, cooldownManager);
-        if(isHologramPluginDetected())
+        toggleManagers(false);
+        if(isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
         {
-            toggleManagers(false, holoManager);
+            toggleManager(false, holoManager);
         }
     }
 
@@ -119,12 +118,17 @@ public class LootCrate extends JavaPlugin {
             this.getServer().getPluginManager().registerEvents(l, this);
     }
 
-    private void toggleManagers(boolean enable, Manager... array) {
-        for (Manager m : array)
-            if (enable)
-                m.enable();
-            else
-                m.disable();
+    private void toggleManagers(boolean enabled) {
+        for (Manager m : managersMap.values()) {
+            toggleManager(enabled, m);
+        }
+    }
+
+    private void toggleManager(boolean enabled, Manager manager) {
+        if (enabled)
+            manager.enable();
+        else
+            manager.disable();
     }
 
     private void registerConfig() {
@@ -171,15 +175,23 @@ public class LootCrate extends JavaPlugin {
     }
 
     public void reload() {
+
+        CacheManager cacheManager = getManager(CacheManager.class);
+        LocationManager locationManager = getManager(LocationManager.class);
+
         cacheManager.reload();
         locationManager.reload();
 
-        if (isHologramPluginDetected())
+        if (isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
             holoManager.reload();
 
     }
 
     private void displayIntro() {
+
+        UpdateManager updateManager = getManager(UpdateManager.class);
+        CacheManager cacheManager = getManager(CacheManager.class);
+
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "[  " + ChatColor.YELLOW + "LootCrate"
@@ -231,104 +243,17 @@ public class LootCrate extends JavaPlugin {
         }
     }
 
-    /**
-     * @return the invManager
-     */
-    public InventoryManager getInvManager() {
-        return invManager;
+    @SuppressWarnings("unchecked")
+    public <T extends Manager> T getManager(Class<T> clazz) {
+        for (Manager manager : managersMap.values()) {
+            if (clazz.isInstance(manager)) {
+                return (T) manager;
+            }
+        }
+        return null;
     }
 
-    /**
-     * @return the messageManager
-     */
-    public MessageManager getMessageManager() {
-        return messageManager;
-    }
-
-    /**
-     * @return the fileManager
-     */
-    public CrateFileManager getCrateFileManager() {
-        return crateFileManager;
-    }
-
-    /**
-     * @return the cacheManager
-     */
-    public CacheManager getCacheManager() {
-        return cacheManager;
-    }
-
-    /**
-     * @return the crateManager
-     */
-    public CrateManager getCrateManager() {
-        return crateManager;
-    }
-
-    /**
-     * @return the keyCacheManager
-     */
-    public KeyCacheManager getKeyCacheManager() {
-        return keyCacheManager;
-    }
-
-    /**
-     * @return the keyFileManager
-     */
-    public KeyFileManager getKeyFileManager() {
-        return keyFileManager;
-    }
-
-    /**
-     * @return the locationManager
-     */
-    public LocationManager getLocationManager() {
-        return locationManager;
-    }
-
-    /**
-     * @return the commandManager
-     */
-    public CommandManager getCommandManager() {
-        return commandManager;
-    }
-
-    /**
-     * @return the optionManager
-     */
-    public OptionManager getOptionManager() {
-        return optionManager;
-    }
-
-    /**
-     * @return the updateManager
-     */
-    public UpdateManager getUpdateManager() {
-        return updateManager;
-    }
-
-    /**
-     * @return the holoManager
-     */
     public HologramManager getHoloManager() {
         return holoManager;
-    }
-
-    /**
-     * @return the chatManager
-     */
-    public ChatManager getChatManager() {
-        return chatManager;
-    }
-
-    public FileManager getFileManager() {
-        return fileManager;
-    }
-
-    public CustomizationManager getCustomizationManager() { return customizationManager; }
-
-    public CooldownManager getCooldownManager() {
-        return cooldownManager;
     }
 }

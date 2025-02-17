@@ -7,6 +7,8 @@ import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
 
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.ChatColor;
@@ -27,7 +29,7 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         super(plugin, p, crate.getName());
 
         this.plugin = plugin;
-        this.crate = plugin.getCacheManager().getCrateById(crate.getId());
+        this.crate =  plugin.getManager(CacheManager.class).getCrateById(crate.getId());
 
         generateFrame();
         generateNavigation();
@@ -62,17 +64,17 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         GUIItem guiItem = new GUIItem(index, item.getItem().clone());
         guiItem.addLoreLine(" ");
         guiItem.addLoreLine(ChatColor.DARK_GRAY + "---[Info]---");
-        guiItem.addLoreLine(plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_ITEM_INFO_ID) + item.getId());
-        guiItem.addLoreLine(plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_ITEM_INFO_CHANCE) + item.getChance() + "%");
-        guiItem.addLoreLine(plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_ITEM_INFO_MIN) + item.getMinAmount());
-        guiItem.addLoreLine(plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_ITEM_INFO_MAX) + item.getMaxAmount());
-        guiItem.addLoreLine(plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_ITEM_INFO_DISPLAY) + item.isDisplay());
-        guiItem.addLoreLine(plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_ITEM_INFO_COMMANDS));
+        guiItem.addLoreLine(plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_ITEM_INFO_ID) + item.getId());
+        guiItem.addLoreLine(plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_ITEM_INFO_CHANCE) + item.getChance() + "%");
+        guiItem.addLoreLine(plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_ITEM_INFO_MIN) + item.getMinAmount());
+        guiItem.addLoreLine(plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_ITEM_INFO_MAX) + item.getMaxAmount());
+        guiItem.addLoreLine(plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_ITEM_INFO_DISPLAY) + item.isDisplay());
+        guiItem.addLoreLine(plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_ITEM_INFO_COMMANDS));
         if(item.getCommands() != null)
             for (String command : item.getCommands())
-                guiItem.addLoreLine(plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_ITEM_COMMAND_FORMAT) + command);
+                guiItem.addLoreLine(plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_ITEM_COMMAND_FORMAT) + command);
         guiItem.addLoreLine(" ");
-        guiItem.addLoreLine(plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_ITEM_LEFT_CLICK_EDIT));
+        guiItem.addLoreLine(plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_ITEM_LEFT_CLICK_EDIT));
         guiItem.setCrateItem(item);
         return guiItem;
     }

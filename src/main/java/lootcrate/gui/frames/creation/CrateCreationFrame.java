@@ -5,6 +5,7 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.menu.CrateListFrame;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
 import lootcrate.objects.Crate;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,7 +25,7 @@ public class CrateCreationFrame extends ExtendedFrame implements Listener {
         super(plugin, p, ChatColor.GREEN + "Crate Main Menu");
 
         this.plugin = plugin;
-        crates = plugin.getCacheManager().getCache();
+        crates =  plugin.getManager(CacheManager.class).getCache();
 
         generateFrame();
         generateNavigation();

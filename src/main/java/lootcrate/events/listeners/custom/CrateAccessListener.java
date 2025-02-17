@@ -7,6 +7,7 @@ import lootcrate.enums.Placeholder;
 import lootcrate.events.custom.CrateAccessEvent;
 import lootcrate.events.custom.CrateOpenEvent;
 import lootcrate.events.custom.CrateViewEvent;
+import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import org.bukkit.Bukkit;
@@ -30,7 +31,7 @@ public class CrateAccessListener implements Listener {
 
         // if player has permission to interact with the crate
         if (!CommandUtils.hasCratePermission(crate, p)) {
-            plugin.getMessageManager().sendMessage(p, Message.NO_PERMISSION_LOOTCRATE_INTERACT,
+            plugin.getManager(MessageManager.class).sendMessage(p, Message.NO_PERMISSION_LOOTCRATE_INTERACT,
                     ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName()));
             return;
         }

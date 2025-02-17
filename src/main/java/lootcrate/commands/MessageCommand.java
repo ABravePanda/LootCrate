@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.enums.Message;
 import lootcrate.enums.Placeholder;
+import lootcrate.managers.MessageManager;
 import lootcrate.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -27,24 +28,24 @@ public class MessageCommand extends Command {
     @Override
     public void executeCommand() {
         if (sender instanceof Player) {
-            plugin.getMessageManager().sendMessage(sender, Message.MUST_BE_CONSOLE, null);
+            plugin.getManager(MessageManager.class).sendMessage(sender, Message.MUST_BE_CONSOLE, null);
             return;
         }
 
         if (args.length < 2) {
-            plugin.getMessageManager().sendMessage(sender, Message.MESSAGE_COMMAND_USAGE, null);
+            plugin.getManager(MessageManager.class).sendMessage(sender, Message.MESSAGE_COMMAND_USAGE, null);
             return;
         }
 
         if (Bukkit.getPlayer(args[0]) == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.PLAYER_NOT_FOUND,
+            plugin.getManager(MessageManager.class).sendMessage(sender, Message.PLAYER_NOT_FOUND,
                     ImmutableMap.of(Placeholder.PLAYER_NAME, args[0]));
             return;
         }
 
         Player p = Bukkit.getPlayer(args[0]);
 
-        plugin.getMessageManager().sendNoPrefixMessage(p, Message.MESSAGE_COMMAND_FORMAT,
+        plugin.getManager(MessageManager.class).sendNoPrefixMessage(p, Message.MESSAGE_COMMAND_FORMAT,
                 ImmutableMap.of(Placeholder.PLAYER, args[0], Placeholder.MESSAGE, CommandUtils.builder(args, 1)));
     }
 

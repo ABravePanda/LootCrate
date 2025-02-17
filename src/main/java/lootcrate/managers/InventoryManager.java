@@ -50,7 +50,7 @@ public class InventoryManager extends BasicManager {
                 ItemMeta meta = itemStack.getItemMeta();
                 List<String> lore = meta.getLore() == null ? new ArrayList<>() : meta.getLore();
                 lore.add(" ");
-                lore.add(this.getPlugin().getMessageManager().parseMessage(Message.CHANCE,
+                lore.add(this.getPlugin().getManager(MessageManager.class).parseMessage(Message.CHANCE,
                         ImmutableMap.of(Placeholder.ITEM_CHANCE, item.getChance() + "")));
                 meta.setLore(lore);
                 itemStack.setItemMeta(meta);

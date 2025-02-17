@@ -5,6 +5,7 @@ import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CrateManager;
 import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
@@ -33,7 +34,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
 
         this.plugin = plugin;
         this.crate = crate;
-        this.customizationManager = plugin.getCustomizationManager();
+        this.customizationManager = plugin.getManager(CustomizationManager.class);
         this.duration = (int) customizationManager.parseLong(CustomizationOption.RND_ANIMATION_DURATION);
         this.rewardSpeed = customizationManager.parseLong(CustomizationOption.RND_ANIMATION_SCROLL_SPEED);
         this.backgroundSpeed = customizationManager.parseLong(CustomizationOption.RND_ANIMATION_GLASS_SPEED);
@@ -99,13 +100,13 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
         return Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             @Override
             public void run() {
-                setItem(22, new GUIItem(22, plugin.getCrateManager().getRandomItem(crate)));
+                setItem(22, new GUIItem(22, plugin.getManager(CrateManager.class).getRandomItem(crate)));
             }
         }, 0L, this.rewardSpeed);
     }
 
     private void giveRewards(CrateItem crateItem) {
-        plugin.getCrateManager().giveReward(crateItem, getViewer());
+        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer());
     }
 
     private Material randomGlass() {

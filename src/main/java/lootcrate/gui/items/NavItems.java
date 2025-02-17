@@ -14,7 +14,7 @@ public class NavItems
     public NavItems(LootCrate plugin)
     {
         this.plugin = plugin;
-        this.customizationManager = plugin.getCustomizationManager();
+        this.customizationManager = plugin.getManager(CustomizationManager.class);
     }
 
     public ItemStack getNavClose()

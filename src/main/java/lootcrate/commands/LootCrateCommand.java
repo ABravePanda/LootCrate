@@ -4,6 +4,7 @@ import lootcrate.LootCrate;
 import lootcrate.commands.subs.*;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
+import lootcrate.managers.MessageManager;
 import org.bukkit.command.CommandSender;
 
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class LootCrateCommand extends Command {
     public void executeCommand() {
 
         if (args.length == 0) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
+            plugin.getManager(MessageManager.class).sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
             return;
         }
 
@@ -85,7 +86,7 @@ public class LootCrateCommand extends Command {
                 new SubCommandLootCrateOption(plugin, sender, args).runSubCommand(true);
                 break;
             default:
-                plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
+                plugin.getManager(MessageManager.class).sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
                 break;
         }
     }

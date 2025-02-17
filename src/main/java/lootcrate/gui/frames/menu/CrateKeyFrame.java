@@ -5,6 +5,7 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.frames.types.InputAllowed;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateKey;
 import lootcrate.utils.ObjUtils;
@@ -82,7 +83,7 @@ public class CrateKeyFrame extends BaseFrame implements Listener, InputAllowed {
                 if (p.getOpenInventory().getTopInventory().getItem(31) == null)
                     return;
                 crate.setKey(new CrateKey(this.getInventory().getItem(31), false));
-                plugin.getCacheManager().update(crate);
+                plugin.getManager(CacheManager.class).update(crate);
                 this.closeFrame(p, this);
                 this.openFrame(p, new CrateKeyFrame(plugin, p, crate));
                 break;

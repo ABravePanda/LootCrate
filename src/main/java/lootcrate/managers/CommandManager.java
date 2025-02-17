@@ -18,9 +18,9 @@ public class CommandManager extends BasicManager implements CommandExecutor, Tab
 
     public CommandManager(LootCrate plugin) {
         super(plugin);
-        this.messageManager = plugin.getMessageManager();
-        this.crateManager = plugin.getCrateManager();
-        this.locationManager = plugin.getLocationManager();
+        this.messageManager = plugin.getManager(MessageManager.class);
+        this.crateManager = plugin.getManager(CrateManager.class);
+        this.locationManager = plugin.getManager(LocationManager.class);
     }
 
     @Override

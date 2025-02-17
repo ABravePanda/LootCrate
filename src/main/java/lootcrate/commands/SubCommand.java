@@ -3,6 +3,7 @@ package lootcrate.commands;
 import lootcrate.LootCrate;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
+import lootcrate.managers.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -15,11 +16,25 @@ public abstract class SubCommand {
     private final String[] args;
     private final Permission[] permissions;
 
+    protected final CrateManager crateManager;
+    protected final CacheManager cacheManager;
+    protected final LocationManager locationManager;
+    protected final MessageManager messageManager;
+    protected final OptionManager optionManager;
+    protected final InventoryManager inventoryManager;
+
     public SubCommand(LootCrate plugin, CommandSender sender, String[] args, Permission... perm) {
         this.plugin = plugin;
         this.sender = sender;
         this.args = args;
         this.permissions = perm;
+
+        this.crateManager = plugin.getManager(CrateManager.class);
+        this.cacheManager = plugin.getManager(CacheManager.class);
+        this.messageManager = plugin.getManager(MessageManager.class);
+        this.optionManager = plugin.getManager(OptionManager.class);
+        this.locationManager = plugin.getManager(LocationManager.class);
+        this.inventoryManager = plugin.getManager(InventoryManager.class);
     }
 
     /**
@@ -43,7 +58,7 @@ public abstract class SubCommand {
      */
     public boolean testPermissions() {
         if (!hasPermission(permissions)) {
-            plugin.getMessageManager().sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
+            messageManager.sendMessage(sender, Message.NO_PERMISSION_COMMAND, null);
             return false;
         }
 
@@ -58,7 +73,7 @@ public abstract class SubCommand {
      */
     public boolean testPlayer(boolean playerRequired) {
         if (playerRequired && !(sender instanceof Player)) {
-            plugin.getMessageManager().sendMessage(sender, Message.MUST_BE_PLAYER, null);
+            messageManager.sendMessage(sender, Message.MUST_BE_PLAYER, null);
             return true;
         }
         return false;

@@ -6,6 +6,9 @@ import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.ChatManager;
+import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,10 +24,10 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
     private final List<Crate> crates;
 
     public CrateMainMenuFrame(LootCrate plugin, Player p) {
-        super(plugin, p, plugin.getCustomizationManager().parseString(CustomizationOption.CRATES_MAIN_MENU_TITLE));
+        super(plugin, p, plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATES_MAIN_MENU_TITLE));
 
         this.plugin = plugin;
-        crates = plugin.getCacheManager().getCache();
+        crates = plugin.getManager(CacheManager.class).getCache();
 
         generateFrame();
         generateNavigation();
@@ -47,8 +50,8 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
 
     private void fillItems()
     {
-        this.setItem(20, new GUIItem(20, Material.CRAFTING_TABLE, plugin.getCustomizationManager().parseString(CustomizationOption.MAIN_CREATE_NEW_CRATE)));
-        this.setItem(24, new GUIItem(24, Material.CHEST, plugin.getCustomizationManager().parseString(CustomizationOption.MAIN_VIEW_ALL_CRATES)));
+        this.setItem(20, new GUIItem(20, Material.CRAFTING_TABLE, plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.MAIN_CREATE_NEW_CRATE)));
+        this.setItem(24, new GUIItem(24, Material.CHEST, plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.MAIN_VIEW_ALL_CRATES)));
     }
 
     // events
@@ -76,8 +79,8 @@ public class CrateMainMenuFrame extends ExtendedFrame implements Listener {
             e.setCancelled(true);
             this.closeFrame(p, this);
             ChatState state = ChatState.CREATE_CRATE_NAME;
-            plugin.getChatManager().addPlayer(p, state);
-            plugin.getChatManager().sendNotification(p);
+            plugin.getManager(ChatManager.class).addPlayer(p, state);
+            plugin.getManager(ChatManager.class).sendNotification(p);
         }
         e.setCancelled(true);
 

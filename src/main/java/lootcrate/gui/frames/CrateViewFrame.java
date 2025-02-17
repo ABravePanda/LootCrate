@@ -8,6 +8,8 @@ import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.frames.types.Pageable;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.gui.items.NavItems;
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.InventoryManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.entity.Player;
@@ -28,7 +30,7 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
         super(plugin, p, crate.getName());
 
         this.plugin = plugin;
-        this.crate = plugin.getCacheManager().getCrateById(crate.getId());
+        this.crate = plugin.getManager(CacheManager.class).getCrateById(crate.getId());
         this.sortType = SortType.CHANCE;
         if(crate.getOption(CrateOptionType.SORT_TYPE) != null) {
             this.sortType = SortType.valueOf(crate.getOption(CrateOptionType.SORT_TYPE).getValue().toString());
@@ -43,7 +45,7 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
     @Override
     public void generateFrame() {
         int index = 0;
-        for (ItemStack item : plugin.getInvManager().addCrateEffects(crate, sortType)) {
+        for (ItemStack item : plugin.getManager(InventoryManager.class).addCrateEffects(crate, sortType)) {
             if (index < getUsableSize())
                 this.setItem(index, new GUIItem(index, item));
             index++;
@@ -63,7 +65,7 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
 
         int itemIndex = (page*usableSize)-usableSize;
         int index = 0;
-        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate, sortType);
+        List<ItemStack> items = plugin.getManager(InventoryManager.class).addCrateEffects(crate, sortType);
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && items.size() > itemIndex)
                 this.setItem(index, new GUIItem(index, items.get(itemIndex)));
@@ -80,7 +82,7 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
 
         int itemIndex = (page*usableSize)-usableSize;
         int index = 0;
-        List<ItemStack> items = plugin.getInvManager().addCrateEffects(crate, sortType);
+        List<ItemStack> items = plugin.getManager(InventoryManager.class).addCrateEffects(crate, sortType);
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && items.size() > itemIndex)
                 this.setItem(index, new GUIItem(index, items.get(itemIndex)));

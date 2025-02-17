@@ -28,7 +28,7 @@ public class CrateFileManager extends FileManager {
      * @return The Crate object of the given name or null
      */
     public Crate getCrateFromFile(String name) {
-        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(crateFile);
         if (config.get(CRATE_PREFIX + name) == null)
             return null;
         if (config.get(CRATE_PREFIX + name) instanceof MemorySection) {
@@ -70,7 +70,7 @@ public class CrateFileManager extends FileManager {
      * @param crate The Crate to be saved
      */
     public void saveCrate(Crate crate) {
-        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(crateFile);
         config.set(CRATE_PREFIX + crate.getId(), crate.serialize());
         saveFile(config);
     }
@@ -83,7 +83,7 @@ public class CrateFileManager extends FileManager {
      * @param crate   Crate to save
      */
     public void overrideSave(String oldName, Crate crate) {
-        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(crateFile);
         config.set(CRATE_PREFIX + oldName, null);
         config.set(CRATE_PREFIX + crate.getId(), crate.serialize());
         saveFile(config);
@@ -95,7 +95,7 @@ public class CrateFileManager extends FileManager {
      * @param crate The Crate to be remove
      */
     public void removeCrate(Crate crate) {
-        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(crateFile);
+        FileConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(crateFile);
         config.set(CRATE_PREFIX + crate.getId(), null);
         saveFile(config);
     }
@@ -104,7 +104,7 @@ public class CrateFileManager extends FileManager {
      * Loads the files into the variables
      */
     private void loadFiles() {
-        crateFile = this.getPlugin().getFileManager().getFile(FileType.CRATES);
+        crateFile = this.getPlugin().getManager(FileManager.class).getFile(FileType.CRATES);
     }
 
     /**

@@ -5,6 +5,7 @@ import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.menu.option.*;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.LocationManager;
 import lootcrate.objects.Crate;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -58,7 +59,7 @@ public class CrateLocationFrame extends BaseFrame {
 
     public void fillLocations() {
         int index = 0;
-        for (final Location l : plugin.getLocationManager().getCrateLocations(crate)) {
+        for (final Location l : plugin.getManager(LocationManager.class).getCrateLocations(crate)) {
             final GUIItem item = new GUIItem(index, l.getBlock().getType(),
                     ChatColor.GOLD + "" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ(),
                     ChatColor.AQUA + "" + l.getWorld().getName());

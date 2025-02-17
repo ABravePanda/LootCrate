@@ -6,6 +6,8 @@ import lootcrate.enums.SortType;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import org.bukkit.ChatColor;
@@ -63,8 +65,8 @@ public class CrateOptionSortFrame extends BaseFrame implements Listener {
         for(SortType sort : SortType.values())
         {
             GUIItem item = new GUIItem(0, sort.getItemStack(),
-                    plugin.getCustomizationManager().parseString(sort.getName()),
-                    plugin.getCustomizationManager().parseString(sort.getDescription()));
+                    plugin.getManager(CustomizationManager.class).parseString(sort.getName()),
+                    plugin.getManager(CustomizationManager.class).parseString(sort.getDescription()));
             item.setNameColor(ChatColor.RED);
             item.setLoreColor(ChatColor.GRAY);
             sortTypes.put(sort, item);
@@ -133,7 +135,7 @@ public class CrateOptionSortFrame extends BaseFrame implements Listener {
         {
             if(sortTypes.getItemStack().equals(guiItem.getItemStack().getType()))
                 crate.setOption(new CrateOption(CrateOptionType.SORT_TYPE, sortTypes.toString()));
-            plugin.getCacheManager().update(crate);
+            plugin.getManager(CacheManager.class).update(crate);
         }
         e.setCancelled(true);
 

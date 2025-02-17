@@ -6,6 +6,8 @@ import lootcrate.enums.Message;
 import lootcrate.enums.Option;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
+import lootcrate.managers.KeyCacheManager;
+import lootcrate.managers.MessageManager;
 import lootcrate.managers.OptionManager;
 import lootcrate.managers.UpdateManager;
 import org.bukkit.entity.Player;
@@ -17,11 +19,15 @@ public class PlayerJoinListener implements Listener {
     private final LootCrate plugin;
     private final OptionManager optionManager;
     private final UpdateManager updateManager;
+    private final MessageManager messageManager;
+    private final KeyCacheManager keyCacheManager;
 
     public PlayerJoinListener(LootCrate plugin) {
         this.plugin = plugin;
-        this.updateManager = plugin.getUpdateManager();
-        this.optionManager = plugin.getOptionManager();
+        this.updateManager = plugin.getManager(UpdateManager.class);
+        this.optionManager = plugin.getManager(OptionManager.class);
+        this.messageManager = plugin.getManager(MessageManager.class);
+        this.keyCacheManager = plugin.getManager(KeyCacheManager.class);
     }
 
     @EventHandler
@@ -29,11 +35,11 @@ public class PlayerJoinListener implements Listener {
         Player p = e.getPlayer();
 
         if (optionManager.valueOf(Option.JOIN_KEY_NOTIFICATION)){
-            if(!plugin.getKeyCacheManager().hasKeys(p.getUniqueId()))
+            if(!keyCacheManager.hasKeys(p.getUniqueId()))
                 return;
-            else if(plugin.getKeyCacheManager().convertIntToCrate(p.getUniqueId()).size() == 0) return;
+            else if(keyCacheManager.convertIntToCrate(p.getUniqueId()).isEmpty()) return;
             else
-                plugin.getMessageManager().sendMessage(p, Message.JOIN_KEY_NOTIFICATION,  ImmutableMap.of(Placeholder.KEY_AMOUNT, plugin.getKeyCacheManager().convertIntToCrate(p.getUniqueId()).size() + ""));
+                messageManager.sendMessage(p, Message.JOIN_KEY_NOTIFICATION,  ImmutableMap.of(Placeholder.KEY_AMOUNT, keyCacheManager.convertIntToCrate(p.getUniqueId()).size() + ""));
 
         }
 

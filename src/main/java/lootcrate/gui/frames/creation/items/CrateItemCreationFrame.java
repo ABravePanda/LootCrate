@@ -4,6 +4,7 @@ import lootcrate.LootCrate;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.ExtendedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CacheManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.ChatColor;
@@ -109,7 +110,7 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
             e.setCancelled(true);
             if(crateItem.getItem() != null) {
                 if (!crate.replaceItem(crateItem)) crate.addItem(crateItem);
-                plugin.getCacheManager().update(crate);
+                plugin.getManager(CacheManager.class).update(crate);
             }
             this.closeFrame(p, this);
             this.openFrame(p, new CrateItemFrame(plugin, p, crate));
@@ -119,7 +120,7 @@ public class CrateItemCreationFrame extends ExtendedFrame implements Listener {
             e.setCancelled(true);
             if(crate.getItem(crateItem.getId()) != null) {
                 crate.removeItem(crateItem);
-                plugin.getCacheManager().update(crate);
+                plugin.getManager(CacheManager.class).update(crate);
             }
             this.closeFrame(p, this);
             this.openFrame(p, new CrateItemFrame(plugin, p, crate));

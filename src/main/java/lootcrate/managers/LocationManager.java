@@ -29,7 +29,7 @@ public class LocationManager extends BasicManager {
      */
     public LocationManager(LootCrate plugin) {
         super(plugin);
-        this.crateManager = plugin.getCrateManager();
+        this.crateManager = plugin.getManager(CrateManager.class);
 
     }
 
@@ -37,7 +37,7 @@ public class LocationManager extends BasicManager {
      * Reloads the config and repopulates location list
      */
     public void reload() {
-        config = this.getPlugin().getFileManager().getConfiguration(f);
+        config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
         populateLocations();
     }
 
@@ -71,7 +71,7 @@ public class LocationManager extends BasicManager {
      */
     public void removeCrateLocation(Location l) {
         reload();
-        config = this.getPlugin().getFileManager().getConfiguration(f);
+        config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
         String uuid = findUUIDByLocation(l);
         if (uuid == null)
             return;
@@ -93,7 +93,7 @@ public class LocationManager extends BasicManager {
      */
     public void removeCrateLocation(Crate crate) {
         reload();
-        config = this.getPlugin().getFileManager().getConfiguration(f);
+        config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
         String uuid = findUUIDByCrate(crate);
         if (uuid == null)
             return;
@@ -142,7 +142,7 @@ public class LocationManager extends BasicManager {
             MemorySection section = (MemorySection) config.get(s);
             if (section.get("Crate") == null)
                 continue;
-            Crate crate2 = this.getPlugin().getCacheManager().getCrateById(section.getInt("Crate"));
+            Crate crate2 = this.getPlugin().getManager(CacheManager.class).getCrateById(section.getInt("Crate"));
             if (crate2 == null)
                 continue;
             if (crate.getId() == crate2.getId())
@@ -161,7 +161,7 @@ public class LocationManager extends BasicManager {
             Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")),
                     (double) section.get("Location.x"), (double) section.get("Location.y"),
                     (double) section.get("Location.z"));
-            Crate crate = this.getPlugin().getCacheManager().getCrateById(section.getInt("Crate"));
+            Crate crate = this.getPlugin().getManager(CacheManager.class).getCrateById(section.getInt("Crate"));
             if (crate == null || loc == null)
                 continue;
             locationList.put(loc, crate);
@@ -195,8 +195,8 @@ public class LocationManager extends BasicManager {
 
     @Override
     public void enable() {
-        f = this.getPlugin().getFileManager().getFile(FileType.LOCATIONS);
-        config = this.getPlugin().getFileManager().getConfiguration(f);
+        f = this.getPlugin().getManager(FileManager.class).getFile(FileType.LOCATIONS);
+        config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
         populateLocations();
     }
 

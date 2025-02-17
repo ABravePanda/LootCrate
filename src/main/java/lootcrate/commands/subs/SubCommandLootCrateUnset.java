@@ -48,7 +48,7 @@ public class SubCommandLootCrateUnset extends SubCommand {
             return;
 
         if (args.length < 1) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
             return;
         }
 
@@ -59,18 +59,18 @@ public class SubCommandLootCrateUnset extends SubCommand {
         ImmutableMap<Placeholder, String> map = ImmutableMap.of(Placeholder.X, l.getBlockX() + "", Placeholder.Y,
                 l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 
-        if(!plugin.getLocationManager().getLocationList().containsKey(l))
+        if(!locationManager.getLocationList().containsKey(l))
         {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, map);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, map);
             return;
         }
-        plugin.getLocationManager().removeCrateLocation(l);
+        locationManager.removeCrateLocation(l);
 
         // create hologram
         if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
             holoManager.reload();
 
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
     }
 
     @Override

@@ -97,7 +97,7 @@ public class CrateManager extends BasicManager {
         if (crate.getOption(CrateOptionType.OPEN_MESSAGE).getValue() != null) {
             if (crate.getOption(CrateOptionType.OPEN_MESSAGE).getValue().toString().equalsIgnoreCase("none"))
                 return;
-            p.sendMessage(this.getPlugin().getMessageManager().getPrefix()
+            p.sendMessage(this.getPlugin().getManager(MessageManager.class).getPrefix()
                     + ChatColor.translateAlternateColorCodes('&', crate.getOption(CrateOptionType.OPEN_MESSAGE)
                     .getValue().toString().replace("{crate_name}", crate.getName())));
         }
@@ -105,7 +105,7 @@ public class CrateManager extends BasicManager {
     }
 
     public void giveReward(CrateItem crateItem, Player p) {
-        int rnd = this.getPlugin().getCrateManager().getRandomAmount(crateItem);
+        int rnd = this.getPlugin().getManager(CrateManager.class).getRandomAmount(crateItem);
 
         if (!crateItem.isDisplay()) {
             for (int i = 0; i < rnd; i++)
@@ -115,7 +115,7 @@ public class CrateManager extends BasicManager {
         int i = 1;
 
         for (String cmd : crateItem.getCommands()) {
-            if (this.getPlugin().getOptionManager().valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
+            if (this.getPlugin().getManager(OptionManager.class).valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
                 i = rnd;
             for (int j = 0; j < i; j++)
                 Bukkit.dispatchCommand(this.getPlugin().getServer().getConsoleSender(), cmd.replace("{player}", p.getName()).replace("{amount}", rnd + ""));
@@ -144,7 +144,7 @@ public class CrateManager extends BasicManager {
 
     public Crate getCrateFromItemID(int id)
     {
-        List<Crate> crates = this.getPlugin().getCacheManager().getCache();
+        List<Crate> crates = this.getPlugin().getManager(CacheManager.class).getCache();
         for(Crate crate : crates)
             for(CrateItem item : crate.getItems())
                 if(item.getId() == id) return crate;

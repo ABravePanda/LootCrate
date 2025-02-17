@@ -5,6 +5,7 @@ import lootcrate.enums.CustomizationOption;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CrateManager;
 import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
@@ -34,7 +35,7 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
 
         this.plugin = plugin;
         this.crate = crate;
-        this.customizationManager = plugin.getCustomizationManager();
+        this.customizationManager = plugin.getManager(CustomizationManager.class);
         this.rewardSpeed = customizationManager.parseLong(CustomizationOption.REMOVING_ANIMATION_DURATION);
         this.fillMaterial = customizationManager.parseMaterial(CustomizationOption.REMOVING_ANIMATION_FILLER_MATERIAL);
 
@@ -90,11 +91,11 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
 
     private void initLineup() {
         for (int i = 0; i < this.getSize(); i++)
-            setItem(i, new GUIItem(i, plugin.getCrateManager().getRandomItem(crate)));
+            setItem(i, new GUIItem(i, plugin.getManager(CrateManager.class).getRandomItem(crate)));
     }
 
     private void giveRewards(CrateItem crateItem) {
-        plugin.getCrateManager().giveReward(crateItem, getViewer());
+        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer());
     }
 
     private void initList() {

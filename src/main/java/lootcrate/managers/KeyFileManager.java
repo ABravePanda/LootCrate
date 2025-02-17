@@ -22,7 +22,7 @@ public class KeyFileManager extends FileManager {
 
     public Map<UUID, List<Integer>> loadCache()
     {
-        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(keyFile);
+        FileConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(keyFile);
         Map<UUID, List<Integer>> map = new HashMap();
 
         if(config.getConfigurationSection(KEY_PREFIX) == null) return new HashMap<>();
@@ -41,12 +41,12 @@ public class KeyFileManager extends FileManager {
      * @param keyMap the map of keys to be saved
      */
     public void saveCache(Map<UUID, List<Integer>> keyMap) {
-        FileConfiguration config = this.getPlugin().getFileManager().getConfiguration(keyFile);
+        FileConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(keyFile);
 
         for(UUID uuid : keyMap.keySet()) {
             config.set(KEY_PREFIX + uuid, keyMap.get(uuid));
         }
-        getPlugin().getFileManager().saveFile(keyFile, config);
+        getPlugin().getManager(FileManager.class).saveFile(keyFile, config);
     }
 
 
@@ -54,7 +54,7 @@ public class KeyFileManager extends FileManager {
      * Loads the files into the variables
      */
     private void loadFiles() {
-        keyFile = this.getPlugin().getFileManager().getFile(FileType.KEYS);
+        keyFile = this.getPlugin().getManager(FileManager.class).getFile(FileType.KEYS);
     }
 
     @Override

@@ -63,22 +63,22 @@ public class SubCommandLootCrateAdd extends SubCommand {
             return;
 
         if (args.length <= 5) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
             return;
         }
         if (mainHandItem.getType() == Material.AIR) {
-            plugin.getMessageManager().sendMessage(sender, Message.MUST_HOLD_ITEM, null);
+            messageManager.sendMessage(sender, Message.MUST_HOLD_ITEM, null);
             return;
         }
 
         if (CommandUtils.tryParse(args[2]) == null || CommandUtils.tryParse(args[3]) == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_USAGE, null);
             return;
         }
 
-        Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
+        Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
         if (crate == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
                     ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
             return;
         }
@@ -87,7 +87,7 @@ public class SubCommandLootCrateAdd extends SubCommand {
         double chance = CommandUtils.tryParseDouble(args[4]);
 
         if (min > max && min >= 1) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_MINMAX, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_MINMAX, null);
             return;
         }
 
@@ -96,8 +96,8 @@ public class SubCommandLootCrateAdd extends SubCommand {
         CrateItem item = new CrateItem(mainHandItem, min, max, chance,
                 Boolean.parseBoolean(args[5]), null);
         crate.addItem(item);
-        plugin.getCacheManager().update(crate);
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_SUCCESS,
+        cacheManager.update(crate);
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
                         Placeholder.ITEM_TYPE, "" + item.getItem().getType(), Placeholder.ITEM_ID, "" + item.getId(),
                         Placeholder.ITEM_NAME, "" + item.getItem().getItemMeta().getDisplayName()));
@@ -119,7 +119,7 @@ public class SubCommandLootCrateAdd extends SubCommand {
 
         if (args.length == 2) {
             list.add("[CrateID]");
-            TabUtils.addCratesToList(list, plugin.getCacheManager());
+            TabUtils.addCratesToList(list, cacheManager);
         }
         if (args.length == 3)
             list.add("[MinimumAmount]");
@@ -129,7 +129,7 @@ public class SubCommandLootCrateAdd extends SubCommand {
             list.add("[Chance]");
         if (args.length == 6) {
             list.add("[Is Display]");
-            list.add(ChatColor.stripColor(plugin.getMessageManager().parseMessage(Message.LOOTCRATE_COMMAND_ADD_HINT, null)));
+            list.add(ChatColor.stripColor(messageManager.parseMessage(Message.LOOTCRATE_COMMAND_ADD_HINT, null)));
             list.add("true");
             list.add("false");
         }

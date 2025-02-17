@@ -7,7 +7,10 @@ import lootcrate.enums.HologramPlugin;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
+import lootcrate.managers.CacheManager;
 import lootcrate.managers.HologramManager;
+import lootcrate.managers.LocationManager;
+import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
@@ -50,8 +53,9 @@ public class SubCommandLootCrateSet extends SubCommand {
         if (!this.testPermissions())
             return;
 
+
         if (args.length < 2) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
             return;
         }
 
@@ -59,22 +63,22 @@ public class SubCommandLootCrateSet extends SubCommand {
         ImmutableMap<Placeholder, String> map1 = ImmutableMap.of(Placeholder.X, l.getBlockX() + "", Placeholder.Y,
                 l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
         if (args[1].equalsIgnoreCase("none")) {
-            plugin.getLocationManager().removeCrateLocation(l);
+            locationManager.removeCrateLocation(l);
 
             if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
                 plugin.getHoloManager().reload();
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
+           messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
             return;
         }
 
         if (CommandUtils.tryParse(args[1]) == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
             return;
         }
 
-        Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
+        Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
         if (crate == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
                     ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
             return;
         }
@@ -82,18 +86,18 @@ public class SubCommandLootCrateSet extends SubCommand {
                 Placeholder.CRATE_NAME, crate.getName(), Placeholder.X, l.getBlockX() + "", Placeholder.Y,
                 l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 
-        if(plugin.getLocationManager().getLocationList().containsKey(l))
+        if(locationManager.getLocationList().containsKey(l))
         {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, map);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, map);
             return;
         }
-        plugin.getLocationManager().addCrateLocation(l, crate);
+        locationManager.addCrateLocation(l, crate);
 
         // create hologram
         if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
             holoManager.createHologram(l.getBlock(), crate);
 
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
     }
 
     @Override
@@ -104,10 +108,12 @@ public class SubCommandLootCrateSet extends SubCommand {
                 && !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
             return list;
 
+        CacheManager cacheManager = plugin.getManager(CacheManager.class);
+
         if (args.length == 2) {
             list.add("[CrateID]");
             list.add("none");
-            TabUtils.addCratesNamesToList(list, plugin.getCacheManager());
+            TabUtils.addCratesNamesToList(list, cacheManager);
         }
         return list;
     }

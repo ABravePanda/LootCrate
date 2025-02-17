@@ -5,6 +5,7 @@ import lootcrate.gui.events.custom.GUICloseEvent;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.gui.items.GUIItem;
 import lootcrate.gui.items.NavItems;
+import lootcrate.managers.InventoryManager;
 import lootcrate.utils.ObjUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -120,12 +121,12 @@ public abstract class BaseFrame implements Frame, Listener, Pageable {
 
     @Override
     public void open() {
-        plugin.getInvManager().openFrame(player, this);
+        plugin.getManager(InventoryManager.class).openFrame(player, this);
     }
 
     @Override
     public void close() {
-        plugin.getInvManager().closeFrame(player, this);
+        plugin.getManager(InventoryManager.class).closeFrame(player, this);
     }
 
     @Override
@@ -178,7 +179,7 @@ public abstract class BaseFrame implements Frame, Listener, Pageable {
     }
 
     public void openFrame(Player p, Frame frame) {
-        plugin.getInvManager().openFrame(p, frame);
+        plugin.getManager(InventoryManager.class).openFrame(p, frame);
     }
 
     public void closeFrame(Player p, Frame frame) {

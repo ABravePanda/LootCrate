@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 public class ChatManager extends BasicManager {
     private final HashMap<Player, ChatState> map;
+    private MessageManager messageManager;
 
     /**
      * Constructor of ChatManager
@@ -49,10 +50,10 @@ public class ChatManager extends BasicManager {
 
         switch (getState(p)) {
             case CHANGE_CRATE_NAME:
-                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_NAME, null);
+                messageManager.sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_NAME, null);
                 break;
             case CHANGE_CRATE_MESSAGE:
-                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_MESSAGE, null);
+                messageManager.sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_MESSAGE, null);
                 break;
             case CHANGE_CRATE_SOUND: // Not more used
                 /*
@@ -62,16 +63,16 @@ public class ChatManager extends BasicManager {
                  */
                 break;
             case CREATE_CRATE_NAME:
-                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CREATE_CRATE_NAME, null);
+                messageManager.sendMessage(p, Message.LOOTCRATE_CREATE_CRATE_NAME, null);
                 break;
             case ADD_ITEM_COMMAND:
-                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_ADD_ITEM_COMMAND, null);
+                messageManager.sendMessage(p, Message.LOOTCRATE_ADD_ITEM_COMMAND, null);
                 break;
             case CHANGE_CRATE_KNOCKBACK:
-                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_KNOCKBACK, ImmutableMap.of(Placeholder.KNOCKBACK, getState(p).getCrate().getOption(CrateOptionType.KNOCK_BACK).getValue().toString()));
+                messageManager.sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_KNOCKBACK, ImmutableMap.of(Placeholder.KNOCKBACK, getState(p).getCrate().getOption(CrateOptionType.KNOCK_BACK).getValue().toString()));
                 break;
             case CHANGE_CRATE_COOLDOWN:
-                getPlugin().getMessageManager().sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_COOLDOWN, ImmutableMap.of(Placeholder.COOLDOWN, getState(p).getCrate().getOption(CrateOptionType.COOLDOWN).getValue().toString()));
+                messageManager.sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_COOLDOWN, ImmutableMap.of(Placeholder.COOLDOWN, getState(p).getCrate().getOption(CrateOptionType.COOLDOWN).getValue().toString()));
                 break;
             default:
                 break;
@@ -81,7 +82,7 @@ public class ChatManager extends BasicManager {
 
     @Override
     public void enable() {
-
+        this.messageManager = getPlugin().getManager(MessageManager.class);
     }
 
     @Override

@@ -52,17 +52,17 @@ public class SubCommandLootCrateCreate extends SubCommand {
             return;
 
         if (args.length <= 1) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_USAGE, null);
             return;
         }
 
         Crate crate = new Crate(CommandUtils.builder(args, 1));
-        plugin.getCrateManager().addDefaultOptions(crate);
-        plugin.getCacheManager().update(crate);
+        crateManager.addDefaultOptions(crate);
+        cacheManager.update(crate);
 
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_PERMISSIONS,
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_CREATE_PERMISSIONS,
                 ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
     }
 

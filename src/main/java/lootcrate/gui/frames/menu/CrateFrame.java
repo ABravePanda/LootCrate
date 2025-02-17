@@ -8,6 +8,7 @@ import lootcrate.gui.frames.menu.option.CrateOptionMainMenuFrame;
 import lootcrate.gui.frames.types.BaseFrame;
 import lootcrate.gui.frames.types.Frame;
 import lootcrate.gui.items.GUIItem;
+import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -48,17 +49,17 @@ public class CrateFrame extends BaseFrame implements Listener {
 
     public void fillOptions() {
         this.setItem(19, new GUIItem(19, Material.BRICKS,
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_VIEW_ITEMS_NAME),
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_VIEW_ITEMS_LORE)));
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_VIEW_ITEMS_NAME),
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_VIEW_ITEMS_LORE)));
         this.setItem(12, new GUIItem(12, Material.TRIPWIRE_HOOK,
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_VIEW_KEY_NAME),
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_VIEW_KEY_LORE)));
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_VIEW_KEY_NAME),
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_VIEW_KEY_LORE)));
         this.setItem(14, new GUIItem(14, Material.ENDER_PEARL,
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_VIEW_LOCATIONS_NAME),
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_VIEW_LOCATIONS_LORE)));
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_VIEW_LOCATIONS_NAME),
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_VIEW_LOCATIONS_LORE)));
         this.setItem(25, new GUIItem(25, Material.ANVIL,
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_VIEW_OPTIONS_NAME),
-                plugin.getCustomizationManager().parseString(CustomizationOption.CRATE_VIEW_OPTIONS_LORE)));
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_VIEW_OPTIONS_NAME),
+                plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_VIEW_OPTIONS_LORE)));
     }
 
     // events

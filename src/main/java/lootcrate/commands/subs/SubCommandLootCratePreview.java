@@ -44,18 +44,18 @@ public class SubCommandLootCratePreview extends SubCommand {
             return;
 
         if (args.length <= 1) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_USAGE, null);
             return;
         }
 
         if (CommandUtils.tryParse(args[1]) == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_USAGE, null);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_USAGE, null);
             return;
         }
 
-        Crate crate = plugin.getCacheManager().getCrateById(CommandUtils.tryParse(args[1]));
+        Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
         if (crate == null) {
-            plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
                     ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
             return;
         }
@@ -63,7 +63,7 @@ public class SubCommandLootCratePreview extends SubCommand {
         CrateViewFrame frame = new CrateViewFrame(plugin, (Player) sender, crate);
         frame.open();
 
-        plugin.getMessageManager().sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_SUCCESS,
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
     }
 
@@ -77,7 +77,7 @@ public class SubCommandLootCratePreview extends SubCommand {
 
         if (args.length == 2) {
             list.add("[CrateID]");
-            TabUtils.addCratesNamesToList(list, plugin.getCacheManager());
+            TabUtils.addCratesNamesToList(list, cacheManager);
         }
 
         if(args.length == 3)

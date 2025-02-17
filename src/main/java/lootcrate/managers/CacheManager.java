@@ -31,14 +31,14 @@ public class CacheManager extends BasicManager {
     //TODO run async
     public void update(Crate crate) {
         crate = verify(crate);
-        this.getPlugin().getCrateFileManager().saveCrate(crate);
+        getPlugin().getManager(CrateFileManager.class).saveCrate(crate);
 
         cache.remove(crate);
         cache.add(crate);
     }
 
     public void rename(String oldCrate, Crate Crate) {
-        this.getPlugin().getCrateFileManager().overrideSave(oldCrate, Crate);
+        getPlugin().getManager(CrateFileManager.class).overrideSave(oldCrate, Crate);
         cache.remove(oldCrate);
         cache.add(Crate);
     }
@@ -49,7 +49,7 @@ public class CacheManager extends BasicManager {
      * @param Crate Crate to remove
      */
     public void remove(Crate Crate) {
-        this.getPlugin().getCrateFileManager().removeCrate(Crate);
+        getPlugin().getManager(CrateFileManager.class).removeCrate(Crate);
         List<Crate> copiedCache = new ArrayList<Crate>(cache);
 
         for (Crate cacheCrate : copiedCache) {
@@ -90,7 +90,7 @@ public class CacheManager extends BasicManager {
         Bukkit.getScheduler().runTaskAsynchronously(this.getPlugin(), new Runnable() {
             @Override
             public void run() {
-                cache = plugin.getCrateFileManager().loadAllCrates();
+                cache = plugin.getManager(CrateFileManager.class).loadAllCrates();
                 cache = verify(cache);
                 Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override
@@ -106,7 +106,7 @@ public class CacheManager extends BasicManager {
      * Loads the cache
      */
     public void load() {
-        cache = this.getPlugin().getCrateFileManager().loadAllCrates();
+        cache = getPlugin().getManager(CrateFileManager.class).loadAllCrates();
         cache = verify(cache);
     }
 
@@ -125,7 +125,7 @@ public class CacheManager extends BasicManager {
             }
             if(crate.getOption(CrateOptionType.HOLOGRAM_ENABLED) == null) {
                 crate.addOption(CrateOptionType.HOLOGRAM_ENABLED, true);
-                this.getPlugin().getCrateFileManager().saveCrate(crate);
+                getPlugin().getManager(CrateFileManager.class).saveCrate(crate);
             }
             if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
                 crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
@@ -165,7 +165,7 @@ public class CacheManager extends BasicManager {
         }
 
         for (Crate Crate : cache) {
-            this.getPlugin().getCrateFileManager().saveCrate(Crate);
+            getPlugin().getManager(CrateFileManager.class).saveCrate(Crate);
         }
     }
 
