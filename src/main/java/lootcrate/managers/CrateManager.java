@@ -104,7 +104,7 @@ public class CrateManager extends BasicManager {
 
     }
 
-    public void giveReward(CrateItem crateItem, Player p) {
+    public void giveReward(CrateItem crateItem, Player p, String crateName) {
         int rnd = this.getPlugin().getManager(CrateManager.class).getRandomAmount(crateItem);
 
         if (!crateItem.isDisplay()) {
@@ -118,7 +118,15 @@ public class CrateManager extends BasicManager {
             if (this.getPlugin().getManager(OptionManager.class).valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
                 i = rnd;
             for (int j = 0; j < i; j++)
-                Bukkit.dispatchCommand(this.getPlugin().getServer().getConsoleSender(), cmd.replace("{player}", p.getName()).replace("{amount}", rnd + ""));
+                Bukkit.dispatchCommand(this.getPlugin().getServer().getConsoleSender(), cmd
+                        .replace("{player}", p.getName())
+                        .replace("{amount}", rnd + "")
+                        .replace("{reward}", (crateItem.getItem().getItemMeta() != null && crateItem.getItem().getItemMeta().hasDisplayName())
+                                ? crateItem.getItem().getItemMeta().getDisplayName()
+                                : crateItem.getItem().getType().toString()
+                        )
+                        .replace("{crate_name}", crateName)
+                );
         }
 
     }

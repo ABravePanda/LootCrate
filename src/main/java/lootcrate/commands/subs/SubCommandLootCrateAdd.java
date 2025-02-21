@@ -97,6 +97,7 @@ public class SubCommandLootCrateAdd extends SubCommand {
                 Boolean.parseBoolean(args[5]), null);
         crate.addItem(item);
         cacheManager.update(crate);
+        cacheManager.reload();
         messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
                         Placeholder.ITEM_TYPE, "" + item.getItem().getType(), Placeholder.ITEM_ID, "" + item.getId(),

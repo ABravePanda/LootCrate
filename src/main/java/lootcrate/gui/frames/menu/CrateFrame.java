@@ -22,7 +22,7 @@ public class CrateFrame extends BaseFrame implements Listener {
     private final Crate crate;
 
     public CrateFrame(LootCrate plugin, Player p, Crate crate) {
-        super(plugin, p, crate.getName() + " : " + crate.getId());
+        super(plugin, p, crate.getName() + "§7 : " + crate.getId());
 
         this.plugin = plugin;
         this.crate = crate;
