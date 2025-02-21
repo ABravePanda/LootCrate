@@ -9,6 +9,7 @@ import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.utils.CommandUtils;
+import lootcrate.utils.ItemUtils;
 import lootcrate.utils.TabUtils;
 import org.bukkit.command.CommandSender;
 
@@ -66,8 +67,8 @@ public class SubCommandLootCrateItems extends SubCommand {
             map.put(Placeholder.ITEM_MIN_AMOUNT, item.getMinAmount() + "");
             map.put(Placeholder.ITEM_MAX_AMOUNT, item.getMaxAmount() + "");
             map.put(Placeholder.ITEM_CHANCE, item.getChance() + "");
-            map.put(Placeholder.ITEM_NAME, item.getItem().getItemMeta().getDisplayName().length() == 0 ? "None"
-                    : item.getItem().getItemMeta().getDisplayName());
+            map.put(Placeholder.ITEM_NAME, ItemUtils.getOrCreateItemMeta(item.getItem()).getDisplayName().length() == 0 ? "None"
+                    : ItemUtils.getOrCreateItemMeta(item.getItem()).getDisplayName());
             map.put(Placeholder.ITEM_COMMANDS, item.getCommands().size() + "");
             messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ITEMS_FORMAT, ImmutableMap.copyOf(map));
         }

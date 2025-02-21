@@ -15,6 +15,7 @@ import lootcrate.managers.CustomizationManager;
 import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
+import lootcrate.utils.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -88,7 +89,7 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
         InventoryAction action = e.getClickEvent().getAction();
        // if(!action.equals(InventoryAction.PICKUP_ONE) && !action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) return;
 
-        Sound sound = Sound.valueOf(ChatColor.stripColor(e.getItem().getItemStack().getItemMeta().getDisplayName()));
+        Sound sound = Sound.valueOf(ChatColor.stripColor(ItemUtils.getOrCreateItemMeta(e.getItem().getItemStack()).getDisplayName()));
 
         if(action.equals(InventoryAction.PICKUP_ALL))
         {

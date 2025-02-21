@@ -77,7 +77,7 @@ public class MetaCommand extends Command {
 
             } else if (args[0].equalsIgnoreCase("view"))
             {
-                p.sendMessage(item.getItemMeta().getAsString());
+                p.sendMessage(ItemUtils.getOrCreateItemMeta(item).getAsString());
                 return;
             } else
                 plugin.getManager(MessageManager.class).sendMessage(sender, Message.META_USAGE, null);

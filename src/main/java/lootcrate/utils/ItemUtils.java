@@ -1,6 +1,7 @@
 package lootcrate.utils;
 
 import lootcrate.LootCrate;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 
 public class ItemUtils {
     public static ItemStack setDisplayName(ItemStack item, String displayName) {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = getOrCreateItemMeta(item);
         if (displayName != null)
             meta.setDisplayName(displayName);
         item.setItemMeta(meta);
@@ -26,7 +27,7 @@ public class ItemUtils {
     }
 
     public static ItemStack setLore(ItemStack item, String... lore) {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = getOrCreateItemMeta(item);
         if (lore != null)
             meta.setLore(Arrays.asList(lore));
         item.setItemMeta(meta);
@@ -35,7 +36,7 @@ public class ItemUtils {
 
     public static ItemStack addCrateID(LootCrate plugin, ItemStack item, int id)
     {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = getOrCreateItemMeta(item);
         PersistentDataContainer container = meta.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-crate-id");
         container.set(key, PersistentDataType.INTEGER, id);
@@ -46,7 +47,7 @@ public class ItemUtils {
 
     public static ItemStack addRandomizer(LootCrate plugin, ItemStack item)
     {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = getOrCreateItemMeta(item);
         PersistentDataContainer container = meta.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-crate-randomizer");
         container.set(key, PersistentDataType.INTEGER, ObjUtils.randomID(5));
@@ -56,7 +57,7 @@ public class ItemUtils {
 
     public static ItemStack removeRandomizer(LootCrate plugin, ItemStack item)
     {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = getOrCreateItemMeta(item);
         PersistentDataContainer container = meta.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-crate-randomizer");
         if(container.has(key, PersistentDataType.INTEGER))
@@ -67,9 +68,15 @@ public class ItemUtils {
 
     public static int getIDFromItem(LootCrate plugin, ItemStack item)
     {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = getOrCreateItemMeta(item);
         PersistentDataContainer container = meta.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-crate-id");
         return container.get(key, PersistentDataType.INTEGER);
+    }
+
+    public static ItemMeta getOrCreateItemMeta(ItemStack itemStack) {
+        if(itemStack.hasItemMeta())
+            return itemStack.getItemMeta();
+        return Bukkit.getItemFactory().getItemMeta(itemStack.getType());
     }
 }

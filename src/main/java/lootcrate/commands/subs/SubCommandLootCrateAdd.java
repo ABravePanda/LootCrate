@@ -9,6 +9,7 @@ import lootcrate.enums.Placeholder;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.utils.CommandUtils;
+import lootcrate.utils.ItemUtils;
 import lootcrate.utils.TabUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -100,7 +101,7 @@ public class SubCommandLootCrateAdd extends SubCommand {
         messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_ADD_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_ID, "" + crate.getId(), Placeholder.CRATE_NAME, crate.getName(),
                         Placeholder.ITEM_TYPE, "" + item.getItem().getType(), Placeholder.ITEM_ID, "" + item.getId(),
-                        Placeholder.ITEM_NAME, "" + item.getItem().getItemMeta().getDisplayName()));
+                        Placeholder.ITEM_NAME, "" + ItemUtils.getOrCreateItemMeta(item.getItem()).getDisplayName()));
 
     }
 

@@ -3,6 +3,7 @@ package lootcrate.gui.items;
 import lootcrate.gui.events.custom.GUIItemClickEvent;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.CrateKey;
+import lootcrate.utils.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -96,7 +97,7 @@ public class GUIItem implements Listener {
     private ItemStack editMeta(ItemStack item, String name, String... lore) {
         name = ChatColor.translateAlternateColorCodes('&', name);
 
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
         meta.setDisplayName(name);
         meta.setLore(Arrays.asList(lore));
         item.setItemMeta(meta);
@@ -106,20 +107,20 @@ public class GUIItem implements Listener {
     private ItemStack editMeta(ItemStack item, String name) {
         name = ChatColor.translateAlternateColorCodes('&', name);
 
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
         meta.setDisplayName(name);
         item.setItemMeta(meta);
         return item;
     }
 
     public void setName(String name) {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
         meta.setDisplayName(name);
         item.setItemMeta(meta);
     }
 
     public void addLoreLine(String line) {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
         if(meta == null) return;
         List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
         lore.add(line);
@@ -129,7 +130,7 @@ public class GUIItem implements Listener {
 
     public void setLoreColor(ChatColor color)
     {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
         List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
         for(int i = 0; i < lore.size(); i++)
             lore.set(i, color + lore.get(i));
@@ -139,12 +140,12 @@ public class GUIItem implements Listener {
 
     public void setNameColor(ChatColor color)
     {
-        setName(color + ChatColor.stripColor(item.getItemMeta().getDisplayName()));
+        setName(color + ChatColor.stripColor(ItemUtils.getOrCreateItemMeta(item).getDisplayName()));
     }
 
     public String getDislayName()
     {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
         if(meta == null) return this.getItemStack().getType().name();
 
         return meta.getDisplayName();
@@ -159,7 +160,7 @@ public class GUIItem implements Listener {
     {
         if(glowing) {
             item.addUnsafeEnchantment(Enchantment.MENDING, 1);
-            ItemMeta meta = item.getItemMeta();
+            ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             item.setItemMeta(meta);
         } else

@@ -22,7 +22,7 @@ public class InventoryUtils {
             });
             case NAME -> {
                 items.sort(Comparator.comparing(item -> {
-                    String whatToSortBy = item.getItem().getItemMeta().getDisplayName().isBlank() ? item.getItem().getType().name() : item.getItem().getItemMeta().getDisplayName();
+                    String whatToSortBy = ItemUtils.getOrCreateItemMeta(item.getItem()).getDisplayName().isBlank() ? item.getItem().getType().name() : ItemUtils.getOrCreateItemMeta(item.getItem()).getDisplayName();
                     return whatToSortBy;
                 }));
             }

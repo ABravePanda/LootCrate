@@ -9,6 +9,7 @@ import lootcrate.managers.CacheManager;
 import lootcrate.managers.CrateManager;
 import lootcrate.managers.CustomizationManager;
 import lootcrate.objects.Crate;
+import lootcrate.utils.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -69,7 +70,7 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
         if (item.getType() != Material.CHEST)
             return;
 
-        String idFromLore = ChatColor.stripColor(item.getItemMeta().getLore().get(0));
+        String idFromLore = ChatColor.stripColor(ItemUtils.getOrCreateItemMeta(item).getLore().get(0));
         Crate crate = plugin.getManager(CacheManager.class).getCrateById(Integer.parseInt(idFromLore));
 
         CrateFrame crateFrame = new CrateFrame(plugin, p, crate);

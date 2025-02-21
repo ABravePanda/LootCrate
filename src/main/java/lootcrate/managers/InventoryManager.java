@@ -47,7 +47,7 @@ public class InventoryManager extends BasicManager {
             ItemUtils.addRandomizer(this.getPlugin(), itemStack);
             if ((boolean) crate.getOption(CrateOptionType.DISPLAY_CHANCES).getValue()) {
                 if (itemStack.getType() == Material.AIR) continue;
-                ItemMeta meta = itemStack.getItemMeta();
+                ItemMeta meta = ItemUtils.getOrCreateItemMeta(itemStack);
                 List<String> lore = meta.getLore() == null ? new ArrayList<>() : meta.getLore();
                 lore.add(" ");
                 lore.add(this.getPlugin().getManager(MessageManager.class).parseMessage(Message.CHANCE,

@@ -41,7 +41,7 @@ public class ObjUtils {
         ItemStack item = crate.getKey().getItem();
         if(item ==null) return null;
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
-        ItemMeta itemMeta = item.getItemMeta();
+        ItemMeta itemMeta = ItemUtils.getOrCreateItemMeta(item);
         itemMeta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, crate.getId());
         item.setItemMeta(itemMeta);
         ItemUtils.removeRandomizer(plugin, item);
@@ -51,7 +51,7 @@ public class ObjUtils {
     public static CrateItem assignRandomIDToItem(LootCrate plugin, CrateItem crateItem) {
         ItemStack item = crateItem.getItem();
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
-        ItemMeta itemMeta = item.getItemMeta();
+        ItemMeta itemMeta = ItemUtils.getOrCreateItemMeta(item);
         itemMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, getRandomString(9));
         item.setItemMeta(itemMeta);
         crateItem.setItem(item);
@@ -63,7 +63,7 @@ public class ObjUtils {
             return false;
 
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
         return container.get(key, PersistentDataType.INTEGER) == crate.getId();
@@ -72,11 +72,11 @@ public class ObjUtils {
     public static boolean isKey(LootCrate plugin, ItemStack item) {
         if (item == null)
             return false;
-        if (item.getItemMeta() == null)
+        if (ItemUtils.getOrCreateItemMeta(item) == null)
             return false;
 
         NamespacedKey key = new NamespacedKey(plugin, "lootcrate-key");
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
         if (container == null)

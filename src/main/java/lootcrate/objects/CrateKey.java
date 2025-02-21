@@ -1,5 +1,6 @@
 package lootcrate.objects;
 
+import lootcrate.utils.ItemUtils;
 import lootcrate.utils.ObjUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.MemorySection;
@@ -38,7 +39,7 @@ public class CrateKey implements ConfigurationSerializable {
         // Old Version Support - will be removed in update after
         if (map.get("Material") != null) {
             this.item = new ItemStack(Material.valueOf((String) map.get("Material")));
-            ItemMeta meta = this.item.getItemMeta();
+            ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
             meta.setDisplayName((String) map.get("Name"));
             meta.setLore((List<String>) map.get("Lore"));
             this.item.setItemMeta(meta);
@@ -55,7 +56,7 @@ public class CrateKey implements ConfigurationSerializable {
     public ItemStack getItem() {
         if (isGlowing()) {
             item.addUnsafeEnchantment(Enchantment.DENSITY, 1);
-            ItemMeta meta = item.getItemMeta();
+            ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             item.setItemMeta(meta);
         }

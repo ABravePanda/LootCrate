@@ -7,6 +7,7 @@ import lootcrate.enums.SortType;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -119,8 +120,9 @@ public class CacheManager extends BasicManager {
     }
 
     public Crate verify(Crate crate) {
-        for (CrateItem item : new ArrayList<CrateItem>(crate.getItems())) {
-            if (item.getItem() == null || item.getItem().getType() == null || item.getItem().getType() == Material.AIR) {
+        for (CrateItem item : new ArrayList<>(crate.getItems())) {
+            if (item.getItem() == null || item.getItem().getType() == Material.AIR) {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "ERROR: " + ChatColor.RED + "Attempting to add a null or empty item to Crate: " + crate.getName());
                 crate.removeItem(item);
             }
             if(crate.getOption(CrateOptionType.HOLOGRAM_ENABLED) == null) {
