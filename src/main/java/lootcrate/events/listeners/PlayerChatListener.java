@@ -65,7 +65,7 @@ public class PlayerChatListener implements Listener {
                 break;
             case CHANGE_CRATE_SOUND: // Not more used
                 /*
-                Sound sound = Sound.valueOf(e.getMessage());
+                Sound sound = SoundUtils.valueOf(e.getMessage());
                 if (sound == null)
                     return;
                 crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.toString()));

@@ -16,9 +16,8 @@ import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
 import lootcrate.utils.ItemUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import lootcrate.utils.SoundUtils;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,14 +32,14 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
 
     private final LootCrate plugin;
     private final Crate crate;
-    private List<Sound> soundList;
+    private final List<Sound> soundList;
 
     public CrateOptionSoundFrame(LootCrate plugin, Player p, Crate crate) {
         super(plugin, p, crate.getName());
 
         this.plugin = plugin;
         this.crate = crate;
-        this.soundList = Arrays.stream(Sound.values()).toList();
+        this.soundList = Registry.SOUNDS.stream().toList();
 
         registerFrame();
         generateFrame();
@@ -89,7 +88,7 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
         InventoryAction action = e.getClickEvent().getAction();
        // if(!action.equals(InventoryAction.PICKUP_ONE) && !action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) return;
 
-        Sound sound = Sound.valueOf(ChatColor.stripColor(ItemUtils.getOrCreateItemMeta(e.getItem().getItemStack()).getDisplayName()));
+        Sound sound = SoundUtils.valueOf(ChatColor.stripColor(ItemUtils.getOrCreateItemMeta(e.getItem().getItemStack()).getDisplayName().toLowerCase()));
 
         if(action.equals(InventoryAction.PICKUP_ALL))
         {
@@ -153,7 +152,7 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
     {
         String sound = "";
         if(crate.getOption(CrateOptionType.OPEN_SOUND).getValue() == null) return Sound.UI_TOAST_CHALLENGE_COMPLETE;
-        return Sound.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue());
+        return SoundUtils.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue());
     }
 
     private GUIItem createGUIItem(int index, int itemIndex)
@@ -165,4 +164,5 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
             item.setGlowing(true);
         return item;
     }
+
 }

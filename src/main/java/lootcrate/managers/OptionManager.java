@@ -3,6 +3,7 @@ package lootcrate.managers;
 import lootcrate.LootCrate;
 import lootcrate.enums.AnimationStyle;
 import lootcrate.enums.Option;
+import lootcrate.utils.SoundUtils;
 import org.bukkit.Sound;
 
 public class OptionManager extends BasicManager {
@@ -31,7 +32,7 @@ public class OptionManager extends BasicManager {
             case STRING:
                 return (T) plugin.getConfig().getString(PREFIX + option.getKey());
             case MINECRAFT_SOUND:
-                return (T) Sound.valueOf(plugin.getConfig().getString(PREFIX + option.getKey()));
+                return (T) SoundUtils.valueOf(plugin.getConfig().getString(PREFIX + option.getKey()));
             case ANIMATION_STYLE:
                 return (T) AnimationStyle.valueOf(plugin.getConfig().getString(PREFIX + option.getKey()));
             default:

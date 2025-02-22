@@ -6,6 +6,7 @@ import lootcrate.enums.*;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.RandomCollection;
+import lootcrate.utils.SoundUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -84,12 +85,12 @@ public class CrateManager extends BasicManager {
         if (crate.getOption(CrateOptionType.OPEN_SOUND).getValue() != null) {
             if (crate.getOption(CrateOptionType.OPEN_SOUND).getValue().toString().equalsIgnoreCase("none"))
                 return;
-            if (Sound.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue()) == null)
+            if (SoundUtils.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue()) == null)
                 return;
             int soundVolume = 1;
             if (crate.getOption(CrateOptionType.SOUND_VOLUME) != null)
                 soundVolume = (int) crate.getOption(CrateOptionType.SOUND_VOLUME).getValue();
-            p.playSound(p.getLocation(), Sound.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue()),
+            p.playSound(p.getLocation(), SoundUtils.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue()),
                     soundVolume, 1);
         }
 
