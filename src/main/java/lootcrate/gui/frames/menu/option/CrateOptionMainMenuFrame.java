@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 
 public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
@@ -100,15 +101,11 @@ public class CrateOptionMainMenuFrame extends BaseFrame implements Listener {
                 state.setCrate(crate);
                 break;
             case JUKEBOX:
-                frameToOpen = new CrateOptionSoundFrame(plugin, p, crate);
-                /**
-                ChatState state2 = ChatState.CHANGE_CRATE_SOUND;
-                state2.setCrate(crate);
-                plugin.getChatManager().addPlayer(p, state2);
-                plugin.getChatManager().sendNotification(p);
-                this.close();
-                 return;
-                 **/
+                if(e.getClickEvent().getAction().equals(InventoryAction.PICKUP_HALF)) {
+                    state = ChatState.CHANGE_CRATE_SOUND;
+                    state.setCrate(crate);
+                } else
+                    frameToOpen = new CrateOptionSoundFrame(plugin, p, crate);
                 break;
             case ARMOR_STAND:
                 frameToOpen = new CrateOptionHologramEnabledFrame(plugin, p, crate);

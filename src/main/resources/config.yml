@@ -332,6 +332,9 @@ messages:
   #Change crate cooldown message
   lootcrate-change-crate-cooldown: "&6Enter the number you would like the crate cooldown to be in seconds. Current cooldown is {cooldown}.\n&7Type '&ccancel&7' to cancel."
 
+  #Change crate sound message
+  lootcrate-change-crate-sound: "&6Enter the new open sound for your crate. &cOptions: https://www.digminecraft.com/lists/sound_list_pc.php"
+
   #Change canceled action message
   lootcrate-action-canceled: "&cAction canceled."
 
@@ -360,6 +363,7 @@ messages:
   # {cooldown} - cooldown value
 
   lootcrate-changed-sound-message: "&6Crate open sound has been set to &e{sound_name}&6."
+  # {sound_name} - sound value
 
 
 #+---------------------------------------+
@@ -460,7 +464,7 @@ custom-gui:
   crate-options-sort-name: "&cSort"
   crate-options-sort-lore: "&7Change the way the items are sorted in the view gui."
   crate-options-opensound-name: "&cOpen Sound"
-  crate-options-opensound-lore: "&7Change the sound that plays when a crate is opened."
+  crate-options-opensound-lore: "&7Change the sound that plays when a crate is opened.\n&6Left Click to Open GUI\n&6Shift Left Click to Enter Chat"
   crate-options-hologram-name: "&cHologram"
   crate-options-hologram-lore: "&7Enable/Disable the hologram above the crate."
   crate-options-animation-name: "&cAnimation Style"

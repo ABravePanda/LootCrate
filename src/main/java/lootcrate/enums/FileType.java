@@ -6,6 +6,7 @@ public enum FileType {
     LOCATIONS("locations.yml"),
     KEYS("player_keys.yml"),
     COOLDOWNS("cooldowns.yml"),
+    DEBUG("debug.txt"),
     LOG("log.txt");
 
     private final String name;

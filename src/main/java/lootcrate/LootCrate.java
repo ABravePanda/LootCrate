@@ -1,9 +1,6 @@
 package lootcrate;
 
-import lootcrate.enums.CustomizationOption;
-import lootcrate.enums.HologramPlugin;
-import lootcrate.enums.Message;
-import lootcrate.enums.Option;
+import lootcrate.enums.*;
 import lootcrate.events.listeners.LootCrateInteractListener;
 import lootcrate.events.listeners.PlayerChatListener;
 import lootcrate.events.listeners.PlayerJoinListener;
@@ -16,6 +13,8 @@ import lootcrate.objects.*;
 import org.bukkit.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Registry;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -23,11 +22,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LootCrate extends JavaPlugin {
@@ -77,7 +75,6 @@ public class LootCrate extends JavaPlugin {
             }
 
         }, 80L);
-
     }
 
     private void createManagersMap() {
@@ -242,6 +239,7 @@ public class LootCrate extends JavaPlugin {
             this.getHoloManager().reload();
         }
     }
+
 
     @SuppressWarnings("unchecked")
     public <T extends Manager> T getManager(Class<T> clazz) {

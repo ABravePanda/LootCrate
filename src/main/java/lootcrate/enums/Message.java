@@ -66,6 +66,7 @@ public enum Message {
     LOOTCRATE_ADD_ITEM_COMMAND("lootcrate-add-item-command"),
     LOOTCRATE_CHANGE_CRATE_KNOCKBACK("lootcrate-change-crate-knockback"),
     LOOTCRATE_CHANGE_CRATE_COOLDOWN("lootcrate-change-crate-cooldown"),
+    LOOTCRATE_CHANGE_CRATE_SOUND("lootcrate-change-crate-sound"),
     LOOTCRATE_ACTION_CANCELED("lootcrate-action-canceled"),
 
     LOOTCRATE_NAME_CHANGED("lootcrate-name-changed"),

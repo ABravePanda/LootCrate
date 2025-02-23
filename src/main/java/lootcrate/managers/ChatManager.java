@@ -55,12 +55,8 @@ public class ChatManager extends BasicManager {
             case CHANGE_CRATE_MESSAGE:
                 messageManager.sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_MESSAGE, null);
                 break;
-            case CHANGE_CRATE_SOUND: // Not more used
-                /*
-                p.sendMessage(ChatColor.GOLD + "Enter the new open sound for your crate. " + ChatColor.RED
-                        + "Options: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html");
-                p.sendMessage("§7Type '§ccancel§7' to cancel.");
-                 */
+            case CHANGE_CRATE_SOUND:
+                messageManager.sendMessage(p, Message.LOOTCRATE_CHANGE_CRATE_SOUND, null);
                 break;
             case CREATE_CRATE_NAME:
                 messageManager.sendMessage(p, Message.LOOTCRATE_CREATE_CRATE_NAME, null);

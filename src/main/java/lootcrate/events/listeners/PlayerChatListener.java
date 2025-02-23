@@ -2,10 +2,7 @@ package lootcrate.events.listeners;
 
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
-import lootcrate.enums.ChatState;
-import lootcrate.enums.CrateOptionType;
-import lootcrate.enums.Message;
-import lootcrate.enums.Placeholder;
+import lootcrate.enums.*;
 import lootcrate.gui.frames.creation.items.CrateItemCreationCommandsFrame;
 import lootcrate.gui.frames.menu.CrateFrame;
 import lootcrate.gui.frames.menu.CrateMainMenuFrame;
@@ -13,6 +10,7 @@ import lootcrate.gui.frames.menu.option.CrateOptionMainMenuFrame;
 import lootcrate.managers.*;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateOption;
+import lootcrate.utils.SoundUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -63,15 +61,13 @@ public class PlayerChatListener implements Listener {
                         ChatColor.translateAlternateColorCodes('&', e.getMessage())));
                 messageManager.sendMessage(p, Message.LOOTCRATE_MESSAGE_CHANGED, ImmutableMap.of(Placeholder.MESSAGE, ChatColor.translateAlternateColorCodes('&', e.getMessage())));
                 break;
-            case CHANGE_CRATE_SOUND: // Not more used
-                /*
-                Sound sound = SoundUtils.valueOf(e.getMessage());
+            case CHANGE_CRATE_SOUND:
+                Sounds sound = Sounds.fromKey(e.getMessage());
                 if (sound == null)
                     return;
                 crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.toString()));
-                p.playSound(p.getLocation(), sound, 1, 1);
-                sendConfirmation(p, ChatColor.GOLD + "Crate open sound has been set to " + ChatColor.YELLOW + sound.name());
-                 */
+                SoundUtils.playSound(p, sound, 1, 1);
+                messageManager.sendMessage(p, Message.LOOTCRATE_SOUND_CHANGED, ImmutableMap.of(Placeholder.SOUND_NAME, sound.getKey()));
                 break;
             case CREATE_CRATE_NAME:
                 if(e.getMessage().equalsIgnoreCase("cancel")){

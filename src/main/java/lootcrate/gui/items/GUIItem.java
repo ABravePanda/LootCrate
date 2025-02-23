@@ -99,10 +99,21 @@ public class GUIItem implements Listener {
 
         ItemMeta meta = ItemUtils.getOrCreateItemMeta(item);
         meta.setDisplayName(name);
-        meta.setLore(Arrays.asList(lore));
+
+        // Create a new list for lore
+        List<String> loreList = new ArrayList<>();
+
+        // Process each lore line, splitting on \n
+        for (String line : lore) {
+            String[] splitLines = ChatColor.translateAlternateColorCodes('&', line).split("\\\\n"); // Correctly handle \n in input
+            loreList.addAll(Arrays.asList(splitLines));
+        }
+
+        meta.setLore(loreList);
         item.setItemMeta(meta);
         return item;
     }
+
 
     private ItemStack editMeta(ItemStack item, String name) {
         name = ChatColor.translateAlternateColorCodes('&', name);

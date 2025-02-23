@@ -1,6 +1,5 @@
 package lootcrate.managers;
 
-import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.enums.*;
 import lootcrate.objects.Crate;
@@ -14,7 +13,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -90,8 +88,8 @@ public class CrateManager extends BasicManager {
             int soundVolume = 1;
             if (crate.getOption(CrateOptionType.SOUND_VOLUME) != null)
                 soundVolume = (int) crate.getOption(CrateOptionType.SOUND_VOLUME).getValue();
-            p.playSound(p.getLocation(), SoundUtils.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue()),
-                    soundVolume, 1);
+            Sounds sound = SoundUtils.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue());
+            SoundUtils.playSound(p, sound, soundVolume, 1);
         }
 
         // get message, send it
@@ -142,7 +140,7 @@ public class CrateManager extends BasicManager {
         crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
         crate.addOption(CrateOptionType.SORT_TYPE, SortType.CHANCE.toString());
         crate.addOption(CrateOptionType.DISPLAY_CHANCES, true);
-        crate.addOption(CrateOptionType.OPEN_SOUND, Sound.UI_TOAST_CHALLENGE_COMPLETE.toString());
+        crate.addOption(CrateOptionType.OPEN_SOUND, "ui.toast.challenge_complete");
         crate.addOption(CrateOptionType.OPEN_MESSAGE, "&fYou have opened &e{crate_name}&f.");
         crate.addOption(CrateOptionType.HOLOGRAM_ENABLED, true);
         crate.addOption(CrateOptionType.HOLOGRAM_LINES, Arrays.asList(lines));
