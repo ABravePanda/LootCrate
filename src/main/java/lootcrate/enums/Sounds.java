@@ -1,8 +1,5 @@
 package lootcrate.enums;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public enum Sounds {
     ENTITY__ALLAY__AMBIENT_WITH_ITEM("entity.allay.ambient_with_item"),
     BLOCK__LODESTONE__FALL("block.lodestone.fall"),

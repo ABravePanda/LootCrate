@@ -2,14 +2,10 @@ package lootcrate.managers;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
-import eu.decentsoftware.holograms.api.holograms.HologramLine;
-import eu.decentsoftware.holograms.api.holograms.HologramPage;
 import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
-import lootcrate.enums.HologramPlugin;
 import lootcrate.objects.Crate;
 import lootcrate.utils.ObjUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;

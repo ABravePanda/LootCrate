@@ -5,14 +5,13 @@ import lootcrate.enums.CrateOptionType;
 import lootcrate.enums.FileType;
 import lootcrate.objects.Cooldown;
 import lootcrate.objects.Crate;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class CooldownManager extends FileManager{
 

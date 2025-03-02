@@ -8,7 +8,6 @@ import lootcrate.objects.RandomCollection;
 import lootcrate.utils.SoundUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

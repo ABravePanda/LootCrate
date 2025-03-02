@@ -9,8 +9,6 @@ import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
 import lootcrate.managers.CacheManager;
 import lootcrate.managers.HologramManager;
-import lootcrate.managers.LocationManager;
-import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;

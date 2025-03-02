@@ -2,15 +2,12 @@ package lootcrate.events.listeners.custom;
 
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
-import lootcrate.enums.*;
+import lootcrate.enums.Message;
+import lootcrate.enums.Option;
+import lootcrate.enums.Placeholder;
 import lootcrate.events.custom.CrateOpenEvent;
-import lootcrate.gui.frames.animations.CrateCSGOAnimationFrame;
-import lootcrate.gui.frames.animations.CrateRandomGlassAnimationFrame;
-import lootcrate.gui.frames.animations.CrateRemovingItemAnimationFrame;
-import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.managers.*;
 import lootcrate.objects.Crate;
-import lootcrate.objects.CrateOption;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ObjUtils;
@@ -83,7 +80,6 @@ public class CrateOpenListener implements Listener {
     private void openCrate(Crate crate, Player p) {
         plugin.getManager(CrateManager.class).crateOpenEffects(crate, p);
         cooldownManager.addCooldown(p.getUniqueId(), crate);
-        openAnimation(crate, p);
     }
 
     private boolean isCooldownInEffect(Crate crate, Player p) {
@@ -96,29 +92,5 @@ public class CrateOpenListener implements Listener {
         return false;
     }
 
-    private void openAnimation(Crate crate, Player p) {
-        AnimatedFrame frame = null;
-        CrateOption opt = crate.getOption(CrateOptionType.ANIMATION_STYLE);
-        AnimationStyle type = AnimationStyle.valueOf((String) opt.getValue());
-        switch (type) {
-            case CSGO:
-                frame = new CrateCSGOAnimationFrame(plugin, p, crate);
-                break;
-            case REMOVING_ITEM:
-                frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);
-                break;
-            case NONE:
-                plugin.getManager(CrateManager.class).giveReward(plugin.getManager(CrateManager.class).getRandomItem(crate), p, crate.getName());
-                return;
-            default:
-                frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
-                break;
-
-        }
-
-        plugin.getManager(InventoryManager.class).openFrame(p, frame);
-
-        frame.showAnimation();
-    }
 
 }

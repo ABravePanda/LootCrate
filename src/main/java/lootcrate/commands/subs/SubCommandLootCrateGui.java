@@ -1,16 +1,9 @@
 package lootcrate.commands.subs;
 
-import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
-import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
-import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.menu.CrateMainMenuFrame;
-import lootcrate.gui.frames.menu.CrateFrame;
-import lootcrate.gui.frames.types.Frame;
-import lootcrate.objects.Crate;
-import lootcrate.utils.CommandUtils;
+import lootcrate.gui.menu.TestMenu;
 import lootcrate.utils.TabUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -47,19 +40,22 @@ public class SubCommandLootCrateGui extends SubCommand {
 
         if (!this.testPermissions())
             return;
+//
+//        Frame frame = new CrateMainMenuFrame(plugin, p);
+//        if (args.length == 2) {
+//            Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
+//            if (crate == null) {
+//                messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+//                        ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
+//                return;
+//            }
+//            frame = new CrateFrame(plugin, p, crate);
+//        }
+//
+//        inventoryManager.openFrame(p, frame);
 
-        Frame frame = new CrateMainMenuFrame(plugin, p);
-        if (args.length == 2) {
-            Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
-            if (crate == null) {
-                messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
-                        ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
-                return;
-            }
-            frame = new CrateFrame(plugin, p, crate);
-        }
-
-        inventoryManager.openFrame(p, frame);
+        TestMenu testMenu = new TestMenu(plugin);
+        testMenu.open(p);
 
     }
 

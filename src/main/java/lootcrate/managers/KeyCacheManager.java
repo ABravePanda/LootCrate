@@ -1,13 +1,8 @@
 package lootcrate.managers;
 
 import lootcrate.LootCrate;
-import lootcrate.enums.AnimationStyle;
-import lootcrate.enums.CrateOptionType;
 import lootcrate.enums.FileType;
 import lootcrate.objects.Crate;
-import lootcrate.objects.CrateItem;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

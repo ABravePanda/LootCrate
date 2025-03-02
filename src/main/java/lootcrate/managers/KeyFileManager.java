@@ -2,14 +2,13 @@ package lootcrate.managers;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.FileType;
-import lootcrate.objects.Crate;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class KeyFileManager extends FileManager {
     private final String KEY_PREFIX = "keys.";

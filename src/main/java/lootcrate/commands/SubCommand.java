@@ -21,7 +21,6 @@ public abstract class SubCommand {
     protected final LocationManager locationManager;
     protected final MessageManager messageManager;
     protected final OptionManager optionManager;
-    protected final InventoryManager inventoryManager;
 
     public SubCommand(LootCrate plugin, CommandSender sender, String[] args, Permission... perm) {
         this.plugin = plugin;
@@ -34,7 +33,6 @@ public abstract class SubCommand {
         this.messageManager = plugin.getManager(MessageManager.class);
         this.optionManager = plugin.getManager(OptionManager.class);
         this.locationManager = plugin.getManager(LocationManager.class);
-        this.inventoryManager = plugin.getManager(InventoryManager.class);
     }
 
     /**
