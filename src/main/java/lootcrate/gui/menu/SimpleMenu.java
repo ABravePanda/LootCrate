@@ -16,11 +16,13 @@ public abstract class SimpleMenu implements Menu {
     private final LootCrate plugin;
     private final MenuItem[] items;
     private final Inventory inventory;
+    private final Rows size;
 
-    public SimpleMenu(LootCrate plugin, Rows row, String title) {
+    public SimpleMenu(LootCrate plugin, Rows rows, String title) {
         this.plugin = plugin;
-        this.inventory = Bukkit.createInventory(this, row.getSize(), title);
-        items = new MenuItem[row.getSize()];
+        this.size = rows;
+        this.inventory = Bukkit.createInventory(this, rows.getSize(), title);
+        items = new MenuItem[rows.getSize()];
     }
 
     /**
@@ -49,6 +51,16 @@ public abstract class SimpleMenu implements Menu {
     }
 
     @Override
+    public MenuItem getItem(int slot) {
+        return items[slot];
+    }
+
+    @Override
+    public void onClose() {
+
+    }
+
+    @Override
     public abstract void onSetItems();
 
     @Override
@@ -58,6 +70,10 @@ public abstract class SimpleMenu implements Menu {
 
     public LootCrate getPlugin() {
         return plugin;
+    }
+
+    public Rows getSize() {
+        return size;
     }
 
     public enum Rows {

@@ -3,7 +3,12 @@ package lootcrate.commands.subs;
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
 import lootcrate.enums.Permission;
+import lootcrate.gui.menu.AnimationType;
+import lootcrate.gui.menu.MenuType;
+import lootcrate.gui.menu.SimpleMenu;
 import lootcrate.gui.menu.TestMenu;
+import lootcrate.gui.menu.creation.MenuCreationSize;
+import lootcrate.managers.MenuManager;
 import lootcrate.utils.TabUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,6 +20,7 @@ public class SubCommandLootCrateGui extends SubCommand {
     private final String[] args;
     private final CommandSender sender;
     private final LootCrate plugin;
+    private final MenuManager menuManager;
 
     /**
      * Default constructor for any {@link lootcrate.commands.SubCommand}
@@ -29,6 +35,7 @@ public class SubCommandLootCrateGui extends SubCommand {
         this.plugin = plugin;
         this.sender = sender;
         this.args = args;
+        this.menuManager = plugin.getManager(MenuManager.class);
     }
 
     @Override
@@ -40,22 +47,10 @@ public class SubCommandLootCrateGui extends SubCommand {
 
         if (!this.testPermissions())
             return;
-//
-//        Frame frame = new CrateMainMenuFrame(plugin, p);
-//        if (args.length == 2) {
-//            Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
-//            if (crate == null) {
-//                messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
-//                        ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
-//                return;
-//            }
-//            frame = new CrateFrame(plugin, p, crate);
-//        }
-//
-//        inventoryManager.openFrame(p, frame);
 
-        TestMenu testMenu = new TestMenu(plugin);
-        testMenu.open(p);
+        if(args[1].equalsIgnoreCase("create")) {
+            menuManager.beginMenuCreationStage(p, 1);
+        }
 
     }
 
@@ -64,8 +59,15 @@ public class SubCommandLootCrateGui extends SubCommand {
         List<String> list = new LinkedList<String>();
 
         if (args.length == 2) {
-            list.add("[CrateID]");
-            TabUtils.addCratesNamesToList(list, cacheManager);
+            list.add("create");
+            list.add("edit");
+            list.add("settings");
+        }
+
+        if(args.length == 3) {
+            if(args[1].equalsIgnoreCase("create")) {
+                TabUtils.addCratesToList(list, cacheManager);
+            }
         }
 
         return list;

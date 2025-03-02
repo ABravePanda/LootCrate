@@ -94,6 +94,7 @@ public class LootCrate extends JavaPlugin {
         managersMap.put(9, new KeyFileManager(this));
         managersMap.put(10, new KeyCacheManager(this));
         managersMap.put(11, new LocationManager(this));
+        managersMap.put(12, new MenuManager(this));
         managersMap.put(13, new CommandManager(this));
         managersMap.put(14, new ChatManager(this));
         managersMap.put(15, new CooldownManager(this));

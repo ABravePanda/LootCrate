@@ -32,6 +32,12 @@ public class FileManager extends BasicManager {
         return file;
     }
 
+    public File createFile(String name)
+    {
+        File file = new File(this.getPlugin().getDataFolder(), File.separator + name);
+        return file;
+    }
+
     public YamlConfiguration getConfiguration(File file)
     {
         return YamlConfiguration.loadConfiguration(file);

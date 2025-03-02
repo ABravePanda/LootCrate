@@ -6,10 +6,13 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
+import lootcrate.gui.menu.CustomMenu;
+import lootcrate.managers.MenuManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -41,26 +44,32 @@ public class SubCommandLootCratePreview extends SubCommand {
         if (!this.testPermissions())
             return;
 
-        if (args.length <= 1) {
-            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_USAGE, null);
-            return;
-        }
+//        if (args.length <= 1) {
+//            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_USAGE, null);
+//            return;
+//        }
+//
+//        if (CommandUtils.tryParse(args[1]) == null) {
+//            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_USAGE, null);
+//            return;
+//        }
+//
+//        Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
+//        if (crate == null) {
+//            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+//                    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
+//            return;
+//        }
 
-        if (CommandUtils.tryParse(args[1]) == null) {
-            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_USAGE, null);
-            return;
-        }
+        Player p = (Player) sender;
 
-        Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
-        if (crate == null) {
-            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
-                    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
-            return;
-        }
+//        plugin.getManager(MenuManager.class).saveMenu();
+//        CustomMenu menu = plugin.getManager(MenuManager.class).loadMenu();
+//        menu.open(p);
 
-
-        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_SUCCESS,
-                ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
+//
+//        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_SUCCESS,
+//                ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
     }
 
     @Override

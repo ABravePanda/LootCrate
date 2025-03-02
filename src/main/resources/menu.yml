@@ -1,5 +1,12 @@
 name: "This is a custom menu"
+crate: 345
 size: TWO
-items:
+slots:
   0:
-    itemstack...
+    type: CLOSE_MENU
+    item:
+      itemstack
+  1:
+    type: REWARD
+  2:
+    type: REWARD
