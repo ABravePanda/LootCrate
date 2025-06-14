@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class GuiClickListener implements Listener {
 
+
     private final LootCrate plugin;
     private final GuiManager guiManager;
 
