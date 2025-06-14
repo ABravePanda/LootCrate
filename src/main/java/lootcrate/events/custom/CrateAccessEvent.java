@@ -51,7 +51,9 @@ public class CrateAccessEvent extends Event implements Cancellable {
         return this.player;
     }
 
-    public Location getLocation() { return this.location; }
+    public Location getLocation() {
+        return this.location;
+    }
 
     public Action getAction() {
         return action;

@@ -125,7 +125,7 @@ public class CacheManager extends BasicManager {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "ERROR: " + ChatColor.RED + "Attempting to add a null or empty item to Crate: " + crate.getName());
                 crate.removeItem(item);
             }
-            if(crate.getOption(CrateOptionType.HOLOGRAM_ENABLED) == null) {
+            if (crate.getOption(CrateOptionType.HOLOGRAM_ENABLED) == null) {
                 crate.addOption(CrateOptionType.HOLOGRAM_ENABLED, true);
                 getPlugin().getManager(CrateFileManager.class).saveCrate(crate);
             }

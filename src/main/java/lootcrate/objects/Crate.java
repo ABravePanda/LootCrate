@@ -4,8 +4,8 @@ import lootcrate.LootCrate;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.managers.CacheManager;
 import lootcrate.utils.ObjUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 

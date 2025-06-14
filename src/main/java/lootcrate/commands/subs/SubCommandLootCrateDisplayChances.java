@@ -26,8 +26,7 @@ public class SubCommandLootCrateDisplayChances extends SubCommand {
      *
      * @param plugin an instance of {@link lootcrate.LootCrate}
      * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateDisplayChances(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_DISPLAYCHANCES, Permission.COMMAND_LOOTCRATE_ADMIN);

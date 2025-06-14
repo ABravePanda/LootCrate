@@ -75,8 +75,7 @@ public class MetaCommand extends Command {
 
                 item.addUnsafeEnchantment(Enchantment.getByName(args[1]), Integer.parseInt(args[2]));
 
-            } else if (args[0].equalsIgnoreCase("view"))
-            {
+            } else if (args[0].equalsIgnoreCase("view")) {
                 p.sendMessage(ItemUtils.getOrCreateItemMeta(item).getAsString());
                 return;
             } else

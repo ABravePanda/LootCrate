@@ -21,7 +21,7 @@ public abstract class SubCommand {
     protected final LocationManager locationManager;
     protected final MessageManager messageManager;
     protected final OptionManager optionManager;
-    protected final InventoryManager inventoryManager;
+    protected final GuiManager guiManager;
 
     public SubCommand(LootCrate plugin, CommandSender sender, String[] args, Permission... perm) {
         this.plugin = plugin;
@@ -34,17 +34,17 @@ public abstract class SubCommand {
         this.messageManager = plugin.getManager(MessageManager.class);
         this.optionManager = plugin.getManager(OptionManager.class);
         this.locationManager = plugin.getManager(LocationManager.class);
-        this.inventoryManager = plugin.getManager(InventoryManager.class);
+        this.guiManager = plugin.getManager(GuiManager.class);
     }
 
     /**
      * Checks if sender has the given permissions
      *
-     * @param perm   Permissions to check
+     * @param perm Permissions to check
      * @return True if even just one permission is passed. False if none pass
      */
     public boolean hasPermission(Permission... perm) {
-        if(perm == null) return true;
+        if (perm == null) return true;
         for (Permission p : perm)
             if (sender.hasPermission(p.getKey()))
                 return true;

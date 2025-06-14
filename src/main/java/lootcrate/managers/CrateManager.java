@@ -8,7 +8,6 @@ import lootcrate.objects.RandomCollection;
 import lootcrate.utils.SoundUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -67,7 +66,7 @@ public class CrateManager extends BasicManager {
     public int getRandomAmount(CrateItem item) {
         if (item.getMaxAmount() < item.getMinAmount())
             return 1;
-        if(item.getMaxAmount() == item.getMinAmount())
+        if (item.getMaxAmount() == item.getMinAmount())
             return item.getMinAmount();
         return ThreadLocalRandom.current().nextInt(item.getMinAmount(), item.getMaxAmount() + 1);
     }
@@ -76,7 +75,7 @@ public class CrateManager extends BasicManager {
      * Plays crate sound and sends message to player to open crate for
      *
      * @param crate Crate to open
-     * @param p Player to open crate for
+     * @param p     Player to open crate for
      */
     public void crateOpenEffects(Crate crate, Player p) {
         // play sound
@@ -149,12 +148,11 @@ public class CrateManager extends BasicManager {
         crate.addOption(CrateOptionType.HOLOGRAM_OFFSET_Z, 0.5D);
     }
 
-    public Crate getCrateFromItemID(int id)
-    {
+    public Crate getCrateFromItemID(int id) {
         List<Crate> crates = this.getPlugin().getManager(CacheManager.class).getCache();
-        for(Crate crate : crates)
-            for(CrateItem item : crate.getItems())
-                if(item.getId() == id) return crate;
+        for (Crate crate : crates)
+            for (CrateItem item : crate.getItems())
+                if (item.getId() == id) return crate;
         return null;
     }
 

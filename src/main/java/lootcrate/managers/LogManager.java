@@ -16,8 +16,7 @@ public abstract class LogManager extends BasicManager {
         this.logFile = createLog();
     }
 
-    private File createLog()
-    {
+    private File createLog() {
         return fileManager.createFile(FileType.LOG);
     }
 

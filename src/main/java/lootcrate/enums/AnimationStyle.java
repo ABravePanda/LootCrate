@@ -13,8 +13,7 @@ public enum AnimationStyle {
     private final CustomizationOption name;
     private final CustomizationOption description;
 
-    AnimationStyle(Material itemStack, CustomizationOption name, CustomizationOption description)
-    {
+    AnimationStyle(Material itemStack, CustomizationOption name, CustomizationOption description) {
         this.itemStack = itemStack;
         this.name = name;
         this.description = description;

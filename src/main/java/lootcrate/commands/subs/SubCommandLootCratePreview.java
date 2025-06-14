@@ -6,12 +6,10 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.CrateViewFrame;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,8 +24,7 @@ public class SubCommandLootCratePreview extends SubCommand {
      *
      * @param plugin an instance of {@link LootCrate}
      * @param sender the {@link CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCratePreview(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_PREVIEW, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -59,9 +56,9 @@ public class SubCommandLootCratePreview extends SubCommand {
                     ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
             return;
         }
-
-        CrateViewFrame frame = new CrateViewFrame(plugin, (Player) sender, crate);
-        frame.open();
+//
+//        CrateViewFrame frame = new CrateViewFrame(plugin, (Player) sender, crate);
+//        frame.open();
 
         messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
@@ -80,7 +77,7 @@ public class SubCommandLootCratePreview extends SubCommand {
             TabUtils.addCratesNamesToList(list, cacheManager);
         }
 
-        if(args.length == 3)
+        if (args.length == 3)
             args[2] = "";
         return list;
     }

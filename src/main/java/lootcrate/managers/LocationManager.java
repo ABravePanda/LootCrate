@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -173,7 +172,7 @@ public class LocationManager extends BasicManager {
      *
      * @return location list of all locations and crates
      */
-    public Map<Location, Crate> getLocationList() {
+    public Map<Location, Crate> getLocationMap() {
         return locationList;
     }
 
@@ -186,8 +185,8 @@ public class LocationManager extends BasicManager {
     public List<Location> getCrateLocations(Crate crate) {
         List<Location> locations = new ArrayList<Location>();
 
-        for (Location l : getLocationList().keySet())
-            if (getLocationList().get(l) == crate)
+        for (Location l : getLocationMap().keySet())
+            if (getLocationMap().get(l).getId() == crate.getId())
                 locations.add(l);
 
         return locations;

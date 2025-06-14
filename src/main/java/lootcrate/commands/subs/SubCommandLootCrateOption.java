@@ -6,10 +6,6 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.menu.CrateFrame;
-import lootcrate.gui.frames.menu.CrateMainMenuFrame;
-import lootcrate.gui.frames.menu.option.CrateOptionMainMenuFrame;
-import lootcrate.gui.frames.types.Frame;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
@@ -29,8 +25,7 @@ public class SubCommandLootCrateOption extends SubCommand {
      *
      * @param plugin an instance of {@link LootCrate}
      * @param sender the {@link CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateOption(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_GUI, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -49,7 +44,7 @@ public class SubCommandLootCrateOption extends SubCommand {
         if (!this.testPermissions())
             return;
 
-        if(args.length < 2) {
+        if (args.length < 2) {
             messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_OPTION_USAGE, null);
             return;
         }
@@ -60,9 +55,7 @@ public class SubCommandLootCrateOption extends SubCommand {
                     ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
             return;
         }
-        inventoryManager.openFrame(p, new CrateOptionMainMenuFrame(plugin, p, crate));
-
-
+        //inventoryManager.openFrame(p, new CrateOptionMainMenuFrame(plugin, p, crate));
 
 
     }

@@ -26,8 +26,7 @@ public class SubCommandLootCrateUnset extends SubCommand {
      *
      * @param plugin an instance of {@link LootCrate}
      * @param sender the {@link CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateUnset(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_SET, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -59,15 +58,14 @@ public class SubCommandLootCrateUnset extends SubCommand {
         ImmutableMap<Placeholder, String> map = ImmutableMap.of(Placeholder.X, l.getBlockX() + "", Placeholder.Y,
                 l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 
-        if(!locationManager.getLocationList().containsKey(l))
-        {
+        if (!locationManager.getLocationMap().containsKey(l)) {
             messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, map);
             return;
         }
         locationManager.removeCrateLocation(l);
 
         // create hologram
-        if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
+        if (plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
             holoManager.reload();
 
         messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);

@@ -14,7 +14,7 @@
 #
 #   Description
 #   option: "value"
-    # value type - example/definition
+# value type - example/definition
 
 options:
   #Should the commands on each item be dispatched the amount of times the item is received, or once?
@@ -41,24 +41,24 @@ options:
 
   #Should players receive message on join if they have unclaimed keys?
   join-key-notification: true
-  # boolean - true/false
+    # boolean - true/false
 
-    
-#+------------------------------+
-#|                              |
-#|          Messages            | 
-#|                              |
-#+------------------------------+
-    
-# Message Key
-# < > = Mandatory, must use at least one option
-# [ ] = Mandatory, must enter some custom input
-# ( ) = Optional,  may or may not enter some input
-# { } = Placeholder
 
-#   Description
-#   message: "value"
-    # {placeholder} - definition
+    #+------------------------------+
+    #|                              |
+    #|          Messages            |
+    #|                              |
+    #+------------------------------+
+    
+    # Message Key
+    # < > = Mandatory, must use at least one option
+    # [ ] = Mandatory, must enter some custom input
+    # ( ) = Optional,  may or may not enter some input
+    # { } = Placeholder
+
+    #   Description
+    #   message: "value"
+  # {placeholder} - definition
 messages:
   #Prefix of every message
   prefix: "&e&lLOOTCRATE &r"
@@ -352,11 +352,11 @@ messages:
 
   #Change knockback not changed message
   lootcrate-knockback-not-changed: "&cCannot set the cooldown to {knockback}. You must set it between 0 and 20."
-   # {knockback} - Knockback value
+  # {knockback} - Knockback value
 
   #Change cooldown changed message
   lootcrate-cooldown-changed: "&6Crate cooldown has been set to {cooldown}."
-   # {cooldown} - cooldown value
+  # {cooldown} - cooldown value
 
   #Change cooldown not changed message
   lootcrate-cooldown-not-changed: "&cCannot set the cooldown to {cooldown}."

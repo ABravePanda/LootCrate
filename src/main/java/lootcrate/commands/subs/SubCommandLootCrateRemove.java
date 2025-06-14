@@ -25,8 +25,7 @@ public class SubCommandLootCrateRemove extends SubCommand {
      *
      * @param plugin an instance of {@link lootcrate.LootCrate}
      * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateRemove(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_REMOVE, Permission.COMMAND_LOOTCRATE_ADMIN);

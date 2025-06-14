@@ -2,15 +2,12 @@ package lootcrate.events.listeners.custom;
 
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
-import lootcrate.enums.*;
+import lootcrate.enums.Message;
+import lootcrate.enums.Option;
+import lootcrate.enums.Placeholder;
 import lootcrate.events.custom.CrateOpenEvent;
-import lootcrate.gui.frames.animations.CrateCSGOAnimationFrame;
-import lootcrate.gui.frames.animations.CrateRandomGlassAnimationFrame;
-import lootcrate.gui.frames.animations.CrateRemovingItemAnimationFrame;
-import lootcrate.gui.frames.types.AnimatedFrame;
 import lootcrate.managers.*;
 import lootcrate.objects.Crate;
-import lootcrate.objects.CrateOption;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.InventoryUtils;
 import lootcrate.utils.ObjUtils;
@@ -37,7 +34,7 @@ public class CrateOpenListener implements Listener {
 
         // If config allows virtual keys, check if they have the key in the cache
         if ((boolean) plugin.getManager(OptionManager.class).valueOf(Option.ALLOW_VIRTUAL_KEYS) && plugin.getManager(KeyCacheManager.class).contains(p.getUniqueId(), crate)) {
-            if(isCooldownInEffect(crate, p)) return;
+            if (isCooldownInEffect(crate, p)) return;
             // They have the key in cache, remove then run the code as if they have the physical key
             plugin.getManager(KeyCacheManager.class).remove(p.getUniqueId(), crate);
             openCrate(crate, p);
@@ -66,7 +63,7 @@ public class CrateOpenListener implements Listener {
         }
 
         //if cooldown is in effect
-        if(isCooldownInEffect(crate, p)) return;
+        if (isCooldownInEffect(crate, p)) return;
 
         // if inv is full
         if (InventoryUtils.isFull(p.getInventory())) {
@@ -87,8 +84,8 @@ public class CrateOpenListener implements Listener {
     }
 
     private boolean isCooldownInEffect(Crate crate, Player p) {
-        if(CommandUtils.hasCooldownOverride(crate, p)) return false;
-        if(!cooldownManager.canOpen(p.getUniqueId(), crate)) {
+        if (CommandUtils.hasCooldownOverride(crate, p)) return false;
+        if (!cooldownManager.canOpen(p.getUniqueId(), crate)) {
             plugin.getManager(MessageManager.class).sendMessage(p, Message.LOOTCRATE_COOLDOWN_IN_EFFECT,
                     ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.TIME, cooldownManager.timeLeft(p.getUniqueId(), crate) + ""));
             return true;
@@ -97,28 +94,28 @@ public class CrateOpenListener implements Listener {
     }
 
     private void openAnimation(Crate crate, Player p) {
-        AnimatedFrame frame = null;
-        CrateOption opt = crate.getOption(CrateOptionType.ANIMATION_STYLE);
-        AnimationStyle type = AnimationStyle.valueOf((String) opt.getValue());
-        switch (type) {
-            case CSGO:
-                frame = new CrateCSGOAnimationFrame(plugin, p, crate);
-                break;
-            case REMOVING_ITEM:
-                frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);
-                break;
-            case NONE:
-                plugin.getManager(CrateManager.class).giveReward(plugin.getManager(CrateManager.class).getRandomItem(crate), p, crate.getName());
-                return;
-            default:
-                frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
-                break;
-
-        }
-
-        plugin.getManager(InventoryManager.class).openFrame(p, frame);
-
-        frame.showAnimation();
+//        AnimatedFrame frame = null;
+//        CrateOption opt = crate.getOption(CrateOptionType.ANIMATION_STYLE);
+//        AnimationStyle type = AnimationStyle.valueOf((String) opt.getValue());
+//        switch (type) {
+//            case CSGO:
+//                frame = new CrateCSGOAnimationFrame(plugin, p, crate);
+//                break;
+//            case REMOVING_ITEM:
+//                frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);
+//                break;
+//            case NONE:
+//                plugin.getManager(CrateManager.class).giveReward(plugin.getManager(CrateManager.class).getRandomItem(crate), p, crate.getName());
+//                return;
+//            default:
+//                frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
+//                break;
+//
+//        }
+//
+//        plugin.getManager(InventoryManager.class).openFrame(p, frame);
+//
+//        frame.showAnimation();
     }
 
 }

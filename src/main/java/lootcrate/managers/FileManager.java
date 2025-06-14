@@ -10,8 +10,7 @@ import java.io.IOException;
 
 public class FileManager extends BasicManager {
 
-    public FileManager(LootCrate plugin)
-    {
+    public FileManager(LootCrate plugin) {
         super(plugin);
     }
 
@@ -26,24 +25,20 @@ public class FileManager extends BasicManager {
     }
 
 
-    public File createFile(FileType type)
-    {
+    public File createFile(FileType type) {
         File file = new File(this.getPlugin().getDataFolder(), File.separator + type.getName());
         return file;
     }
 
-    public YamlConfiguration getConfiguration(File file)
-    {
+    public YamlConfiguration getConfiguration(File file) {
         return YamlConfiguration.loadConfiguration(file);
     }
 
-    public File getFile(FileType type)
-    {
+    public File getFile(FileType type) {
         return createFile(type);
     }
 
-    public void saveFile(File file, FileConfiguration fileConfiguration)
-    {
+    public void saveFile(File file, FileConfiguration fileConfiguration) {
         try {
             fileConfiguration.save(file);
         } catch (IOException e) {

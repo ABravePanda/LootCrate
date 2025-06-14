@@ -1,20 +1,21 @@
 package lootcrate;
 
-import lootcrate.enums.*;
+import lootcrate.enums.CustomizationOption;
+import lootcrate.enums.HologramPlugin;
+import lootcrate.enums.Message;
+import lootcrate.enums.Option;
 import lootcrate.events.listeners.LootCrateInteractListener;
 import lootcrate.events.listeners.PlayerChatListener;
 import lootcrate.events.listeners.PlayerJoinListener;
 import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
-import lootcrate.gui.events.listeners.GUICloseListener;
+import lootcrate.gui.event.listener.GuiClickListener;
 import lootcrate.managers.*;
 import lootcrate.objects.*;
-import org.bukkit.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.Registry;
-import org.bukkit.Sound;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -22,11 +23,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class LootCrate extends JavaPlugin {
     private Metrics metrics;
@@ -43,14 +46,13 @@ public class LootCrate extends JavaPlugin {
         createManagersMap();
 
         registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
-                new CrateViewListener(this), new GUICloseListener(this), new PlayerJoinListener(this),
+                new CrateViewListener(this), new GuiManager(this), new GuiClickListener(this), new PlayerJoinListener(this),
                 new PlayerChatListener(this));
 
 
         toggleManagers(true);
 
-        if(isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
-        {
+        if (isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS)) {
             holoManager = new HologramManager(this);
             toggleManager(true, holoManager);
         }
@@ -61,15 +63,14 @@ public class LootCrate extends JavaPlugin {
 
         //Temporary fix to stop loot crates not working on startup.
 
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(this, new BukkitRunnable(){
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(this, new BukkitRunnable() {
 
             @Override
             public void run() {
                 reloadConfig();
                 reload();
 
-                if(getHoloManager() != null)
-                {
+                if (getHoloManager() != null) {
                     getHoloManager().reload();
                 }
             }
@@ -92,7 +93,7 @@ public class LootCrate extends JavaPlugin {
         managersMap.put(9, new KeyFileManager(this));
         managersMap.put(10, new KeyCacheManager(this));
         managersMap.put(11, new LocationManager(this));
-        managersMap.put(12, new InventoryManager(this));
+        managersMap.put(12, new GuiManager(this));
         managersMap.put(13, new CommandManager(this));
         managersMap.put(14, new ChatManager(this));
         managersMap.put(15, new CooldownManager(this));
@@ -102,8 +103,7 @@ public class LootCrate extends JavaPlugin {
     @Override
     public void onDisable() {
         toggleManagers(false);
-        if(isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
-        {
+        if (isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS)) {
             toggleManager(false, holoManager);
         }
     }
@@ -229,13 +229,11 @@ public class LootCrate extends JavaPlugin {
         ConfigurationSerialization.registerClass(Cooldown.class);
     }
 
-    private void startReload()
-    {
+    private void startReload() {
         this.reloadConfig();
         this.reload();
 
-        if(this.getHoloManager() != null)
-        {
+        if (this.getHoloManager() != null) {
             this.getHoloManager().reload();
         }
     }
@@ -248,6 +246,9 @@ public class LootCrate extends JavaPlugin {
                 return (T) manager;
             }
         }
+        Exception e = new NoSuchElementException("Manager not found");
+        e.printStackTrace();
+
         return null;
     }
 

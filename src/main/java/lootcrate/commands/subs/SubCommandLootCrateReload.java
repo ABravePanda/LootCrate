@@ -17,8 +17,7 @@ public class SubCommandLootCrateReload extends SubCommand {
      *
      * @param plugin an instance of {@link lootcrate.LootCrate}
      * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateReload(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_RELOAD, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -36,8 +35,7 @@ public class SubCommandLootCrateReload extends SubCommand {
         plugin.reloadConfig();
         plugin.reload();
 
-        if(plugin.getHoloManager() != null)
-        {
+        if (plugin.getHoloManager() != null) {
             plugin.getHoloManager().reload();
         }
 

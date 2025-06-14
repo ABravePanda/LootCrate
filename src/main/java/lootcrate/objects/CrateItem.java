@@ -33,8 +33,7 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
             this.setCommands(new ArrayList<String>());
     }
 
-    public CrateItem()
-    {
+    public CrateItem() {
         this.setId(ObjUtils.randomID(5));
         this.setItem(null);
         this.setChance(0);

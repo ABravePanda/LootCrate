@@ -1,5 +1,4 @@
 package lootcrate.converters.impl;
 
-public class CrazyCratesConverter
-{
+public class CrazyCratesConverter {
 }

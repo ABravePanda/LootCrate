@@ -12,7 +12,7 @@ public abstract class Command {
 
     public boolean hasPermission(CommandSender sender, Permission adminPermission, Permission... perm) {
         if (adminPermission != null)
-            if(sender.hasPermission(adminPermission.getKey())) return true;
+            if (sender.hasPermission(adminPermission.getKey())) return true;
         for (Permission p : perm)
             if (sender.hasPermission(p.getKey()))
                 return true;

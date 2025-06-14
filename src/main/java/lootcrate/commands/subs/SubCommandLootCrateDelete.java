@@ -24,8 +24,7 @@ public class SubCommandLootCrateDelete extends SubCommand {
      *
      * @param plugin an instance of {@link lootcrate.LootCrate}
      * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateDelete(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_DELETE, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -57,7 +56,7 @@ public class SubCommandLootCrateDelete extends SubCommand {
             return;
         }
         locationManager.removeCrateLocation(crate);
-        if(plugin.getHoloManager() != null)
+        if (plugin.getHoloManager() != null)
             plugin.getHoloManager().reload();
         cacheManager.remove(crate);
         cacheManager.save();

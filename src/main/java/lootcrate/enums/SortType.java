@@ -12,8 +12,7 @@ public enum SortType {
     private final CustomizationOption name;
     private final CustomizationOption description;
 
-    SortType(Material itemStack, CustomizationOption name, CustomizationOption description)
-    {
+    SortType(Material itemStack, CustomizationOption name, CustomizationOption description) {
         this.itemStack = itemStack;
         this.name = name;
         this.description = description;

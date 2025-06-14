@@ -53,7 +53,7 @@ public class LootCrateInteractListener implements Listener {
         e.setCancelled(true);
 
         Crate crate = cacheManager.getCrateById(
-                plugin.getManager(LocationManager.class).getLocationList().get(e.getClickedBlock().getLocation()).getId());
+                plugin.getManager(LocationManager.class).getLocationMap().get(e.getClickedBlock().getLocation()).getId());
 
         CrateAccessEvent event = new CrateAccessEvent(crate, p, e.getClickedBlock().getLocation(), e.getAction());
         Bukkit.getPluginManager().callEvent(event);
@@ -64,6 +64,6 @@ public class LootCrateInteractListener implements Listener {
     }
 
     private boolean isCrate(Location l) {
-        return     plugin.getManager(LocationManager.class).getLocationList().containsKey(l);
+        return plugin.getManager(LocationManager.class).getLocationMap().containsKey(l);
     }
 }

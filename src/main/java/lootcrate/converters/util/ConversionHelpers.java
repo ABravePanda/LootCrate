@@ -1,5 +1,4 @@
 package lootcrate.converters.util;
 
-public class ConversionHelpers
-{
+public class ConversionHelpers {
 }

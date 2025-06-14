@@ -11,13 +11,11 @@ public enum FileType {
 
     private final String name;
 
-    FileType(String name)
-    {
+    FileType(String name) {
         this.name = name;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 

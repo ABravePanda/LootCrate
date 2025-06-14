@@ -1,13 +1,8 @@
 package lootcrate.managers;
 
 import lootcrate.LootCrate;
-import lootcrate.enums.AnimationStyle;
-import lootcrate.enums.CrateOptionType;
 import lootcrate.enums.FileType;
 import lootcrate.objects.Crate;
-import lootcrate.objects.CrateItem;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -25,9 +20,8 @@ public class KeyCacheManager extends BasicManager {
     /**
      * Updates a player key into the cache
      *
-     * @param uuid the UUID of the player
+     * @param uuid  the UUID of the player
      * @param crate the crate the player got the key to
-     *
      */
     public void update(UUID uuid, Crate crate) {
         List<Integer> integerList = new ArrayList<>();
@@ -37,7 +31,7 @@ public class KeyCacheManager extends BasicManager {
     }
 
     public void remove(UUID uuid, Crate crate) {
-        if(!cache.containsKey(uuid)) return;
+        if (!cache.containsKey(uuid)) return;
 
         List<Integer> integerList = new ArrayList<>(getCrateIDSByUUID(uuid));
         integerList.remove((Integer) crate.getId());
@@ -53,17 +47,14 @@ public class KeyCacheManager extends BasicManager {
         return cache.get(uuid).contains(crate.getId());
     }
 
-    private List<Integer> getCrateIDSByUUID(UUID uuid)
-    {
+    private List<Integer> getCrateIDSByUUID(UUID uuid) {
         return cache.get(uuid) == null ? new ArrayList<>() : cache.get(uuid);
     }
 
-    public List<Crate> getCratesByUUID(UUID uuid)
-    {
+    public List<Crate> getCratesByUUID(UUID uuid) {
         List<Crate> crateList = new ArrayList<>();
-        for(int i : getCrateIDSByUUID(uuid))
-        {
-            if(this.getPlugin().getManager(CacheManager.class).getCrateById(i) != null)
+        for (int i : getCrateIDSByUUID(uuid)) {
+            if (this.getPlugin().getManager(CacheManager.class).getCrateById(i) != null)
                 crateList.add(this.getPlugin().getManager(CacheManager.class).getCrateById(i));
         }
         return crateList;
@@ -79,8 +70,7 @@ public class KeyCacheManager extends BasicManager {
         return cache;
     }
 
-    public boolean hasKeys(UUID uuid)
-    {
+    public boolean hasKeys(UUID uuid) {
         return cache.containsKey(uuid);
     }
 
@@ -113,12 +103,10 @@ public class KeyCacheManager extends BasicManager {
         this.getPlugin().getManager(KeyFileManager.class).saveCache(cache);
     }
 
-    public List<Crate> convertIntToCrate(UUID uuid)
-    {
+    public List<Crate> convertIntToCrate(UUID uuid) {
         List<Integer> integerList = new ArrayList<>(getCrateIDSByUUID(uuid));
         List<Crate> crateList = new ArrayList<>();
-        for(int i : integerList)
-        {
+        for (int i : integerList) {
             crateList.add(this.getPlugin().getManager(CacheManager.class).getCrateById(i));
         }
         return crateList;
@@ -141,12 +129,9 @@ public class KeyCacheManager extends BasicManager {
         save();
     }
 
-    public void displayCache()
-    {
-        for(UUID uuid : cache.keySet())
-        {
-            for(int i : cache.get(uuid))
-            {
+    public void displayCache() {
+        for (UUID uuid : cache.keySet()) {
+            for (int i : cache.get(uuid)) {
                 System.out.println(i);
             }
         }

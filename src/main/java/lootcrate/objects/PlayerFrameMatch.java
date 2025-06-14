@@ -7,8 +7,7 @@ public class PlayerFrameMatch {
     private final UUID uuid;
     private final int frameid;
 
-    public PlayerFrameMatch(UUID uuid, int frameid)
-    {
+    public PlayerFrameMatch(UUID uuid, int frameid) {
         this.uuid = uuid;
         this.frameid = frameid;
     }

@@ -24,8 +24,7 @@ public class SubCommandLootCrateCreate extends SubCommand {
      *
      * @param plugin an instance of {@link lootcrate.LootCrate}
      * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateCreate(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_CREATE, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -40,7 +39,6 @@ public class SubCommandLootCrateCreate extends SubCommand {
      * must be valid. It adds the command, replaces the old CrateItem, then updates the cache
      *
      * @param playerRequired if a player is required to run this command can any {@link org.bukkit.command.CommandSender}
-     *
      */
     @Override
     public void runSubCommand(boolean playerRequired) {

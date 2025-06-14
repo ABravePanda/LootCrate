@@ -48,6 +48,8 @@ public class CrateViewEvent extends Event implements Cancellable {
         return this.player;
     }
 
-    public Location getLocation() { return this.location; }
+    public Location getLocation() {
+        return this.location;
+    }
 
 }

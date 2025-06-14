@@ -9,7 +9,10 @@ import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
 import lootcrate.managers.KeyCacheManager;
 import lootcrate.objects.Crate;
-import lootcrate.utils.*;
+import lootcrate.utils.CommandUtils;
+import lootcrate.utils.InventoryUtils;
+import lootcrate.utils.ObjUtils;
+import lootcrate.utils.TabUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,8 +31,7 @@ public class SubCommandLootCrateGive extends SubCommand {
      *
      * @param plugin an instance of {@link lootcrate.LootCrate}
      * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateGive(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_GIVE, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -85,16 +87,14 @@ public class SubCommandLootCrateGive extends SubCommand {
                 return;
             }
 
-            for(int i = Integer.parseInt(args[3]); i > 0; i--)
-            {
-                if(player == null) giveAllKey(crate);
+            for (int i = Integer.parseInt(args[3]); i > 0; i--) {
+                if (player == null) giveAllKey(crate);
                 else giveKey(player, crate);
             }
             sendMessage(player, crate, Integer.parseInt(args[3]));
 
-        } else
-        {
-            if(player == null) giveAllKey(crate);
+        } else {
+            if (player == null) giveAllKey(crate);
             else giveKey(player, crate);
             sendMessage(player, crate, 1);
         }
@@ -122,56 +122,47 @@ public class SubCommandLootCrateGive extends SubCommand {
         return list;
     }
 
-    private void giveKey(Player p, Crate crate)
-    {
+    private void giveKey(Player p, Crate crate) {
         distributeCrateKey(crate, p);
     }
 
-    private void giveAllKey(Crate crate)
-    {
-        for(Player p : Bukkit.getOnlinePlayers()) {
+    private void giveAllKey(Crate crate) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
             distributeCrateKey(crate, p);
         }
     }
 
     private void distributeCrateKey(Crate crate, Player p) {
-        if (optionManager.valueOf(Option.LOOTCRATE_CLAIM_ENABLED)){
-            if(optionManager.valueOf(Option.PRIORITIZE_INVENTORY_OVER_CLAIM))
+        if (optionManager.valueOf(Option.LOOTCRATE_CLAIM_ENABLED)) {
+            if (optionManager.valueOf(Option.PRIORITIZE_INVENTORY_OVER_CLAIM))
                 p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
             else
                 keyCacheManager.update(p.getUniqueId(), crate);
-        }
-        else
-        {
-            if(InventoryUtils.isFull(p.getInventory()))
-            {
+        } else {
+            if (InventoryUtils.isFull(p.getInventory())) {
                 //TODO error full inv
-            }
-            else
-            {
+            } else {
                 p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
             }
         }
     }
 
 
-    private void sendMessage(Player p, Crate crate, int amount)
-    {
+    private void sendMessage(Player p, Crate crate, int amount) {
         messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_SENDER,
                 ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
                         Placeholder.PLAYER_NAME, p == null ? "everyone" : p.getName(), Placeholder.KEY_AMOUNT, amount + ""));
 
-        if(p == null) {
-            for(Player pl : Bukkit.getOnlinePlayers()) {
+        if (p == null) {
+            for (Player pl : Bukkit.getOnlinePlayers()) {
                 messageManager.sendMessage(pl, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER,
                         ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
                                 Placeholder.SENDER_NAME, sender.getName(), Placeholder.KEY_AMOUNT, amount + ""));
             }
-        }
-        else
+        } else
             messageManager.sendMessage(p, Message.LOOTCRATE_COMMAND_GIVE_SUCCESS_RECEIVER,
-                ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
-                        Placeholder.SENDER_NAME, sender.getName(), Placeholder.KEY_AMOUNT, amount + ""));
+                    ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "", Placeholder.CRATE_NAME, crate.getName(),
+                            Placeholder.SENDER_NAME, sender.getName(), Placeholder.KEY_AMOUNT, amount + ""));
 
     }
 

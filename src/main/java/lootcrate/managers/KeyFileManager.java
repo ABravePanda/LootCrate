@@ -2,14 +2,13 @@ package lootcrate.managers;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.FileType;
-import lootcrate.objects.Crate;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class KeyFileManager extends FileManager {
     private final String KEY_PREFIX = "keys.";
@@ -20,12 +19,11 @@ public class KeyFileManager extends FileManager {
     }
 
 
-    public Map<UUID, List<Integer>> loadCache()
-    {
+    public Map<UUID, List<Integer>> loadCache() {
         FileConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(keyFile);
         Map<UUID, List<Integer>> map = new HashMap();
 
-        if(config.getConfigurationSection(KEY_PREFIX) == null) return new HashMap<>();
+        if (config.getConfigurationSection(KEY_PREFIX) == null) return new HashMap<>();
 
         for (String s : config.getConfigurationSection(KEY_PREFIX).getKeys(false)) {
             List<Integer> integerList = config.getIntegerList(KEY_PREFIX + s);
@@ -43,7 +41,7 @@ public class KeyFileManager extends FileManager {
     public void saveCache(Map<UUID, List<Integer>> keyMap) {
         FileConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(keyFile);
 
-        for(UUID uuid : keyMap.keySet()) {
+        for (UUID uuid : keyMap.keySet()) {
             config.set(KEY_PREFIX + uuid, keyMap.get(uuid));
         }
         getPlugin().getManager(FileManager.class).saveFile(keyFile, config);

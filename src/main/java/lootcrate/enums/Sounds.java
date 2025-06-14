@@ -1,8 +1,5 @@
 package lootcrate.enums;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public enum Sounds {
     ENTITY__ALLAY__AMBIENT_WITH_ITEM("entity.allay.ambient_with_item"),
     BLOCK__LODESTONE__FALL("block.lodestone.fall"),
@@ -1663,8 +1660,8 @@ public enum Sounds {
     }
 
     public static Sounds fromKey(String sound) {
-        for(Sounds sounds : values())
-            if(sounds.getKey().equalsIgnoreCase(sound))
+        for (Sounds sounds : values())
+            if (sounds.getKey().equalsIgnoreCase(sound))
                 return sounds;
         return Sounds.ENTITY__FIREWORK_ROCKET__SHOOT;
     }

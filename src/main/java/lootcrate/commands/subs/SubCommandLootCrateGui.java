@@ -6,9 +6,9 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.menu.CrateMainMenuFrame;
-import lootcrate.gui.frames.menu.CrateFrame;
-import lootcrate.gui.frames.types.Frame;
+import lootcrate.gui.frame.GuiFrame;
+import lootcrate.gui.frame.crate.CrateFrame;
+import lootcrate.managers.GuiManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
@@ -28,8 +28,7 @@ public class SubCommandLootCrateGui extends SubCommand {
      *
      * @param plugin an instance of {@link lootcrate.LootCrate}
      * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateGui(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_GUI, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -48,18 +47,23 @@ public class SubCommandLootCrateGui extends SubCommand {
         if (!this.testPermissions())
             return;
 
-        Frame frame = new CrateMainMenuFrame(plugin, p);
-        if (args.length == 2) {
-            Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
-            if (crate == null) {
-                messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
-                        ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
-                return;
-            }
-            frame = new CrateFrame(plugin, p, crate);
-        }
+//        Frame frame = new CrateMainMenuFrame(plugin, p);
+//        if (args.length == 2) {
+//
+//            frame = new CrateFrame(plugin, p, crate);
+//        }
+//
+//        inventoryManager.openFrame(p, frame);
 
-        inventoryManager.openFrame(p, frame);
+        Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
+        if (crate == null) {
+            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
+                    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
+            return;
+        }
+        GuiFrame guiFrame = new CrateFrame(plugin,  p, crate);
+
+        plugin.getManager(GuiManager.class).open(p, guiFrame);
 
     }
 

@@ -9,8 +9,6 @@ import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
 import lootcrate.managers.CacheManager;
 import lootcrate.managers.HologramManager;
-import lootcrate.managers.LocationManager;
-import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
@@ -32,8 +30,7 @@ public class SubCommandLootCrateSet extends SubCommand {
      *
      * @param plugin an instance of {@link lootcrate.LootCrate}
      * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateSet(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_SET, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -65,9 +62,9 @@ public class SubCommandLootCrateSet extends SubCommand {
         if (args[1].equalsIgnoreCase("none")) {
             locationManager.removeCrateLocation(l);
 
-            if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
+            if (plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
                 plugin.getHoloManager().reload();
-           messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
             return;
         }
 
@@ -86,15 +83,14 @@ public class SubCommandLootCrateSet extends SubCommand {
                 Placeholder.CRATE_NAME, crate.getName(), Placeholder.X, l.getBlockX() + "", Placeholder.Y,
                 l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 
-        if(locationManager.getLocationList().containsKey(l))
-        {
+        if (locationManager.getLocationMap().containsKey(l)) {
             messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, map);
             return;
         }
         locationManager.addCrateLocation(l, crate);
 
         // create hologram
-        if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
+        if (plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
             holoManager.createHologram(l.getBlock(), crate);
 
         messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);

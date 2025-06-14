@@ -23,30 +23,24 @@ public class CustomizationManager extends BasicManager {
         return colorMsg;
     }
 
-    public Material parseMaterial(CustomizationOption option)
-    {
+    public Material parseMaterial(CustomizationOption option) {
         String text = getStringOption(option);
-        try
-        {
+        try {
             Material.valueOf(text);
-        }
-        catch (IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             return Material.BARRIER;
         }
         return Material.valueOf(text);
     }
 
-    public long parseLong(CustomizationOption option)
-    {
+    public long parseLong(CustomizationOption option) {
         String text = getStringOption(option);
         if (text == null || text.isEmpty())
             return 0l;
         return CommandUtils.tryParseLong(text);
     }
 
-    public String getStringOption(CustomizationOption option)
-    {
+    public String getStringOption(CustomizationOption option) {
         return this.getPlugin().getConfig().getString(PREFIX + option.getKey());
     }
 

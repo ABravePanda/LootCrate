@@ -1,7 +1,7 @@
 ## LootCrate
 
-LootCrate is a plugin for every server! Want to reward your players for doing anything, or want a good shop item? Look no futher! Allow your players to purchase LootCrate Keys to open LootCrates and recieve special awards!
-
+LootCrate is a plugin for every server! Want to reward your players for doing anything, or want a good shop item? Look
+no futher! Allow your players to purchase LootCrate Keys to open LootCrates and recieve special awards!
 
 More to come soon...
 

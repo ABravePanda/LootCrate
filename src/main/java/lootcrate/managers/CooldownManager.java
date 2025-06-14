@@ -5,16 +5,15 @@ import lootcrate.enums.CrateOptionType;
 import lootcrate.enums.FileType;
 import lootcrate.objects.Cooldown;
 import lootcrate.objects.Crate;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
-public class CooldownManager extends FileManager{
+public class CooldownManager extends FileManager {
 
     private final String PREFIX = "cooldowns";
     private File cooldownFile;
@@ -63,18 +62,17 @@ public class CooldownManager extends FileManager{
     }
 
 
-
     public void addCooldown(UUID playerUUID, Crate crate) {
         int cooldownTime = (int) crate.getOption(CrateOptionType.COOLDOWN).getValue();
-        if(cooldownTime == 0) return;
+        if (cooldownTime == 0) return;
         Cooldown cooldown = new Cooldown(playerUUID, crate.getId(), System.currentTimeMillis(), cooldownTime);
         cooldowns.add(cooldown);
     }
 
     public boolean canOpen(UUID playerUUID, Crate crate) {
         Cooldown cooldown = getCooldown(playerUUID, crate);
-        if(cooldown == null) return true;
-        if(cooldown.isOver()) {
+        if (cooldown == null) return true;
+        if (cooldown.isOver()) {
             cooldowns.remove(cooldown);
             return true;
         }
@@ -83,21 +81,21 @@ public class CooldownManager extends FileManager{
 
     public double timeLeft(UUID playerUUID, Crate crate) {
         Cooldown cooldown = getCooldown(playerUUID, crate);
-        if(cooldown == null) return 0D;
+        if (cooldown == null) return 0D;
         return cooldown.getTimeLeft();
     }
 
     public Cooldown getCooldown(UUID playerUUID, Crate crate) {
-        for(Cooldown cooldown : cooldowns) {
-            if(cooldown.getUuid().equals(playerUUID) && crate.getId() == cooldown.getCrateId()) return cooldown;
+        for (Cooldown cooldown : cooldowns) {
+            if (cooldown.getUuid().equals(playerUUID) && crate.getId() == cooldown.getCrateId()) return cooldown;
         }
         return null;
     }
 
     public List<Cooldown> getCooldownsForPlayer(UUID uuid) {
         List<Cooldown> cooldownList = new ArrayList<>();
-        for(Cooldown cooldown : cooldowns) {
-            if(cooldown.getUuid().equals(uuid)) cooldownList.add(cooldown);
+        for (Cooldown cooldown : cooldowns) {
+            if (cooldown.getUuid().equals(uuid)) cooldownList.add(cooldown);
         }
         return cooldownList;
     }

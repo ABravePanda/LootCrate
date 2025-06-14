@@ -4,7 +4,6 @@ import lootcrate.LootCrate;
 import lootcrate.enums.FileType;
 import lootcrate.enums.Sounds;
 import lootcrate.managers.FileManager;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

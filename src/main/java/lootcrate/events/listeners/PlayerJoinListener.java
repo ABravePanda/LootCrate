@@ -34,12 +34,12 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        if (optionManager.valueOf(Option.JOIN_KEY_NOTIFICATION)){
-            if(!keyCacheManager.hasKeys(p.getUniqueId()))
+        if (optionManager.valueOf(Option.JOIN_KEY_NOTIFICATION)) {
+            if (!keyCacheManager.hasKeys(p.getUniqueId()))
                 return;
-            else if(keyCacheManager.convertIntToCrate(p.getUniqueId()).isEmpty()) return;
+            else if (keyCacheManager.convertIntToCrate(p.getUniqueId()).isEmpty()) return;
             else
-                messageManager.sendMessage(p, Message.JOIN_KEY_NOTIFICATION,  ImmutableMap.of(Placeholder.KEY_AMOUNT, keyCacheManager.convertIntToCrate(p.getUniqueId()).size() + ""));
+                messageManager.sendMessage(p, Message.JOIN_KEY_NOTIFICATION, ImmutableMap.of(Placeholder.KEY_AMOUNT, keyCacheManager.convertIntToCrate(p.getUniqueId()).size() + ""));
 
         }
 

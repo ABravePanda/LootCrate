@@ -1,18 +1,9 @@
 package lootcrate.commands.subs;
 
-import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
-import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
-import lootcrate.enums.Placeholder;
-import lootcrate.gui.frames.KeyViewFrame;
 import lootcrate.managers.KeyCacheManager;
-import lootcrate.objects.Crate;
-import lootcrate.utils.CommandUtils;
-import lootcrate.utils.ObjUtils;
-import lootcrate.utils.TabUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -30,8 +21,7 @@ public class SubCommandLootCrateClaim extends SubCommand {
      *
      * @param plugin an instance of {@link LootCrate}
      * @param sender the {@link CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
+     * @param args   the following arguments in the command string
      */
     public SubCommandLootCrateClaim(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_CLAIM, Permission.COMMAND_LOOTCRATE_ADMIN);
@@ -50,7 +40,7 @@ public class SubCommandLootCrateClaim extends SubCommand {
 
         Player p = (Player) sender;
 
-        this.inventoryManager.openFrame(p, new KeyViewFrame(plugin, p));
+//        this.inventoryManager.openFrame(p, new KeyViewFrame(plugin, p));
 
     }
 
