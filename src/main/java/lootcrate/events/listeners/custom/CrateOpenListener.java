@@ -108,7 +108,7 @@ public class CrateOpenListener implements Listener {
                 frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);
                 break;
             case NONE:
-                plugin.getManager(CrateManager.class).giveReward(plugin.getManager(CrateManager.class).getRandomItem(crate), p, crate.getName());
+                plugin.getManager(CrateManager.class).giveReward(plugin.getManager(CrateManager.class).getRandomItem(crate), p, crate.getName(), crate);
                 return;
             default:
                 frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);

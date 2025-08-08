@@ -145,4 +145,11 @@ public class CrateItem implements Comparable<CrateItem>, ConfigurationSerializab
         return Double.valueOf(this.getChance()).compareTo(Double.valueOf(o.getChance()));
     }
 
+    /**
+     * Required static method for ConfigurationSerializable
+     */
+    public static CrateItem deserialize(Map<String, Object> data) {
+        return new CrateItem(data);
+    }
+
 }

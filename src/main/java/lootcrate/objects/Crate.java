@@ -33,7 +33,6 @@ public class Crate implements ConfigurationSerializable {
             this.setOptions(options);
         else
             this.setOptions(new LinkedHashMap<CrateOptionType, Object>());
-
     }
 
     public Crate(String name) {
@@ -175,6 +174,7 @@ public class Crate implements ConfigurationSerializable {
         map.put("Options", getSeralizedOptions());
         map.put("Key", getKey() != null ? getKey().serialize() : null);
         map.put("Items", getItems());
+        
         return map;
     }
 
@@ -195,6 +195,5 @@ public class Crate implements ConfigurationSerializable {
         }
         return item;
     }
-
 
 }

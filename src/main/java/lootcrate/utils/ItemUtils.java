@@ -11,6 +11,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
+import java.io.File;
+import lootcrate.managers.FileManager;
 
 public class ItemUtils {
     public static ItemStack setDisplayName(ItemStack item, String displayName) {
@@ -78,5 +80,20 @@ public class ItemUtils {
         if(itemStack.hasItemMeta())
             return itemStack.getItemMeta();
         return Bukkit.getItemFactory().getItemMeta(itemStack.getType());
+    }
+
+    public static String getDisplayOrTranslatedName(LootCrate plugin, ItemStack item) {
+        if (item == null) return "";
+        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+            return item.getItemMeta().getDisplayName();
+        }
+        // Sinon, traduction via words.yml
+        String type = item.getType().toString();
+        FileManager fileManager = plugin.getManager(FileManager.class);
+        File wordsFile = new File(plugin.getDataFolder(), "words.yml");
+        if (!wordsFile.exists()) return type;
+        org.bukkit.configuration.file.YamlConfiguration wordsConfig = fileManager.getConfiguration(wordsFile);
+        String translated = wordsConfig.getString(type);
+        return translated != null ? translated : type;
     }
 }

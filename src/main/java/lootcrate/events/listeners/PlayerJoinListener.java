@@ -16,14 +16,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
-    private final LootCrate plugin;
     private final OptionManager optionManager;
     private final UpdateManager updateManager;
     private final MessageManager messageManager;
     private final KeyCacheManager keyCacheManager;
 
     public PlayerJoinListener(LootCrate plugin) {
-        this.plugin = plugin;
         this.updateManager = plugin.getManager(UpdateManager.class);
         this.optionManager = plugin.getManager(OptionManager.class);
         this.messageManager = plugin.getManager(MessageManager.class);

@@ -95,7 +95,7 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
     }
 
     private void giveRewards(CrateItem crateItem) {
-        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName());
+        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName(), crate);
     }
 
     private void initList() {

@@ -40,7 +40,8 @@ public class CacheManager extends BasicManager {
 
     public void rename(String oldCrate, Crate Crate) {
         getPlugin().getManager(CrateFileManager.class).overrideSave(oldCrate, Crate);
-        cache.remove(oldCrate);
+        // Remove the old crate by finding it by name
+        cache.removeIf(c -> c.getName().equals(oldCrate));
         cache.add(Crate);
     }
 
@@ -57,6 +58,14 @@ public class CacheManager extends BasicManager {
             if (cacheCrate.getId() == Crate.getId())
                 cache.remove(cacheCrate);
         }
+    }
+
+    /**
+     * Force la sauvegarde de toutes les caisses
+     * Utile pour sauvegarder manuellement sans attendre l'arrêt du serveur
+     */
+    public void forceSave() {
+        saveAllCrates();
     }
 
     /**
@@ -86,7 +95,6 @@ public class CacheManager extends BasicManager {
      * @deprecated Loads the cache asynchronously
      */
     public void loadAsync(final LootCrate callback) {
-        final long startTime = System.nanoTime();
         final LootCrate plugin = this.getPlugin();
         Bukkit.getScheduler().runTaskAsynchronously(this.getPlugin(), new Runnable() {
             @Override
@@ -120,32 +128,36 @@ public class CacheManager extends BasicManager {
     }
 
     public Crate verify(Crate crate) {
+        // Verify main items
         for (CrateItem item : new ArrayList<>(crate.getItems())) {
             if (item.getItem() == null || item.getItem().getType() == Material.AIR) {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "ERROR: " + ChatColor.RED + "Attempting to add a null or empty item to Crate: " + crate.getName());
                 crate.removeItem(item);
             }
-            if(crate.getOption(CrateOptionType.HOLOGRAM_ENABLED) == null) {
-                crate.addOption(CrateOptionType.HOLOGRAM_ENABLED, true);
-                getPlugin().getManager(CrateFileManager.class).saveCrate(crate);
-            }
-            if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
-                crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
-                this.update(crate);
-            }
-            if (crate.getOption(CrateOptionType.SOUND_VOLUME) == null) {
-                crate.addOption(CrateOptionType.SOUND_VOLUME, 1);
-                this.update(crate);
-            }
-            if (crate.getOption(CrateOptionType.SORT_TYPE) == null) {
-                crate.addOption(CrateOptionType.SORT_TYPE, SortType.CHANCE.toString());
-                this.update(crate);
-            }
-            if (crate.getOption(CrateOptionType.COOLDOWN) == null) {
-                crate.addOption(CrateOptionType.COOLDOWN, 0);
-                this.update(crate);
-            }
         }
+        
+        // Verify options
+        if(crate.getOption(CrateOptionType.HOLOGRAM_ENABLED) == null) {
+            crate.addOption(CrateOptionType.HOLOGRAM_ENABLED, true);
+            getPlugin().getManager(CrateFileManager.class).saveCrate(crate);
+        }
+        if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
+            crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
+            this.update(crate);
+        }
+        if (crate.getOption(CrateOptionType.SOUND_VOLUME) == null) {
+            crate.addOption(CrateOptionType.SOUND_VOLUME, 1);
+            this.update(crate);
+        }
+        if (crate.getOption(CrateOptionType.SORT_TYPE) == null) {
+            crate.addOption(CrateOptionType.SORT_TYPE, SortType.CHANCE.toString());
+            this.update(crate);
+        }
+        if (crate.getOption(CrateOptionType.COOLDOWN) == null) {
+            crate.addOption(CrateOptionType.COOLDOWN, 0);
+            this.update(crate);
+        }
+        
         return crate;
     }
 
@@ -185,6 +197,22 @@ public class CacheManager extends BasicManager {
 
     @Override
     public void disable() {
-
+        // Sauvegarder toutes les caisses lors de l'arrêt du serveur
+        saveAllCrates();
     }
+
+    /**
+     * Sauvegarde toutes les caisses du cache vers le fichier
+     */
+    private void saveAllCrates() {
+        for (Crate crate : cache) {
+            try {
+                getPlugin().getManager(CrateFileManager.class).saveCrate(crate);
+            } catch (Exception e) {
+                getPlugin().getLogger().severe("Erreur lors de la sauvegarde de la caisse " + crate.getName() + ": " + e.getMessage());
+            }
+        }
+        getPlugin().getLogger().info("Sauvegarde de " + cache.size() + " caisses terminée.");
+    }
+
 }

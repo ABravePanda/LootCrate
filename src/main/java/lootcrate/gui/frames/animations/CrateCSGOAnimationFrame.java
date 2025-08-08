@@ -98,7 +98,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
     }
 
     private void giveRewards(CrateItem crateItem) {
-        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName());
+        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName(), crate);
     }
 
     public void fillBackground(Material m, String name, boolean showRewardsPointer) {

@@ -135,8 +135,8 @@ public class SubCommandLootCrateGive extends SubCommand {
     }
 
     private void distributeCrateKey(Crate crate, Player p) {
-        if (optionManager.valueOf(Option.LOOTCRATE_CLAIM_ENABLED)){
-            if(optionManager.valueOf(Option.PRIORITIZE_INVENTORY_OVER_CLAIM))
+        if ((Boolean) optionManager.valueOf(Option.LOOTCRATE_CLAIM_ENABLED)){
+            if((Boolean) optionManager.valueOf(Option.PRIORITIZE_INVENTORY_OVER_CLAIM))
                 p.getInventory().addItem(ObjUtils.assignCrateToKey(plugin, crate));
             else
                 keyCacheManager.update(p.getUniqueId(), crate);

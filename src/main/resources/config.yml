@@ -17,31 +17,57 @@
     # value type - example/definition
 
 options:
-  #Should the commands on each item be dispatched the amount of times the item is received, or once?
+  #Les commandes de chaque objet doivent-elles être exécutées autant de fois que l'objet est reçu, ou une seule fois ?
   dispatch-command-item-time: false
-  # boolean - true/false
+  # booléen - true/false
 
-  #Should people with op or required permission receive login notifications about a new update for the plugin
+  #Les personnes avec op ou la permission requise doivent-elles recevoir une notification de mise à jour du plugin à la connexion ?
   admin-update-notification: true
-  # boolean - true/false
+  # booléen - true/false
 
 
-  #Should players instantly receive keys or should they use /lootcrate claim
+  #Les joueurs doivent-ils recevoir instantanément les clés ou utiliser /lootcrate claim ?
   lootcrate-claim-enabled: true
-  # boolean - true/false
+  # booléen - true/false
 
-  #Should people be able to use their key crates even before claiming them?
+  #Les joueurs peuvent-ils utiliser leurs clés de caisse même avant de les réclamer ?
   allow-virtual-keys: false
-  # boolean - true/false
+  # booléen - true/false
 
-  #Should prioritize giving keys in inventory first?
-  #If inventory is full and lootcrate-claim-enabled is true, fallback to /lootcrate claim.
+  #Faut-il privilégier la remise des clés dans l'inventaire ?
+  #Si l'inventaire est plein et lootcrate-claim-enabled est true, bascule sur /lootcrate claim.
   prioritize-inventory-over-claim: false
-  # boolean - true/false
+  # booléen - true/false
 
-  #Should players receive message on join if they have unclaimed keys?
+  #Les joueurs doivent-ils recevoir un message à la connexion s'ils ont des clés non réclamées ?
   join-key-notification: true
-  # boolean - true/false
+  # booléen - true/false
+
+  #Permet d'annoncer publiquement (broadcast) le gain d'un item par un joueur après réception
+  broadcast-item-win-enabled: false
+  # booléen - true/false
+
+  #Message de broadcast lors du gain d'un item
+  #Placeholders disponibles : {crate_name}, {player_name}, {item_name}
+  #Si {item_name} n'est pas défini ou vide, le plugin doit utiliser words.yml pour traduire le type d'item (exemple : DIAMOND: Diamant)
+  broadcast-item-win-message: "{crate_name} ► &f{player_name} &fa obtenu {item_name}."
+
+  #Système anti-spam pour les broadcasts d'objets gagnés
+  #Configuration spécifique par caisse pour éviter le spam de messages de broadcast
+  #Si une caisse n'est pas configurée ici, l'anti-spam ne s'applique pas
+  antispam-broadcast-item-win:
+    #Exemple de configuration pour une caisse (remplacer "exemple_crate" par le nom exact de votre caisse)
+    exemple_crate:
+      #Active ou désactive l'anti-spam pour cette caisse
+      enable: true
+      #Temps en secondes pendant lequel on compte les objets gagnés
+      time-target: 2
+      #Nombre d'objets gagnés pendant time-target avant d'activer l'anti-spam
+      item-target: 4
+      #Message affiché quand l'anti-spam s'active
+      antispam-broadcast: "{crate_name} ► §fAnti-spam activé"
+      #Durée en secondes pendant laquelle l'anti-spam reste actif
+      anti-spam-time: 3
 
     
 #+------------------------------+
@@ -50,352 +76,352 @@ options:
 #|                              |
 #+------------------------------+
     
-# Message Key
-# < > = Mandatory, must use at least one option
-# [ ] = Mandatory, must enter some custom input
-# ( ) = Optional,  may or may not enter some input
+# Clé de message
+# < > = Obligatoire, doit utiliser au moins une option
+# [ ] = Obligatoire, doit saisir une entrée personnalisée
+# ( ) = Optionnel, peut ou non saisir une entrée
 # { } = Placeholder
 
 #   Description
-#   message: "value"
-    # {placeholder} - definition
+#   message: "valeur"
+    # {placeholder} - définition
 messages:
-  #Prefix of every message
+  #Préfixe de chaque message
   prefix: "&e&lLOOTCRATE &r"
 
-  #Chance, as displayed when you view a crate
-  chance: "&6&lChance: &e{item_chance}%"
-  # {item_chance} - Chance of winning of the item being displayed
+  #Chance, affichée lors de la visualisation d'une caisse
+  chance: "&6&lChance : &e{item_chance}%"
+  # {item_chance} - Chance d'obtenir l'objet affiché
 
-  #When the command sender doesn't have the required permission
-  command-no-permission: "&cYou have no permission to do this."
+  #Quand l'expéditeur de la commande n'a pas la permission requise
+  command-no-permission: "&cVous n'avez pas la permission de faire cela."
 
-  #When a player tries to interact with a lootcrate they don't have the permission to
-  lootcrate-interact-no-permission: "&cYou do not have permission to interact with &e{crate_name}&c."
+  #Quand un joueur essaie d'interagir avec une caisse sans la permission
+  lootcrate-interact-no-permission: "&cVous n'avez pas la permission d'interagir avec &e{crate_name}&c."
 
-  #Sent to player when they join the server, and they still have keys to claim
-  join-key-notification: "&fYou still have &6{key_amount}&f keys to claim. Use &6/lootcrate claim&f to claim them now"
-  # {key_amount} - The amount of keys to claim
+  #Envoyé au joueur à la connexion s'il a encore des clés à réclamer
+  join-key-notification: "&fIl vous reste &6{key_amount}&f clé(s) à réclamer. Utilisez &6/lootcrate claim&f pour les récupérer."
+  # {key_amount} - Nombre de clés à réclamer
 
-  #When player attempts to open crate, but have a full inventory
-  inventory-full: "&cYour inventory is full!"
-  # {crate_name} - Name of crate
+  #Quand le joueur tente d'ouvrir une caisse mais que son inventaire est plein
+  inventory-full: "&cVotre inventaire est plein !"
+  # {crate_name} - Nom de la caisse
 
-  #Sent to console if command requires player
-  must-be-player: "&cYou must be a player to do this."
+  #Envoyé à la console si la commande nécessite un joueur
+  must-be-player: "&cVous devez être un joueur pour faire cela."
 
-  #Sent to player if command requires console
-  must-be-console: "&cYou must be the console to do this."
+  #Envoyé au joueur si la commande nécessite la console
+  must-be-console: "&cVous devez être la console pour faire cela."
 
-  #Usage for /meta
-  meta-command-usage: "&cUsage: /meta <name | lore | enchantment>"
+  #Utilisation pour /meta
+  meta-command-usage: "&cUtilisation : /meta <name | lore | enchantment>"
 
-  #Sent to player if command requires them to hold an item
-  must-be-holding-item: "&cYou must be holding an item in your main hand!"
+  #Envoyé au joueur si la commande nécessite de tenir un objet
+  must-be-holding-item: "&cVous devez tenir un objet dans votre main principale !"
 
-  #Sent to player when attempting to place a lootkey
-  cannot-place-lootkey: "&cYou cannot place a Loot Key."
+  #Envoyé au joueur lors de la tentative de placement d'une clé de caisse
+  cannot-place-lootkey: "&cVous ne pouvez pas placer une Clé de Caisse."
 
-  #Sent to player if crate items total chance doesn't equal 100%
-  lootcrate-chance-not-100: "&4Error: &cThe items in the LootCrate &e{crate_name} &conly total &e{crate_total_chance}&c."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
-  # {crate_total_chance} - Total of all crate item chances
+  #Envoyé au joueur si le total des chances des objets de la caisse n'est pas égal à 100%
+  lootcrate-chance-not-100: "&4Erreur : &cLes objets de la caisse &e{crate_name} &cne totalisent que &e{crate_total_chance}&c."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
+  # {crate_total_chance} - Total des chances des objets
 
-  #Usage for /lootcrate
-  lootcrate-command-basic-usage: "&cUsage: /lootcrate <create | delete | key | set | add | remove | give | items | list | reload>"
+  #Utilisation pour /lootcrate
+  lootcrate-command-basic-usage: "&cUtilisation : /lootcrate <create | delete | key | set | add | remove | give | items | list | reload>"
 
-  #Sent when lootcate cannot be found
-  lootcrate-not-found: "&cThe LootCrate with the id &e#{crate_id}&c was not found."
-  # {crate_id} - Id of crate
+  #Envoyé quand la caisse ne peut pas être trouvée
+  lootcrate-not-found: "&cLa caisse avec l'id &e#{crate_id}&c est introuvable."
+  # {crate_id} - Id de la caisse
 
-  #Sent when lootcrate has no key or it cannot be found
-  key-not-found: "&cThe key for the LootCrate &e{crate_name}&c was not found."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
+  #Envoyé quand la clé de la caisse n'existe pas ou est introuvable
+  key-not-found: "&cLa clé pour la caisse &e{crate_name}&c est introuvable."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
 
-  #Sent when player cannot be found
-  player-not-found: "&cCould not find player &e{player_name}&c."
-  # {player_name} - Name of player
+  #Envoyé quand le joueur est introuvable
+  player-not-found: "&cImpossible de trouver le joueur &e{player_name}&c."
+  # {player_name} - Nom du joueur
 
-  #Sent when item in lootcrate cannot be found
-  lootcrate-item-not-found: "&cThe item &e#{item_id} &cin LootCrate with the id &e#{crate_id}&c was not found."
-  # {item_id} - Id of item
-  # {crate_id} - Id of crate
+  #Envoyé quand l'objet de la caisse est introuvable
+  lootcrate-item-not-found: "&cL'objet &e#{item_id} &cdans la caisse avec l'id &e#{crate_id}&c est introuvable."
+  # {item_id} - Id de l'objet
+  # {crate_id} - Id de la caisse
 
-  #Sent when specified enchantment could not be found
-  enchantment-not-found: "&cCould not find enchantment &e{enchantment_name}&c."
-  # {enchantment_name} - Name of enchantment
+  #Envoyé quand l'enchantement spécifié est introuvable
+  enchantment-not-found: "&cImpossible de trouver l'enchantement &e{enchantment_name}&c."
+  # {enchantment_name} - Nom de l'enchantement
 
-  #Usage for command
-  lootcrate-command-create-usage: "&cUsage: /lootcrate create [name]"
+  #Utilisation pour la commande
+  lootcrate-command-create-usage: "&cUtilisation : /lootcrate create [nom]"
 
-  #Sent on completion of command
-  lootcrate-command-create-success: "&fCreated a LootCrate with the name &e{crate_name}&f. &fReference ID: &e#{crate_id}"
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
+  #Envoyé à la fin de la commande
+  lootcrate-command-create-success: "&fCaisse créée avec le nom &e{crate_name}&f. ID de référence : &e#{crate_id}"
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
 
-  #Sent to whoever create a crate
-  loocrate-command-create-permissions: "&6To allow players to use this crate, give them the permission &flootcrate.interact.{crate_id}&6 or &flootcrate.interact.*&6."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
+  #Envoyé à celui qui crée une caisse
+  loocrate-command-create-permissions: "&6Pour permettre aux joueurs d'utiliser cette caisse, donnez-leur la permission &flootcrate.interact.{crate_id}&6 ou &flootcrate.interact.*&6."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
 
-  #Usage for command
-  lootcrate-command-delete-usage: "&cUsage: /lootcrate delete [crate id]"
+  #Utilisation pour la commande
+  lootcrate-command-delete-usage: "&cUtilisation : /lootcrate delete [id de la caisse]"
 
-  #Sent on completion of command
-  lootcrate-command-delete-success: "&fDeleted the LootCrate with the name &e{crate_name}&f."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
+  #Envoyé à la fin de la commande
+  lootcrate-command-delete-success: "&fCaisse supprimée avec le nom &e{crate_name}&f."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
 
-  #Usage for command
-  lootcrate-command-key-usage: "&cUsage: /lootcrate key [crate id] [glowing]"
+  #Utilisation pour la commande
+  lootcrate-command-key-usage: "&cUtilisation : /lootcrate key [id de la caisse] [brillant]"
 
-  #Sent on completion of command
-  lootcrate-command-key-success: "&fAdded a key to the LootCrate with the name &e{crate_name}&f."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
+  #Envoyé à la fin de la commande
+  lootcrate-command-key-success: "&fClé ajoutée à la caisse &e{crate_name}&f."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
 
-  #Usage for command
-  lootcrate-command-add-usage: "&cUsage: /lootcrate add [crate id] [min amount] [max amount] [chance] [isDisplay]"
+  #Utilisation pour la commande
+  lootcrate-command-add-usage: "&cUtilisation : /lootcrate add [id de la caisse] [min] [max] [chance] [isDisplay]"
 
-  #Sent as error when min is greater than max amount
-  lootcrate-command-add-minmax: "&cThe minimum amount must be smaller or equal to the max amount"
+  #Erreur quand min est supérieur à max
+  lootcrate-command-add-minmax: "&cLa quantité minimale doit être inférieure ou égale à la quantité maximale."
 
-  #Sent on completion of command
-  lootcrate-command-add-success: "&fAdded &e{item_type}&f to the LootCrate with the name &e{crate_name}&f. The item's id is &e#{item_id}&f."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
-  # {item_id} - Id of item
-  # {item_type} - Type of item
-  # {item_name} - Name of item
+  #Envoyé à la fin de la commande
+  lootcrate-command-add-success: "&fAjouté &e{item_type}&f à la caisse &e{crate_name}&f. L'id de l'objet est &e#{item_id}&f."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
+  # {item_id} - Id de l'objet
+  # {item_type} - Type d'objet
+  # {item_name} - Nom de l'objet
 
-  #Sent to whoever added an item to the crate
-  loocrate-command-add-hint: "&6If you want this item to only execute commands, &aisDisplay = true&6."
+  #Envoyé à celui qui ajoute un objet à la caisse
+  loocrate-command-add-hint: "&6Si vous voulez que cet objet n'exécute que des commandes, &aisDisplay = true&6."
 
-  #Usage for command
-  lootcrate-command-remove-usage: "&cUsage: /lootcrate remove [crate id] [item id]"
+  #Utilisation pour la commande
+  lootcrate-command-remove-usage: "&cUtilisation : /lootcrate remove [id de la caisse] [id de l'objet]"
 
-  #Sent on completion of command
-  lootcrate-command-remove-success: "&fRemoved item &e#{item_id}&f from the LootCrate with the name &e{crate_name}&f."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
-  # {item_id} - Id of item
+  #Envoyé à la fin de la commande
+  lootcrate-command-remove-success: "&fObjet &e#{item_id}&f supprimé de la caisse &e{crate_name}&f."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
+  # {item_id} - Id de l'objet
 
-  #Usage for command
-  lootcrate-command-items-usage: "&cUsage: /lootcrate items [crate id]"
+  #Utilisation pour la commande
+  lootcrate-command-items-usage: "&cUtilisation : /lootcrate items [id de la caisse]"
 
-  #Format of lootcrate items when being listed to player
-  lootcrate-command-items-format: "&7#{item_id}&f | Type: &e{item_type}&f | Name: &e{item_name}&f | MinAmount: &e{item_min_amount}&f | MaxAmount: &e{item_max_amount}&f | Chance: &e{item_chance}&f | Commands: &e{item_commands}&f"
-  # {item_id} - Id of item
-  # {item_type} - Type of item
-  # {item_name} - Name of item
-  # {item_min_amount} - Min amount of item
-  # {item_max_amount} - Max amount of item
-  # {item_chance} - Chance of item
-  # {item_commands} - Amount of commands of item
+  #Format des objets de la caisse lors de l'affichage au joueur
+  lootcrate-command-items-format: "&7#{item_id}&f | Type : &e{item_type}&f | Nom : &e{item_name}&f | Min : &e{item_min_amount}&f | Max : &e{item_max_amount}&f | Chance : &e{item_chance}&f | Commandes : &e{item_commands}&f"
+  # {item_id} - Id de l'objet
+  # {item_type} - Type d'objet
+  # {item_name} - Nom de l'objet
+  # {item_min_amount} - Quantité min
+  # {item_max_amount} - Quantité max
+  # {item_chance} - Chance de l'objet
+  # {item_commands} - Nombre de commandes de l'objet
 
-  #Usage for command
-  lootcrate-command-list-usage: "&cUsage: /lootcrate list"
+  #Utilisation pour la commande
+  lootcrate-command-list-usage: "&cUtilisation : /lootcrate list"
 
-  #Format of lootcrates when being listed to player
-  lootcrate-command-list-format: "&7#{crate_id}&f | Name: &e{crate_name}&f | Item Count: &e{crate_item_count}&f | Key Type: &e{crate_key_type}&f"
-  # {crate_id} - Id of crate
-  # {crate_name} - Name of crate
-  # {crate_item_count} - Count of items in crates
-  # {crate_key_type} - Type of material key is
+  #Format des caisses lors de l'affichage au joueur
+  lootcrate-command-list-format: "&7#{crate_id}&f | Nom : &e{crate_name}&f | Objets : &e{crate_item_count}&f | Type de clé : &e{crate_key_type}&f"
+  # {crate_id} - Id de la caisse
+  # {crate_name} - Nom de la caisse
+  # {crate_item_count} - Nombre d'objets
+  # {crate_key_type} - Type de clé
 
-  #Usage for command
-  lootcrate-command-set-usage: "&cUsage: /lootcrate set [crate id]"
+  #Utilisation pour la commande
+  lootcrate-command-set-usage: "&cUtilisation : /lootcrate set [id de la caisse]"
 
-  #Sent on completion of command
-  lootcrate-command-set-success: "&fSet &e{X}, {Y}, {Z} &fas a location for the LootCrate &e{crate_name}&f."
-  # {crate_id} - Id of crate
-  # {crate_name} - Name of crate
-  # {X} - X cord of position
-  # {Y} - Y cord of position
-  # {Z} - Z cord of position
+  #Envoyé à la fin de la commande
+  lootcrate-command-set-success: "&fPosition &e{X}, {Y}, {Z} &fajoutée pour la caisse &e{crate_name}&f."
+  # {crate_id} - Id de la caisse
+  # {crate_name} - Nom de la caisse
+  # {X} - X
+  # {Y} - Y
+  # {Z} - Z
 
-  #Sent when a crate already exists at this location
-  lootcrate-command-set-failure: "&cA crate already exists at this location!"
-  # {crate_id} - Id of crate
-  # {crate_name} - Name of crate
-  # {X} - X cord of position
-  # {Y} - Y cord of position
-  # {Z} - Z cord of position
+  #Envoyé quand une caisse existe déjà à cet emplacement
+  lootcrate-command-set-failure: "&cUne caisse existe déjà à cet emplacement !"
+  # {crate_id} - Id de la caisse
+  # {crate_name} - Nom de la caisse
+  # {X} - X
+  # {Y} - Y
+  # {Z} - Z
 
-  #Sent on completion of command
-  lootcrate-command-set-remove-success: "&fRemoved &e{X}, {Y}, {Z} &fas a LootCrate location."
-  # {X} - X cord of position
-  # {Y} - Y cord of position
-  # {Z} - Z cord of position
+  #Envoyé à la fin de la commande
+  lootcrate-command-set-remove-success: "&fPosition &e{X}, {Y}, {Z} &fsupprimée comme emplacement de caisse."
+  # {X} - X
+  # {Y} - Y
+  # {Z} - Z
 
-  #Usage for command
-  lootcrate-command-give-usage: "&cUsage: /lootcrate give [player name] [crate id] (amount)"
+  #Utilisation pour la commande
+  lootcrate-command-give-usage: "&cUtilisation : /lootcrate give [nom du joueur] [id de la caisse] (quantité)"
 
-  #Sent on completion of command to receiver of key
-  lootcrate-command-give-success-to-receiver: "&fYou have received {key_amount} key(s) for the LootCrate &e{crate_name}&f. Use &6/lootcrate claim&f to claim it now."
-  # {crate_name} - Name of crate
-  # {sender_name} - Name of whoever sent the key
-  # {key_amount} - The amount of keys sent
+  #Envoyé au destinataire de la clé
+  lootcrate-command-give-success-to-receiver: "&fVous avez reçu {key_amount} clé(s) pour la caisse &e{crate_name}&f. Utilisez &6/lootcrate claim&f pour la réclamer."
+  # {crate_name} - Nom de la caisse
+  # {sender_name} - Nom de l'expéditeur
+  # {key_amount} - Nombre de clés
 
-  #Sent on completion of command to sender of key
-  lootcrate-command-give-success-to-sender: "&fYou have sent {key_amount} key(s) for the LootCrate &e{crate_name}&f to &e{player_name}&f."
-  # {crate_name} - Name of crate
-  # {player_name} - Name of whoever received the key
-  # {key_amount} - The amount of keys received
+  #Envoyé à l'expéditeur de la clé
+  lootcrate-command-give-success-to-sender: "&fVous avez envoyé {key_amount} clé(s) pour la caisse &e{crate_name}&f à &e{player_name}&f."
+  # {crate_name} - Nom de la caisse
+  # {player_name} - Nom du destinataire
+  # {key_amount} - Nombre de clés
 
-  #Sent to command sender when receiving player has a full inventory
-  lootcrate-command-claim-full-inventory: "&cYou cannot claim this key as your inventory is full."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
-  # {player_name} - Name of whoever was to receive the key
+  #Envoyé à l'expéditeur si l'inventaire du destinataire est plein
+  lootcrate-command-claim-full-inventory: "&cVous ne pouvez pas réclamer cette clé car votre inventaire est plein."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
+  # {player_name} - Nom du destinataire
 
-  #Sent to player when they successfully claim a key
-  lootcrate-command-claim-success: "&fYou have claimed a key for &6{crate_name}&f."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
+  #Envoyé au joueur quand il réclame une clé avec succès
+  lootcrate-command-claim-success: "&fVous avez réclamé une clé pour &6{crate_name}&f."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
 
-  #Usage for command
-  lootcrate-command-command-usage: "&cUsage: /lootcrate command [crate id] [item id] [command]"
+  #Utilisation pour la commande
+  lootcrate-command-command-usage: "&cUtilisation : /lootcrate command [id de la caisse] [id de l'objet] [commande]"
 
-  #Sent on completion of command
-  lootcrate-command-command-success: "&fYou have added a command to Item &e#{item_id} for the LootCrate &e{crate_name}&f."
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
-  # {item_id} - Id of item
-  # {item_type} - Type of item
-  # {item_name} - Name of item
+  #Envoyé à la fin de la commande
+  lootcrate-command-command-success: "&fCommande ajoutée à l'objet &e#{item_id} pour la caisse &e{crate_name}&f."
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
+  # {item_id} - Id de l'objet
+  # {item_type} - Type d'objet
+  # {item_name} - Nom de l'objet
 
-  #Sent on completion of command
-  lootcrate-command-displaychances-success: "&fYou have updated &e{crate_name}&f's option to display chances to: &e{value}&f"
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
-  # {value} - Value entered (true/false)
+  #Envoyé à la fin de la commande
+  lootcrate-command-displaychances-success: "&fOption d'affichage des chances de &e{crate_name}&f mise à jour : &e{value}&f"
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
+  # {value} - Valeur entrée (true/false)
 
-  #Usage for command
-  lootcrate-command-displaychances-usage: "&cUsage: /lootcrate displaychances [crate id] [display chances]"
+  #Utilisation pour la commande
+  lootcrate-command-displaychances-usage: "&cUtilisation : /lootcrate displaychances [id de la caisse] [afficher chances]"
 
-  #Usage for command
-  lootcrate-command-version-usage: "&cUsage: /lootcrate version"
+  #Utilisation pour la commande
+  lootcrate-command-version-usage: "&cUtilisation : /lootcrate version"
 
-  #Sent on completion of command
-  lootcrate-command-reload-success: "&aPlugin has been reloaded."
+  #Envoyé à la fin de la commande
+  lootcrate-command-reload-success: "&aLe plugin a été rechargé."
 
-  #Usage for command
-  lootcrate-command-preview-usage: "&cUsage: /lootcrate preview [crate_id]"
+  #Utilisation pour la commande
+  lootcrate-command-preview-usage: "&cUtilisation : /lootcrate preview [id_caisse]"
 
-  #Sent on completion of command
-  lootcrate-command-preview-success: "&aYou are now viewing &e{crate_name}"
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
+  #Envoyé à la fin de la commande
+  lootcrate-command-preview-success: "&aVous visualisez maintenant &e{crate_name}"
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
 
-  #Usage for command
-  lootcrate-command-option-usage: "&cUsage: /lootcrate option [crate_id]"
+  #Utilisation pour la commande
+  lootcrate-command-option-usage: "&cUtilisation : /lootcrate option [id_caisse]"
 
-  #Format of message from message command
+  #Format du message de la commande message
   message-command-format: "&f{message}"
-  # {message} - Message to be sent
+  # {message} - Message à envoyer
 
-  #Usage for command
-  message-command-usage: "&cUsage: /message {player} {message}"
+  #Utilisation pour la commande
+  message-command-usage: "&cUtilisation : /message {joueur} {message}"
 
-  #Sebt when player is opening a loot crate
-  lootcrate-open: "&aOpening LootCrate &e{crate_name}"
-  # {crate_name} - Name of crate
+  #Envoyé quand un joueur ouvre une caisse
+  lootcrate-open: "&aOuverture de la caisse &e{crate_name}"
+  # {crate_name} - Nom de la caisse
 
-  #Used when incorrect key is used to open a crate
-  lootcrate-wrong-key: "&cThis is the wrong key to open the LootCrate &e{crate_name}"
-  # {crate_name} - Name of crate
-  # {crate_id} - Id of crate
+  #Utilisé quand une mauvaise clé est utilisée pour ouvrir une caisse
+  lootcrate-wrong-key: "&cCeci n'est pas la bonne clé pour ouvrir la caisse &e{crate_name}"
+  # {crate_name} - Nom de la caisse
+  # {crate_id} - Id de la caisse
 
-  #Used when cooldown is still in effect for the crate
-  lootcrate-cooldown-in-effect: "&cPlease wait &e{time} seconds&c before opening the LootCrate &e{crate_name}&c."
-  # {crate_name} - Name of crate
-  # {time} - Time left in seconds (e.g 1.3)
+  #Utilisé quand un cooldown est en cours sur la caisse
+  lootcrate-cooldown-in-effect: "&cVeuillez patienter &e{time} secondes&c avant d'ouvrir la caisse &e{crate_name}&c."
+  # {crate_name} - Nom de la caisse
+  # {time} - Temps restant en secondes (ex : 1.3)
 
-  #Change crate name message
-  lootcrate-change-crate-name: "&6Enter the new name for your crate.\n&7Type '&ccancel&7' to cancel."
+  #Message pour changer le nom de la caisse
+  lootcrate-change-crate-name: "&6Entrez le nouveau nom de votre caisse.\n&7Tapez '&ccancel&7' pour annuler."
 
-  #Change crate message message
-  lootcrate-change-crate-message: "&6Enter the new open message for your crate.\n&7Type '&ccancel&7' to cancel."
+  #Message pour changer le message d'ouverture de la caisse
+  lootcrate-change-crate-message: "&6Entrez le nouveau message d'ouverture de votre caisse.\n&7Tapez '&ccancel&7' pour annuler."
 
-  #Change create crate message
-  lootcrate-create-crate-name: "&6Enter the name for your new crate.\n&7Type '&ccancel&7' to cancel."
+  #Message pour créer une caisse
+  lootcrate-create-crate-name: "&6Entrez le nom de votre nouvelle caisse.\n&7Tapez '&ccancel&7' pour annuler."
 
-  #Change add item message
-  lootcrate-add-item-command: "&6Enter the command you would like to add (without '/'). Use {player} as a placeholder.\n&7Type '&ccancel&7' to cancel."
+  #Message pour ajouter une commande à un objet
+  lootcrate-add-item-command: "&6Entrez la commande à ajouter (sans '/'). Utilisez {player} comme placeholder.\n&7Tapez '&ccancel&7' pour annuler."
 
-  #Change crate knockback message
-  lootcrate-change-crate-knockback: "&6Enter the number you would like the knockback to be. Current knockback is {knockback}."
+  #Message pour changer le knockback de la caisse
+  lootcrate-change-crate-knockback: "&6Entrez le nombre de knockback souhaité. Knockback actuel : {knockback}."
 
-  #Change crate cooldown message
-  lootcrate-change-crate-cooldown: "&6Enter the number you would like the crate cooldown to be in seconds. Current cooldown is {cooldown}.\n&7Type '&ccancel&7' to cancel."
+  #Message pour changer le cooldown de la caisse
+  lootcrate-change-crate-cooldown: "&6Entrez le nombre de secondes pour le cooldown de la caisse. Cooldown actuel : {cooldown}.\n&7Tapez '&ccancel&7' pour annuler."
 
-  #Change crate sound message
-  lootcrate-change-crate-sound: "&6Enter the new open sound for your crate. &cOptions: https://www.digminecraft.com/lists/sound_list_pc.php"
+  #Message pour changer le son d'ouverture de la caisse
+  lootcrate-change-crate-sound: "&6Entrez le nouveau son d'ouverture de la caisse. &cOptions : https://www.digminecraft.com/lists/sound_list_pc.php"
 
-  #Change canceled action message
-  lootcrate-action-canceled: "&cAction canceled."
+  #Message d'annulation d'action
+  lootcrate-action-canceled: "&cAction annulée."
 
-  #Change name changed message
-  lootcrate-name-changed: "&6Crate name has been set to '&r{crate_name}&6'."
-  # {crate_name} - Name of crate
+  #Message de confirmation de changement de nom
+  lootcrate-name-changed: "&6Le nom de la caisse a été défini sur '&r{crate_name}&6'."
+  # {crate_name} - Nom de la caisse
 
-  #Change message changed message
-  lootcrate-message-changed: "&6Crate open message has been set to '&r{message}&6'."
-  # {message} - New message
+  #Message de confirmation de changement de message
+  lootcrate-message-changed: "&6Le message d'ouverture de la caisse a été défini sur '&r{message}&6'."
+  # {message} - Nouveau message
 
-  #Change knockback changed message
-  lootcrate-knockback-changed: "&6Crate knockback has been set to {knockback}."
-  # {knockback} - Knockback value
+  #Message de confirmation de changement de knockback
+  lootcrate-knockback-changed: "&6Le knockback de la caisse a été défini sur {knockback}."
+  # {knockback} - Valeur du knockback
 
-  #Change knockback not changed message
-  lootcrate-knockback-not-changed: "&cCannot set the cooldown to {knockback}. You must set it between 0 and 20."
-   # {knockback} - Knockback value
+  #Message d'échec de changement de knockback
+  lootcrate-knockback-not-changed: "&cImpossible de définir le cooldown à {knockback}. Vous devez choisir entre 0 et 20."
+   # {knockback} - Valeur du knockback
 
-  #Change cooldown changed message
-  lootcrate-cooldown-changed: "&6Crate cooldown has been set to {cooldown}."
-   # {cooldown} - cooldown value
+  #Message de confirmation de changement de cooldown
+  lootcrate-cooldown-changed: "&6Le cooldown de la caisse a été défini sur {cooldown}."
+   # {cooldown} - valeur du cooldown
 
-  #Change cooldown not changed message
-  lootcrate-cooldown-not-changed: "&cCannot set the cooldown to {cooldown}."
-  # {cooldown} - cooldown value
+  #Message d'échec de changement de cooldown
+  lootcrate-cooldown-not-changed: "&cImpossible de définir le cooldown à {cooldown}."
+  # {cooldown} - valeur du cooldown
 
-  lootcrate-changed-sound-message: "&6Crate open sound has been set to &e{sound_name}&6."
-  # {sound_name} - sound value
+  lootcrate-changed-sound-message: "&6Le son d'ouverture de la caisse a été défini sur &e{sound_name}&6."
+  # {sound_name} - valeur du son
 
 
 #+---------------------------------------+
 #|                                       |
-#|          GUI Customization            |
+#|          Personnalisation GUI         |
 #|                                       |
 #+---------------------------------------+
 
-#All timing options are in seconds
+#Toutes les options de temps sont en secondes
 
 custom-gui:
 
-  #Naivation Menu Options
+  #Options du menu de navigation
   navigation-blocker-material: "RED_STAINED_GLASS_PANE"
   navigation-blocker-name: "&k&l-"
 
   navigation-close-material: "BARRIER"
-  navigation-close-name: "&cClose"
+  navigation-close-name: "&cFermer"
 
   navigation-next-material: "SPECTRAL_ARROW"
-  navigation-next-name: "&6Next"
+  navigation-next-name: "&6Suivant"
 
   navigation-previous-material: "ARROW"
-  navigation-previous-name: "&6Previous"
+  navigation-previous-name: "&6Précédent"
 
-  #Claim Menu Options
+  #Options du menu de réclamation
   claim-all-material: "CHEST"
-  claim-all-name: "&6Claim All Keys"
+  claim-all-name: "&6Tout réclamer"
 
-  #CSGO Animation Options
+  #Options d'animation CSGO
   csgo-animation-pointer-material: "REDSTONE_TORCH"
-  csgo-animation-pointer-name: "&c&lReward"
+  csgo-animation-pointer-name: "&c&lRécompense"
 
   csgo-animation-background-material: "WHITE_STAINED_GLASS_PANE"
   csgo-animation-background-name: "&k-"
@@ -406,9 +432,9 @@ custom-gui:
   csgo-animation-scroll-speed: "1"
   csgo-animation-duration: "6"
 
-  #Random Glass Animation Options
+  #Options d'animation Random Glass
   rnd-animation-pointer-material: "REDSTONE_TORCH"
-  rnd-animation-pointer-name: "&c&lReward"
+  rnd-animation-pointer-name: "&c&lRécompense"
 
   rnd-animation-glass-name: "&k-"
 
@@ -419,7 +445,7 @@ custom-gui:
   rnd-animation-glass-speed: "1"
   rnd-animation-duration: "6"
 
-  #Removing Item Animation Options
+  #Options d'animation Suppression d'objet
   removing-animation-filler-material: "RED_STAINED_GLASS_PANE"
   removing-animation-filler-name: "&k-"
 
@@ -428,71 +454,126 @@ custom-gui:
 
   removing-animation-duration: "6"
 
-  crates-main-menu-title: "&8Crate Main Menu"
-  all-crates-menu-title: "&8All Crates Menu"
+  crates-main-menu-title: "&8Menu Principal des Caisses"
+  all-crates-menu-title: "&8Menu de Toutes les Caisses"
 
 
-  main-create-new-crate: "&aCreate New Crate"
-  main-view-all-crates: "&aView All Crates"
+  main-create-new-crate: "&aCréer une nouvelle caisse"
+  main-view-all-crates: "&aVoir toutes les caisses"
 
-  crate-view-items-name: "&cItems"
-  crate-view-items-lore: "&7All the items in the crate."
-  crate-view-key-name: "&cKey"
-  crate-view-key-lore: "&7Used to unlock the crate."
-  crate-view-locations-name: "&cLocations"
-  crate-view-locations-lore: "&7All the places the crate is set."
+  crate-view-items-name: "&cObjets"
+  crate-view-items-lore: "&7Tous les objets de la caisse."
+  crate-view-key-name: "&cClé"
+  crate-view-key-lore: "&7Utilisée pour ouvrir la caisse."
+  crate-view-locations-name: "&cEmplacements"
+  crate-view-locations-lore: "&7Tous les emplacements de la caisse."
   crate-view-options-name: "&cOptions"
-  crate-view-options-lore: "&7Edit crate name, hologram, knockback, etc..."
+  crate-view-options-lore: "&7Modifier le nom, l'hologramme, le knockback, etc..."
 
-  crate-item-info-id: "&7ID: &6"
-  crate-item-info-chance: "&7Chance: &6"
-  crate-item-info-min: "&7Min: &6"
-  crate-item-info-max: "&7Max: &6"
-  crate-item-info-display: "&7Display: &6"
-  crate-item-info-commands: "&7Commands: &6"
+  crate-item-info-id: "&7ID : &6"
+  crate-item-info-chance: "&7Chance : &6"
+  crate-item-info-min: "&7Min : &6"
+  crate-item-info-max: "&7Max : &6"
+  crate-item-info-display: "&7Affichage : &6"
+  crate-item-info-commands: "&7Commandes : &6"
   crate-item-command-format: "&7 - &e/"
-  crate-item-left-click-edit: "&cLeft-Click to Edit"
+  crate-item-left-click-edit: "&cClic gauche pour modifier"
 
-  crate-options-name-name: "&cName"
-  crate-options-name-lore: "&7Change the crate name."
-  crate-options-message-name: "&cOpen Message"
-  crate-options-message-lore: "&7Change the message player receives upon crate opening."
+  crate-options-name-name: "&cNom"
+  crate-options-name-lore: "&7Changer le nom de la caisse."
+  crate-options-message-name: "&cMessage d'ouverture"
+  crate-options-message-lore: "&7Changer le message reçu à l'ouverture de la caisse."
   crate-options-cooldown-name: "&cCooldown"
-  crate-options-cooldown-lore: "&7Change the crate open cooldown."
-  crate-options-knockback-name: "&cKnockback Level"
-  crate-options-knockback-lore: "&7Change how far the crate knocks you back."
-  crate-options-sort-name: "&cSort"
-  crate-options-sort-lore: "&7Change the way the items are sorted in the view gui."
-  crate-options-opensound-name: "&cOpen Sound"
-  crate-options-opensound-lore: "&7Change the sound that plays when a crate is opened.\n&6Left Click to Open GUI\n&6Shift Left Click to Enter Chat"
-  crate-options-hologram-name: "&cHologram"
-  crate-options-hologram-lore: "&7Enable/Disable the hologram above the crate."
-  crate-options-animation-name: "&cAnimation Style"
-  crate-options-animation-lore: "&7Change the open animation."
+  crate-options-cooldown-lore: "&7Changer le cooldown d'ouverture de la caisse."
+  crate-options-knockback-name: "&cNiveau de knockback"
+  crate-options-knockback-lore: "&7Changer la distance de knockback de la caisse."
+  crate-options-sort-name: "&cTri"
+  crate-options-sort-lore: "&7Changer la façon dont les objets sont triés dans la vue."
+  crate-options-opensound-name: "&cSon d'ouverture"
+  crate-options-opensound-lore: "&7Changer le son joué à l'ouverture de la caisse.\n&6Clic gauche pour ouvrir le GUI\n&6Shift clic gauche pour saisir dans le chat"
+  crate-options-hologram-name: "&cHologramme"
+  crate-options-hologram-lore: "&7Activer/Désactiver l'hologramme au-dessus de la caisse."
+  crate-options-animation-name: "&cStyle d'animation"
+  crate-options-animation-lore: "&7Changer l'animation d'ouverture."
 
-  crate-sort-by-none-name: "None"
-  crate-sort-by-none-lore: "&7No real sorting method."
+  crate-sort-by-none-name: "Aucun"
+  crate-sort-by-none-lore: "&7Aucune méthode de tri."
   crate-sort-by-chance-name: "Chance"
-  crate-sort-by-chance-lore: "&7The percent value the player\nwill get the item over other items."
-  crate-sort-by-name-name: "Name"
-  crate-sort-by-name-lore: "&7The display name or the items base name."
+  crate-sort-by-chance-lore: "&7Le pourcentage de chance d'obtenir l'objet."
+  crate-sort-by-name-name: "Nom"
+  crate-sort-by-name-lore: "&7Le nom affiché ou le nom de base de l'objet."
   crate-sort-by-id-name: "ID"
-  crate-sort-by-id-lore: "&7The random ID the item is assigned."
+  crate-sort-by-id-lore: "&7L'ID aléatoire attribué à l'objet."
 
-  crate-sound-left-click-action: "&bLeft Click &7to play sound"
-  crate-sound-shift-left-click-action: "&bShift Left Click &7to select sound"
+  crate-sound-left-click-action: "&bClic gauche &7pour jouer le son"
+  crate-sound-shift-left-click-action: "&bShift clic gauche &7pour sélectionner le son"
 
-  crate-hologram-visible-name: "&cHologram Visible"
-  crate-hologram-enabled: "&aEnabled"
-  crate-hologram-disabled: "&cDisabled"
-  crate-hologram-enable: "&aEnable"
-  crate-hologram-disable: "&cDisable"
+  crate-hologram-visible-name: "&cHologramme visible"
+  crate-hologram-enabled: "&aActivé"
+  crate-hologram-disabled: "&cDésactivé"
+  crate-hologram-enable: "&aActiver"
+  crate-hologram-disable: "&cDésactiver"
 
-  crate-animation-removing-item-name: "Removing Item"
-  crate-animation-removing-item-lore: "&7Removes an item until one left."
-  crate-animation-none-name: "None"
-  crate-animation-none-lore: "&7Instantly gives the item."
-  crate-animation-random-glass-name: "Random Glass"
-  crate-animation-random-glass-lore: "&7Glass background randomly switches."
+  crate-animation-removing-item-name: "Suppression d'objet"
+  crate-animation-removing-item-lore: "&7Supprime un objet jusqu'à ce qu'il n'en reste qu'un."
+  crate-animation-none-name: "Aucun"
+  crate-animation-none-lore: "&7Donne instantanément l'objet."
+  crate-animation-random-glass-name: "Verre aléatoire"
+  crate-animation-random-glass-lore: "&7Le fond en verre change aléatoirement."
   crate-animation-csgo-name: "CSGO"
-  crate-animation-csgo-lore: "&7Scrolling type animation."
+  crate-animation-csgo-lore: "&7Animation de type défilement."
+
+#
+# Effets de particules autour des caisses
+# Format :
+# particule:
+#   nom_de_caisse: couleur (ex: green, red, blue, etc.)
+#   autre_caisse: "none" (pour désactiver les particules)
+# Si une caisse n'est pas mentionnée ici, elle n'aura pas de particule.
+#
+# Couleurs disponibles :
+#   red, green, blue, yellow, aqua, fuchsia, white, black, gray, orange,
+#   purple, navy, silver, teal, maroon, olive, lime
+#   (none pour désactiver)
+particule:
+  exemple_crate: green
+  autre_crate: "none"
+
+#
+# Effets visuels spéciaux sur les caisses (aucun dégât, aucune destruction)
+# Format :
+# effect:
+#   nom_de_caisse: type (ex: explosion, thunder)
+# Si une caisse n'est pas mentionnée ici, elle n'aura pas d'effet.
+#
+# Effets disponibles :
+#   explosion         - Explosion visuelle
+#   thunder           - Coup de tonnerre (éclair)
+#   enchant           - Particules d'enchantement
+#   flame             - Flammes
+#   heart             - Cœurs
+#   totem             - Effet de totem d'immortalité
+#   note              - Notes de musique
+#   smoke             - Fumée
+#   crit              - Particules de coup critique
+#   happy_villager    - Particules de villageois heureux
+#   angry_villager    - Particules de villageois en colère
+#   cloud             - Nuage
+#   lava              - Gouttes de lave
+#   drip_lava         - Gouttes de lave tombantes
+#   drip_water        - Gouttes d'eau tombantes
+#   portal            - Portail du Nether
+#   dragon_breath     - Souffle de dragon
+#   spit              - Lama qui crache
+#   sneeze            - Lama qui éternue
+#   firework          - Étincelles de feu d'artifice
+#   ash               - Cendres
+#   soul              - Âme
+#   soul_fire         - Flamme d'âme
+#   snowflake         - Flocon de neige
+#   slime             - Goutte de slime
+#   bubble            - Bulles d'eau
+#
+effect:
+  exemple_crate: explosion
+  autre_crate: thunder

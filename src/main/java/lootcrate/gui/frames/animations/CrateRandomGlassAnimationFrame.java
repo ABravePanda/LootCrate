@@ -106,7 +106,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
     }
 
     private void giveRewards(CrateItem crateItem) {
-        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName());
+        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName(), crate);
     }
 
     private Material randomGlass() {

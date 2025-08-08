@@ -1,3 +1,15 @@
 /target/
 /.idea/
 /.settings/
+
+# Ignore deprecated child/alternate system files
+src/main/java/lootcrate/commands/subs/*Child*.java
+src/main/java/lootcrate/commands/subs/*Alternate*.java
+src/main/java/lootcrate/managers/ChildCrateManager.java
+
+# Ignore removed unused utilities
+src/main/java/lootcrate/utils/DebugUtils.java
+src/main/java/lootcrate/utils/Logger.java
+
+# Ignore empty files
+src/main/java/lootcrate/commands/subs/SubCommandLootCrateChangeLoot.java
