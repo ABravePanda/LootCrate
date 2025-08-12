@@ -47,6 +47,8 @@ public abstract class AbstractGuiFrame implements GuiFrame {
     /** Whether the GUI can be closed by the player. */
     protected boolean readyToClose;
 
+    protected GuiFrame backframe;
+
     /**
      * Creates a new {@code AbstractGuiFrame}.
      *
@@ -84,6 +86,14 @@ public abstract class AbstractGuiFrame implements GuiFrame {
      */
     public Collection<GUIItem> getItems() {
         return items.values();
+    }
+
+    public void setBackFrame(GuiFrame backframe) {
+        this.backframe = backframe;
+    }
+
+    public GuiFrame getBackframe() {
+        return backframe;
     }
 
     @Override

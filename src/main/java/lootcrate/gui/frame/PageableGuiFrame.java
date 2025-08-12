@@ -42,8 +42,6 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
     /** Cached list of all elements to display. */
     protected List<T> cachedElements = Collections.emptyList();
 
-    /** Optional frame to return to when pressing the back button. */
-    private GuiFrame backFrame = null;
 
     /**
      * Creates a new paginated GUI frame.
@@ -59,14 +57,6 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
         this.itemsPerPage = itemsPerPage;
     }
 
-    /**
-     * Sets the frame to return to when pressing the back button.
-     *
-     * @param frame the frame to open when going back
-     */
-    public void setBackFrame(GuiFrame frame) {
-        this.backFrame = frame;
-    }
 
     @Override
     public void render() {
@@ -136,10 +126,10 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
     }
 
     /**
-     * Renders a back button if a {@link #backFrame} is set.
+     * Renders a back button if a {@link #getBackframe()} is set.
      */
     protected void renderBackButton() {
-        if (backFrame == null) return;
+        if (getBackframe() == null) return;
 
         setItem(GUIItem.builder()
                 .slot(getBackButtonSlot())
@@ -148,7 +138,7 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
                         .lore("§7Return to previous menu.")
                         .build())
                 .cancelPolicy(CancelPolicy.ALWAYS)
-                .onClick(ClickType.LEFT, ctx -> ctx.getGuiManager().open(ctx.getPlayer(), backFrame))
+                .onClick(ClickType.LEFT, ctx -> ctx.getGuiManager().open(ctx.getPlayer(), getBackframe()))
                 .build());
     }
 

@@ -6,7 +6,6 @@ import lootcrate.gui.GUIItem;
 import lootcrate.gui.frame.GuiFrame;
 import lootcrate.gui.frame.PageableGuiFrame;
 import lootcrate.managers.CacheManager;
-import lootcrate.managers.CrateManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.utils.ItemBuilder;
@@ -14,7 +13,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class CrateRewardFrame extends PageableGuiFrame<CrateItem> {

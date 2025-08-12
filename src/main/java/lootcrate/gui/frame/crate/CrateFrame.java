@@ -91,7 +91,6 @@ public class CrateFrame extends AbstractGuiFrame {
                 .cancelPolicy(CancelPolicy.ALWAYS)
                 .onClick(ClickType.LEFT, ctx -> {
                     ctx.getGuiManager().open(ctx.getPlayer(), new CrateKeyFrame(plugin, ctx.getPlayer(), crate, this));
-                    // TODO
                 })
                 .build());
 
@@ -104,8 +103,7 @@ public class CrateFrame extends AbstractGuiFrame {
                         .build())
                 .cancelPolicy(CancelPolicy.ALWAYS)
                 .onClick(ClickType.LEFT, ctx -> {
-                    ctx.getPlayer().sendMessage("§aOpening options...");
-                    // TODO
+                    ctx.getGuiManager().open(ctx.getPlayer(), new CrateOptionFrame(plugin, ctx.getPlayer(), crate, this));
                 })
                 .build());
 
