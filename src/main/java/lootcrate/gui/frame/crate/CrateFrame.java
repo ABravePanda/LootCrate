@@ -84,13 +84,13 @@ public class CrateFrame extends AbstractGuiFrame {
         // Crate Properties (name, id, etc.)
         setItem(GUIItem.builder()
                 .slot(23)
-                .itemStack(new ItemBuilder(Material.NAME_TAG, plugin)
-                        .name("§aCrate Properties")
-                        .lore("§7Edit the crate's name,", "§7ID and description.")
+                .itemStack(new ItemBuilder(Material.TRIPWIRE_HOOK, plugin)
+                        .name("§aCrate Key")
+                        .lore("§7Edit the crate's key,", "§7Set a new crate key.")
                         .build())
                 .cancelPolicy(CancelPolicy.ALWAYS)
                 .onClick(ClickType.LEFT, ctx -> {
-                    ctx.getPlayer().sendMessage("§aOpening property editor...");
+                    ctx.getGuiManager().open(ctx.getPlayer(), new CrateKeyFrame(plugin, ctx.getPlayer(), crate, this));
                     // TODO
                 })
                 .build());

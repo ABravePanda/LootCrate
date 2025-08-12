@@ -12,19 +12,58 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Abstract GUI frame implementation for paginated content.
+ * <p>
+ * Extends {@link AbstractGuiFrame} and provides:
+ * <ul>
+ *   <li>Page navigation (next/previous buttons)</li>
+ *   <li>Back button to return to another {@link GuiFrame}</li>
+ *   <li>Border rendering</li>
+ *   <li>Automated paging of a list of elements</li>
+ * </ul>
+ * <p>
+ * Subclasses must implement:
+ * <ul>
+ *   <li>{@link #getElements()} — to provide the full list of items</li>
+ *   <li>{@link #buildItem(Object, int)} — to convert an element into a {@link GUIItem}</li>
+ * </ul>
+ *
+ * @param <T> the type of elements being paginated
+ */
 public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
 
+    /** The currently displayed page index (0-based). */
     protected int currentPage = 0;
+
+    /** Number of elements to display per page. */
     protected final int itemsPerPage;
+
+    /** Cached list of all elements to display. */
     protected List<T> cachedElements = Collections.emptyList();
 
+    /** Optional frame to return to when pressing the back button. */
     private GuiFrame backFrame = null;
 
+    /**
+     * Creates a new paginated GUI frame.
+     *
+     * @param plugin        the owning plugin
+     * @param size          the inventory size
+     * @param title         the inventory title
+     * @param viewer        the player viewing this GUI
+     * @param itemsPerPage  the number of items per page
+     */
     public PageableGuiFrame(JavaPlugin plugin, int size, String title, Player viewer, int itemsPerPage) {
         super(plugin, size, title, viewer);
         this.itemsPerPage = itemsPerPage;
     }
 
+    /**
+     * Sets the frame to return to when pressing the back button.
+     *
+     * @param frame the frame to open when going back
+     */
     public void setBackFrame(GuiFrame frame) {
         this.backFrame = frame;
     }
@@ -40,6 +79,11 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
         renderBackButton();
     }
 
+    /**
+     * Renders a specific page of elements into the content slots.
+     *
+     * @param page the page index (0-based)
+     */
     protected void renderPage(int page) {
         List<Integer> contentSlots = getContentSlots();
 
@@ -54,6 +98,9 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
         }
     }
 
+    /**
+     * Renders navigation buttons for moving between pages.
+     */
     protected void renderNavigation() {
         int maxPage = getMaxPage();
 
@@ -88,6 +135,9 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
         }
     }
 
+    /**
+     * Renders a back button if a {@link #backFrame} is set.
+     */
     protected void renderBackButton() {
         if (backFrame == null) return;
 
@@ -102,6 +152,9 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
                 .build());
     }
 
+    /**
+     * Renders a decorative border around the content area.
+     */
     protected void renderBorder() {
         ItemStack filler = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE, plugin)
                 .name(" ")
@@ -118,14 +171,30 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
         }
     }
 
+    /**
+     * @return the maximum page index (0-based)
+     */
     private int getMaxPage() {
         return Math.max((cachedElements.size() - 1) / itemsPerPage, 0);
     }
 
+    /**
+     * @return the complete list of elements to be displayed
+     */
     protected abstract List<T> getElements();
 
+    /**
+     * Builds a {@link GUIItem} for a given element.
+     *
+     * @param element the element to display
+     * @param slot    the target slot index
+     * @return the built GUI item, or {@code null} for an empty slot
+     */
     protected abstract GUIItem buildItem(T element, int slot);
 
+    /**
+     * @return the list of slot indices used for content items
+     */
     protected List<Integer> getContentSlots() {
         return List.of(
                 10, 11, 12, 13, 14, 15, 16,
@@ -134,15 +203,18 @@ public abstract class PageableGuiFrame<T> extends AbstractGuiFrame {
         );
     }
 
+    /** @return the slot index for the "previous page" button. */
     protected int getPreviousButtonSlot() {
         return size - 6;
     }
 
+    /** @return the slot index for the "next page" button. */
     protected int getNextButtonSlot() {
         return size - 4;
     }
 
+    /** @return the slot index for the "back" button (default: bottom left). */
     protected int getBackButtonSlot() {
-        return size - 9; // usually bottom left slot
+        return size - 9;
     }
 }

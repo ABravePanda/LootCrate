@@ -5,6 +5,8 @@ import lootcrate.gui.CancelPolicy;
 import lootcrate.gui.GUIItem;
 import lootcrate.gui.frame.GuiFrame;
 import lootcrate.gui.frame.PageableGuiFrame;
+import lootcrate.managers.CacheManager;
+import lootcrate.managers.CrateManager;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.utils.ItemBuilder;
@@ -64,6 +66,7 @@ public class CrateRewardFrame extends PageableGuiFrame<CrateItem> {
                 })
                 .onClick(ClickType.RIGHT, ctx -> {
                     crate.getItems().remove(reward);
+                    ctx.getPlugin().getManager(CacheManager.class).update(crate);
                     ctx.getPlayer().sendMessage("§cRemoved reward item.");
                     render(); // Refresh display
                 })
