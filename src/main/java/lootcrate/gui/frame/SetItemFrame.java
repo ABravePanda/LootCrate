@@ -25,17 +25,18 @@ public class SetItemFrame extends AbstractGuiFrame {
     private final String centerTitle;
     private final String[] centerLore;
 
+    private final ItemStack defaultItem;
+
     private final int itemSlot = 13;
 
-    public SetItemFrame(LootCrate plugin, Player viewer, GuiFrame previousFrame,
-                        String title, String centerTitle, String[] centerLore,
-                        Consumer<ItemStack> onSet, Runnable onCancel) {
+    public SetItemFrame(LootCrate plugin, Player viewer, GuiFrame previousFrame, String title, String centerTitle, String[] centerLore, Consumer<ItemStack> onSet, Runnable onCancel, ItemStack defaultItem) {
         super(plugin, 27, "§8» " + title, viewer);
         this.previousFrame = previousFrame;
         this.onSet = onSet;
         this.onCancel = onCancel;
         this.centerTitle = centerTitle;
         this.centerLore = centerLore;
+        this.defaultItem = defaultItem;
     }
 
     @Override
@@ -82,7 +83,7 @@ public class SetItemFrame extends AbstractGuiFrame {
         // Item Slot (player can place here)
         setItem(GUIItem.builder()
                 .slot(itemSlot)
-                .itemStack(new ItemBuilder(Material.AIR, getJavaPlugin()).build())
+                .itemStack(defaultItem.clone())
                 .cancelPolicy(CancelPolicy.NEVER) // allow placing items
                 .build());
     }
@@ -95,9 +96,9 @@ public class SetItemFrame extends AbstractGuiFrame {
                     .itemStack(item.clone())
                     .cancelPolicy(CancelPolicy.NEVER)
                     .build());
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override

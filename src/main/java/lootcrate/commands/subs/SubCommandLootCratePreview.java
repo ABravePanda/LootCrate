@@ -6,10 +6,13 @@ import lootcrate.commands.SubCommand;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
+import lootcrate.managers.CrateManager;
 import lootcrate.objects.Crate;
+import lootcrate.objects.CrateItem;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -62,6 +65,9 @@ public class SubCommandLootCratePreview extends SubCommand {
 
         messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_PREVIEW_SUCCESS,
                 ImmutableMap.of(Placeholder.CRATE_NAME, crate.getName(), Placeholder.CRATE_ID, "" + crate.getId()));
+
+        CrateItem reward = crate.getItems().get(0);
+        plugin.getManager(CrateManager.class).giveReward(reward, (Player) sender, crate);
     }
 
     @Override

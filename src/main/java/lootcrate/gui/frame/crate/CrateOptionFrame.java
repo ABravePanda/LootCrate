@@ -1,11 +1,13 @@
 package lootcrate.gui.frame.crate;
 
 import lootcrate.LootCrate;
+import lootcrate.enums.ChatState;
 import lootcrate.enums.CrateOptionType;
 import lootcrate.gui.CancelPolicy;
 import lootcrate.gui.GUIItem;
 import lootcrate.gui.frame.GuiFrame;
 import lootcrate.gui.frame.PageableGuiFrame;
+import lootcrate.managers.ChatManager;
 import lootcrate.managers.CrateManager;
 import lootcrate.managers.LocationManager;
 import lootcrate.objects.Crate;
@@ -57,6 +59,9 @@ public class CrateOptionFrame extends PageableGuiFrame<CrateOptionFrame.CrateOpt
                                 "§b" + crateOption.getValue().toString()
                         )
                         .build())
+//                .onClick(ClickType.LEFT, clickContext -> {
+//                    clickContext.getPlugin().getManager(ChatManager.class).addPlayer(clickContext.getPlayer(), ChatState.
+//                })
                 .cancelPolicy(CancelPolicy.ALWAYS)
                 .build();
     }

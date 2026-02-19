@@ -11,6 +11,7 @@ import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
 import lootcrate.gui.event.listener.GuiClickListener;
+import lootcrate.logging.RewardLogManager;
 import lootcrate.managers.*;
 import lootcrate.objects.*;
 import org.bstats.bukkit.Metrics;
@@ -45,9 +46,16 @@ public class LootCrate extends JavaPlugin {
         registerConfig();
         createManagersMap();
 
-        registerEvents(new LootCrateInteractListener(this), new CrateAccessListener(this), new CrateOpenListener(this),
-                new CrateViewListener(this), new GuiManager(this), new GuiClickListener(this), new PlayerJoinListener(this),
-                new PlayerChatListener(this));
+        registerEvents(
+                new LootCrateInteractListener(this),
+                new CrateAccessListener(this),
+                new CrateOpenListener(this),
+                new CrateViewListener(this),
+                new GuiManager(this),
+                new GuiClickListener(this),
+                new PlayerJoinListener(this),
+                new PlayerChatListener(this)
+        );
 
 
         toggleManagers(true);
@@ -97,6 +105,7 @@ public class LootCrate extends JavaPlugin {
         managersMap.put(13, new CommandManager(this));
         managersMap.put(14, new ChatManager(this));
         managersMap.put(15, new CooldownManager(this));
+        managersMap.put(16, new RewardLogManager(this));
 
     }
 

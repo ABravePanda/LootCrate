@@ -100,7 +100,8 @@ public class CrateKeyFrame extends AbstractGuiFrame {
                                 plugin.getManager(CacheManager.class).update(crate);
                                 ctx.getPlayer().sendMessage("§aCrate key set to: §f" + item.getType());
                             },
-                            () -> ctx.getPlayer().sendMessage("§7Cancelled setting crate key.")
+                            () -> ctx.getPlayer().sendMessage("§7Cancelled setting crate key."),
+                            crate.getKey() != null ? crate.getKey().getItem() : new ItemStack(Material.AIR)
                     );
                     plugin.getManager(GuiManager.class).open(ctx.getPlayer(), frame);
                 })

@@ -85,6 +85,9 @@ public class LootCrateCommand extends Command {
             case "option":
                 new SubCommandLootCrateOption(plugin, sender, args).runSubCommand(true);
                 break;
+            case "log":
+                new SubCommandLootCrateLog(plugin, sender, args).runSubCommand(true);
+                break;
             default:
                 plugin.getManager(MessageManager.class).sendMessage(sender, Message.LOOTCRATE_BASIC_USAGE, null);
                 break;
@@ -173,6 +176,8 @@ public class LootCrateCommand extends Command {
                 return new SubCommandLootCrateClaim(plugin, sender, args).runTabComplete();
             case "option":
                 return new SubCommandLootCrateOption(plugin, sender, args).runTabComplete();
+            case "log":
+                return new SubCommandLootCrateLog(plugin, sender, args).runTabComplete();
             default:
                 return list;
         }

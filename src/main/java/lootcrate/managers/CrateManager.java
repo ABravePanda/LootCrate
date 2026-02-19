@@ -2,6 +2,8 @@ package lootcrate.managers;
 
 import lootcrate.LootCrate;
 import lootcrate.enums.*;
+import lootcrate.logging.RewardLogManager;
+import lootcrate.logging.RewardRecord;
 import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import lootcrate.objects.RandomCollection;
@@ -102,7 +104,7 @@ public class CrateManager extends BasicManager {
 
     }
 
-    public void giveReward(CrateItem crateItem, Player p, String crateName) {
+    public void giveReward(CrateItem crateItem, Player p, Crate crate) {
         int rnd = this.getPlugin().getManager(CrateManager.class).getRandomAmount(crateItem);
 
         if (!crateItem.isDisplay()) {
@@ -123,9 +125,12 @@ public class CrateManager extends BasicManager {
                                 ? crateItem.getItem().getItemMeta().getDisplayName()
                                 : crateItem.getItem().getType().toString()
                         )
-                        .replace("{crate_name}", crateName)
+                        .replace("{crate_name}", crate.getName())
                 );
         }
+
+        RewardRecord rewardRecord = new RewardRecord(p.getUniqueId(), crate, crateItem, rnd);
+        getPlugin().getManager(RewardLogManager.class).logAsync(rewardRecord);
 
     }
 

@@ -196,5 +196,4 @@ public class Crate implements ConfigurationSerializable {
         return item;
     }
 
-
 }
