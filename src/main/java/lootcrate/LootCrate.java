@@ -51,7 +51,6 @@ public class LootCrate extends JavaPlugin {
                 new CrateAccessListener(this),
                 new CrateOpenListener(this),
                 new CrateViewListener(this),
-                new GuiManager(this),
                 new GuiClickListener(this),
                 new PlayerJoinListener(this),
                 new PlayerChatListener(this)

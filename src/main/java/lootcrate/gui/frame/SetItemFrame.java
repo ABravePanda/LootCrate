@@ -5,6 +5,7 @@ import lootcrate.gui.CancelPolicy;
 import lootcrate.gui.GUIItem;
 import lootcrate.managers.GuiManager;
 import lootcrate.utils.ItemBuilder;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -36,7 +37,11 @@ public class SetItemFrame extends AbstractGuiFrame {
         this.onCancel = onCancel;
         this.centerTitle = centerTitle;
         this.centerLore = centerLore;
-        this.defaultItem = defaultItem;
+        if(defaultItem == null) {
+            this.defaultItem = new ItemBuilder(Material.BELL, getJavaPlugin()).name(ChatColor.RED + "DefaultItem is null").build();
+        } else {
+            this.defaultItem = defaultItem;
+        }
     }
 
     @Override

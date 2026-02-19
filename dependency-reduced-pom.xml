@@ -44,7 +44,7 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.3.1</version>
         <configuration>
-          <outputDirectory>E:\Spigot Test Servers\1.21\plugins</outputDirectory>
+          <outputDirectory>E:\Spigot Test Servers\1.21.11\plugins</outputDirectory>
         </configuration>
       </plugin>
       <plugin>
