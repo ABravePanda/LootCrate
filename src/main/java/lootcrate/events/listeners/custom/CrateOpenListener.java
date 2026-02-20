@@ -5,7 +5,11 @@ import lootcrate.LootCrate;
 import lootcrate.enums.Message;
 import lootcrate.enums.Option;
 import lootcrate.enums.Placeholder;
+import lootcrate.enums.AnimationStyle;
+import lootcrate.enums.CrateOptionType;
 import lootcrate.events.custom.CrateOpenEvent;
+import lootcrate.gui.frame.GuiFrame;
+import lootcrate.gui.frame.crate.CrateOpeningAnimationFrame;
 import lootcrate.managers.*;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
@@ -94,28 +98,23 @@ public class CrateOpenListener implements Listener {
     }
 
     private void openAnimation(Crate crate, Player p) {
-//        AnimatedFrame frame = null;
-//        CrateOption opt = crate.getOption(CrateOptionType.ANIMATION_STYLE);
-//        AnimationStyle type = AnimationStyle.valueOf((String) opt.getValue());
-//        switch (type) {
-//            case CSGO:
-//                frame = new CrateCSGOAnimationFrame(plugin, p, crate);
-//                break;
-//            case REMOVING_ITEM:
-//                frame = new CrateRemovingItemAnimationFrame(plugin, p, crate);
-//                break;
-//            case NONE:
-//                plugin.getManager(CrateManager.class).giveReward(plugin.getManager(CrateManager.class).getRandomItem(crate), p, crate.getName());
-//                return;
-//            default:
-//                frame = new CrateRandomGlassAnimationFrame(plugin, p, crate);
-//                break;
-//
-//        }
-//
-//        plugin.getManager(InventoryManager.class).openFrame(p, frame);
-//
-//        frame.showAnimation();
+        AnimationStyle type = AnimationStyle.RANDOM_GLASS;
+        if (crate.getOption(CrateOptionType.ANIMATION_STYLE) != null && crate.getOption(CrateOptionType.ANIMATION_STYLE).getValue() != null) {
+            String configured = crate.getOption(CrateOptionType.ANIMATION_STYLE).getValue().toString();
+            try {
+                type = AnimationStyle.valueOf(configured.toUpperCase());
+            } catch (IllegalArgumentException ignored) {
+                // keep default
+            }
+        }
+
+        if (type == AnimationStyle.NONE) {
+            plugin.getManager(CrateManager.class).giveReward(plugin.getManager(CrateManager.class).getRandomItem(crate), p, crate);
+            return;
+        }
+
+        GuiFrame frame = new CrateOpeningAnimationFrame(plugin, p, crate);
+        plugin.getManager(GuiManager.class).open(p, frame);
     }
 
 }
