@@ -9,6 +9,7 @@ import lootcrate.utils.SoundUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -18,13 +19,22 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class CrateManager extends BasicManager {
 
+    private final CacheManager cacheManager;
+    private final MessageManager messageManager;
+    private final OptionManager optionManager;
+    private final KeyCacheManager keyCacheManager;
+
     /**
      * Constructor for CrateManager
      *
      * @param plugin An instance of the plugin
      */
-    public CrateManager(LootCrate plugin) {
+    public CrateManager(LootCrate plugin, CacheManager cacheManager, MessageManager messageManager, OptionManager optionManager, KeyCacheManager keyCacheManager) {
         super(plugin);
+        this.cacheManager = cacheManager;
+        this.messageManager = messageManager;
+        this.optionManager = optionManager;
+        this.keyCacheManager = keyCacheManager;
     }
 
     /**
@@ -88,7 +98,7 @@ public class CrateManager extends BasicManager {
             int soundVolume = 1;
             if (crate.getOption(CrateOptionType.SOUND_VOLUME) != null)
                 soundVolume = (int) crate.getOption(CrateOptionType.SOUND_VOLUME).getValue();
-            Sounds sound = SoundUtils.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue());
+            SoundKey sound = SoundUtils.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue());
             SoundUtils.playSound(p, sound, soundVolume, 1);
         }
 
@@ -96,15 +106,21 @@ public class CrateManager extends BasicManager {
         if (crate.getOption(CrateOptionType.OPEN_MESSAGE).getValue() != null) {
             if (crate.getOption(CrateOptionType.OPEN_MESSAGE).getValue().toString().equalsIgnoreCase("none"))
                 return;
-            p.sendMessage(this.getPlugin().getManager(MessageManager.class).getPrefix()
+            p.sendMessage(messageManager.getPrefix()
                     + ChatColor.translateAlternateColorCodes('&', crate.getOption(CrateOptionType.OPEN_MESSAGE)
                     .getValue().toString().replace("{crate_name}", crate.getName())));
         }
 
     }
 
-    public void giveReward(CrateItem crateItem, Player p, String crateName) {
-        int rnd = this.getPlugin().getManager(CrateManager.class).getRandomAmount(crateItem);
+    public void giveReward(CrateItem crateItem, Player p, String crateName, World originWorld, Crate crate) {
+        if (originWorld != null && !p.getWorld().equals(originWorld) && !optionManager.<Boolean>valueOf(Option.ALLOW_REWARD_ON_WORLD_CHANGE)) {
+            keyCacheManager.update(p.getUniqueId(), crate);
+            messageManager.sendMessage(p, Message.LOOTCRATE_WORLD_CHANGED, null);
+            return;
+        }
+
+        int rnd = this.getRandomAmount(crateItem);
 
         if (!crateItem.isDisplay()) {
             for (int i = 0; i < rnd; i++)
@@ -114,7 +130,7 @@ public class CrateManager extends BasicManager {
         int i = 1;
 
         for (String cmd : crateItem.getCommands()) {
-            if (this.getPlugin().getManager(OptionManager.class).valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
+            if (optionManager.<Boolean>valueOf(Option.DISPATCH_COMMAND_ITEM_AMOUNT))
                 i = rnd;
             for (int j = 0; j < i; j++)
                 Bukkit.dispatchCommand(this.getPlugin().getServer().getConsoleSender(), cmd
@@ -151,7 +167,7 @@ public class CrateManager extends BasicManager {
 
     public Crate getCrateFromItemID(int id)
     {
-        List<Crate> crates = this.getPlugin().getManager(CacheManager.class).getCache();
+        List<Crate> crates = cacheManager.getCache();
         for(Crate crate : crates)
             for(CrateItem item : crate.getItems())
                 if(item.getId() == id) return crate;

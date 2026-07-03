@@ -1,5 +1,7 @@
 package lootcrate;
 
+import lootcrate.core.ports.TaskScheduler;
+import lootcrate.core.ports.WorldLookup;
 import lootcrate.enums.*;
 import lootcrate.events.listeners.LootCrateInteractListener;
 import lootcrate.events.listeners.PlayerChatListener;
@@ -8,6 +10,8 @@ import lootcrate.events.listeners.custom.CrateAccessListener;
 import lootcrate.events.listeners.custom.CrateOpenListener;
 import lootcrate.events.listeners.custom.CrateViewListener;
 import lootcrate.gui.events.listeners.GUICloseListener;
+import lootcrate.infra.bukkit.BukkitTaskScheduler;
+import lootcrate.infra.bukkit.BukkitWorldLookup;
 import lootcrate.managers.*;
 import lootcrate.objects.*;
 import org.bukkit.ChatColor;
@@ -51,7 +55,7 @@ public class LootCrate extends JavaPlugin {
 
         if(isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
         {
-            holoManager = new HologramManager(this);
+            holoManager = new HologramManager(this, getManager(OptionManager.class), getManager(LocationManager.class));
             toggleManager(true, holoManager);
         }
 
@@ -81,21 +85,40 @@ public class LootCrate extends JavaPlugin {
 
         managersMap = new HashMap<>();
 
-        managersMap.put(1, new OptionManager(this));
-        managersMap.put(2, new UpdateManager(this));
-        managersMap.put(3, new MessageManager(this));
-        managersMap.put(4, new FileManager(this));
-        managersMap.put(5, new CustomizationManager(this));
-        managersMap.put(6, new CrateFileManager(this));
-        managersMap.put(7, new CacheManager(this));
-        managersMap.put(8, new CrateManager(this));
-        managersMap.put(9, new KeyFileManager(this));
-        managersMap.put(10, new KeyCacheManager(this));
-        managersMap.put(11, new LocationManager(this));
-        managersMap.put(12, new InventoryManager(this));
-        managersMap.put(13, new CommandManager(this));
-        managersMap.put(14, new ChatManager(this));
-        managersMap.put(15, new CooldownManager(this));
+        WorldLookup worldLookup = new BukkitWorldLookup();
+        TaskScheduler taskScheduler = new BukkitTaskScheduler(this);
+
+        OptionManager optionManager = new OptionManager(this);
+        MessageManager messageManager = new MessageManager(this);
+        FileManager fileManager = new FileManager(this);
+        CustomizationManager customizationManager = new CustomizationManager(this);
+        CrateFileManager crateFileManager = new CrateFileManager(this);
+        CacheManager cacheManager = new CacheManager(this, crateFileManager);
+        KeyFileManager keyFileManager = new KeyFileManager(this);
+        KeyCacheManager keyCacheManager = new KeyCacheManager(this, keyFileManager, cacheManager, fileManager);
+        CrateManager crateManager = new CrateManager(this, cacheManager, messageManager, optionManager, keyCacheManager);
+        LocationManager locationManager = new LocationManager(this, fileManager, cacheManager, worldLookup);
+        InventoryManager inventoryManager = new InventoryManager(this, messageManager);
+        CommandManager commandManager = new CommandManager(this, messageManager, crateManager, locationManager);
+        ChatManager chatManager = new ChatManager(this, messageManager);
+        CooldownManager cooldownManager = new CooldownManager(this, fileManager);
+        UpdateManager updateManager = new UpdateManager(this, optionManager, taskScheduler);
+
+        managersMap.put(1, optionManager);
+        managersMap.put(2, updateManager);
+        managersMap.put(3, messageManager);
+        managersMap.put(4, fileManager);
+        managersMap.put(5, customizationManager);
+        managersMap.put(6, crateFileManager);
+        managersMap.put(7, cacheManager);
+        managersMap.put(8, crateManager);
+        managersMap.put(9, keyFileManager);
+        managersMap.put(10, keyCacheManager);
+        managersMap.put(11, locationManager);
+        managersMap.put(12, inventoryManager);
+        managersMap.put(13, commandManager);
+        managersMap.put(14, chatManager);
+        managersMap.put(15, cooldownManager);
 
     }
 
