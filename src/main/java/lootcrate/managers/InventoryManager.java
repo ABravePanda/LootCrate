@@ -24,13 +24,15 @@ import java.util.*;
 public class InventoryManager extends BasicManager {
 
     private final List<PlayerFrameMatch> matches;
+    private final MessageManager messageManager;
     /**
      * Constructor for InventoryManager
      *
      * @param plugin An instance of the plugin
      */
-    public InventoryManager(LootCrate plugin) {
+    public InventoryManager(LootCrate plugin, MessageManager messageManager) {
         super(plugin);
+        this.messageManager = messageManager;
         this.matches = new ArrayList<PlayerFrameMatch>();
     }
 
@@ -50,7 +52,7 @@ public class InventoryManager extends BasicManager {
                 ItemMeta meta = ItemUtils.getOrCreateItemMeta(itemStack);
                 List<String> lore = meta.getLore() == null ? new ArrayList<>() : meta.getLore();
                 lore.add(" ");
-                lore.add(this.getPlugin().getManager(MessageManager.class).parseMessage(Message.CHANCE,
+                lore.add(messageManager.parseMessage(Message.CHANCE,
                         ImmutableMap.of(Placeholder.ITEM_CHANCE, item.getChance() + "")));
                 meta.setLore(lore);
                 itemStack.setItemMeta(meta);

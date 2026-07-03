@@ -27,10 +27,10 @@ public class HologramManager extends BasicManager implements Manager {
      *
      * @param plugin An instance of the plugin
      */
-    public HologramManager(LootCrate plugin) {
+    public HologramManager(LootCrate plugin, OptionManager optionManager, LocationManager locationManager) {
         super(plugin);
-        this.optionManager = plugin.getManager(OptionManager.class);
-        this.locationManager = plugin.getManager(LocationManager.class);
+        this.optionManager = optionManager;
+        this.locationManager = locationManager;
         this.holograms = new ArrayList<>();
     }
 

@@ -1,8 +1,8 @@
 package lootcrate.managers;
 
 import lootcrate.LootCrate;
+import lootcrate.core.ports.TaskScheduler;
 import org.bukkit.ChatColor;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,6 +16,7 @@ import java.net.URLConnection;
 
 public class UpdateManager extends BasicManager {
     private final OptionManager optionManager;
+    private final TaskScheduler taskScheduler;
     private int project = 0;
     private URL checkURL;
     private String newVersion = "";
@@ -26,9 +27,10 @@ public class UpdateManager extends BasicManager {
      *
      * @param plugin An instance of the plugin
      */
-    public UpdateManager(LootCrate plugin) {
+    public UpdateManager(LootCrate plugin, OptionManager optionManager, TaskScheduler taskScheduler) {
         super(plugin);
-        this.optionManager = plugin.getManager(OptionManager.class);
+        this.optionManager = optionManager;
+        this.taskScheduler = taskScheduler;
         this.newVersion = plugin.getDescription().getVersion();
         this.project = 87046;
         try {
@@ -50,17 +52,14 @@ public class UpdateManager extends BasicManager {
     }
 
     public String getNewVersion() {
-        Bukkit.getScheduler().runTaskAsynchronously(this.getPlugin(), new Runnable() {
-            @Override
-            public void run() {
-                URLConnection con;
-                try {
-                    con = checkURL.openConnection();
-                    newVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+        taskScheduler.runTaskAsynchronously(() -> {
+            URLConnection con;
+            try {
+                con = checkURL.openConnection();
+                newVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         });
         if (newVersion != null)

@@ -5,23 +5,17 @@ import lootcrate.enums.CrateOptionType;
 import lootcrate.enums.FileType;
 import lootcrate.objects.Cooldown;
 import lootcrate.objects.Crate;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.checkerframework.checker.units.qual.A;
 
-import java.io.File;
 import java.util.*;
 
-public class CooldownManager extends FileManager{
+public class CooldownManager extends AbstractFileBackedStore {
 
     private final String PREFIX = "cooldowns";
-    private File cooldownFile;
     private List<Cooldown> cooldowns;
 
-    public CooldownManager(LootCrate plugin) {
-        super(plugin);
+    public CooldownManager(LootCrate plugin, FileManager fileManager) {
+        super(plugin, fileManager);
     }
 
     @Override
@@ -36,8 +30,8 @@ public class CooldownManager extends FileManager{
     }
 
     private void loadFile() {
-        cooldownFile = createFile(FileType.COOLDOWNS);
-        FileConfiguration configuration = getConfiguration(cooldownFile);
+        loadConfig(FileType.COOLDOWNS);
+        FileConfiguration configuration = config;
 
         if (configuration.contains(PREFIX)) {
             List<Map<String, Object>> serializedCooldowns = (List<Map<String, Object>>) configuration.getList(PREFIX);
@@ -51,15 +45,13 @@ public class CooldownManager extends FileManager{
     }
 
     private void saveFile() {
-        FileConfiguration configuration = getConfiguration(cooldownFile);
-
         List<Map<String, Object>> serializedCooldowns = new ArrayList<>();
         for (Cooldown cooldown : cooldowns) {
             serializedCooldowns.add(cooldown.serialize());
         }
 
-        configuration.set(PREFIX, serializedCooldowns);
-        saveFile(cooldownFile, configuration);
+        config.set(PREFIX, serializedCooldowns);
+        saveConfig();
     }
 
 
