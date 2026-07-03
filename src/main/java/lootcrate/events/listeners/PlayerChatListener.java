@@ -62,10 +62,10 @@ public class PlayerChatListener implements Listener {
                 messageManager.sendMessage(p, Message.LOOTCRATE_MESSAGE_CHANGED, ImmutableMap.of(Placeholder.MESSAGE, ChatColor.translateAlternateColorCodes('&', e.getMessage())));
                 break;
             case CHANGE_CRATE_SOUND:
-                Sounds sound = Sounds.fromKey(e.getMessage());
+                SoundKey sound = SoundKey.fromKey(e.getMessage());
                 if (sound == null)
                     return;
-                crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.toString()));
+                crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.getKey()));
                 SoundUtils.playSound(p, sound, 1, 1);
                 messageManager.sendMessage(p, Message.LOOTCRATE_SOUND_CHANGED, ImmutableMap.of(Placeholder.SOUND_NAME, sound.getKey()));
                 break;
