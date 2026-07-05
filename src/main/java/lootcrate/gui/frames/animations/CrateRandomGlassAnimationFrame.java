@@ -11,6 +11,7 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,6 +24,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
 
     private final LootCrate plugin;
     private final Crate crate;
+    private final World originWorld;
     private long backgroundSpeed = 2;
     private long rewardSpeed = 3;
     private int duration = 6;
@@ -34,6 +36,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
 
         this.plugin = plugin;
         this.crate = crate;
+        this.originWorld = p.getWorld();
         this.customizationManager = plugin.getManager(CustomizationManager.class);
         this.duration = (int) customizationManager.parseLong(CustomizationOption.RND_ANIMATION_DURATION);
         this.rewardSpeed = customizationManager.parseLong(CustomizationOption.RND_ANIMATION_SCROLL_SPEED);
@@ -106,7 +109,7 @@ public class CrateRandomGlassAnimationFrame extends AnimatedFrame implements Lis
     }
 
     private void giveRewards(CrateItem crateItem) {
-        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName());
+        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName(), originWorld, crate);
     }
 
     private Material randomGlass() {

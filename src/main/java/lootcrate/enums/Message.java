@@ -59,6 +59,7 @@ public enum Message {
     LOOTCRATE_OPEN("lootcrate-open"),
     LOOTCRATE_COOLDOWN_IN_EFFECT("lootcrate-cooldown-in-effect"),
     LOOTCRATE_INCORRECT_KEY("lootcrate-wrong-key"),
+    LOOTCRATE_WORLD_CHANGED("lootcrate-world-changed"),
 
     LOOTCRATE_CHANGE_CRATE_NAME("lootcrate-change-crate-name"),
     LOOTCRATE_CHANGE_CRATE_MESSAGE("lootcrate-change-crate-message"),

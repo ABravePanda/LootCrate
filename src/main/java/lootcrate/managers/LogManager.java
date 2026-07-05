@@ -10,9 +10,9 @@ public abstract class LogManager extends BasicManager {
     private final FileManager fileManager;
     private File logFile;
 
-    public LogManager(LootCrate plugin) {
+    public LogManager(LootCrate plugin, FileManager fileManager) {
         super(plugin);
-        this.fileManager = getPlugin().getManager(FileManager.class);
+        this.fileManager = fileManager;
         this.logFile = createLog();
     }
 

@@ -11,6 +11,7 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +20,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
 
     private final LootCrate plugin;
     private final Crate crate;
+    private final World originWorld;
     private long rewardSpeed = 3;
     private int duration = 6;
     private int taskID;
@@ -29,6 +31,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
 
         this.plugin = plugin;
         this.crate = crate;
+        this.originWorld = p.getWorld();
         this.customizationManager = plugin.getManager(CustomizationManager.class);
         this.duration = (int) customizationManager.parseLong(CustomizationOption.CSGO_ANIMATION_DURATION);
         this.rewardSpeed = customizationManager.parseLong(CustomizationOption.CSGO_ANIMATION_SCROLL_SPEED);
@@ -98,7 +101,7 @@ public class CrateCSGOAnimationFrame extends AnimatedFrame implements Listener {
     }
 
     private void giveRewards(CrateItem crateItem) {
-        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName());
+        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName(), originWorld, crate);
     }
 
     public void fillBackground(Material m, String name, boolean showRewardsPointer) {

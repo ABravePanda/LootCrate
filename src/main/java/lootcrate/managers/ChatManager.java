@@ -14,15 +14,16 @@ import java.util.HashMap;
 
 public class ChatManager extends BasicManager {
     private final HashMap<Player, ChatState> map;
-    private MessageManager messageManager;
+    private final MessageManager messageManager;
 
     /**
      * Constructor of ChatManager
      *
      * @param plugin Instance of plugin
      */
-    public ChatManager(LootCrate plugin) {
+    public ChatManager(LootCrate plugin, MessageManager messageManager) {
         super(plugin);
+        this.messageManager = messageManager;
         map = new HashMap<Player, ChatState>();
     }
 
@@ -78,7 +79,6 @@ public class ChatManager extends BasicManager {
 
     @Override
     public void enable() {
-        this.messageManager = getPlugin().getManager(MessageManager.class);
     }
 
     @Override

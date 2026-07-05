@@ -141,6 +141,12 @@ public abstract class BaseFrame implements Frame, Listener, Pageable {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
+    protected void unregisterItems() {
+        for (GUIItem item : getContents())
+            if (item != null)
+                org.bukkit.event.HandlerList.unregisterAll(item);
+    }
+
     @Override
     public void fillBackground(Material m) {
         for (int i = 0; i < getInventory().getSize(); i++) {
@@ -212,6 +218,16 @@ public abstract class BaseFrame implements Frame, Listener, Pageable {
         if (e.getInventory() != this.getInventory())
             return;
         e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onInventoryCloseEvent(InventoryCloseEvent e) {
+        if (!e.getPlayer().equals(this.getViewer()))
+            return;
+        if (e.getInventory() != this.getInventory())
+            return;
+        unregisterItems();
+        unregisterFrame();
     }
 
 

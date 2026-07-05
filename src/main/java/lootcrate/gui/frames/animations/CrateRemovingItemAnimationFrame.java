@@ -11,6 +11,7 @@ import lootcrate.objects.Crate;
 import lootcrate.objects.CrateItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,6 +25,7 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
     private Material fillMaterial = Material.RED_STAINED_GLASS_PANE;
     private final LootCrate plugin;
     private final Crate crate;
+    private final World originWorld;
     private long rewardSpeed = 3;
     private int taskID;
     private List<Integer> numList;
@@ -35,6 +37,7 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
 
         this.plugin = plugin;
         this.crate = crate;
+        this.originWorld = p.getWorld();
         this.customizationManager = plugin.getManager(CustomizationManager.class);
         this.rewardSpeed = customizationManager.parseLong(CustomizationOption.REMOVING_ANIMATION_DURATION);
         this.fillMaterial = customizationManager.parseMaterial(CustomizationOption.REMOVING_ANIMATION_FILLER_MATERIAL);
@@ -95,7 +98,7 @@ public class CrateRemovingItemAnimationFrame extends AnimatedFrame implements Li
     }
 
     private void giveRewards(CrateItem crateItem) {
-        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName());
+        plugin.getManager(CrateManager.class).giveReward(crateItem, getViewer(), crate.getName(), originWorld, crate);
     }
 
     private void initList() {

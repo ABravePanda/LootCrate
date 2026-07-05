@@ -43,6 +43,14 @@ options:
   join-key-notification: true
   # boolean - true/false
 
+  #Should players still receive their reward if they change worlds during the opening animation?
+  #Set this to false if you use per-world inventories (e.g. Multiverse-Inventories), otherwise
+  #players could open a crate in one world, switch worlds during the animation, and receive
+  #the reward in a different world's inventory. If false, the crate's key is refunded and can
+  #be claimed again via /lootcrate claim.
+  allow-reward-on-world-change: true
+  # boolean - true/false
+
     
 #+------------------------------+
 #|                              |
@@ -308,6 +316,9 @@ messages:
   lootcrate-wrong-key: "&cThis is the wrong key to open the LootCrate &e{crate_name}"
   # {crate_name} - Name of crate
   # {crate_id} - Id of crate
+
+  #Used when a player changes world during the opening animation, cancelling the reward
+  lootcrate-world-changed: "&cYou changed worlds while opening the LootCrate, your reward was cancelled."
 
   #Used when cooldown is still in effect for the crate
   lootcrate-cooldown-in-effect: "&cPlease wait &e{time} seconds&c before opening the LootCrate &e{crate_name}&c."

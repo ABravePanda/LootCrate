@@ -15,10 +15,16 @@ import java.io.IOException;
 import java.util.*;
 
 public class KeyCacheManager extends BasicManager {
+    private final KeyFileManager keyFileManager;
+    private final CacheManager cacheManager;
+    private final FileManager fileManager;
     private Map<UUID, List<Integer>> cache;
 
-    public KeyCacheManager(LootCrate plugin) {
+    public KeyCacheManager(LootCrate plugin, KeyFileManager keyFileManager, CacheManager cacheManager, FileManager fileManager) {
         super(plugin);
+        this.keyFileManager = keyFileManager;
+        this.cacheManager = cacheManager;
+        this.fileManager = fileManager;
         cache = new HashMap<>();
     }
 
@@ -63,8 +69,8 @@ public class KeyCacheManager extends BasicManager {
         List<Crate> crateList = new ArrayList<>();
         for(int i : getCrateIDSByUUID(uuid))
         {
-            if(this.getPlugin().getManager(CacheManager.class).getCrateById(i) != null)
-                crateList.add(this.getPlugin().getManager(CacheManager.class).getCrateById(i));
+            if(cacheManager.getCrateById(i) != null)
+                crateList.add(cacheManager.getCrateById(i));
         }
         return crateList;
     }
@@ -88,7 +94,7 @@ public class KeyCacheManager extends BasicManager {
      * Loads the cache
      */
     public void load() {
-        cache = this.getPlugin().getManager(KeyFileManager.class).loadCache();
+        cache = keyFileManager.loadCache();
     }
 
     /**
@@ -97,8 +103,8 @@ public class KeyCacheManager extends BasicManager {
     public void save() {
 
 
-        File f = this.getPlugin().getManager(FileManager.class).getFile(FileType.KEYS);
-        YamlConfiguration config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
+        File f = fileManager.getFile(FileType.KEYS);
+        YamlConfiguration config = fileManager.getConfiguration(f);
 
         for (String key : config.getKeys(false)) {
             config.set(key, null);
@@ -110,7 +116,7 @@ public class KeyCacheManager extends BasicManager {
             e.printStackTrace();
         }
 
-        this.getPlugin().getManager(KeyFileManager.class).saveCache(cache);
+        keyFileManager.saveCache(cache);
     }
 
     public List<Crate> convertIntToCrate(UUID uuid)
@@ -119,7 +125,7 @@ public class KeyCacheManager extends BasicManager {
         List<Crate> crateList = new ArrayList<>();
         for(int i : integerList)
         {
-            crateList.add(this.getPlugin().getManager(CacheManager.class).getCrateById(i));
+            crateList.add(cacheManager.getCrateById(i));
         }
         return crateList;
     }

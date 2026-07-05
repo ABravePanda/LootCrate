@@ -17,10 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CacheManager extends BasicManager {
+    private final CrateFileManager crateFileManager;
     private List<Crate> cache;
 
-    public CacheManager(LootCrate plugin) {
+    public CacheManager(LootCrate plugin, CrateFileManager crateFileManager) {
         super(plugin);
+        this.crateFileManager = crateFileManager;
         cache = new ArrayList<Crate>();
     }
 
@@ -32,14 +34,14 @@ public class CacheManager extends BasicManager {
     //TODO run async
     public void update(Crate crate) {
         crate = verify(crate);
-        getPlugin().getManager(CrateFileManager.class).saveCrate(crate);
+        crateFileManager.saveCrate(crate);
 
         cache.remove(crate);
         cache.add(crate);
     }
 
     public void rename(String oldCrate, Crate Crate) {
-        getPlugin().getManager(CrateFileManager.class).overrideSave(oldCrate, Crate);
+        crateFileManager.overrideSave(oldCrate, Crate);
         cache.remove(oldCrate);
         cache.add(Crate);
     }
@@ -50,7 +52,7 @@ public class CacheManager extends BasicManager {
      * @param Crate Crate to remove
      */
     public void remove(Crate Crate) {
-        getPlugin().getManager(CrateFileManager.class).removeCrate(Crate);
+        crateFileManager.removeCrate(Crate);
         List<Crate> copiedCache = new ArrayList<Crate>(cache);
 
         for (Crate cacheCrate : copiedCache) {
@@ -83,31 +85,10 @@ public class CacheManager extends BasicManager {
     }
 
     /**
-     * @deprecated Loads the cache asynchronously
-     */
-    public void loadAsync(final LootCrate callback) {
-        final long startTime = System.nanoTime();
-        final LootCrate plugin = this.getPlugin();
-        Bukkit.getScheduler().runTaskAsynchronously(this.getPlugin(), new Runnable() {
-            @Override
-            public void run() {
-                cache = plugin.getManager(CrateFileManager.class).loadAllCrates();
-                cache = verify(cache);
-                Bukkit.getScheduler().runTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        //callback.onAsyncDone(startTime);
-                    }
-                });
-            }
-        });
-    }
-
-    /**
      * Loads the cache
      */
     public void load() {
-        cache = getPlugin().getManager(CrateFileManager.class).loadAllCrates();
+        cache = crateFileManager.loadAllCrates();
         cache = verify(cache);
     }
 
@@ -127,7 +108,7 @@ public class CacheManager extends BasicManager {
             }
             if(crate.getOption(CrateOptionType.HOLOGRAM_ENABLED) == null) {
                 crate.addOption(CrateOptionType.HOLOGRAM_ENABLED, true);
-                getPlugin().getManager(CrateFileManager.class).saveCrate(crate);
+                crateFileManager.saveCrate(crate);
             }
             if (crate.getOption(CrateOptionType.ANIMATION_STYLE) == null) {
                 crate.addOption(CrateOptionType.ANIMATION_STYLE, AnimationStyle.RANDOM_GLASS.toString());
@@ -167,7 +148,7 @@ public class CacheManager extends BasicManager {
         }
 
         for (Crate Crate : cache) {
-            getPlugin().getManager(CrateFileManager.class).saveCrate(Crate);
+            crateFileManager.saveCrate(Crate);
         }
     }
 

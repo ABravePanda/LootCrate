@@ -1,43 +1,42 @@
 package lootcrate.managers;
 
 import lootcrate.LootCrate;
+import lootcrate.core.ports.WorldLookup;
 import lootcrate.enums.FileType;
 import lootcrate.objects.Crate;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class LocationManager extends BasicManager {
+public class LocationManager extends AbstractFileBackedStore {
 
     private final Map<Location, Crate> locationList = new LinkedHashMap<Location, Crate>();
 
-    private final CrateManager crateManager;
+    private final CacheManager cacheManager;
+    private final WorldLookup worldLookup;
     private final String locationPrefix = "locations.";
-    File f;
-    FileConfiguration config;
 
     /**
      * Constructor for LocationManager
      *
      * @param plugin Instance of plugin
      */
-    public LocationManager(LootCrate plugin) {
-        super(plugin);
-        this.crateManager = plugin.getManager(CrateManager.class);
-
+    public LocationManager(LootCrate plugin, FileManager fileManager, CacheManager cacheManager, WorldLookup worldLookup) {
+        super(plugin, fileManager);
+        this.cacheManager = cacheManager;
+        this.worldLookup = worldLookup;
     }
 
     /**
      * Reloads the config and repopulates location list
      */
     public void reload() {
-        config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
+        reloadConfig();
         populateLocations();
     }
 
@@ -56,7 +55,7 @@ public class LocationManager extends BasicManager {
         config.set(randomUUID + ".Crate", crate.getId());
         config.set(randomUUID + ".Location", l.serialize());
         try {
-            config.save(f);
+            config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,14 +70,14 @@ public class LocationManager extends BasicManager {
      */
     public void removeCrateLocation(Location l) {
         reload();
-        config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
+        reloadConfig();
         String uuid = findUUIDByLocation(l);
         if (uuid == null)
             return;
         config.set(uuid, null);
         locationList.remove(l);
         try {
-            config.save(f);
+            config.save(file);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -93,13 +92,13 @@ public class LocationManager extends BasicManager {
      */
     public void removeCrateLocation(Crate crate) {
         reload();
-        config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
+        reloadConfig();
         String uuid = findUUIDByCrate(crate);
         if (uuid == null)
             return;
         config.set(uuid, null);
         try {
-            config.save(f);
+            config.save(file);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -116,18 +115,34 @@ public class LocationManager extends BasicManager {
     public String findUUIDByLocation(Location l) {
         reload();
         for (String s : config.getKeys(false)) {
-            MemorySection section = (MemorySection) config.get(s);
-            if (section.get("Location") == null)
+            ConfigurationSection section = config.getConfigurationSection(s + ".Location");
+            if (section == null)
                 continue;
-            if (Bukkit.getWorld((String) section.get("Location.world")) == null)
+            World world = resolveWorld(section);
+            if (world == null)
                 continue;
-            Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")),
-                    (double) section.get("Location.x"), (double) section.get("Location.y"),
-                    (double) section.get("Location.z"));
+            Location loc = new Location(world, section.getDouble("x"), section.getDouble("y"), section.getDouble("z"));
             if (l.equals(loc))
                 return s;
         }
         return null;
+    }
+
+    /**
+     * Resolves the world stored in a serialized Location section, supporting
+     * both the legacy "world" name key and the "world_key" namespaced key.
+     */
+    private World resolveWorld(ConfigurationSection section) {
+        String worldKey = section.getString("world_key");
+        if (worldKey != null) {
+            NamespacedKey key = NamespacedKey.fromString(worldKey.replace("minecraft:", ""));
+            if (key != null) {
+                for (World world : worldLookup.getWorlds())
+                    if (world.getKey().equals(key))
+                        return world;
+            }
+        }
+        return worldLookup.getWorld(section.getString("world", ""));
     }
 
     /**
@@ -142,7 +157,7 @@ public class LocationManager extends BasicManager {
             MemorySection section = (MemorySection) config.get(s);
             if (section.get("Crate") == null)
                 continue;
-            Crate crate2 = this.getPlugin().getManager(CacheManager.class).getCrateById(section.getInt("Crate"));
+            Crate crate2 = cacheManager.getCrateById(section.getInt("Crate"));
             if (crate2 == null)
                 continue;
             if (crate.getId() == crate2.getId())
@@ -157,12 +172,15 @@ public class LocationManager extends BasicManager {
     public void populateLocations() {
         locationList.clear();
         for (String s : config.getKeys(false)) {
-            MemorySection section = (MemorySection) config.get(s);
-            Location loc = new Location(Bukkit.getWorld((String) section.get("Location.world")),
-                    (double) section.get("Location.x"), (double) section.get("Location.y"),
-                    (double) section.get("Location.z"));
-            Crate crate = this.getPlugin().getManager(CacheManager.class).getCrateById(section.getInt("Crate"));
-            if (crate == null || loc == null)
+            ConfigurationSection section = config.getConfigurationSection(s + ".Location");
+            if (section == null)
+                continue;
+            World world = resolveWorld(section);
+            if (world == null)
+                continue;
+            Location loc = new Location(world, section.getDouble("x"), section.getDouble("y"), section.getDouble("z"));
+            Crate crate = cacheManager.getCrateById(config.getInt(s + ".Crate"));
+            if (crate == null)
                 continue;
             locationList.put(loc, crate);
         }
@@ -195,8 +213,7 @@ public class LocationManager extends BasicManager {
 
     @Override
     public void enable() {
-        f = this.getPlugin().getManager(FileManager.class).getFile(FileType.LOCATIONS);
-        config = this.getPlugin().getManager(FileManager.class).getConfiguration(f);
+        loadConfig(FileType.LOCATIONS);
         populateLocations();
     }
 

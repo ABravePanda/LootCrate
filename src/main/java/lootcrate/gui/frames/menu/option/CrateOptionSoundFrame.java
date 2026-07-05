@@ -29,18 +29,20 @@ import java.util.stream.Collectors;
 
 public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftClickAllowed {
 
+    private static final SoundKey DEFAULT_SOUND = SoundKey.fromKey("ui.toast.challenge_complete");
+
     private final LootCrate plugin;
     private final Crate crate;
-    private final List<Sounds> soundList;
+    private final List<SoundKey> soundList;
 
     public CrateOptionSoundFrame(LootCrate plugin, Player p, Crate crate) {
         super(plugin, p, crate.getName());
 
         this.plugin = plugin;
         this.crate = crate;
-        this.soundList = List.of(Sounds.values())
+        this.soundList = SoundKey.values()
                 .stream()
-                .sorted(Comparator.comparing(Sounds::name))
+                .sorted(Comparator.comparing(SoundKey::getKey))
                 .collect(Collectors.toList());
 
         registerFrame();
@@ -90,7 +92,12 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
         InventoryAction action = e.getClickEvent().getAction();
        // if(!action.equals(InventoryAction.PICKUP_ONE) && !action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) return;
 
-        Sounds sound = SoundUtils.valueOf(ChatColor.stripColor(ItemUtils.getOrCreateItemMeta(e.getItem().getItemStack()).getDisplayName().toLowerCase()));
+        SoundKey sound = SoundUtils.valueOf(ChatColor.stripColor(ItemUtils.getOrCreateItemMeta(e.getItem().getItemStack()).getDisplayName().toLowerCase()));
+
+        if (sound == null) {
+            e.setCancelled(true);
+            return;
+        }
 
         if(action.equals(InventoryAction.PICKUP_ALL))
         {
@@ -98,13 +105,14 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
             SoundUtils.playSound(p, sound, 10, 10);
         }
 
-        if(action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY))
+        if(action.equals(InventoryAction.PICKUP_HALF) || action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY))
         {
             crate.setOption(new CrateOption(CrateOptionType.OPEN_SOUND, sound.getKey()));
             e.setCancelled(true);
             plugin.getManager(CacheManager.class).update(crate);
-            new CrateOptionSoundFrame(plugin, p, crate).open();
-            plugin.getManager(MessageManager.class).sendMessage(p, Message.LOOTCRATE_SOUND_CHANGED, ImmutableMap.of(Placeholder.SOUND_NAME, sound.name()));
+            this.close();
+            new CrateOptionMainMenuFrame(plugin, p, crate).open();
+            plugin.getManager(MessageManager.class).sendMessage(p, Message.LOOTCRATE_SOUND_CHANGED, ImmutableMap.of(Placeholder.SOUND_NAME, sound.getKey()));
         }
         e.setCancelled(true);
     }
@@ -117,7 +125,7 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
 
         int itemIndex = (page * usableSize) - usableSize;
         int index = 0;
-        List<Sounds> items = new ArrayList<>(soundList);
+        List<SoundKey> items = new ArrayList<>(soundList);
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && items.size() > itemIndex)
                 this.setItem(index, createGUIItem(index, itemIndex));
@@ -140,7 +148,7 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
 
         int itemIndex = (page * usableSize) - usableSize;
         int index = 0;
-        List<Sounds> items = new ArrayList<>(soundList);
+        List<SoundKey> items = new ArrayList<>(soundList);
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && items.size() > itemIndex)
                 this.setItem(index, createGUIItem(index, itemIndex));
@@ -150,18 +158,16 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
 
     }
 
-    private Sounds getCurrentSound()
+    private SoundKey getCurrentSound()
     {
-        String sound = "";
-        if(crate.getOption(CrateOptionType.OPEN_SOUND).getValue() == null) return Sounds.UI__TOAST__CHALLENGE_COMPLETE;
-        return SoundUtils.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue());
+        if(crate.getOption(CrateOptionType.OPEN_SOUND).getValue() == null) return DEFAULT_SOUND;
+        SoundKey sound = SoundUtils.valueOf((String) crate.getOption(CrateOptionType.OPEN_SOUND).getValue());
+        return sound != null ? sound : DEFAULT_SOUND;
     }
 
     private GUIItem createGUIItem(int index, int itemIndex) {
-        Sounds sound = soundList.get(itemIndex);
-
-        // Get the actual sound key instead of the enum name
-        String soundKey = sound.getKey(); // Assuming `getKey()` returns a NamespacedKey or String
+        SoundKey sound = soundList.get(itemIndex);
+        String soundKey = sound.getKey();
 
         GUIItem item = new GUIItem(index, Material.MUSIC_DISC_FAR, ChatColor.GOLD + soundKey, " ",
                 plugin.getManager(CustomizationManager.class).parseString(CustomizationOption.CRATE_SOUND_LEFT_CLICK_ACTION),
