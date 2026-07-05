@@ -1,6 +1,5 @@
 package lootcrate.enums;
 
-import org.checkerframework.checker.units.qual.min;
 
 public enum CustomizationOption {
     NAVIGATION_BLOCKER_MATERIAL("navigation-blocker-material"),

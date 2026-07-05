@@ -3,14 +3,11 @@ package lootcrate.commands.subs;
 import com.google.common.collect.ImmutableMap;
 import lootcrate.LootCrate;
 import lootcrate.commands.SubCommand;
-import lootcrate.enums.HologramPlugin;
 import lootcrate.enums.Message;
 import lootcrate.enums.Permission;
 import lootcrate.enums.Placeholder;
 import lootcrate.managers.CacheManager;
 import lootcrate.managers.HologramManager;
-import lootcrate.managers.LocationManager;
-import lootcrate.managers.MessageManager;
 import lootcrate.objects.Crate;
 import lootcrate.utils.CommandUtils;
 import lootcrate.utils.TabUtils;
@@ -22,91 +19,92 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SubCommandLootCrateSet extends SubCommand {
+    private final LootCrate plugin;
     private final String[] args;
     private final CommandSender sender;
-    private final LootCrate plugin;
-    private final HologramManager holoManager;
+    private final HologramManager hologramManager;
 
-    /**
-     * Default constructor for any {@link lootcrate.commands.SubCommand}
-     *
-     * @param plugin an instance of {@link lootcrate.LootCrate}
-     * @param sender the {@link org.bukkit.command.CommandSender} which is executing this command
-     * @param args the following arguments in the command string
-     *
-     */
     public SubCommandLootCrateSet(LootCrate plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args, Permission.COMMAND_LOOTCRATE_SET, Permission.COMMAND_LOOTCRATE_ADMIN);
         this.plugin = plugin;
         this.sender = sender;
         this.args = args;
-        this.holoManager = plugin.getHoloManager();
+        this.hologramManager = plugin.getHoloManager();
     }
 
     @Override
     public void runSubCommand(boolean playerRequired) {
-        if (this.testPlayer(playerRequired))
-            return;
+        if (testPlayer(playerRequired) || !testPermissions()) return;
 
-        Player p = (Player) sender;
-
-        if (!this.testPermissions())
-            return;
-
+        Player player = (Player) sender;
 
         if (args.length < 2) {
             messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
             return;
         }
 
-        Location l = p.getTargetBlock(null, 10).getLocation();
-        ImmutableMap<Placeholder, String> map1 = ImmutableMap.of(Placeholder.X, l.getBlockX() + "", Placeholder.Y,
-                l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
-        if (args[1].equalsIgnoreCase("none")) {
-            locationManager.removeCrateLocation(l);
+        Location location = player.getTargetBlock(null, 10).getLocation();
 
-            if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
-                plugin.getHoloManager().reload();
-           messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, map1);
+        if (args[1].equalsIgnoreCase("none")) {
+            removeCrateLocation(location);
             return;
         }
 
-        if (CommandUtils.tryParse(args[1]) == null) {
+        Integer crateId = CommandUtils.tryParse(args[1]);
+        if (crateId == null) {
             messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_USAGE, null);
             return;
         }
 
-        Crate crate = cacheManager.getCrateById(CommandUtils.tryParse(args[1]));
+        Crate crate = cacheManager.getCrateById(crateId);
         if (crate == null) {
-            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND,
-                    ImmutableMap.of(Placeholder.CRATE_ID, "" + CommandUtils.tryParse(args[1])));
+            messageManager.sendMessage(sender, Message.LOOTCRATE_NOT_FOUND, ImmutableMap.of(Placeholder.CRATE_ID, String.valueOf(crateId)));
             return;
         }
-        ImmutableMap<Placeholder, String> map = ImmutableMap.of(Placeholder.CRATE_ID, crate.getId() + "",
-                Placeholder.CRATE_NAME, crate.getName(), Placeholder.X, l.getBlockX() + "", Placeholder.Y,
-                l.getBlockY() + "", Placeholder.Z, l.getBlockZ() + "");
 
-        if(locationManager.getLocationList().containsKey(l))
-        {
-            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, map);
+        ImmutableMap<Placeholder, String> placeholders = getPlaceholders(location, crate);
+
+        if (locationManager.getLocationList().containsKey(location)) {
+            messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_FAILURE, placeholders);
             return;
         }
-        locationManager.addCrateLocation(l, crate);
 
-        // create hologram
-        if(plugin.isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
-            holoManager.createHologram(l.getBlock(), crate);
+        locationManager.addCrateLocation(location, crate);
+        hologramManager.createHologram(location.getBlock(), crate);
 
-        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, map);
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_SUCCESS, placeholders);
+    }
+
+    private void removeCrateLocation(Location location) {
+        locationManager.removeCrateLocation(location);
+        hologramManager.reload();
+
+        messageManager.sendMessage(sender, Message.LOOTCRATE_COMMAND_SET_REMOVE_SUCCESS, getLocationPlaceholders(location));
+    }
+
+    private ImmutableMap<Placeholder, String> getLocationPlaceholders(Location location) {
+        return ImmutableMap.of(
+                Placeholder.X, String.valueOf(location.getBlockX()),
+                Placeholder.Y, String.valueOf(location.getBlockY()),
+                Placeholder.Z, String.valueOf(location.getBlockZ())
+        );
+    }
+
+    private ImmutableMap<Placeholder, String> getPlaceholders(Location location, Crate crate) {
+        return ImmutableMap.of(
+                Placeholder.CRATE_ID, String.valueOf(crate.getId()),
+                Placeholder.CRATE_NAME, crate.getName(),
+                Placeholder.X, String.valueOf(location.getBlockX()),
+                Placeholder.Y, String.valueOf(location.getBlockY()),
+                Placeholder.Z, String.valueOf(location.getBlockZ())
+        );
     }
 
     @Override
     public List<String> runTabComplete() {
-        List<String> list = new LinkedList<String>();
+        List<String> list = new LinkedList<>();
 
-        if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_SET.getKey())
-                && !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey()))
-            return list;
+        if (!sender.hasPermission(Permission.COMMAND_LOOTCRATE_SET.getKey()) && !sender.hasPermission(Permission.COMMAND_LOOTCRATE_ADMIN.getKey())) return list;
 
         CacheManager cacheManager = plugin.getManager(CacheManager.class);
 
@@ -115,7 +113,7 @@ public class SubCommandLootCrateSet extends SubCommand {
             list.add("none");
             TabUtils.addCratesNamesToList(list, cacheManager);
         }
+
         return list;
     }
-
 }

@@ -53,11 +53,8 @@ public class LootCrate extends JavaPlugin {
 
         toggleManagers(true);
 
-        if(isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
-        {
-            holoManager = new HologramManager(this, getManager(OptionManager.class), getManager(LocationManager.class));
-            toggleManager(true, holoManager);
-        }
+        holoManager = new HologramManager(this);
+        toggleManager(true, holoManager);
 
         displayIntro();
         startReload();
@@ -125,10 +122,7 @@ public class LootCrate extends JavaPlugin {
     @Override
     public void onDisable() {
         toggleManagers(false);
-        if(isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
-        {
-            toggleManager(false, holoManager);
-        }
+        toggleManager(false, holoManager);
     }
 
     private void registerEvents(Listener... array) {
@@ -202,8 +196,7 @@ public class LootCrate extends JavaPlugin {
         locationManager.reload();
         keyFileManager.reload();
 
-        if (isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
-            holoManager.reload();
+        holoManager.reload();
 
     }
 
@@ -224,9 +217,9 @@ public class LootCrate extends JavaPlugin {
                     + "). Download here: " + updateManager.getResourceURL() + ChatColor.DARK_GRAY + ".");
         Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Loaded " + ChatColor.YELLOW
                 + cacheManager.getCache().size() + ChatColor.DARK_GRAY + " crate(s).");
-        if (isHologramPluginDetected(HologramPlugin.DECENT_HOLOGRAMS))
+        if (holoManager.hasPlugin())
             Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "Detected " + ChatColor.YELLOW
-                    + "DecentHolograms" + ChatColor.DARK_GRAY + ".");
+                    + holoManager.getPluginName() + ChatColor.DARK_GRAY + ".");
         else
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "No Hologram Plugin Found. Disabling Hologram Feature.");
         if (metrics != null)
@@ -235,9 +228,6 @@ public class LootCrate extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("");
     }
 
-    public boolean isHologramPluginDetected(HologramPlugin hologramPlugin) {
-        return Bukkit.getPluginManager().isPluginEnabled(hologramPlugin.getPluginName());
-    }
 
     private void initMetrics() {
         int pluginId = 9767;
