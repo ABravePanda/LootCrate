@@ -56,13 +56,13 @@ public class KeyViewFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void nextPage() {
-        if (usableSize - getUsableItems().size() > 0) return;
+        List<Crate> crates = plugin.getManager(KeyCacheManager.class).convertIntToCrate(player.getUniqueId());
+        if (page * usableSize >= crates.size()) return;
         clearUsableItems();
         page++;
 
         int itemIndex = (page * usableSize) - usableSize;
         int index = 0;
-        List<Crate> crates = plugin.getManager(KeyCacheManager.class).convertIntToCrate(player.getUniqueId());
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && crates.size() > itemIndex)
                 this.setItem(index, new GUIItem(index, ItemUtils.addCrateID(plugin, crates.get(itemIndex).getKey().getItem(), crates.get(itemIndex).getId())));

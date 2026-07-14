@@ -81,7 +81,7 @@ public class CrateListFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void nextPage() {
-        if (usableSize - getUsableItems().size() >= 0) return;
+        if (page * usableSize >= crates.size()) return;
         clearUsableItems();
         page++;
 

@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CrateItemFrame extends ExtendedFrame implements Listener {
@@ -51,12 +52,27 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
     // methods
 
     public void fillItems() {
-        int index = 0;
+        fillPage(getDisplayableItems());
+    }
+
+    private List<CrateItem> getDisplayableItems() {
+        List<CrateItem> items = new ArrayList<>();
         for (CrateItem item : crate.getItems()) {
             if(item == null) continue;
             if(item.getItem().getType() == Material.AIR) continue;
-            this.setItem(index, createGUIItem(index, item));
+            items.add(item);
+        }
+        return items;
+    }
+
+    private void fillPage(List<CrateItem> items) {
+        int itemIndex = (page*usableSize)-usableSize;
+        int index = 0;
+        for (int i = 0; i < getUsableSize(); i++) {
+            if (index < getUsableSize() && items.size() > itemIndex)
+                this.setItem(index, createGUIItem(index, items.get(itemIndex)));
             index++;
+            itemIndex++;
         }
     }
 
@@ -102,21 +118,13 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void nextPage() {
-        if(usableSize - getUsableItems().size() >= 0) {
+        List<CrateItem> items = getDisplayableItems();
+        if(page * usableSize >= items.size()) {
             return;
         }
         clearUsableItems();
         page++;
-
-        int itemIndex = (page*usableSize)-usableSize;
-        int index = 0;
-        List<CrateItem> items = crate.getItems();
-        for (int i = 0; i < getUsableSize(); i++) {
-            if (index < getUsableSize() && items.size() > itemIndex)
-                this.setItem(index, createGUIItem(index, items.get(itemIndex)));
-            index++;
-            itemIndex++;
-        }
+        fillPage(items);
     }
 
     @Override
@@ -128,16 +136,6 @@ public class CrateItemFrame extends ExtendedFrame implements Listener {
         }
         clearUsableItems();
         page--;
-
-        int itemIndex = (page*usableSize)-usableSize;
-        int index = 0;
-        List<CrateItem> items = crate.getItems();
-        for (int i = 0; i < getUsableSize(); i++) {
-            if (index < getUsableSize() && items.size() > itemIndex)
-                this.setItem(index, createGUIItem(index, items.get(itemIndex)));
-            index++;
-            itemIndex++;
-        }
-
+        fillPage(getDisplayableItems());
     }
 }

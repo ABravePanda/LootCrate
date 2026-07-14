@@ -59,13 +59,13 @@ public class CrateViewFrame extends ExtendedFrame implements Listener {
 
     @Override
     public void nextPage() {
-        if(usableSize - getUsableItems().size() > 0) return;
+        List<ItemStack> items = plugin.getManager(InventoryManager.class).addCrateEffects(crate, sortType);
+        if(page * usableSize >= items.size()) return;
         clearUsableItems();
         page++;
 
         int itemIndex = (page*usableSize)-usableSize;
         int index = 0;
-        List<ItemStack> items = plugin.getManager(InventoryManager.class).addCrateEffects(crate, sortType);
         for (int i = 0; i < getUsableSize(); i++) {
             if (index < getUsableSize() && items.size() > itemIndex)
                 this.setItem(index, new GUIItem(index, items.get(itemIndex)));
