@@ -119,7 +119,7 @@ public class CrateOptionSoundFrame extends BaseFrame implements Listener, ShiftC
 
     @Override
     public void nextPage() {
-        if (usableSize - getUsableItems().size() > 0) return;
+        if (page * usableSize >= soundList.size()) return;
         clearUsableItems();
         page++;
 
